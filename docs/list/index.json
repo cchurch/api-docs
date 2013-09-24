@@ -11,7 +11,7 @@
                 {
                     "method": "GET",
                     "summary": "List Devices",
-                    "notes": "List all devices available to the user",
+                    "notes": "Returns array of all devices available to the user",
                     "nickname": "listDevices",
                     "type": "array",
                     "items": {
@@ -59,12 +59,20 @@
                     ],
                     "responseMessages": [
                         {
+                            "code": 200,
+                            "message": "Request succeded"
+                        },
+                        {
                             "code": 400,
-                            "message": "Invalid ID supplied"
+                            "message": "Unexpected or non-identifiable arguments are supplied"
                         },
                         {
                             "code": 401,
-                            "message": "Unauthorized"
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
                         }
                     ]
                 }

@@ -13,6 +13,7 @@
                     "summary": "Authenticate",
                     "notes": "Returns an auth token",
                     "nickname": "authenticate",
+                    "type": "string",
                     "parameters": [
                         {
                             "name": "username",
@@ -38,12 +39,36 @@
                     ],
                     "responseMessages": [
                         {
+                            "code": 200,
+                            "message": "User has been authenticated. Body contains JSON encoded result"
+                        },
+                        {
                             "code": 400,
-                            "message": "Invalid ID supplied"
+                            "message": "Some argument(s) are missing or invalid"
                         },
                         {
                             "code": 401,
-                            "message": "Unauthorized"
+                            "message": "Supplied credentials are not valid"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 462,
+                            "message": "User is pending. This will be thrown before 401 if username is valid and Account is active."
                         }
                     ]
                 }
@@ -68,12 +93,16 @@
                     ],
                     "responseMessages": [
                         {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
+                        },
+                        {
                             "code": 400,
-                            "message": "Invalid Token supplied"
+                            "message": "Some argument(s) are missing or invalid"
                         },
                         {
                             "code": 401,
-                            "message": "Unauthorized"
+                            "message": "Invalid Token supplied"
                         }
                     ]
                 }
