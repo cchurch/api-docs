@@ -1,0 +1,13 @@
+{"apiVersion": "1.0.0", "swaggerVersion": "1.2", "apis": [
+    {
+        "path": "/aaa",
+        "description": "Authentication, authorization and registration"
+    },
+    {
+        "path": "/list",
+        "description": "List available entities, such as Devices, Layouts, Users, Accounts, etc."
+    }
+], "info": {
+    "title": "Eagle Eye Networks API Documentation",
+    "contact": "support@eagleeyenetworks.com"
+}}

@@ -1,0 +1,84 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "resourcePath": "/aaa",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/aaa/authenticate",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Authenticate",
+                    "notes": "Returns an auth token",
+                    "nickname": "authenticate",
+                    "parameters": [
+                        {
+                            "name": "username",
+                            "description": "Username",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "Password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Invalid ID supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/authorize",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Authorize",
+                    "notes": "Returns authorized user",
+                    "nickname": "authorize",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Token",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Invalid Token supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models": {}
+}

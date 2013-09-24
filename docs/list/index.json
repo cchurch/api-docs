@@ -1,0 +1,188 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "resourcePath": "/list",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/list/devices",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Devices",
+                    "notes": "List all devices available to the user",
+                    "nickname": "listDevices",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListDevice"
+                    },
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "description": "Device ID",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "n",
+                            "description": "Device Name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "t",
+                            "description": "Device Type",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "camera",
+                                "bridge"
+                            ]
+                        },
+                        {
+                            "name": "s",
+                            "description": "Device Service Status",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "ATTD",
+                                "IDLE",
+                                "IGND",
+                                "ERRR"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Invalid ID supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "ListDevice":{
+            "id":"ListDevice",
+            "required":[],
+            "properties":{
+                "account_id":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Unique identifier for the Device's Account",
+                    "required": true
+                },
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Device",
+                    "required": true
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the device",
+                    "required": true
+                },
+                "type":{
+                    "type":"string",
+                    "description":"Type of device",
+                    "enum": [
+                        "camera",
+                        "bridge"
+                    ],
+                    "required": true
+                },
+                "bridges":{
+                    "type":"array",
+                    "description":"List of bridges that see the camera",
+                    "required": true
+                },
+                "service_status":{
+                    "type":"string",
+                    "description":"Device service status",
+                    "enum": [
+                        "ATTD",
+                        "IDLE",
+                        "IGND",
+                        "ERRR"
+                    ],
+                    "required": true
+                },
+                "permissions":{
+                    "type":"string",
+                    "description":"Permissions the user has on the device",
+                    "required": true
+                },
+                "tags":{
+                    "type":"array",
+                    "description":"Tags",
+                    "required": true
+                },
+                "guid":{
+                    "type":"string",
+                    "description":"GUID",
+                    "required": true
+                },
+                "serial_number":{
+                    "type":"string",
+                    "description":"Serial number",
+                    "required": true
+                },
+                "device_status":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Device status bit mask",
+                    "required": true
+                },
+                "timezone":{
+                    "type":"string",
+                    "description":"Timezone",
+                    "required": true
+                },
+                "timezone_utc_offset":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description": "Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC.",
+                    "required": true
+                },
+                "is_unsupported":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Indicates the camera is NOT supported (1) or IS supported (0)",
+                    "required": true
+                },
+                "ip_address":{
+                    "type":"string",
+                    "description":"IP Address of device",
+                    "required": true
+                },
+                "is_shared":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Indicates the camera is shared (1) or not (0)",
+                    "required": true
+                },
+                "owner_account_name":{
+                    "type":"string",
+                    "description":"Name of the account that owns the device.  This only applies to shared cameras, since they will be owned by a different account.",
+                    "required": true
+                },
+                "is_upnp":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP.",
+                    "required": true
+                }
+            }
+        }
+    }
+}
