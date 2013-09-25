@@ -1,0 +1,38 @@
+body {
+
+}
+
+body #header {
+    background-color: #3d3d3d !important;
+    padding:0px !important;
+    vertical-align: middle !important;
+}
+
+#header div {
+    vertical-align: middle !important;
+}
+
+.info_title, .info_contact {
+    display: none;
+}
+
+#message-bar {
+    min-height: 20px !important;
+}
+
+#een-logo {
+    background: url(../images/eagle-logo.png) 0px 0px no-repeat;
+    background-size: 120px;
+    height: 45px;
+    width:150px;
+    display:inline-block;
+}
+
+#een-title{
+    font-weight: bold;
+    font-size: 25px;
+    color: white;
+    font-size: 18px;
+    width:200px;
+    display:inline-block;
+}
