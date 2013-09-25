@@ -5,7 +5,7 @@
     },
     {
         "path": "/list",
-        "description": "List available entities, such as Devices, Layouts, Users, Accounts, etc."
+        "description": "List devices, layouts, users, etc."
     }
 ], "info": {
     "title": "API Documentation",
