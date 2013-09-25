@@ -45,5 +45,6 @@
     }
 ], "info": {
     "title": "API Documentation",
+    "description": "To begin using this API, you must first acquire a session by calling aaa/authenticate and aaa/authorize. All subsequent API calls will use that session.",
     "contact": "support@eagleeyenetworks.com"
 }}

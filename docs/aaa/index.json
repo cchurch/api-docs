@@ -10,8 +10,8 @@
             "operations": [
                 {
                     "method": "POST",
-                    "summary": "Authenticate",
-                    "notes": "Returns an auth token",
+                    "summary": "Authenticate with user credentials",
+                    "notes": "Logins are a 2 step process:  Authenticate, then Authorize with the token returned by Authenticate.",
                     "nickname": "authenticate",
                     "type": "AuthenticateToken",
                     "parameters": [
@@ -79,14 +79,14 @@
             "operations": [
                 {
                     "method": "POST",
-                    "summary": "Authorize",
-                    "notes": "Returns authorized user",
+                    "summary": "Authorize a user by token",
+                    "notes": "Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object.",
                     "nickname": "authorize",
                     "type": "AuthorizeUser",
                     "parameters": [
                         {
                             "name": "token",
-                            "description": "Token",
+                            "description": "Token returned by authenticate",
                             "required": true,
                             "type": "string",
                             "paramType": "form"

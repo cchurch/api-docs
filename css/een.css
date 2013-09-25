@@ -49,8 +49,8 @@ body #header {
     top: 33%;
 }
 
-#een-contact a {
-    color: white;
+#header a {
+    color: white !important;
 }
 
 #een-session {

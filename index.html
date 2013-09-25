@@ -26,22 +26,23 @@
                     supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
                     onComplete: function(swaggerApi, swaggerUi){
                         if(console) {
-                          console.log("Loaded SwaggerUI")
+                            console.log("Loaded SwaggerUI")
                         }
                         $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+                        // Copy title into the header
                         $('#een-title').text($('.info_title').text());
+                        // Copy contact link into the header
                         $('#een-contact').html($(".info_contact a").clone());
                     },
                     onFailure: function(data){
                         if(console) {
-                          console.log("Unable to Load SwaggerUI");
-                          console.log(data);
+                            console.log("Unable to Load SwaggerUI");
+                            console.log(data);
                         }
                     },
                     docExpansion: "none"
                 });
-                // Clear out any existing session
-                //document.cookie = "videobank_sessionid=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.eagleeyenetworks.com; path=/";
+
                 function readCookie(name) {
                     var nameEQ = name + "=";
                     var ca = document.cookie.split(';');
@@ -52,17 +53,31 @@
                     }
                     return null;
                 }
+
                 function checkSession(){
                     var cookie = readCookie('videobank_sessionid');
                     if(cookie){
+                        // Show the session ID in the header
                         $('#een-session').text('Session ID: '+cookie);
+                        $('#een-session').append($("<span></span>"));
+                        $('#een-session span').html(" (<a href='#'>clear</a>)");
+                        $('#een-session span a').on('click', function(){
+                            // Clear out existing session
+                            document.cookie = "videobank_sessionid=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.eagleeyenetworks.com; path=/";
+                        });
                     }else{
+                        // We don't have a session ID
                         $('#een-session').text('Session ID: None');
                     }
                 }
+
+                // Populate session ID in header now
                 checkSession();
-                // Monitor the session ID and display it if we have one
+
+                // Monitor the session ID and display it if we ever get one (after authenticate/authorize calls)
                 window.setInterval(checkSession, 2000);
+
+                // Load GUI
                 swaggerUi.load();
             });
         </script>
