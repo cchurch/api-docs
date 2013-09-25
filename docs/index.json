@@ -1,50 +1,55 @@
-{"apiVersion": "1.0.0", "swaggerVersion": "1.2", "apis": [
-    {
-        "path": "/aaa",
-        "description": "Authentication, authorization and registration"
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "info": {
+        "title": "API Documentation",
+        "description": "Most of this API's services require a valid session to use, which you can acquire by first calling <a href=\"#\" id=\"show_authenticate\">aaa/authenticate</a> and <a href=\"#\" id=\"show_authorize\">aaa/authorize</a>.",
+        "contact": "support@eagleeyenetworks.com"
     },
-    {
-        "path": "/device",
-        "description": "Camera and Bridge operations"
-    },
-    {
-        "path": "/layout",
-        "description": "Layout operations"
-    },
-    {
-        "path": "/user",
-        "description": "User operations"
-    },
-    {
-        "path": "/account",
-        "description": "Account operations"
-    },
-    {
-        "path": "/manufactureddevice",
-        "description": "Manufactured Device operations"
-    },
-    {
-        "path": "/list",
-        "description": "List devices, layouts, users, etc."
-    },
-    {
-        "path": "/poll",
-        "description": "Polling operations"
-    },
-    {
-        "path": "/asset",
-        "description": "Asset operations"
-    },
-    {
-        "path": "/action",
-        "description": "Actions"
-    },
-    {
-        "path": "/metric",
-        "description": "Metric queries"
-    }
-], "info": {
-    "title": "API Documentation",
-    "description": "To begin using this API, you must first acquire a session by calling aaa/authenticate and aaa/authorize. All subsequent API calls will use that session.",
-    "contact": "support@eagleeyenetworks.com"
-}}
+    "apis": [
+        {
+            "path": "/aaa",
+            "description": "Authentication, authorization and registration"
+        },
+        {
+            "path": "/device",
+            "description": "Camera and Bridge operations"
+        },
+        {
+            "path": "/layout",
+            "description": "Layout operations"
+        },
+        {
+            "path": "/user",
+            "description": "User operations"
+        },
+        {
+            "path": "/account",
+            "description": "Account operations"
+        },
+        {
+            "path": "/manufactureddevice",
+            "description": "Manufactured Device operations"
+        },
+        {
+            "path": "/list",
+            "description": "List devices, layouts, users, etc."
+        },
+        {
+            "path": "/poll",
+            "description": "Polling operations"
+        },
+        {
+            "path": "/asset",
+            "description": "Asset operations"
+        },
+        {
+            "path": "/action",
+            "description": "Actions"
+        },
+        {
+            "path": "/metric",
+            "description": "Metric queries"
+        }
+    ]
+}

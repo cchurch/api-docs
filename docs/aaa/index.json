@@ -10,7 +10,7 @@
             "operations": [
                 {
                     "method": "POST",
-                    "summary": "Authenticate with user credentials",
+                    "summary": "Login Step 1: Authenticate with user credentials",
                     "notes": "Logins are a 2 step process:  Authenticate, then Authorize with the token returned by Authenticate.",
                     "nickname": "authenticate",
                     "type": "AuthenticateToken",
@@ -79,7 +79,7 @@
             "operations": [
                 {
                     "method": "POST",
-                    "summary": "Authorize a user by token",
+                    "summary": "Login Step 2: Authorize user with token",
                     "notes": "Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object.",
                     "nickname": "authorize",
                     "type": "AuthorizeUser",

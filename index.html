@@ -33,6 +33,8 @@
                         $('#een-title').text($('.info_title').text());
                         // Copy contact link into the header
                         $('#een-contact').html($(".info_contact a").clone());
+                        $('#show_authenticate').off('click').on('click', showAuthenticate);
+                        $('#show_authorize').off('click').on('click', showAuthorize);
                     },
                     onFailure: function(data){
                         if(console) {
@@ -42,6 +44,26 @@
                     },
                     docExpansion: "none"
                 });
+
+                function showAuthenticate(e){
+                    e.preventDefault();
+                    if(!$($('a[href*="aaa/authenticate"]').get(0)).is(':visible')){
+                        $($('a[href*="aaa"]').get(0)).trigger('click');
+                    }
+                    if(!$($('div[id*="aaa_authenticate"]').get(0)).is(':visible')){
+                        $($('a[href*="aaa/authenticate"]').get(0)).trigger('click');
+                    }
+                }
+
+                function showAuthorize(e){
+                    e.preventDefault();
+                    if(!$($('a[href*="aaa/authenticate"]').get(0)).is(':visible')){
+                        $($('a[href*="aaa"]').get(0)).trigger('click');
+                    }
+                    if(!$($('div[id*="aaa_authorize"]').get(0)).is(':visible')){
+                        $($('a[href*="aaa/authorize"]').get(0)).trigger('click');
+                    }
+                }
 
                 function readCookie(name) {
                     var nameEQ = name + "=";
