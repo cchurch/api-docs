@@ -1,0 +1,66 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "resourcePath": "/layout",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/layout",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Layout",
+                    "notes": "Returns layout object by ID",
+                    "nickname": "getLayout",
+                    "type": "Layout",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Layout ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "Layout":{
+            "id":"Layout",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Layout",
+                    "required": true
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the layout",
+                    "required": true
+                }
+            }
+        }
+    }
+}

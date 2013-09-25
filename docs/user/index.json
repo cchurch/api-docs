@@ -2,126 +2,43 @@
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
     "basePath": "https://22222.eagleeyenetworks.com/g",
-    "resourcePath": "/aaa",
+    "resourcePath": "/user",
     "produces": ["application/json"],
     "apis": [
         {
-            "path": "/aaa/authenticate",
+            "path": "/user",
             "operations": [
                 {
-                    "method": "POST",
-                    "summary": "Authenticate",
-                    "notes": "Returns an auth token",
-                    "nickname": "authenticate",
-                    "type": "AuthenticateToken",
+                    "method": "GET",
+                    "summary": "Get User",
+                    "notes": "Returns user object by ID. Not passing an ID will return the current authorized user.",
+                    "nickname": "getUser",
+                    "type": "User",
                     "parameters": [
                         {
-                            "name": "username",
-                            "description": "Username",
-                            "required": true,
+                            "name": "id",
+                            "description": "User ID",
+                            "required": false,
                             "type": "string",
-                            "paramType": "form"
-                        },
-                        {
-                            "name": "password",
-                            "description": "Password",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "form"
-                        },
-                        {
-                            "name": "realm",
-                            "description": "Realm",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "form"
+                            "paramType": "query"
                         }
                     ],
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "User has been authenticated. Body contains JSON encoded result"
+                            "message": "Request succeded"
                         },
                         {
                             "code": 400,
-                            "message": "Some argument(s) are missing or invalid"
+                            "message": "Unexpected or non-identifiable arguments are supplied"
                         },
                         {
                             "code": 401,
-                            "message": "Supplied credentials are not valid"
+                            "message": "Unauthorized due to invalid session cookie"
                         },
                         {
-                            "code": 402,
-                            "message": "Account is suspended"
-                        },
-                        {
-                            "code": 412,
-                            "message": "User is disabled"
-                        },
-                        {
-                            "code": 460,
-                            "message": "Account is inactive"
-                        },
-                        {
-                            "code": 461,
-                            "message": "Account is pending"
-                        },
-                        {
-                            "code": 462,
-                            "message": "User is pending. This will be thrown before 401 if username is valid and Account is active."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "path": "/aaa/authorize",
-            "operations": [
-                {
-                    "method": "POST",
-                    "summary": "Authorize",
-                    "notes": "Returns authorized user",
-                    "nickname": "authorize",
-                    "type": "AuthorizeUser",
-                    "parameters": [
-                        {
-                            "name": "token",
-                            "description": "Token",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "form"
-                        }
-                    ],
-                    "responseMessages": [
-                        {
-                            "code": 200,
-                            "message": "User has been authorized for access to the realm"
-                        },
-                        {
-                            "code": 400,
-                            "message": "Some argument(s) are missing or invalid"
-                        },
-                        {
-                            "code": 401,
-                            "message": "Invalid Token supplied"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "path": "/aaa/logout",
-            "operations": [
-                {
-                    "method": "POST",
-                    "summary": "Log out",
-                    "notes": "Log out user and invalidate HTTP session cookie",
-                    "nickname": "logout",
-                    "parameters": [],
-                    "responseMessages": [
-                        {
-                            "code": 204,
-                            "message": "User has been logged out"
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
                         }
                     ]
                 }
@@ -129,29 +46,13 @@
         }
     ],
     "models":{
-        "AuthenticateToken":{
-            "id":"AuthenticateToken",
-            "required":[],
-            "properties":{
-                "token":{
-                    "type":"string",
-                    "description":"Authentication Token needed for aaa/authorize",
-                    "required": true
-                }
-            }
-        },
-        "AuthorizeUser":{
-            "id":"AuthorizeUser",
+        "User":{
+            "id":"User",
             "required":[],
             "properties":{
                 "id":{
                     "type":"string",
                     "description":"Unique identifier for Authorized User",
-                    "required": true
-                },
-                "user_id": {
-                    "type":"string",
-                    "description":"Unique identifier for Authorized User (same as 'id')",
                     "required": true
                 },
                 "first_name": {
@@ -317,6 +218,7 @@
                     "description":"SMS phone number",
                     "required": false
                 },
+
                 "is_sms_include_picture": {
                     "type":"integer",
                     "format":"int64",

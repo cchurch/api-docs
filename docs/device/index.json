@@ -1,0 +1,66 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "resourcePath": "/device",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/device",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Device",
+                    "notes": "Returns device object by ID",
+                    "nickname": "getDevice",
+                    "type": "Device",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "Device":{
+            "id":"Device",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Device",
+                    "required": true
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the device",
+                    "required": true
+                }
+            }
+        }
+    }
+}

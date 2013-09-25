@@ -4,8 +4,44 @@
         "description": "Authentication, authorization and registration"
     },
     {
+        "path": "/device",
+        "description": "Camera and Bridge operations"
+    },
+    {
+        "path": "/layout",
+        "description": "Layout operations"
+    },
+    {
+        "path": "/user",
+        "description": "User operations"
+    },
+    {
+        "path": "/account",
+        "description": "Account operations"
+    },
+    {
+        "path": "/manufactureddevice",
+        "description": "Manufactured Device operations"
+    },
+    {
         "path": "/list",
         "description": "List devices, layouts, users, etc."
+    },
+    {
+        "path": "/poll",
+        "description": "Polling operations"
+    },
+    {
+        "path": "/asset",
+        "description": "Asset operations"
+    },
+    {
+        "path": "/action",
+        "description": "Actions"
+    },
+    {
+        "path": "/metric",
+        "description": "Metric queries"
     }
 ], "info": {
     "title": "API Documentation",

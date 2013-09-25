@@ -77,16 +77,135 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/list/accounts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Accounts",
+                    "notes": "Returns array of all accounts available to the user",
+                    "nickname": "listAccounts",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListAccount"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/list/users",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Users",
+                    "notes": "Returns array of all users available to the user",
+                    "nickname": "listUsers",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListUser"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "models":{
+        "ListUser":{
+            "id":"ListUser",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the User",
+                    "required": true
+                },
+                "first_name":{
+                    "type":"string",
+                    "description":"First Name of the user",
+                    "required": true
+                },
+                "last_name":{
+                    "type":"string",
+                    "description":"Last Name of the user",
+                    "required": true
+                },
+                "email":{
+                    "type":"string",
+                    "description":"Email address of the user",
+                    "required": true
+                },
+                "permissions":{
+                    "type":"array",
+                    "description":"List of permissions the user has",
+                    "required":true
+                },
+                "last_login":{
+                    "type":"string",
+                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN",
+                    "required":true
+                }
+            }
+        },
+        "ListAccount":{
+            "id":"ListAccount",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Account",
+                    "required": true
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the account",
+                    "required": true
+                }
+            }
+        },
         "ListDevice":{
             "id":"ListDevice",
             "required":[],
             "properties":{
                 "account_id":{
-                    "type":"integer",
-                    "format":"int64",
+                    "type":"string",
                     "description":"Unique identifier for the Device's Account",
                     "required": true
                 },

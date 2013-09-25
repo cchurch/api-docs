@@ -20,6 +20,11 @@ body #header {
     min-height: 20px !important;
 }
 
+.swagger-ui-wrap {
+    width: 960px;
+    position: relative;
+}
+
 #een-logo {
     background: url(../images/eagle-logo.png) 0px 0px no-repeat;
     background-size: 120px;
@@ -38,12 +43,20 @@ body #header {
 }
 
 #een-contact {
-    float: right;
-    height: 45px;
-    padding-top: 18px;
-    font-size: 12px;
+    font-size: 14px;
+    position: absolute;
+    right: 0px;
+    top: 33%;
 }
 
 #een-contact a {
     color: white;
+}
+
+#een-session {
+    display:inline-block;
+    width:auto;
+    font-size:14px;
+    color:white;
+    margin-left: 60px;
 }

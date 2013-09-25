@@ -1,0 +1,66 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "resourcePath": "/account",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/account",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Account",
+                    "notes": "Returns account object by ID",
+                    "nickname": "getAccount",
+                    "type": "Account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Account ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "Account":{
+            "id":"Account",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Account",
+                    "required": true
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the account",
+                    "required": true
+                }
+            }
+        }
+    }
+}
