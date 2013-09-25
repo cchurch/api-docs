@@ -60,7 +60,7 @@
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "Request succeded"
+                            "message": "Request succeeded"
                         },
                         {
                             "code": 400,
@@ -94,7 +94,7 @@
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "Request succeded"
+                            "message": "Request succeeded"
                         },
                         {
                             "code": 400,
@@ -128,7 +128,7 @@
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "Request succeded"
+                            "message": "Request succeeded"
                         },
                         {
                             "code": 400,

@@ -26,7 +26,7 @@
                     "responseMessages": [
                         {
                             "code": 200,
-                            "message": "Request succeded"
+                            "message": "Request succeeded"
                         },
                         {
                             "code": 400,
@@ -39,6 +39,43 @@
                         {
                             "code": 403,
                             "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Delete User",
+                    "notes": "Delete a user",
+                    "nickname": "deleteUser",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "User ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Delete succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "User not found with the supplied ID"
                         }
                     ]
                 }

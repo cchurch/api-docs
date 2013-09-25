@@ -110,6 +110,138 @@
             ]
         },
         {
+            "path": "/aaa/create_account",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Register for a new account",
+                    "notes": "This is used to create a new account and the super user for the account.  As a part of the creation process, the service sends a confirmation email containing a link the user must click to activate the account.  Account cannot be used until it is activated.",
+                    "nickname": "createAccount",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "Password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Account name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "Timezone name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Account has been created and a confirmation email has been sent to the provided email address"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Realm is invalid due to not being a root realm"
+                        },
+                        {
+                            "code": 409,
+                            "message": "Email address has already been registered for the specified realm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/validate_account",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Validate a new account",
+                    "notes": "This is used to verify the email address supplied when the account is created.  When successful, the account is set to active and a user session is created. User will not be required to login again.",
+                    "nickname": "validateAccount",
+                    "type": "ValidateAccountUserId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Account ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "token",
+                            "description": "Account validation token",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Information supplied could not be verified"
+                        },
+                        {
+                            "code": 409,
+                            "message": "Account has already been activated"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "path": "/aaa/logout",
             "operations": [
                 {
@@ -129,6 +261,16 @@
         }
     ],
     "models":{
+        "ValidateAccountUserId":{
+            "id":"ValidateAccountUserId",
+            "properties":{
+                "user_id":{
+                    "type":"string",
+                    "description":"Unique identifier for validated user",
+                    "required":true
+                }
+            }
+        },
         "AuthenticateToken":{
             "id":"AuthenticateToken",
             "required":[],
