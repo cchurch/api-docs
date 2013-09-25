@@ -29,6 +29,8 @@
               console.log("Loaded SwaggerUI")
             }
             $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+              $('#een-title').text($('.info_title').text());
+              $('#een-contact').html($(".info_contact a").clone());
           },
           onFailure: function(data) {
             if(console) {
@@ -47,11 +49,9 @@
         <div id="header">
           <div class="swagger-ui-wrap">
               <div id="een-logo"></div>
-              <div id="een-title">API Documentation</div>
+              <div id="een-title"></div>
+              <div id="een-contact"></div>
           </div>
-        </div>
-        <div id="een-header">
-            &nbsp;
         </div>
         <div id="message-bar" class="swagger-ui-wrap">
             &nbsp;

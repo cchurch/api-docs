@@ -33,6 +33,17 @@ body #header {
     font-size: 25px;
     color: white;
     font-size: 18px;
-    width:200px;
+    width: auto;
     display:inline-block;
+}
+
+#een-contact {
+    float: right;
+    height: 45px;
+    padding-top: 18px;
+    font-size: 12px;
+}
+
+#een-contact a {
+    color: white;
 }
