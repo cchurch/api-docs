@@ -154,33 +154,30 @@
             "properties":{
                 "id":{
                     "type":"string",
-                    "description":"Unique identifier for the User",
-                    "required": true
+                    "description":"Unique identifier for the User"
                 },
                 "first_name":{
                     "type":"string",
-                    "description":"First Name of the user",
-                    "required": true
+                    "description":"First Name of the user"
                 },
                 "last_name":{
                     "type":"string",
-                    "description":"Last Name of the user",
-                    "required": true
+                    "description":"Last Name of the user"
                 },
                 "email":{
                     "type":"string",
-                    "description":"Email address of the user",
-                    "required": true
+                    "description":"Email address of the user"
                 },
                 "permissions":{
                     "type":"array",
                     "description":"List of permissions the user has",
-                    "required":true
+                    "items":{
+                        "type":"string"
+                    }
                 },
                 "last_login":{
                     "type":"string",
-                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN",
-                    "required":true
+                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN"
                 }
             }
         },
@@ -190,13 +187,11 @@
             "properties":{
                 "id":{
                     "type":"string",
-                    "description":"Unique identifier for the Account",
-                    "required": true
+                    "description":"Unique identifier for the Account"
                 },
                 "name":{
                     "type":"string",
-                    "description":"Name of the account",
-                    "required": true
+                    "description":"Name of the account"
                 }
             }
         },
@@ -206,18 +201,15 @@
             "properties":{
                 "account_id":{
                     "type":"string",
-                    "description":"Unique identifier for the Device's Account",
-                    "required": true
+                    "description":"Unique identifier for the Device's Account"
                 },
                 "id":{
                     "type":"string",
-                    "description":"Unique identifier for the Device",
-                    "required": true
+                    "description":"Unique identifier for the Device"
                 },
                 "name":{
                     "type":"string",
-                    "description":"Name of the device",
-                    "required": true
+                    "description":"Name of the device"
                 },
                 "type":{
                     "type":"string",
@@ -225,13 +217,14 @@
                     "enum": [
                         "camera",
                         "bridge"
-                    ],
-                    "required": true
+                    ]
                 },
                 "bridges":{
                     "type":"array",
                     "description":"List of bridges that see the camera",
-                    "required": true
+                    "items":{
+                        "type":"string"
+                    }
                 },
                 "service_status":{
                     "type":"string",
@@ -241,73 +234,63 @@
                         "IDLE",
                         "IGND",
                         "ERRR"
-                    ],
-                    "required": true
+                    ]
                 },
                 "permissions":{
                     "type":"string",
-                    "description":"Permissions the user has on the device",
-                    "required": true
+                    "description":"Permissions the user has on the device"
                 },
                 "tags":{
                     "type":"array",
                     "description":"Tags",
-                    "required": true
+                    "items":{
+                        "type":"string"
+                    }
                 },
                 "guid":{
                     "type":"string",
-                    "description":"GUID",
-                    "required": true
+                    "description":"GUID"
                 },
                 "serial_number":{
                     "type":"string",
-                    "description":"Serial number",
-                    "required": true
+                    "description":"Serial number"
                 },
                 "device_status":{
                     "type":"integer",
                     "format":"int64",
-                    "description":"Device status bit mask",
-                    "required": true
+                    "description":"Device status bit mask"
                 },
                 "timezone":{
                     "type":"string",
-                    "description":"Timezone",
-                    "required": true
+                    "description":"Timezone"
                 },
                 "timezone_utc_offset":{
                     "type":"integer",
                     "format":"int64",
-                    "description": "Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC.",
-                    "required": true
+                    "description": "Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC."
                 },
                 "is_unsupported":{
                     "type":"integer",
                     "format":"int64",
-                    "description":"Indicates the camera is NOT supported (1) or IS supported (0)",
-                    "required": true
+                    "description":"Indicates the camera is NOT supported (1) or IS supported (0)"
                 },
                 "ip_address":{
                     "type":"string",
-                    "description":"IP Address of device",
-                    "required": true
+                    "description":"IP Address of device"
                 },
                 "is_shared":{
                     "type":"integer",
                     "format":"int64",
-                    "description":"Indicates the camera is shared (1) or not (0)",
-                    "required": true
+                    "description":"Indicates the camera is shared (1) or not (0)"
                 },
                 "owner_account_name":{
                     "type":"string",
-                    "description":"Name of the account that owns the device.  This only applies to shared cameras, since they will be owned by a different account.",
-                    "required": true
+                    "description":"Name of the account that owns the device.  This only applies to shared cameras, since they will be owned by a different account."
                 },
                 "is_upnp":{
                     "type":"integer",
                     "format":"int64",
-                    "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP.",
-                    "required": true
+                    "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
                 }
             }
         }

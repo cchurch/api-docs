@@ -52,13 +52,11 @@
             "properties":{
                 "id":{
                     "type":"string",
-                    "description":"Unique identifier for the Manufactured Device",
-                    "required": true
+                    "description":"Unique identifier for the Manufactured Device"
                 },
                 "name":{
                     "type":"string",
-                    "description":"Name of the Manufactured Device",
-                    "required": true
+                    "description":"Name of the Manufactured Device"
                 }
             }
         }

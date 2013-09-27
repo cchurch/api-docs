@@ -52,13 +52,11 @@
             "properties":{
                 "id":{
                     "type":"string",
-                    "description":"Unique identifier for the Account",
-                    "required": true
+                    "description":"Unique identifier for the Account"
                 },
                 "name":{
                     "type":"string",
-                    "description":"Name of the account",
-                    "required": true
+                    "description":"Name of the account"
                 }
             }
         }

@@ -52,13 +52,11 @@
             "properties":{
                 "id":{
                     "type":"string",
-                    "description":"Unique identifier for the Layout",
-                    "required": true
+                    "description":"Unique identifier for the Layout"
                 },
                 "name":{
                     "type":"string",
-                    "description":"Name of the layout",
-                    "required": true
+                    "description":"Name of the layout"
                 }
             }
         }
