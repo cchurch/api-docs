@@ -59,7 +59,95 @@
                     "type":"string",
                     "description":"Name of the device",
                     "required": true
+                },
+                "utcOffset": {
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Signed UTC offset in seconds of the timezone from UTC, where this device is installed.",
+                    "required": true
+                },
+                "timezone":{
+                    "type":"string",
+                    "description":"Supported timezones:  US/Alaska, US/Arizona, US/Central, US/Pacific, US/Eastern, US/Mountain, US/Hawaii, UTC.  If this is a bridge, defaults to the Account timezone.  If this is a camera, defaults to the camers’s Bridge timezone.  Otherwise defaults to US/Pacific.",
+                    "required":true
+                },
+                "guid":{
+                    "type":"string",
+                    "description":"guid or other physical identifier of device",
+                    "required":true
+                },
+                "settings":{
+                    "type":"DeviceSettings",
+                    "description":"",
+                    "required":true
+                },
+                "bridges":{
+                    "type":"DeviceBridges",
+                    "description":"",
+                    "required":true
+                },
+                "permissions":{
+                    "type":"string",
+                    "description":"String of one or more characters. Each character defines a permission. \nPermissions include:\n'R' - user has access to view images and video for this camera.\n'A' - user is an admin for this camera.\n'S' - user can share this camera in a group share.\nNote:  All cameras in a group must have the ‘S’ permission or the group cannot be shared",
+                    "required":true
+                },
+                "tags":{
+                    "type":"array",
+                    "description":"Array of strings, which each string representing a \"tag\"",
+                    "required":true
+                },
+                "camera_settings":{
+                    "type":"string",
+                    "description":"JSON string of camera settings.  (see settings docs) If camera settings cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_settings_status_code will be 404.",
+                    "required":true
+                },
+                "camera_settings_status_code":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"200 if camera_settings were retrieved.  404 if camera_settings were unable to be retrieved.",
+                    "required":true
+                },
+                "camera_info":{
+                    "type":"DeviceCameraInfo",
+                    "description":"Camera related info, which only applies to devices that are cameras",
+                    "required":true
+                },
+                "camera_info_status_code":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"200 if camera_info was retrieved. 404 if camera_info was unable to be retrieved.",
+                    "required":true
                 }
+            }
+        },
+        "DeviceSettings":{
+            "id":"DeviceSettings",
+            "required":[],
+            "properties":{
+                "username":{
+                    "type":"string",
+                    "description":"Username to login to camera",
+                    "required": false
+                },
+                "password":{
+                    "type":"string",
+                    "description":"Password to login to camera",
+                    "required":false
+                }
+            }
+        },
+        "DeviceBridges":{
+            "id":"DeviceBridges",
+            "required":[],
+            "properties":{
+
+            }
+        },
+        "DeviceCameraInfo":{
+            "id":"DeviceCameraInfo",
+            "required":[],
+            "properties":{
+
             }
         }
     }

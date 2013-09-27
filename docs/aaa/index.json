@@ -242,6 +242,349 @@
             ]
         },
         {
+            "path": "/aaa/forgot_password",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Password recovery/reset",
+                    "notes": "Password recovery is a multi-step process.  Step one requests a reset email be sent to the email address of a registered user.  Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience).  Step three uses allows the user to change  the password.  The results of step three is that a user session is created for the user.",
+                    "nickname": "forgotPassword",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "An reset email has been sent to the supplied email address. This status will be provided even if the email address was not found.  This prevents attacks to discover user accounts."
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Information supplied could not be verified"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 462,
+                            "message": "User is pending"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/check_pw_reset_token",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Check password reset token",
+                    "notes": "This is step two of the password recover/reset process. It verifies that the supplied token is a valid reset token.",
+                    "nickname": "forgotPassword",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Password reset token provided in email",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Token is valid"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Token not valid or not found"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/reset_password",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Reset password",
+                    "notes": "This is step three of the password recover/reset process. It both verifies that the supplied token is a valid reset token and then, if valid resets the password associated with the token to the newly supplied password.  Upon completion, a user login session is created.",
+                    "nickname": "resetPassword",
+                    "type": "ResetPasswordUserId",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Password reset token provided in email",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "New password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Token not valid or not found"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/resend_registration_email",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Resend Registration Email",
+                    "notes": "This is used by users who have registered for an account, but never confirmed the registration.  This will allow the registration confirmation email to be re-sent to the user.",
+                    "nickname": "resendRegistrationEmail",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address of the account contact for a pending account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm in which the account was created",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Account was located and verified to be in the pending state.  A registration email has been recreated and sent to the provided email address."
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Account with this email address and realm could not be found"
+                        },
+                        {
+                            "code": 409,
+                            "message": "Account is already active (not pending)"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/resend_user_verification_email",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Resend New-User Email",
+                    "notes": "This is used by users who have had a user account created for them, but they never confirmed their user account.  This will re-send the user confirmation email so that they can then confirm their user account.",
+                    "nickname": "resendNewUserEmail",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address of the new user",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm in which the user was created",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "User was located and verified to be in the pending state.  A verification email has been recreated and sent to the provided email address."
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 404,
+                            "message": "User with this email address and realm could not be found"
+                        },
+                        {
+                            "code": 409,
+                            "message": "User is already active (not pending)"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/change_password",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Change Password",
+                    "notes": "This allows a user to change their password directly while authenticated, and also allows super users to change the password of the users they manage.  If someone is changing their own password, they must send their current password as well.  If someone is changing one of the users they manage, they only need to send the new password.",
+                    "nickname": "changePassword",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "ID of the user having their password changed.  Optional.  Defaults to the ID of the authenticated user.  If empty or equal to authenticated user, then \"current_password\" becomes required.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "New password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "current_password",
+                            "description": "Current password of the user.  Optional.  If \"id\" argument is empty, or is equal to the authenticated user's id, then this is required.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "User password was changed successfully"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 404,
+                            "message": "User with the \"id\" provided cannot be found"
+                        },
+                        {
+                            "code": 406,
+                            "message": "The \"current_password\" provided does not match the password of the authenticated user"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "path": "/aaa/logout",
             "operations": [
                 {
@@ -261,6 +604,26 @@
         }
     ],
     "models":{
+        "ChangePasswordId":{
+            "id":"ChangePasswordId",
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier of the user",
+                    "required":true
+                }
+            }
+        },
+        "ResetPasswordUserId":{
+            "id":"ResetPasswordUserId",
+            "properties":{
+                "user_id":{
+                    "type":"string",
+                    "description":"Unique identifier for authorized user",
+                    "required":true
+                }
+            }
+        },
         "ValidateAccountUserId":{
             "id":"ValidateAccountUserId",
             "properties":{
