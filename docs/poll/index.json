@@ -1,9 +1,155 @@
 {
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
-    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "basePath": "https://22222.eagleeyenetworks.com",
     "resourcePath": "/poll",
     "produces": ["application/json"],
-    "apis": [],
-    "models":{}
+    "apis": [
+        {
+            "path": "/poll",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET Poll",
+                    "notes": "Returns poll data",
+                    "nickname": "getPoll",
+                    "type": "GetPoll",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Token",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "summary": "POST Poll",
+                    "notes": "POST Poll",
+                    "nickname": "postPoll",
+                    "type": "PostPoll",
+                    "parameters": [
+                        {
+                            "description": "Cameras",
+                            "required": true,
+                            "type": "PostPollCameras",
+                            "paramType": "body"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "PostPollCameras":{
+            "id":"PostPollCameras",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"PostPollCamera",
+                    "description": "Object"
+                }
+            }
+        },
+        "PostPollCamera":{
+            "id":"PostPollCamera",
+            "required":[],
+            "properties":{
+                "resource":{
+                    "type":"array",
+                    "description": "Array of resources"
+                },
+                "event":{
+                    "type":"array",
+                    "description":"Array of events"
+                }
+            }
+        },
+        "GetPoll":{
+            "id":"GetPoll",
+            "required":[],
+            "properties":{
+
+            }
+        },
+        "PostPoll":{
+            "id":"PostPoll",
+            "required":[],
+            "properties":{
+                "cameras":{
+                    "type":"PostPollResponseCameras",
+                    "description":""
+                },
+                "token":{
+                    "type":"string",
+                    "description":""
+                }
+            }
+        },
+        "PostPollResponseCameras":{
+            "id":"PostPollResponseCameras",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"PostPollResponseCamera",
+                    "description": "Object"
+                }
+            }
+        },
+        "PostPollResponseCamera":{
+            "id":"PostPollResponseCamera",
+            "required":[],
+            "properties":{
+                "event":{
+                    "type":"PostPollResponseCameraEvents",
+                    "description":"Object of events keyed by event ID"
+                }
+            }
+        },
+        "PostPollResponseCameraEvents":{
+            "id":"PostPollResponseCameraEvents",
+            "required":[],
+            "properties":{
+                "event_id":{
+                    "type":"PostPollResponseCameraEvent",
+                    "description":"Object"
+                }
+            }
+        },
+        "PostPollResponseCameraEvent":{
+            "id":"PostPollResponseCameraEvent",
+            "required":[],
+            "properties":{
+                "timestamp":{
+                    "type":"string",
+                    "description":"Timestamp in EEN format: YYYYMMDDHHMMSS.NNN"
+                },
+                "cameraid":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Internal unique identifier"
+                }
+            }
+        }
+    }
 }

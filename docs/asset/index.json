@@ -1,9 +1,511 @@
 {
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
-    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "basePath": "https://22222.eagleeyenetworks.com",
     "resourcePath": "/asset",
     "produces": ["application/json"],
-    "apis": [],
+    "apis": [
+        {
+            "path": "/asset/asset/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET Image",
+                    "notes": "Get an image",
+                    "nickname": "getAssetImage",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_timestamp",
+                            "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "quality",
+                            "description": "Quality of image",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "high",
+                                "med",
+                                "low"
+                            ]
+                        },
+                        {
+                            "name": "asset_class",
+                            "description": "Asset class",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "all",
+                                "pre",
+                                "thumb"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Image was not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/asset/prev/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET previous Image",
+                    "notes": "Get the image before the specified timestamp if one exists.",
+                    "nickname": "getAssetPreviousImage",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_timestamp",
+                            "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "quality",
+                            "description": "Quality of image",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "high",
+                                "med",
+                                "low"
+                            ]
+                        },
+                        {
+                            "name": "asset_class",
+                            "description": "Asset class",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "all",
+                                "pre",
+                                "thumb"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Image was not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/asset/next/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class};l={time_limit}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET Next Image",
+                    "notes": "Get the image after the specified timestamp if one exists.  Blocks if not such image currently exists, otherwise identical to Request After Image.",
+                    "nickname": "getAssetNextImage",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_timestamp",
+                            "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "quality",
+                            "description": "Quality of image",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "high",
+                                "med",
+                                "low"
+                            ]
+                        },
+                        {
+                            "name": "asset_class",
+                            "description": "Asset class",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "all",
+                                "pre",
+                                "thumb"
+                            ]
+                        },
+                        {
+                            "name":"time_limit",
+                            "description":"Limit of time to wait before responding in decimal milliseconds",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int64",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Image was not found"
+                        },
+                        {
+                            "code": 408,
+                            "message": "Time out limit occurred before asset arrived"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/asset/after/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET After Image",
+                    "notes": "Get the image after the specified timestamp if one exists.",
+                    "nickname": "getAssetAfterImage",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_timestamp",
+                            "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "quality",
+                            "description": "Quality of image",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "high",
+                                "med",
+                                "low"
+                            ]
+                        },
+                        {
+                            "name": "asset_class",
+                            "description": "Asset class",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "all",
+                                "pre",
+                                "thumb"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Image was not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/asset/play/video.{format}?t={een_start_timestamp};e={een_end_timestamp};q={quality};c={device_id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET Video",
+                    "notes": "Play video",
+                    "nickname": "getPlayVideo",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_start_timestamp",
+                            "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_end_timestamp",
+                            "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "format",
+                            "description": "Video format",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "flv",
+                                "mp4",
+                                "ts",
+                                "m3u"
+                            ]
+                        },
+                        {
+                            "name": "quality",
+                            "description": "Indicates requested resolution if multiple are available",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "high",
+                                "med",
+                                "low"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Video was not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/asset/list/image?t={een_start_timestamp};e={een_end_timestamp};a={asset_class};c={device_id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET Image List",
+                    "notes": "Get image list",
+                    "nickname": "getListImage",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_start_timestamp",
+                            "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_end_timestamp",
+                            "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "asset_class",
+                            "description": "Asset class",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "all",
+                                "pre",
+                                "thumb"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/asset/list/video?t={een_start_timestamp};e={een_end_timestamp};c={device_id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "GET Video List",
+                    "notes": "Get video list",
+                    "nickname": "getListVideo",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_start_timestamp",
+                            "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "een_end_timestamp",
+                            "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "path"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "models":{}
 }

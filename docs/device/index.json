@@ -151,6 +151,13 @@
                     "type": "DeviceId",
                     "parameters": [
                         {
+                            "name": "id",
+                            "description": "Unique identifier of device",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
                             "name": "name",
                             "description": "Device Name",
                             "required": false,

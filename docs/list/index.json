@@ -145,6 +145,40 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/list/layouts",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Layouts",
+                    "notes": "Returns array of all layouts available to the user",
+                    "nickname": "listLayouts",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListLayout"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "models":{
@@ -192,6 +226,40 @@
                 "name":{
                     "type":"string",
                     "description":"Name of the account"
+                },
+                "camera_online_count":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Number of cameras currently online in the account"
+                },
+                "camera_count":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Number of cameras currently in the account"
+                },
+                "user_count":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Number of users currently in the account"
+                },
+                "is_suspended":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Indicates the account is Suspended (1) or not (0)"
+                },
+                "is_inactive":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Indicates the account is Inactive (1) or not (0)"
+                },
+                "is_active":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Indicates the account is Active (1) or not (0)"
+                },
+                "product_edition":{
+                    "type":"string",
+                    "description":"Product edition in use by the account"
                 }
             }
         },
@@ -291,6 +359,31 @@
                     "type":"integer",
                     "format":"int64",
                     "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
+                }
+            }
+        },
+        "ListLayout":{
+            "id":"ListLayout",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Layout"
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the layout"
+                },
+                "types":{
+                    "type":"array",
+                    "description":"Array of types defined for the layout",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "permissions":{
+                    "type":"string",
+                    "description":"String of zero or more characters.  Each character defines a permission that the current user has for the layout. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout"
                 }
             }
         }
