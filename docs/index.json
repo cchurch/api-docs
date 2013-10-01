@@ -28,10 +28,6 @@
             "description": "Account operations"
         },
         {
-            "path": "/manufactureddevice",
-            "description": "Manufactured Device operations"
-        },
-        {
             "path": "/list",
             "description": "List devices, layouts, users, etc."
         },
@@ -50,6 +46,10 @@
         {
             "path": "/metric",
             "description": "Metric queries"
+        },
+        {
+            "path": "/feedback",
+            "description": "Feedback operations"
         }
     ]
 }

@@ -89,7 +89,59 @@
             "id":"GetPoll",
             "required":[],
             "properties":{
-
+                "cameras":{
+                    "type":"GetPollResponseCameras",
+                    "description":"Objects keyed by device ID"
+                }
+            }
+        },
+        "GetPollResponseCameras":{
+            "id":"GetPollResponseCameras",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"GetPollResponseCamera",
+                    "description": "Object"
+                }
+            }
+        },
+        "GetPollResponseCamera":{
+            "id":"GetPollResponseCamera",
+            "required":[],
+            "properties":{
+                "pre":{
+                    "type":"string",
+                    "description":""
+                },
+                "event":{
+                    "type":"GetPollResponseCameraEvents",
+                    "description":"Object of events keyed by event ID"
+                }
+            }
+        },
+        "GetPollResponseCameraEvents":{
+            "id":"GetPollResponseCameraEvents",
+            "required":[],
+            "properties":{
+                "event_id":{
+                    "type":"GetPollResponseCameraEvent",
+                    "description":"Object"
+                }
+            }
+        },
+        "GetPollResponseCameraEvent":{
+            "id":"GetPollResponseCameraEvent",
+            "required":[],
+            "properties":{
+                "timestamp":{
+                    "type":"string",
+                    "description":"Timestamp in EEN format: YYYYMMDDHHMMSS.NNN"
+                },
+                "cameraid":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Internal unique identifier"
+                }
             }
         },
         "PostPoll":{
@@ -98,11 +150,11 @@
             "properties":{
                 "cameras":{
                     "type":"PostPollResponseCameras",
-                    "description":""
+                    "description":"Objects keyed by device ID"
                 },
                 "token":{
                     "type":"string",
-                    "description":""
+                    "description":"Token to be used for subsequent GET /poll requests."
                 }
             }
         },

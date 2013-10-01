@@ -4,6 +4,449 @@
     "basePath": "https://22222.eagleeyenetworks.com/g",
     "resourcePath": "/metric",
     "produces": ["application/json"],
-    "apis": [],
-    "models":{}
+    "apis": [
+        {
+            "path": "/metric/bridgebandwidth",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Bridge Brandwidth Metrics",
+                    "notes": "Used to query the bandwidth usage for a particular bridge device.",
+                    "nickname": "getMetricBridgeBandwidth",
+                    "type": "MetricBridgeBandwidth",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Bridge ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "start_timestamp",
+                            "description": "Start timestamp of query, in EEN format (YYYYMMDDhhmmss.zzz).  Defaults to 7 days ago.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_timestamp",
+                            "description": "End timestamp of query, in EEN format (YYYYMMDDhhmmss.zzz).  Defaults to now.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "group_by",
+                            "description": "Hour or Day, indicating how the results should be grouped.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum":[
+                                "day",
+                                "hour",
+                                "minute"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Metrics not found"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/metric/camerabandwidth",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Camera Brandwidth Metrics",
+                    "notes": "Used to query the bandwidth usage for a particular camera device.",
+                    "nickname": "getMetricCameraBandwidth",
+                    "type": "MetricCameraBandwidth",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Camera ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "start_timestamp",
+                            "description": "Start timestamp of query, in EEN format (YYYYMMDDhhmmss.zzz).  Defaults to 7 days ago.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_timestamp",
+                            "description": "End timestamp of query, in EEN format (YYYYMMDDhhmmss.zzz).  Defaults to now.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "group_by",
+                            "description": "Hour or Day, indicating how the results should be grouped.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum":[
+                                "day",
+                                "hour",
+                                "minute"
+                            ]
+                        },
+                        {
+                            "name": "motion_interval",
+                            "description": "Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Metrics not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "MetricBridgeBandwidth":{
+            "id":"MetricBridgeBandwidth",
+            "required":[],
+            "properties":{
+                "core": {
+                    "type":"array",
+                    "description":"Array of core metrics",
+                    "items":{
+                        "$ref": "MetricBridgeBandwidthCore"
+                    }
+                },
+                "bandwidth": {
+                    "type":"array",
+                    "description":"Array of bandwidth metrics",
+                    "items":{
+                        "$ref": "MetricBridgeBandwidthBW"
+                    }
+                },
+                "storage": {
+                    "type":"array",
+                    "description":"Array of storage metrics",
+                    "items":{
+                        "$ref": "MetricBridgeBandwidthStorage"
+                    }
+                }
+            }
+        },
+        "MetricBridgeBandwidthBW":{
+            "id":"MetricBridgeBandwidthBW",
+            "required":[],
+            "properties":{
+                "key":{
+                    "type":"MetricBridgeBandwidthBWKey",
+                    "description":"Key"
+                },
+                "value":{
+                    "type":"MetricBridgeBandwidthBWValue",
+                    "description":"Values"
+                }
+            }
+        },
+        "MetricBridgeBandwidthBWKey":{
+            "id":"MetricBridgeBandwidthBWKey",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"string",
+                    "description":"Bridge ID"
+                },
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                }
+            }
+        },
+        "MetricBridgeBandwidthBWValue":{
+            "id":"MetricBridgeBandwidthBWValue",
+            "required":[],
+            "properties":{
+                "bytes_per_second":{
+                    "type":"float",
+                    "description":"Bytes Per Second"
+                },
+                "bytes_sent":{
+                    "type":"float",
+                    "description":"Bytes Sent"
+                },
+                "milli_secs":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Milliseconds"
+                }
+            }
+        },
+        "MetricBridgeBandwidthCore":{
+            "id":"MetricBridgeBandwidthCore",
+            "required":[],
+            "properties":{
+                "key":{
+                    "type":"MetricBridgeBandwidthCoreKey",
+                    "description":"Key"
+                },
+                "value":{
+                    "type":"MetricBridgeBandwidthCoreValue",
+                    "description":"Values"
+                }
+            }
+        },
+        "MetricBridgeBandwidthCoreKey":{
+            "id":"MetricBridgeBandwidthCoreKey",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"string",
+                    "description":"Bridge ID"
+                },
+                "ts":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                }
+            }
+        },
+        "MetricBridgeBandwidthCoreValue":{
+            "id":"MetricBridgeBandwidthCoreValue",
+            "required":[],
+            "properties":{
+                "avg_kbytes_avail":{
+                    "type":"float",
+                    "description":"Average Kilobytes Per Second"
+                },
+                "avg_kbytes_size":{
+                    "type":"float",
+                    "description":"Average Kilobytes Size"
+                },
+                "bytes_freed":{
+                    "type":"float",
+                    "description":"Bytes Freed"
+                },
+                "bytes_shaped":{
+                    "type":"float",
+                    "description":"Bytes Shaped"
+                },
+                "bytes_stored":{
+                    "type":"float",
+                    "description":"Bytes Stored"
+                },
+                "bytes_streamed":{
+                    "type":"float",
+                    "description":"Bytes Streamed"
+                },
+                "samples":{
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Number of samples"
+                }
+            }
+        },
+        "MetricBridgeBandwidthStorage":{
+            "id":"MetricBridgeBandwidthStorage",
+            "required":[],
+            "properties":{
+                "key":{
+                    "type":"MetricBridgeBandwidthStorageKey",
+                    "description":"Key"
+                },
+                "values":{
+                    "type":"MetricBridgeBandwidthStorageValues",
+                    "description":"Values"
+                }
+            }
+        },
+        "MetricBridgeBandwidthStorageKey":{
+            "id":"MetricBridgeBandwidthStorageKey",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"string",
+                    "description":"Bridge ID"
+                },
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                }
+            }
+        },
+        "MetricBridgeBandwidthStorageValues":{
+            "id":"MetricBridgeBandwidthStorageValues",
+            "required":[],
+            "properties":{
+                "diff":{
+                    "type":"float",
+                    "description":"Bytes Diff"
+                },
+                "freed":{
+                    "type":"float",
+                    "description":"Bytes Freed"
+                },
+                "stored":{
+                    "type":"float",
+                    "description":"Bytes Stored"
+                }
+            }
+        },
+
+        "MetricCameraBandwidth":{
+            "id":"MetricCameraBandwidth",
+            "required":[],
+            "properties":{
+                "motion": {
+                    "type":"array",
+                    "description":"Array of motion metrics",
+                    "items":{
+                        "$ref": "MetricCameraBandwidthMotion"
+                    }
+                },
+                "packets": {
+                    "type":"array",
+                    "description":"Array of packet metrics",
+                    "items":{
+                        "$ref": "MetricCameraBandwidthPackets"
+                    }
+                }
+            }
+        },
+        "MetricCameraBandwidthMotion":{
+            "id":"MetricCameraBandwidthMotion",
+            "required":[],
+            "properties":{
+                "key":{
+                    "type":"MetricCameraBandwidthMotionKey",
+                    "description":"Key"
+                },
+                "values":{
+                    "type":"integer",
+                    "description":"Motion Activity value",
+                    "format":"int64"
+                }
+            }
+        },
+        "MetricCameraBandwidthMotionKey":{
+            "id":"MetricCameraBandwidthMotionKey",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"string",
+                    "description":"Camera ID"
+                },
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                }
+            }
+        },
+
+        "MetricCameraBandwidthPackets":{
+            "id":"MetricCameraBandwidthPackets",
+            "required":[],
+            "properties":{
+                "key":{
+                    "type":"MetricCameraBandwidthPacketsKey",
+                    "description":"Key"
+                },
+                "value":{
+                    "type":"MetricCameraBandwidthPacketsValue",
+                    "description":"Values"
+                }
+            }
+        },
+        "MetricCameraBandwidthPacketsKey":{
+            "id":"MetricCameraBandwidthPacketsKey",
+            "required":[],
+            "properties":{
+                "streamtype_number": {
+                    "type":"integer",
+                    "format":"int64",
+                    "description":"Stream type number"
+                },
+                "streamtype": {
+                    "type":"string",
+                    "description":"Stream type",
+                    "enum":[
+                        "video_raw",
+                        "video_raw_jpeg"
+                    ]
+                },
+                "device_id":{
+                    "type":"string",
+                    "description":"Camera ID"
+                },
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                }
+            }
+        },
+        "MetricCameraBandwidthPacketsValue":{
+            "id":"MetricCameraBandwidthPacketsValue",
+            "required":[],
+            "properties":{
+                "total_rcvd":{
+                    "type":"float",
+                    "description":"Total bytes received"
+                },
+                "total_expected":{
+                    "type":"float",
+                    "description":"Total bytes expected"
+                },
+                "packet_loss":{
+                    "type":"float",
+                    "description":"Packet loss percentage (decimal)",
+                    "minimum": 0,
+                    "maximum": 1
+                }
+            }
+        }
+    }
 }

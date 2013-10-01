@@ -6,12 +6,12 @@
     "produces": ["application/json"],
     "apis": [
         {
-            "path": "/asset/asset/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class}",
+            "path": "/asset/asset/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class}",
             "operations": [
                 {
                     "method": "GET",
                     "summary": "GET Image",
-                    "notes": "Get an image",
+                    "notes": "Get an image. Return binary image data in JPEG format. <br/>Headers: <br/>cache control headers to allow asset caching. <br/>content-type: image/jpeg. <br/>location: uri of image (same as request)",
                     "nickname": "getAssetImage",
                     "parameters": [
                         {
@@ -22,7 +22,7 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_timestamp",
+                            "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
@@ -31,7 +31,7 @@
                         {
                             "name": "quality",
                             "description": "Quality of image",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path",
                             "enum":[
@@ -59,6 +59,10 @@
                             "message": "Request succeeded"
                         },
                         {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
+                        },
+                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
                         },
@@ -79,12 +83,12 @@
             ]
         },
         {
-            "path": "/asset/prev/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class}",
+            "path": "/asset/prev/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class}",
             "operations": [
                 {
                     "method": "GET",
                     "summary": "GET previous Image",
-                    "notes": "Get the image before the specified timestamp if one exists.",
+                    "notes": "Get the image before the specified timestamp if one exists. <br/>Returns binary image data in JPEG format. <br/> Headers: cache control headers to allow asset caching if no now relative:<br/> x-ee-timestamp: type-timestamp specifies asset type and timestamp of the provided image. Type is one of 'video', 'preview', 'thumb', 'event'. <br/>x-ee-prev: [type-timestamp | unknown ] of previous image matching the class filter OR 'unknown' if the previous image was complex to figure out. <br/>x-ee-next: [type-timestamp | unknown ] as with x-ee-prev, but specifying the following image. <br/>content-type: image/jpeg <br/>location: /asset/asset/image.jpeg?t=20120917213405.700;q=low;c=thumb (identifies actual asset time of image in response).",
                     "nickname": "getAssetPreviousImage",
                     "parameters": [
                         {
@@ -95,7 +99,7 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_timestamp",
+                            "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
@@ -104,7 +108,7 @@
                         {
                             "name": "quality",
                             "description": "Quality of image",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path",
                             "enum":[
@@ -132,6 +136,10 @@
                             "message": "Request succeeded"
                         },
                         {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
+                        },
+                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
                         },
@@ -152,12 +160,12 @@
             ]
         },
         {
-            "path": "/asset/next/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class};l={time_limit}",
+            "path": "/asset/next/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class};l={time_limit}",
             "operations": [
                 {
                     "method": "GET",
                     "summary": "GET Next Image",
-                    "notes": "Get the image after the specified timestamp if one exists.  Blocks if not such image currently exists, otherwise identical to Request After Image.",
+                    "notes": "Get the image after the specified timestamp if one exists.  Blocks if not such image currently exists, otherwise identical to Request After Image.<br/> Returns binary image data in JPEG format. <br/> Headers: cache control headers to allow asset caching if no now relative:<br/> x-ee-timestamp: type-timestamp specifies asset type and timestamp of the provided image. Type is one of 'video', 'preview', 'thumb', 'event'. <br/>x-ee-prev: [type-timestamp | unknown ] of previous image matching the class filter OR 'unknown' if the previous image was complex to figure out. <br/>x-ee-next: [type-timestamp | unknown ] as with x-ee-prev, but specifying the following image. <br/>content-type: image/jpeg <br/>location: /asset/asset/image.jpeg?t=20120917213405.700;q=low;c=thumb (identifies actual asset time of image in response).",
                     "nickname": "getAssetNextImage",
                     "parameters": [
                         {
@@ -168,7 +176,7 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_timestamp",
+                            "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
@@ -177,7 +185,7 @@
                         {
                             "name": "quality",
                             "description": "Quality of image",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path",
                             "enum":[
@@ -201,7 +209,7 @@
                         {
                             "name":"time_limit",
                             "description":"Limit of time to wait before responding in decimal milliseconds",
-                            "required": true,
+                            "required": false,
                             "type": "integer",
                             "format": "int64",
                             "paramType": "path"
@@ -211,6 +219,10 @@
                         {
                             "code": 200,
                             "message": "Request succeeded"
+                        },
+                        {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
                         },
                         {
                             "code": 400,
@@ -237,12 +249,12 @@
             ]
         },
         {
-            "path": "/asset/after/image.jpeg?c={device_id};t={een_timestamp};q={quality};a={asset_class}",
+            "path": "/asset/after/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class}",
             "operations": [
                 {
                     "method": "GET",
                     "summary": "GET After Image",
-                    "notes": "Get the image after the specified timestamp if one exists.",
+                    "notes": "Get the image after the specified timestamp if one exists. Returns binary image data in JPEG format. <br/> Headers: cache control headers to allow asset caching if no now relative:<br/> x-ee-timestamp: type-timestamp specifies asset type and timestamp of the provided image. Type is one of 'video', 'preview', 'thumb', 'event'. <br/>x-ee-prev: [type-timestamp | unknown ] of previous image matching the class filter OR 'unknown' if the previous image was complex to figure out. <br/>x-ee-next: [type-timestamp | unknown ] as with x-ee-prev, but specifying the following image. <br/>content-type: image/jpeg <br/>location: /asset/asset/image.jpeg?t=20120917213405.700;q=low;c=thumb (identifies actual asset time of image in response).",
                     "nickname": "getAssetAfterImage",
                     "parameters": [
                         {
@@ -253,7 +265,7 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_timestamp",
+                            "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
@@ -262,7 +274,7 @@
                         {
                             "name": "quality",
                             "description": "Quality of image",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path",
                             "enum":[
@@ -288,6 +300,10 @@
                         {
                             "code": 200,
                             "message": "Request succeeded"
+                        },
+                        {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
                         },
                         {
                             "code": 400,
@@ -310,7 +326,7 @@
             ]
         },
         {
-            "path": "/asset/play/video.{format}?t={een_start_timestamp};e={een_end_timestamp};q={quality};c={device_id}",
+            "path": "/asset/play/video.{format}?t={start_timestamp};e={end_timestamp};q={quality};c={device_id};T={playback_start_timestamp};to={to}",
             "operations": [
                 {
                     "method": "GET",
@@ -326,14 +342,14 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_start_timestamp",
+                            "name": "start_timestamp",
                             "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
                             "paramType": "path"
                         },
                         {
-                            "name": "een_end_timestamp",
+                            "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
@@ -355,7 +371,7 @@
                         {
                             "name": "quality",
                             "description": "Indicates requested resolution if multiple are available",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path",
                             "enum":[
@@ -363,12 +379,30 @@
                                 "med",
                                 "low"
                             ]
+                        },
+                        {
+                            "name": "playback_start_timestamp",
+                            "description": "EE timestamp of start of playback.  This is a replacement to the 'to' argument.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path"
+                        },
+                        {
+                            "name": "to",
+                            "description": "Start the video stream N ms into the specified timespan.  Allows playing of a smaller segment",
+                            "required": false,
+                            "type":"string",
+                            "paramType": "path"
                         }
                     ],
                     "responseMessages": [
                         {
                             "code": 200,
                             "message": "Request succeeded"
+                        },
+                        {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
                         },
                         {
                             "code": 400,
@@ -391,7 +425,7 @@
             ]
         },
         {
-            "path": "/asset/list/image?t={een_start_timestamp};e={een_end_timestamp};a={asset_class};c={device_id}",
+            "path": "/asset/list/image?t={start_timestamp};e={end_timestamp};a={asset_class};c={device_id};count={count};q={quality};o={options}",
             "operations": [
                 {
                     "method": "GET",
@@ -407,16 +441,16 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_start_timestamp",
+                            "name": "start_timestamp",
                             "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
                             "paramType": "path"
                         },
                         {
-                            "name": "een_end_timestamp",
+                            "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path"
                         },
@@ -431,12 +465,46 @@
                                 "pre",
                                 "thumb"
                             ]
+                        },
+                        {
+                            "name":"count",
+                            "description":"Used instead or with an e argument. If used with an e argument, the count is a limit on the number of entries to return, starting at the starting timestamp.  If used without the e argument, returns N entries.  Support negative value, which returns N entries before <t>, sorted in reverse order - example -5 return 5 events previous to the specified time.",
+                            "required":false,
+                            "type":"integer",
+                            "format":"int64",
+                            "paramType":"path"
+                        },
+                        {
+                            "name": "quality",
+                            "description": "Indicates requested resolution if multiple are available",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "path",
+                            "enum":[
+                                "high",
+                                "med",
+                                "low"
+                            ]
+                        },
+                        {
+                            "name": "options",
+                            "description": "Additional modifier options. 'coalesce' = coalesces spans together.",
+                            "required": false,
+                            "type":"string",
+                            "paramType": "path",
+                            "enum":[
+                                "coalesce"
+                            ]
                         }
                     ],
                     "responseMessages": [
                         {
                             "code": 200,
                             "message": "Request succeeded"
+                        },
+                        {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
                         },
                         {
                             "code": 400,
@@ -455,7 +523,7 @@
             ]
         },
         {
-            "path": "/asset/list/video?t={een_start_timestamp};e={een_end_timestamp};c={device_id}",
+            "path": "/asset/list/video?t={start_timestamp};e={end_timestamp};c={device_id}",
             "operations": [
                 {
                     "method": "GET",
@@ -471,16 +539,16 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "een_start_timestamp",
+                            "name": "start_timestamp",
                             "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
                             "paramType": "path"
                         },
                         {
-                            "name": "een_end_timestamp",
+                            "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
-                            "required": true,
+                            "required": false,
                             "type": "string",
                             "paramType": "path"
                         }
@@ -489,6 +557,10 @@
                         {
                             "code": 200,
                             "message": "Request succeeded"
+                        },
+                        {
+                            "code": 301,
+                            "message": "Asset has been moved to a different archiver"
                         },
                         {
                             "code": 400,

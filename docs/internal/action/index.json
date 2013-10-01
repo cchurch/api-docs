@@ -1,0 +1,160 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "resourcePath": "/action",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/action/motion_notification",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Motion Notification",
+                    "notes": "Motion Notification",
+                    "nickname": "actionMotionNotification",
+                    "parameters": [ ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/offline_notification",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Offline Notification",
+                    "notes": "Offline Notification",
+                    "nickname": "actionOfflineNotification",
+                    "parameters": [ ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/online_notification",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Online Notification",
+                    "notes": "Online Notification",
+                    "nickname": "actionOnlineNotification",
+                    "parameters": [ ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/on_notification",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "On Notification",
+                    "notes": "On Notification",
+                    "nickname": "actionOnNotification",
+                    "parameters": [ ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/off_notification",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Off Notification",
+                    "notes": "Off Notification",
+                    "nickname": "actionOffNotification",
+                    "parameters": [ ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{ }
+}
