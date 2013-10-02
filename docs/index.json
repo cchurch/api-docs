@@ -3,7 +3,7 @@
     "swaggerVersion": "1.2",
     "info": {
         "title": "API Documentation",
-        "description": "Most of this API's services require a valid session to use, which you can acquire by first calling <a href=\"#\" id=\"show_authenticate\">aaa/authenticate</a> and <a href=\"#\" id=\"show_authorize\">aaa/authorize</a>.",
+        "description": "Most of this API's services require a valid session to use, which you can acquire by first calling <a href=\"#\" id=\"show_authenticate\">aaa/authenticate</a> and <a href=\"#\" id=\"show_authorize\">aaa/authorize</a>.<br/><br/><a href=\"#\" id=\"show_terms\">View Definition of Terms</a>",
         "contact": "support@eagleeyenetworks.com"
     },
     "apis": [
@@ -12,44 +12,44 @@
             "description": "Authentication, authorization and registration"
         },
         {
-            "path": "/device",
-            "description": "Camera and Bridge operations"
-        },
-        {
-            "path": "/layout",
-            "description": "Layout operations"
-        },
-        {
-            "path": "/user",
-            "description": "User operations"
-        },
-        {
             "path": "/account",
             "description": "Account operations"
-        },
-        {
-            "path": "/list",
-            "description": "List devices, layouts, users, etc."
-        },
-        {
-            "path": "/poll",
-            "description": "Polling operations"
-        },
-        {
-            "path": "/asset",
-            "description": "Asset operations"
         },
         {
             "path": "/action",
             "description": "Actions"
         },
         {
-            "path": "/metric",
-            "description": "Metric queries"
+            "path": "/asset",
+            "description": "Asset operations"
+        },
+        {
+            "path": "/device",
+            "description": "Camera and Bridge operations"
         },
         {
             "path": "/feedback",
             "description": "Feedback operations"
+        },
+        {
+            "path": "/layout",
+            "description": "Layout operations"
+        },
+        {
+            "path": "/list",
+            "description": "List devices, layouts, users, etc."
+        },
+        {
+            "path": "/metric",
+            "description": "Metric queries"
+        },
+        {
+            "path": "/poll",
+            "description": "Polling operations"
+        },
+        {
+            "path": "/user",
+            "description": "User operations"
         }
     ]
 }

@@ -1,7 +1,7 @@
 {
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
-    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "basePath": "https://login.eagleeyenetworks.com/g",
     "resourcePath": "/aaa",
     "produces": ["application/json"],
     "apis": [
@@ -39,10 +39,6 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 200,
-                            "message": "User has been authenticated. Body contains JSON encoded result"
-                        },
-                        {
                             "code": 400,
                             "message": "Some argument(s) are missing or invalid"
                         },
@@ -55,10 +51,6 @@
                             "message": "Account is suspended"
                         },
                         {
-                            "code": 412,
-                            "message": "User is disabled"
-                        },
-                        {
                             "code": 460,
                             "message": "Account is inactive"
                         },
@@ -67,8 +59,16 @@
                             "message": "Account is pending"
                         },
                         {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
                             "code": 462,
                             "message": "User is pending. This will be thrown before 401 if username is valid and Account is active."
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authenticated. Body contains JSON encoded result"
                         }
                     ]
                 }
@@ -94,16 +94,16 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 200,
-                            "message": "User has been authorized for access to the realm"
-                        },
-                        {
                             "code": 400,
                             "message": "Some argument(s) are missing or invalid"
                         },
                         {
                             "code": 401,
                             "message": "Invalid Token supplied"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
                         }
                     ]
                 }
@@ -156,10 +156,6 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 202,
-                            "message": "Account has been created and a confirmation email has been sent to the provided email address"
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
                         },
@@ -170,6 +166,10 @@
                         {
                             "code": 409,
                             "message": "Email address has already been registered for the specified realm"
+                        },
+                        {
+                            "code": 202,
+                            "message": "Account has been created and a confirmation email has been sent to the provided email address"
                         }
                     ]
                 }
@@ -202,28 +202,20 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 200,
-                            "message": "User has been authorized for access to the realm"
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
                         },
                         {
-                            "code": 401,
-                            "message": "Unauthorized due to invalid session cookie"
+                            "code": 406,
+                            "message": "Information supplied could not be verified"
                         },
                         {
                             "code": 402,
                             "message": "Account is suspended"
                         },
                         {
-                            "code": 403,
-                            "message": "Forbidden due to the user missing the necessary privileges"
-                        },
-                        {
-                            "code": 406,
-                            "message": "Information supplied could not be verified"
+                            "code": 460,
+                            "message": "Account is inactive"
                         },
                         {
                             "code": 409,
@@ -234,8 +226,8 @@
                             "message": "User is disabled"
                         },
                         {
-                            "code": 460,
-                            "message": "Account is inactive"
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
                         }
                     ]
                 }
@@ -267,24 +259,16 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 202,
-                            "message": "An reset email has been sent to the supplied email address. This status will be provided even if the email address was not found.  This prevents attacks to discover user accounts."
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 402,
-                            "message": "Account is suspended"
                         },
                         {
                             "code": 406,
                             "message": "Information supplied could not be verified"
                         },
                         {
-                            "code": 412,
-                            "message": "User is disabled"
+                            "code": 402,
+                            "message": "Account is suspended"
                         },
                         {
                             "code": 460,
@@ -295,8 +279,16 @@
                             "message": "Account is pending"
                         },
                         {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
                             "code": 462,
                             "message": "User is pending"
+                        },
+                        {
+                            "code": 202,
+                            "message": "An reset email has been sent to the supplied email address. This status will be provided even if the email address was not found.  This prevents attacks to discover user accounts."
                         }
                     ]
                 }
@@ -321,24 +313,16 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 202,
-                            "message": "Token is valid"
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 402,
-                            "message": "Account is suspended"
                         },
                         {
                             "code": 406,
                             "message": "Token not valid or not found"
                         },
                         {
-                            "code": 412,
-                            "message": "User is disabled"
+                            "code": 402,
+                            "message": "Account is suspended"
                         },
                         {
                             "code": 460,
@@ -347,6 +331,14 @@
                         {
                             "code": 461,
                             "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 202,
+                            "message": "Token is valid"
                         }
                     ]
                 }
@@ -379,24 +371,16 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 200,
-                            "message": "User has been authorized for access to the realm"
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 402,
-                            "message": "Account is suspended"
                         },
                         {
                             "code": 406,
                             "message": "Token not valid or not found"
                         },
                         {
-                            "code": 412,
-                            "message": "User is disabled"
+                            "code": 402,
+                            "message": "Account is suspended"
                         },
                         {
                             "code": 460,
@@ -405,6 +389,14 @@
                         {
                             "code": 461,
                             "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
                         }
                     ]
                 }
@@ -436,20 +428,20 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 202,
-                            "message": "Account was located and verified to be in the pending state.  A registration email has been recreated and sent to the provided email address."
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Account with this email address and realm could not be found"
                         },
                         {
                             "code": 402,
                             "message": "Account is suspended"
                         },
                         {
-                            "code": 404,
-                            "message": "Account with this email address and realm could not be found"
+                            "code": 460,
+                            "message": "Account is inactive"
                         },
                         {
                             "code": 409,
@@ -460,8 +452,8 @@
                             "message": "User is disabled"
                         },
                         {
-                            "code": 460,
-                            "message": "Account is inactive"
+                            "code": 202,
+                            "message": "Account was located and verified to be in the pending state.  A registration email has been recreated and sent to the provided email address."
                         }
                     ]
                 }
@@ -493,28 +485,16 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 202,
-                            "message": "User was located and verified to be in the pending state.  A verification email has been recreated and sent to the provided email address."
-                        },
-                        {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 402,
-                            "message": "Account is suspended"
                         },
                         {
                             "code": 404,
                             "message": "User with this email address and realm could not be found"
                         },
                         {
-                            "code": 409,
-                            "message": "User is already active (not pending)"
-                        },
-                        {
-                            "code": 412,
-                            "message": "User is disabled"
+                            "code": 402,
+                            "message": "Account is suspended"
                         },
                         {
                             "code": 460,
@@ -523,6 +503,18 @@
                         {
                             "code": 461,
                             "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 409,
+                            "message": "User is already active (not pending)"
+                        },
+                        {
+                            "code": 202,
+                            "message": "User was located and verified to be in the pending state.  A verification email has been recreated and sent to the provided email address."
                         }
                     ]
                 }
@@ -561,16 +553,12 @@
                     ],
                     "responseMessages": [
                         {
-                            "code": 200,
-                            "message": "User password was changed successfully"
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
                         },
                         {
                             "code": 400,
                             "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 401,
-                            "message": "Unauthorized due to invalid session cookie"
                         },
                         {
                             "code": 404,
@@ -579,6 +567,10 @@
                         {
                             "code": 406,
                             "message": "The \"current_password\" provided does not match the password of the authenticated user"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User password was changed successfully"
                         }
                     ]
                 }

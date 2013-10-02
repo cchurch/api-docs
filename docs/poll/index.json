@@ -1,7 +1,7 @@
 {
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
-    "basePath": "https://22222.eagleeyenetworks.com",
+    "basePath": "https://login.eagleeyenetworks.com",
     "resourcePath": "/poll",
     "produces": ["application/json"],
     "apis": [
@@ -9,15 +9,30 @@
             "path": "/poll",
             "operations": [
                 {
+                    "method": "POST",
+                    "summary": "POST Poll",
+                    "notes": "Subscribe to poll service, which is required for GET /poll. <br/>Response headers: set_cookie: ee-poll-ses=xxxxxx",
+                    "nickname": "postPoll",
+                    "type": "PostPoll",
+                    "parameters": [
+                        {
+                            "description": "Cameras",
+                            "required": true,
+                            "type": "PostPollCameras",
+                            "paramType": "body"
+                        }
+                    ]
+                },
+                {
                     "method": "GET",
                     "summary": "GET Poll",
-                    "notes": "Returns poll data",
+                    "notes": "Used to receive updates on real-time changes. Either requires a valid 'ee-poll-ses' cookie from POST /poll or the 'token' response from POST /poll",
                     "nickname": "getPoll",
                     "type": "GetPoll",
                     "parameters": [
                         {
                             "name": "token",
-                            "description": "Token",
+                            "description": "Token from POST /poll.  Not required if you have the 'ee-poll-ses' cookie from POST /poll.",
                             "required": false,
                             "type": "string",
                             "paramType": "query"
@@ -41,21 +56,6 @@
                             "message": "Forbidden due to the user missing the necessary privileges"
                         }
                     ]
-                },
-                {
-                    "method": "POST",
-                    "summary": "POST Poll",
-                    "notes": "POST Poll",
-                    "nickname": "postPoll",
-                    "type": "PostPoll",
-                    "parameters": [
-                        {
-                            "description": "Cameras",
-                            "required": true,
-                            "type": "PostPollCameras",
-                            "paramType": "body"
-                        }
-                    ]
                 }
             ]
         }
@@ -68,6 +68,10 @@
                 "device_id":{
                     "type":"PostPollCamera",
                     "description": "Object"
+                },
+                "token":{
+                    "type":"string",
+                    "description": "Token that can be used for subsequent calls to GET /poll instead of using the 'ee-poll-ses' cookie."
                 }
             }
         },

@@ -1,7 +1,7 @@
 {
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
-    "basePath": "https://22222.eagleeyenetworks.com/g",
+    "basePath": "https://login.eagleeyenetworks.com/g",
     "resourcePath": "/list",
     "produces": ["application/json"],
     "apis": [
