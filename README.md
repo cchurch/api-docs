@@ -9,6 +9,8 @@ The core REST docs live in "/docs/*/index.json" files.  The "More Info" content 
 
 The "Definition of Terms" content lives in "/docs/terms.html".
 
+To get to the "Internal" docs (which are still a work in progress), browse to "internal.html".
+
 Sandbox deploy steps:
 
 1. Add "application/json json;" to "/etc/nginx/mime.types"
