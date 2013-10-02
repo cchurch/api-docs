@@ -425,7 +425,7 @@
             ]
         },
         {
-            "path": "/asset/list/image?t={start_timestamp};e={end_timestamp};a={asset_class};c={device_id};count={count};q={quality};o={options}",
+            "path": "/asset/list/image?t={start_timestamp};e={end_timestamp};a={asset_class};c={device_id};count={count};q={quality}",
             "operations": [
                 {
                     "method": "GET",
@@ -485,16 +485,6 @@
                                 "med",
                                 "low"
                             ]
-                        },
-                        {
-                            "name": "options",
-                            "description": "Additional modifier options. 'coalesce' = coalesces spans together.",
-                            "required": false,
-                            "type":"string",
-                            "paramType": "path",
-                            "enum":[
-                                "coalesce"
-                            ]
                         }
                     ],
                     "responseMessages": [
@@ -523,7 +513,7 @@
             ]
         },
         {
-            "path": "/asset/list/video?t={start_timestamp};e={end_timestamp};c={device_id}",
+            "path": "/asset/list/video?t={start_timestamp};e={end_timestamp};c={device_id};o={options}",
             "operations": [
                 {
                     "method": "GET",
@@ -551,6 +541,16 @@
                             "required": false,
                             "type": "string",
                             "paramType": "path"
+                        },
+                        {
+                            "name": "options",
+                            "description": "Additional modifier options. 'coalesce' = coalesces spans together.",
+                            "required": false,
+                            "type":"string",
+                            "paramType": "path",
+                            "enum":[
+                                "coalesce"
+                            ]
                         }
                     ],
                     "responseMessages": [
