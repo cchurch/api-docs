@@ -8,47 +8,47 @@
     },
     "apis": [
         {
-            "path": "aaa/",
+            "path": "aaa",
             "description": "Authentication, authorization and registration"
         },
         {
-            "path": "account/",
+            "path": "account",
             "description": "Account operations"
         },
         {
-            "path": "action/",
+            "path": "action",
             "description": "Actions"
         },
         {
-            "path": "asset/",
+            "path": "asset",
             "description": "Asset operations"
         },
         {
-            "path": "device/",
+            "path": "device",
             "description": "Camera and Bridge operations"
         },
         {
-            "path": "feedback/",
+            "path": "feedback",
             "description": "Feedback operations"
         },
         {
-            "path": "layout/",
+            "path": "layout",
             "description": "Layout operations"
         },
         {
-            "path": "list/",
+            "path": "list",
             "description": "List devices, layouts, users, etc."
         },
         {
-            "path": "metric/",
+            "path": "metric",
             "description": "Metric queries"
         },
         {
-            "path": "poll/",
+            "path": "poll",
             "description": "Polling operations"
         },
         {
-            "path": "user/",
+            "path": "user",
             "description": "User operations"
         }
     ]

@@ -8,11 +8,11 @@
     },
     "apis": [
         {
-            "path": "/manufactureddevice",
+            "path": "manufactureddevice",
             "description": "Manufactured Device operations"
         },
         {
-            "path": "/action",
+            "path": "action",
             "description": "Actions"
         }
     ]
