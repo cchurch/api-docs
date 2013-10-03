@@ -359,6 +359,14 @@
                     "type":"integer",
                     "format":"int64",
                     "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
+                },
+                "video_input":{
+                    "type":"string",
+                    "description":"For analog cameras only, this indicates the video input channel of the camera."
+                },
+                "video_status":{
+                    "type":"string",
+                    "description":"For analog cameras only, this indicates the video status of the camera."
                 }
             }
         },
