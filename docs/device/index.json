@@ -262,7 +262,7 @@
                         },
                         {
                             "name": "erase",
-                            "description": "The device will be irretrievably deleted.  If the erase param is omitted, the device will be removed from the account and will be set idle, but it will not be erased.",
+                            "description": "The device will be irretrievably deleted.  Default is True (1).  If erase is False (0), the device will be removed from the account and will be set idle, but it will not be erased.",
                             "required": false,
                             "type": "string",
                             "enum":[
