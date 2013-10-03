@@ -2,7 +2,7 @@
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
     "basePath": "https://apidocs.eagleeyenetworks.com/g",
-    "resourcePath": "/user",
+    "resourcePath": "user/",
     "produces": ["application/json"],
     "apis": [
         {
