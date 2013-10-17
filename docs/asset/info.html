@@ -36,3 +36,39 @@ The image request model provides an efficient mechanism for accessing image sequ
     </li>
     <li>Thumbnail navigation.  The system provides a “thumbnail” image for each event which is intended to provide a small representation of the event.  The easiest mechanism to get a thumbnail for an event is to do an /asset/after/image.jpeg?a=thumb... image request with the starting timestamp of the event.</li>
 </ul>
+
+<h3>Retrieve Video</h3>
+<p>
+    Video is accessed via the “play” command.  Video is captured in segments, and is limited to 5 minutes per segment in storage.  The video command will seamlessly rewrite headers within the video format to join segments as necessary to deliver the requested data span.
+</p>
+<p>
+    If the end time of the segment is in the future, the video will follow the data stream as it arrives, delivering live video streaming with minimal latency.  MP4 format cannot be live streamed.  Note: if the camera is not streaming video, the video will stop (and start again) as video is captured, which is typically not what is desired.
+</p>
+<p>
+    The key word “stream_&lt;streamid&rt;” can be used for the starting timestamp.  This forces the camera to capture video and stream it to the cloud live.  The stream id should be globally unique(ish) string - combination of a timestamp and userid works well.  It is only critical for M3U requests, where it assure continuity between the m3u poll transactions.
+</p>
+<p>
+    The start timestamp must match the starting timestamp of a video if the video already exists.  Subsegments of a video span can be specified by using the “to” (time offset) argument.  For example, assume a 5 minute video has been recorded from 12:30 to 12:35.  The query ?t=20121120123000.000;e=20121120123400.000;to=180000;... will play one minute of video (timestamped at 12:33), 3 minutes into the video starting at 12:30, clipping off the last minute of the recorded segment.
+</p>
+<p>
+    Time offsets and end timestamps can be at any time, but the system will seek to the nearest key frame to actually start the video.
+</p>
+<h4>Video Formats</h4>
+<p>
+The video system is based on h264 video and AAC audio. These streams are encapsulated in different formats for compatibility with different playback modes
+</p>
+<ul>
+    <li>FLV: the native format for the system.  Playable in any Flash player and by VLC etc.</li>
+    <li>Live HTTP Streaming m3u: M3U files are index files into a mpegts data stream.  The system will generate ts urls on approximately a 2 second basis (depending on key frame rate of the underlying video). Note, due to the polling nature of m3u for “live” streams, you can only use now relative requests for streaming (where the streamid is used to maintain transaction state).  So /asset/play/video.m3u?t=stream_34567890332244567;e=+300000;c=12345678 will create a five minute stream, but /asset/play/video.m3u?t=-50000;e=+300000 will not.</li>
+    <li>ts: MPEG Transport Stream format video and audio.  Intended for playback via http streaming in concert with m3u transactions, per the HTTP Live Streaming functionality of iOS and android.  You can list multiple streams for a single video (typically for different resolutions/bandwidth).</li>
+    <li>mp4: MPEG4 files have very broad playback compatibility - all major video player are compatible.  However, mp4 is NOT a streamable format, so it is only used for download functionality and will return an error if the video is live.</li>
+</ul>
+<h4>Video Quality</h4>
+<p>
+    The H264 codec has the concept of profiles and levels to convey whether a playback devices is compatible with a specific video stream.
+</p>
+<ul>
+    <li>Low: Low quality video has a maximum profile of baseline (640x480 max)</li>
+    <li>Med: medium quality video has a maximum profile of main</li>
+    <li>High: high quality video has a maximum profile of high</li>
+</ul>
