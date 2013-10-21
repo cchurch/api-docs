@@ -326,7 +326,7 @@
             ]
         },
         {
-            "path": "/asset/play/video.{format}?t={start_timestamp};e={end_timestamp};q={quality};c={device_id};T={playback_start_timestamp};to={to}",
+            "path": "/asset/play/video.{video_format}?t={start_timestamp};e={end_timestamp};q={quality};c={device_id};T={playback_start_timestamp};to={to}",
             "operations": [
                 {
                     "method": "GET",
@@ -356,7 +356,7 @@
                             "paramType": "path"
                         },
                         {
-                            "name": "format",
+                            "name": "video_format",
                             "description": "Video format",
                             "required": true,
                             "type": "string",
