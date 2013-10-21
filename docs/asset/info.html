@@ -62,6 +62,7 @@ The video system is based on h264 video and AAC audio. These streams are encapsu
     <li>Live HTTP Streaming m3u: M3U files are index files into a mpegts data stream.  The system will generate ts urls on approximately a 2 second basis (depending on key frame rate of the underlying video). Note, due to the polling nature of m3u for “live” streams, you can only use now relative requests for streaming (where the streamid is used to maintain transaction state).  So "/asset/play/video.m3u?t=stream_34567890332244567;e=+300000;c=12345678" will create a five minute stream, but "/asset/play/video.m3u?t=-50000;e=+300000" will not.</li>
     <li>ts: MPEG Transport Stream format video and audio.  Intended for playback via http streaming in concert with m3u transactions, per the HTTP Live Streaming functionality of iOS and android.  You can list multiple streams for a single video (typically for different resolutions/bandwidth).</li>
     <li>mp4: MPEG4 files have very broad playback compatibility - all major video player are compatible.  However, mp4 is NOT a streamable format, so it is only used for download functionality and will return an error if the video is live.</li>
+    <li>m3u8: Use the M3U8 play list format.  Use this for mobile devices as it uses the HTTP layer to stream MPEG TS files with instructions in the M3U8 playlist file.   Continue polling for this playlist until the playlist indicates it is complete.</li>
 </ul>
 <h4>Video Quality</h4>
 <p>
