@@ -246,6 +246,13 @@
             "id":"MetricCameraBandwidth",
             "required":[],
             "properties":{
+                "core": {
+                    "type":"array",
+                    "description":"Array of core metrics",
+                    "items":{
+                        "$ref": "MetricCameraBandwidthCore"
+                    }
+                },
                 "motion": {
                     "type":"array",
                     "description":"Array of motion metrics",
@@ -259,6 +266,40 @@
                     "items":{
                         "$ref": "MetricCameraBandwidthPackets"
                     }
+                }
+            }
+        },
+        "MetricCameraBandwidthCore":{
+            "id":"MetricCameraBandwidthCore",
+            "required":[],
+            "properties":{
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                },
+                "avg_kbytes_on_disk":{
+                    "type":"float",
+                    "description":"Average Kilobytes on Disk"
+                },
+                "avg_days_on_disk":{
+                    "type":"float",
+                    "description":"Average Days on Disk"
+                },
+                "bytes_stored":{
+                    "type":"float",
+                    "description":"Bytes Stored"
+                },
+                "bytes_shaped":{
+                    "type":"float",
+                    "description":"Bytes Shaped"
+                },
+                "bytes_streamed":{
+                    "type":"float",
+                    "description":"Bytes Streamed"
+                },
+                "bytes_freed":{
+                    "type":"float",
+                    "description":"Bytes Freed"
                 }
             }
         },
