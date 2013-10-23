@@ -184,46 +184,13 @@
             "id":"MetricBridgeBandwidthBW",
             "required":[],
             "properties":{
-                "key":{
-                    "type":"MetricBridgeBandwidthBWKey",
-                    "description":"Key"
-                },
-                "value":{
-                    "type":"MetricBridgeBandwidthBWValue",
-                    "description":"Values"
-                }
-            }
-        },
-        "MetricBridgeBandwidthBWKey":{
-            "id":"MetricBridgeBandwidthBWKey",
-            "required":[],
-            "properties":{
-                "device_id":{
-                    "type":"string",
-                    "description":"Bridge ID"
-                },
                 "time":{
                     "type":"string",
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
-                }
-            }
-        },
-        "MetricBridgeBandwidthBWValue":{
-            "id":"MetricBridgeBandwidthBWValue",
-            "required":[],
-            "properties":{
+                },
                 "bytes_per_second":{
                     "type":"float",
                     "description":"Bytes Per Second"
-                },
-                "bytes_sent":{
-                    "type":"float",
-                    "description":"Bytes Sent"
-                },
-                "milli_secs":{
-                    "type":"integer",
-                    "format":"int64",
-                    "description":"Milliseconds"
                 }
             }
         },
@@ -231,62 +198,35 @@
             "id":"MetricBridgeBandwidthCore",
             "required":[],
             "properties":{
-                "key":{
-                    "type":"MetricBridgeBandwidthCoreKey",
-                    "description":"Key"
-                },
-                "value":{
-                    "type":"MetricBridgeBandwidthCoreValue",
-                    "description":"Values"
-                }
-            }
-        },
-        "MetricBridgeBandwidthCoreKey":{
-            "id":"MetricBridgeBandwidthCoreKey",
-            "required":[],
-            "properties":{
-                "device_id":{
-                    "type":"string",
-                    "description":"Bridge ID"
-                },
-                "ts":{
-                    "type":"string",
-                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
-                }
-            }
-        },
-        "MetricBridgeBandwidthCoreValue":{
-            "id":"MetricBridgeBandwidthCoreValue",
-            "required":[],
-            "properties":{
-                "avg_kbytes_avail":{
-                    "type":"float",
-                    "description":"Average Kilobytes Per Second"
-                },
-                "avg_kbytes_size":{
-                    "type":"float",
-                    "description":"Average Kilobytes Size"
-                },
-                "bytes_freed":{
-                    "type":"float",
-                    "description":"Bytes Freed"
-                },
-                "bytes_shaped":{
-                    "type":"float",
-                    "description":"Bytes Shaped"
-                },
-                "bytes_stored":{
-                    "type":"float",
-                    "description":"Bytes Stored"
-                },
-                "bytes_streamed":{
-                    "type":"float",
-                    "description":"Bytes Streamed"
-                },
-                "samples":{
-                    "type":"integer",
-                    "format":"int64",
-                    "description":"Number of samples"
+                "properties":{
+                    "time":{
+                        "type":"string",
+                        "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                    },
+                    "avg_kbytes_size":{
+                        "type":"float",
+                        "description":"Average Kilobytes Size"
+                    },
+                    "avg_kbytes_avail":{
+                        "type":"float",
+                        "description":"Average Kilobytes Per Second"
+                    },
+                    "bytes_stored":{
+                        "type":"float",
+                        "description":"Bytes Stored"
+                    },
+                    "bytes_shaped":{
+                        "type":"float",
+                        "description":"Bytes Shaped"
+                    },
+                    "bytes_streamed":{
+                        "type":"float",
+                        "description":"Bytes Streamed"
+                    },
+                    "bytes_freed":{
+                        "type":"float",
+                        "description":"Bytes Freed"
+                    }
                 }
             }
         },
@@ -294,49 +234,16 @@
             "id":"MetricBridgeBandwidthStorage",
             "required":[],
             "properties":{
-                "key":{
-                    "type":"MetricBridgeBandwidthStorageKey",
-                    "description":"Key"
-                },
-                "values":{
-                    "type":"MetricBridgeBandwidthStorageValues",
-                    "description":"Values"
-                }
-            }
-        },
-        "MetricBridgeBandwidthStorageKey":{
-            "id":"MetricBridgeBandwidthStorageKey",
-            "required":[],
-            "properties":{
-                "device_id":{
-                    "type":"string",
-                    "description":"Bridge ID"
-                },
                 "time":{
                     "type":"string",
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
-                }
-            }
-        },
-        "MetricBridgeBandwidthStorageValues":{
-            "id":"MetricBridgeBandwidthStorageValues",
-            "required":[],
-            "properties":{
+                },
                 "diff":{
                     "type":"float",
                     "description":"Bytes Diff"
-                },
-                "freed":{
-                    "type":"float",
-                    "description":"Bytes Freed"
-                },
-                "stored":{
-                    "type":"float",
-                    "description":"Bytes Stored"
                 }
             }
         },
-
         "MetricCameraBandwidth":{
             "id":"MetricCameraBandwidth",
             "required":[],
@@ -361,84 +268,24 @@
             "id":"MetricCameraBandwidthMotion",
             "required":[],
             "properties":{
-                "key":{
-                    "type":"MetricCameraBandwidthMotionKey",
-                    "description":"Key"
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
-                "values":{
+                "value":{
                     "type":"integer",
                     "description":"Motion Activity value",
                     "format":"int64"
                 }
             }
         },
-        "MetricCameraBandwidthMotionKey":{
-            "id":"MetricCameraBandwidthMotionKey",
-            "required":[],
-            "properties":{
-                "device_id":{
-                    "type":"string",
-                    "description":"Camera ID"
-                },
-                "time":{
-                    "type":"string",
-                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
-                }
-            }
-        },
-
         "MetricCameraBandwidthPackets":{
             "id":"MetricCameraBandwidthPackets",
             "required":[],
             "properties":{
-                "key":{
-                    "type":"MetricCameraBandwidthPacketsKey",
-                    "description":"Key"
-                },
-                "value":{
-                    "type":"MetricCameraBandwidthPacketsValue",
-                    "description":"Values"
-                }
-            }
-        },
-        "MetricCameraBandwidthPacketsKey":{
-            "id":"MetricCameraBandwidthPacketsKey",
-            "required":[],
-            "properties":{
-                "streamtype_number": {
-                    "type":"integer",
-                    "format":"int64",
-                    "description":"Stream type number"
-                },
-                "streamtype": {
-                    "type":"string",
-                    "description":"Stream type",
-                    "enum":[
-                        "video_raw",
-                        "video_raw_jpeg"
-                    ]
-                },
-                "device_id":{
-                    "type":"string",
-                    "description":"Camera ID"
-                },
                 "time":{
                     "type":"string",
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
-                }
-            }
-        },
-        "MetricCameraBandwidthPacketsValue":{
-            "id":"MetricCameraBandwidthPacketsValue",
-            "required":[],
-            "properties":{
-                "total_rcvd":{
-                    "type":"float",
-                    "description":"Total bytes received"
-                },
-                "total_expected":{
-                    "type":"float",
-                    "description":"Total bytes expected"
                 },
                 "packet_loss":{
                     "type":"float",

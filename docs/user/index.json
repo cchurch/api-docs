@@ -890,6 +890,15 @@
                     "items":{
                         "type":"string"
                     }
+                },
+                "is_branded": {
+                    "type":"integer",
+                    "format":"int64",
+                    "description": "Is the user associated with an account that currently has branding enabled"
+                },
+                "active_brand_subdomain": {
+                    "type": "string",
+                    "description": "If the user is associated with an account that has brandinge enabled, this will have that brand's subdomain if one exists"
                 }
             }
         },
