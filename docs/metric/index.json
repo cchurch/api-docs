@@ -198,35 +198,33 @@
             "id":"MetricBridgeBandwidthCore",
             "required":[],
             "properties":{
-                "properties":{
-                    "time":{
-                        "type":"string",
-                        "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
-                    },
-                    "avg_kbytes_size":{
-                        "type":"float",
-                        "description":"Average Kilobytes Size"
-                    },
-                    "avg_kbytes_avail":{
-                        "type":"float",
-                        "description":"Average Kilobytes Per Second"
-                    },
-                    "bytes_stored":{
-                        "type":"float",
-                        "description":"Bytes Stored"
-                    },
-                    "bytes_shaped":{
-                        "type":"float",
-                        "description":"Bytes Shaped"
-                    },
-                    "bytes_streamed":{
-                        "type":"float",
-                        "description":"Bytes Streamed"
-                    },
-                    "bytes_freed":{
-                        "type":"float",
-                        "description":"Bytes Freed"
-                    }
+                "time":{
+                    "type":"string",
+                    "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
+                },
+                "avg_kbytes_size":{
+                    "type":"float",
+                    "description":"Average Kilobytes Size"
+                },
+                "avg_kbytes_avail":{
+                    "type":"float",
+                    "description":"Average Kilobytes Per Second"
+                },
+                "bytes_stored":{
+                    "type":"float",
+                    "description":"Bytes Stored"
+                },
+                "bytes_shaped":{
+                    "type":"float",
+                    "description":"Bytes Shaped"
+                },
+                "bytes_streamed":{
+                    "type":"float",
+                    "description":"Bytes Streamed"
+                },
+                "bytes_freed":{
+                    "type":"float",
+                    "description":"Bytes Freed"
                 }
             }
         },
