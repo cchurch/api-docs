@@ -273,7 +273,7 @@
                         },
                         {
                             "name": "is_force",
-                            "description": "The device will be deleted regardless of communication status with camera or bridge",
+                            "description": "(DEPRECATED) The device will be deleted regardless of communication status with camera or bridge",
                             "required": false,
                             "type": "integer",
                             "format":"int64",
