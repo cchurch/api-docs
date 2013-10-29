@@ -154,6 +154,56 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/action/device_registration",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Device Registration",
+                    "notes": "Archiver notifies VBS of bridge/camera registrations and deregistrations",
+                    "nickname": "actionDeviceRegistration",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "Unique identifier of device",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "registration_id",
+                            "description": "Unique identifier of the device registration",
+                            "required": true,
+                            "type":"integer",
+                            "format":"int64",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "is_deregistration",
+                            "description": "1 or 0 indicating whether this is a deregistration (1) or not (0)",
+                            "required": false,
+                            "type":"integer",
+                            "format":"int64",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Camera or Bridge with device_id was not found"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "models":{ }
