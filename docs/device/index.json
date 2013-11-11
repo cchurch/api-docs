@@ -131,7 +131,7 @@
                         },
                         {
                             "code": 404,
-                            "message": "No device matching the ConnectID was found"
+                            "message": "No device matching the ConnectID or GUID was found"
                         },
                         {
                             "code": 409,
@@ -140,6 +140,10 @@
                         {
                             "code": 410,
                             "message": "Communication cannot be made to attach the camera to the bridge"
+                        },
+                        {
+                            "code": 415,
+                            "message": "Device associated with the given GUID is unsupported"
                         }
                     ]
                 },
