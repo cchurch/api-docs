@@ -288,8 +288,8 @@
                     ]
                 },
                 "bridges":{
-                    "type":"array",
-                    "description":"List of bridges that see the camera",
+                    "type":"array[array[string]]",
+                    "description":"This is an array of string arrays, each string array represents a bridge that can see the camera. The first element of the string array is the bridge ESN.  The second element is the status.",
                     "items":{
                         "type":"string"
                     }
