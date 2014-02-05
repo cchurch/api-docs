@@ -787,7 +787,7 @@
                     "description":"Include picture in sms notifications"
                 },
                 "json":{
-                    "type":"string",
+                    "type":"UserJson",
                     "description":"Misc settings for the user as a JSON string"
                 },
                 "camera_access": {
@@ -829,6 +829,34 @@
                     "items":{
                         "type":"string"
                     }
+                }
+            }
+        },
+        "UserJson":{
+            "id":"UserJson",
+            "required":[],
+            "properties":{
+                 "een": {
+                     "type": "UserJsonEen",
+                     "description":"EEN Object"
+                 }
+            }
+        },
+        "UserJsonEen":{
+            "id":"UserJsonEen",
+            "required":[],
+            "properties":{
+                "show_AMPM": {
+                    "type":"boolean",
+                    "description":"Show times with AM/PM"
+                },
+                "milliseconds_display": {
+                    "type":"boolean",
+                    "description":"Show time with milliseconds"
+                },
+                "camera_timezone": {
+                    "type":"boolean",
+                    "description":"Show time with timezone"
                 }
             }
         }
