@@ -75,14 +75,14 @@
                         },
                         {
                             "name": "guid",
-                            "description":"guid identifier of physical device",
+                            "description":"(DEPRECATED) guid identifier of physical device",
                             "required": false,
                             "type": "string",
                             "paramType": "form"
                         },
                         {
                             "name": "connectID",
-                            "description":"Connect ID needed to add and activate bridge to account.  All non-alphanumeric characters will be stripped.",
+                            "description":"Connect ID needed to add and activate bridge to account.  All non-alphanumeric characters will be stripped. This attribute ONLY pertains to adding bridges.",
                             "required": false,
                             "type": "string",
                             "paramType": "form"

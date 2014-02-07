@@ -1,3 +1,6 @@
 <p>
     The Device service allows access to create new logical devices (Cameras of Bridges) and establish a relationship between a logical and physical devices.  Get method is available to any user with camera ‘R’ (read) permission.  Methods Post, Delete are available to account superUsers and users with Camera ‘A’ (admin) permissions for the indicated camera.  Put method is only available to account superUsers.
+
+    When adding a new camera, the name and settings parameters are required. The settings parameter should contain the id of the bridge and the id of the camera and can be put in this format.
+    {"bridge": "1008XXXX", "guid": "20110901-0001-0001-0001-XXXXYYYYZZZZ"} 
 </p>
