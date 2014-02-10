@@ -82,7 +82,7 @@
                         },
                         {
                             "name": "connectID",
-                            "description":"Connect ID needed to add and activate bridge to account.  All non-alphanumeric characters will be stripped. This attribute ONLY pertains to adding bridges.",
+                            "description":"Connect ID needed to add and activate bridge to account.  All non-alphanumeric characters will be stripped. This is REQUIRED for adding bridges, and ONLY applies to bridges.",
                             "required": false,
                             "type": "string",
                             "paramType": "form"
@@ -409,35 +409,39 @@
             "properties":{
                 "username":{
                     "type":"string",
-                    "description":"Username to login to camera"
+                    "description":"Username to login to camera. Only applies to Cameras."
                 },
                 "password":{
                     "type":"string",
-                    "description":"Password to login to camera"
+                    "description":"Password to login to camera. Only applies to Cameras."
                 },
                 "bridge": {
                     "type":"string",
-                    "description":"Device ID of bridge to attach camera to"
+                    "description":"Device ID of bridge to attach camera to. Only applies to Cameras. Required for PUT for Cameras."
+                },
+                "guid": {
+                    "type":"string",
+                    "description":"GUID of physical device. Only applies to Cameras. Required for PUT for Cameras."
                 },
                 "roi_names": {
                     "type":"DeviceSettingsRoiNames",
-                    "description":"ROI names keyed by ROI ID"
+                    "description":"ROI names keyed by ROI ID. Only applies to Cameras."
                 },
                 "alert_notifications": {
                     "type":"DeviceSettingsAlertNotifications",
-                    "description":"Arrays of User IDs keyed by ROI ID"
+                    "description":"Arrays of User IDs keyed by ROI ID. Only applies to Cameras."
                 },
                 "alert_modes": {
                     "type":"DeviceSettingsAlertModes",
-                    "description":"Arrays of Alert modes keyed by ROI ID"
+                    "description":"Arrays of Alert modes keyed by ROI ID. Only applies to Cameras."
                 },
                 "alert_levels": {
                     "type":"DeviceSettingsAlertLevels",
-                    "description":"Arrays of Alert levels keyed by ROI ID"
+                    "description":"Arrays of Alert levels keyed by ROI ID. Only applies to Cameras."
                 },
                 "notes": {
                     "type":"string",
-                    "description":"Notes"
+                    "description":"Notes."
                 }
             }
         },
