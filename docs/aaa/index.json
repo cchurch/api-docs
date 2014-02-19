@@ -86,7 +86,7 @@
                     "parameters": [
                         {
                             "name": "token",
-                            "description": "Token returned by authenticate",
+                            "description": "Token returned by authenticate. Must be URL Encoded.",
                             "required": true,
                             "type": "string",
                             "paramType": "form"

@@ -3,7 +3,7 @@
     "swaggerVersion": "1.2",
     "info": {
         "title": "API Documentation",
-        "description": "Most of this API's services require a valid session to use, which you can acquire by first calling <a href=\"#\" id=\"show_authenticate\">aaa/authenticate</a> and <a href=\"#\" id=\"show_authorize\">aaa/authorize</a>.<br/><br/><a href=\"#\" id=\"show_terms\">View Definition of Terms</a>",
+        "description": "<a href=\"#\" id=\"show_start\">Getting Started</a> | <a href=\"#\" id=\"show_terms\">Definition of Terms</a>",
         "contact": "support@eagleeyenetworks.com"
     },
     "apis": [

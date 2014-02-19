@@ -97,7 +97,7 @@ h2.info-resource-heading {
     margin-top: 5px !important;
 }
 
-#api_terms {
+#api_terms, #api_start {
     background-color: #efefef;
     border: 1px solid #ccc;
     border-radius: 3px;
