@@ -205,14 +205,14 @@
                         {
                             "name":"camera_settings_add",
                             "type":"string",
-                            "description":"JSON string of camera settings to add/update",
+                            "description":"JSON string of camera settings to add/update (see <a href='#/info/device'>More Info</a> for details).",
                             "required":false,
                             "paramType":"form"
                         },
                         {
                             "name":"camera_settings_delete",
                             "type":"string",
-                            "description":"JSON string of camera settings to delete",
+                            "description":"JSON string of camera settings to delete (see <a href='#/info/device'>More Info</a> for details).",
                             "required":false,
                             "paramType":"form"
                         },
@@ -385,7 +385,7 @@
                 },
                 "camera_settings":{
                     "type":"string",
-                    "description":"JSON string of camera settings.  (see settings docs) If camera settings cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_settings_status_code will be 404."
+                    "description":"JSON string of camera settings (see <a href='#/info/device'>More Info</a> for details). If camera settings cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_settings_status_code will be 404."
                 },
                 "camera_settings_status_code":{
                     "type":"integer",
