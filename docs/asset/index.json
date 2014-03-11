@@ -331,7 +331,7 @@
                 {
                     "method": "GET",
                     "summary": "GET Video",
-                    "notes": "Play video",
+                    "notes": "Returns a video stream in the requested format",
                     "nickname": "getPlayVideo",
                     "parameters": [
                         {
