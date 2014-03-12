@@ -75,7 +75,7 @@
                         },
                         {
                             "name": "shares",
-                            "description": "Array of arrays, one per account user for whom sharing is enabled for this layout.  Each string contains two field separated by comma.  The first field is a user aid and the second field are permissions for the user. Two special user ID exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘cafedead’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.",
+                            "description": "Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user and and the second field are the list of permissions for the user. Two special user IDs exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['cafedead', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array.",
                             "required": false,
                             "type": "string",
                             "paramType": "form"
