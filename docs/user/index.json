@@ -704,94 +704,114 @@
             "properties":{
                 "id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for Authorized User"
                 },
                 "first_name": {
                     "type":"string",
+                    "required": true,
                     "description":"First name of Authorized User"
                 },
                 "last_name": {
                     "type":"string",
+                    "required": true,
                     "description":"Last name of Authorized User"
                 },
                 "email": {
                     "type":"string",
+                    "required": true,
                     "description":"Email of Authorized User"
                 },
                 "owner_account_id": {
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier of user's Account"
                 },
                 "active_account_id": {
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier of user's active Account"
                 },
                 "uid": {
                     "type":"string",
+                    "required": true,
                     "description":"UID"
                 },
                 "is_superuser": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user a Super User"
                 },
                 "is_account_superuser": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user an Account Super User"
                 },
                 "is_staff": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user a Staff User"
                 },
                 "is_active": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user Active"
                 },
                 "is_pending": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user a Pending user"
                 },
                 "is_master": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user in a Master Account"
                 },
                 "is_user_admin": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user a User Admin"
                 },
                 "is_layout_admin": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user a Layout Admin"
                 },
                 "is_live_video": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user authorized to access Live Video"
                 },
                 "is_device_admin": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user a Device Admin"
                 },
                 "is_export_video": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user authorized to Export Video"
                 },
                 "is_recorded_video": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is the user authorized to view Recorded Video"
                 },
                 "street": {
                     "type":"array",
+                    "required": true,
                     "description":"Street Address as array [address line 1, address line 2, ...])",
                     "items":{
                         "type":"string"
@@ -799,60 +819,74 @@
                 },
                 "city": {
                     "type":"string",
+                    "required": true,
                     "description":"City"
                 },
                 "state": {
                     "type":"string",
+                    "required": true,
                     "description":"State"
                 },
                 "country": {
                     "type":"string",
+                    "required": true,
                     "description":"Country"
                 },
                 "postal_code": {
                     "type":"string",
+                    "required": true,
                     "description":"Postal Code"
                 },
                 "phone": {
                     "type":"string",
+                    "required": true,
                     "description":"Phone number"
                 },
                 "mobile_phone": {
                     "type":"string",
+                    "required": true,
                     "description":"Mobile phone number"
                 },
                 "utc_offset": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Timezone offset from UTC in seconds (signed integer)"
                 },
                 "timezone": {
                     "type":"string",
+                    "required": true,
                     "description":"Timezone"
                 },
                 "last_login": {
                     "type":"string",
+                    "required": true,
                     "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN"
                 },
                 "alternate_email": {
                     "type":"string",
+                    "required": true,
                     "description":"Alternate email address"
                 },
                 "sms_phone": {
                     "type":"string",
+                    "required": true,
                     "description":"SMS phone number"
                 },
                 "is_sms_include_picture": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Include picture in sms notifications"
                 },
                 "json":{
                     "type":"UserJson",
+                    "required": true,
                     "description":"Misc settings for the user as a JSON string"
                 },
                 "camera_access": {
                     "type":"array",
+                    "required": true,
                     "description":"List of devices (IDs) the user has access to",
                     "items":{
                         "type":"string"
@@ -860,6 +894,7 @@
                 },
                 "layouts": {
                     "type":"array",
+                    "required": true,
                     "description":"List of layouts (IDs) the user has access to",
                     "items":{
                         "type":"string"
@@ -867,11 +902,13 @@
                 },
                 "is_notify_enable": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Is notifications enabled for the User"
                 },
                 "notify_period": {
                     "type":"array",
+                    "required": true,
                     "description":"List of notification time periods, in the form: D-HHMM-HHMM",
                     "items":{
                         "type":"string"
@@ -879,6 +916,7 @@
                 },
                 "notify_rule": {
                     "type":"array",
+                    "required": true,
                     "description":"List of notification rules, in the form: id-type-delay (e.g. one-email-0)",
                     "items":{
                         "type":"string"
@@ -886,6 +924,7 @@
                 },
                 "access_period": {
                     "type":"array",
+                    "required": true,
                     "description":"List of access time periods, in the form: D-HHMM-HHMM",
                     "items":{
                         "type":"string"
@@ -893,11 +932,13 @@
                 },
                 "is_branded": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description": "Is the user associated with an account that currently has branding enabled"
                 },
                 "active_brand_subdomain": {
                     "type": "string",
+                    "required": true,
                     "description": "If the user is associated with an account that has brandinge enabled, this will have that brand's subdomain if one exists"
                 }
             }
@@ -908,6 +949,7 @@
             "properties":{
                  "een": {
                      "type": "UserJsonEen",
+                     "required": true,
                      "description":"EEN Object"
                  }
             }
@@ -918,16 +960,14 @@
             "properties":{
                 "show_AMPM": {
                     "type":"boolean",
+                    "required": true,
                     "description":"Show times with AM/PM"
                 },
                 "milliseconds_display": {
                     "type":"boolean",
+                    "required": true,
                     "description":"Show time with milliseconds"
                 },
-                "camera_timezone": {
-                    "type":"boolean",
-                    "description":"Show time with timezone"
-                }
             }
         }
     }
