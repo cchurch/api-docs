@@ -356,8 +356,7 @@
                     "description":"Name of the account that owns the device.  This only applies to shared cameras, since they will be owned by a different account."
                 },
                 "is_upnp":{
-                    "type":"integer",
-                    "format":"int64",
+                    "type":"boolean",
                     "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
                 },
                 "video_input":{
