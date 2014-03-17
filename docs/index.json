@@ -48,6 +48,10 @@
             "description": "Polling operations"
         },
         {
+            "path": "recording",
+            "description": "Recording operations"
+        },
+        {
             "path": "user",
             "description": "User operations"
         }

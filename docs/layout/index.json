@@ -232,6 +232,10 @@
                     "items":{
                         "type":"array"
                     }
+                },
+                "current_recording_key":{
+                    "type":"string",
+                    "description":"String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service."
                 }
             }
         },

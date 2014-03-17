@@ -11,7 +11,7 @@
                 {
                     "method": "GET",
                     "summary": "List Devices",
-                    "notes": "Returns array of all devices available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the bridge is able to see the camera. If the service_status is 'IGND', the bridge is unable to see the camera.",
+                    "notes": "Returns array of all devices available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached.",
                     "nickname": "listDevices",
                     "type": "array",
                     "items": {
@@ -296,7 +296,7 @@
                 },
                 "service_status":{
                     "type":"string",
-                    "description":"Device service status",
+                    "description":"Device service status. ATTD = camera is attached to a bridge. IGND = camera is unattached from all bridges and is available to be attached to a bridge. IDLE and ERRR are not currently used.",
                     "enum": [
                         "ATTD",
                         "IDLE",
