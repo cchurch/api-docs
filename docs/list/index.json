@@ -383,7 +383,7 @@
                 },
                 "types":{
                     "type":"array",
-                    "description":"Array of types defined for the layout",
+                    "description":"Array of types defined for the layout. This attribute has not yet been implemented.",
                     "items":{
                         "type":"string"
                     }
