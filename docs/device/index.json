@@ -442,6 +442,26 @@
                 "notes": {
                     "type":"string",
                     "description":"Notes."
+                },
+                "latitude": {
+                    "type":"float",
+                    "description":"Latitude of the cameras location."
+                },
+                "longitude": {
+                    "type":"float",
+                    "description":"Longitude of the cameras location."
+                },
+                "street_address": {
+                    "type":"string",
+                    "description":"Street Address of the cameras location."
+                },
+                "azimuth": {
+                    "type":"float",
+                    "description":"Direction that the center of the camera faces.  Values from 0.0-360.0 North=0.0."
+                },
+                "range": {
+                    "type":"integer",
+                    "description":"Effective distance the camera can 'see' in feet."
                 }
             }
         },
