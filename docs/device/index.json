@@ -45,7 +45,7 @@
                 {
                     "method": "PUT",
                     "summary": "Create new device",
-                    "notes": "Creates a new bridge or camera",
+                    "notes": "Creates a new Camera or Bridge. This requires the existence of a physical camera or bridge device. With camera devices, creating a Camera in the system requires the GUID of the physical camera device.  With bridge devices, creating a Bridge in the system requires the AttachID (aka ConnectID) of the physical bridge device.",
                     "nickname": "putDevice",
                     "type": "DeviceId",
                     "parameters": [
