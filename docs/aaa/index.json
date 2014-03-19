@@ -901,6 +901,10 @@
                     "type":"integer",
                     "required": true,
                     "description":"If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur."
+                },
+                "permissions": {
+                    "type": "object",
+                    "description": "(DEPRECATED) Permissions for the user"
                 }
             }
         }
