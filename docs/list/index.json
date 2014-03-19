@@ -357,7 +357,7 @@
                 },
                 "is_upnp":{
                     "type":"boolean",
-                    "description":"Indicates whether the camera is a UPNP device (1) or not (0).  Currently this only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
+                    "description":"Indicates whether the camera is a UPNP device. Note that this property is different then all the other 'is_*' properties in the API, which normally are integers (0 or 1).  Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
                 },
                 "video_input":{
                     "type":"string",
