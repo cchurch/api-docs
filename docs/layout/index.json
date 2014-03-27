@@ -68,9 +68,9 @@
                         },
                         {
                             "name": "json",
-                            "description": "JSON formatted data about the structure is included in the request.  This will include specifics about camera position and size.",
                             "required": true,
-                            "type": "string",
+                            "type":"LayoutJson",
+                            "description":"String of JSON formatted data that defines the layout",
                             "paramType": "form"
                         },
                         {
@@ -126,9 +126,9 @@
                         },
                         {
                             "name": "json",
-                            "description": "JSON formatted data about the structure is included in the request.  This will include specifics about camera position and size.",
                             "required": true,
-                            "type": "string",
+                            "type":"LayoutJson",
+                            "description":"String of JSON formatted data that defines the layout",
                             "paramType": "form"
                         },
                         {
@@ -220,7 +220,7 @@
                 },
                 "json":{
                     "type":"LayoutJson",
-                    "description":"String of JSON formatted data about the structure is included in the response"
+                    "description":"String of JSON formatted data that defines the layout"
                 },
                 "permissions":{
                     "type":"string",
