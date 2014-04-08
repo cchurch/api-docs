@@ -80,7 +80,7 @@
                 {
                     "method": "POST",
                     "summary": "Login Step 2: Authorize user with token",
-                    "notes": "Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object.",
+                    "notes": "Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'videobank_sessionid' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.",
                     "nickname": "authorize",
                     "type": "AuthorizeUser",
                     "parameters": [
