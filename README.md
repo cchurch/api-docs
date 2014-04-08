@@ -18,6 +18,7 @@ Sandbox deploy steps:
 1. Add "api" symlink in "html" root dir pointing to directory that this repo was checked out in
 
 Prod deploy steps:
+
 1. Make updates to docs in "master" branch, and push to origin
 1. SSH into "192.168.2.154"
 1. Switch to "een" user: sudo su - een
