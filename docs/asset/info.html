@@ -40,6 +40,20 @@ The image request model provides an efficient mechanism for accessing image sequ
     <li>Thumbnail navigation.  The system provides a “thumbnail” image for each event which is intended to provide a small representation of the event.  The easiest mechanism to get a thumbnail for an event is to do an /asset/after/image.jpeg?a=thumb... image request with the starting timestamp of the event.</li>
 </ul>
 
+<h3>Retrieve List of Images</h3>
+<p>
+There are a couple different ways to get a list of images.  There first is to get all preview images between April 1st and April 2nd:
+<a href="">https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;</a>
+</p>
+<p>
+The second way is to get 500 images before April 1st:
+<a href="">https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;</a>
+</p>
+<p>
+The third way is to get the next 500 images after April 1st:
+<a href="">https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;</a>
+</p>
+
 <h3>Retrieve Video</h3>
 <p>
     Video is accessed via the “play” command.  Video is captured in segments, and is limited to 5 minutes per segment in storage.  The video command will seamlessly rewrite headers within the video format to join segments as necessary to deliver the requested data span.
