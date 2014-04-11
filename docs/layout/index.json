@@ -305,6 +305,10 @@
                     "type":"boolean",
                     "description":"Auto rotate cameras"
                 },
+                "camera_border": {
+                    "type":"boolean",
+                    "description":"Show camera pane borders"
+                },
                 "camera_name": {
                     "type":"boolean",
                     "description":"Show camera name"
