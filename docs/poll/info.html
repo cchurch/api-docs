@@ -77,15 +77,15 @@ Each resource type has a specific object format in response:
                     <tbody>
                         <tr>
                             <td>0</td>
-                            <td>Camera registered to EEVBS</td>
+                            <td>Camera registered to EEVBS (DEPRECATED)</td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td>Camera Online</td>
+                            <td>Camera Online (DEPRECATED)</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>Camera On (User Setting)</td>
+                            <td>Camera On (User Setting) (DEPRECATED)</td>
                         </tr>
                         <tr>
                             <td>3</td>
@@ -127,21 +127,58 @@ Each resource type has a specific object format in response:
                             <td>12</td>
                             <td>Reserved Bit</td>
                         </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>Reserved Bit</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Reserved Bit</td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>Reserved Bit</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>Invalid</td>
+                        </tr>
+                        <tr>
+                            <td>17</td>
+                            <td>Camera On</td>
+                        </tr>
+                        <tr>
+                            <td>18</td>
+                            <td>Streaming</td>
+                        </tr>
+                        <tr>
+                            <td>19</td>
+                            <td>Recording</td>
+                        </tr>
+                        <tr>
+                            <td>20</td>
+                            <td>Registered</td>
+                        </tr>
                     </tbody>
                 </table>
                 <p>
                     This status bit mask is used to determine what the high-level/overall camera status is, using the following logic:
                 </p>
                 <p>
-                IF Registered(bit 0)==1 AND Online(bit 1)==1 AND On(bit 2)==1 THEN Online(green check icon)
-                ELSE IF Registered(bit 0)==1 AND On(bit 2)==0 THEN Off(orange forbidden icon)
-                ELSE Offline(red X icon)
+                    IF "Camera On" (bit 17)==0 THEN "Off" (orange forbidden icon)
+                    ELSE IF "Registered" (bit 20)==0 THEN "Internet Offline" (red exclamation icon)
+                    ELSE IF "Streaming" (bit 18)==1 THEN "Online" (green check icon)
+                    ELSE IF "Password" (bit 8)==1 THEN "Password Needed" (red padlock icon)
+                    ELSE "Offline" (red X icon)
                 </p>
                 <p>
                     Recording status uses the following logic:
                 </p>
                 <p>
-                    IF Camera Recording (bit 3) THEN Recording(green circle icon)
+                    IF "Recording" (bit 19) THEN Recording (green circle icon)
+                </p>
+                <p>
+                    IF "Invalid" (bit 16)==1 THEN no status change (use whatever status was set before)
                 </p>
             </td>
         </tr>
