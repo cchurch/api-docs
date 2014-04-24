@@ -577,6 +577,44 @@
             ]
         },
         {
+            "path": "/aaa/switch_account",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Switch Account Context",
+                    "notes": "This allows a user to \"log in\" to another account that the user has access to (see \"list/accounts\").  Most commonly this be would be needed for a master account user accessing their sub accounts.",
+                    "nickname": "switchAccount",
+                    "parameters": [
+                        {
+                            "name": "account_id",
+                            "description": "ID of the account to login to.  Optional.  Defaults to the account ID that the user belongs to.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Account with the \"account_id\" provided cannot be found"
+                        },
+                        {
+                            "code": 200,
+                            "message": "Account context switch successful"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "path": "/aaa/logout",
             "operations": [
                 {
