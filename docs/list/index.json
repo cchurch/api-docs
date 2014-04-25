@@ -306,7 +306,7 @@
                 },
                 "permissions":{
                     "type":"string",
-                    "description":"Permissions the user has on the device"
+                    "description":" String of zero or more characters. Each character defines a permission that the current user has for the device. Permissions include: 'R' - user can view this device. 'W' - user can modify and delete this device. 'S' - user can share this device."
                 },
                 "tags":{
                     "type":"array",
