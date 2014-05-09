@@ -462,6 +462,10 @@
                 "range": {
                     "type":"integer",
                     "description":"Effective distance the camera can 'see' in feet."
+                },
+                "floor": {
+                    "type":"integer",
+                    "description":"The floor of the building given that it is multiple stories."
                 }
             }
         },
