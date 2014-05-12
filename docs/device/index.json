@@ -325,6 +325,7 @@
             "properties":{
                 "id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for the device"
                 }
             }
@@ -335,19 +336,23 @@
             "properties":{
                 "id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for the Device"
                 },
                 "name":{
                     "type":"string",
+                    "required": true,
                     "description":"Name of the device"
                 },
                 "utcOffset": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Signed UTC offset in seconds of the timezone from UTC, where this device is installed."
                 },
                 "timezone":{
                     "type":"string",
+                    "required": true,
                     "description":"Supported timezones:  If this is a bridge, defaults to the Account timezone.  If this is a camera, defaults to the camers’s Bridge timezone.  Otherwise defaults to US/Pacific.",
                     "enum":[
                         "US/Alaska",
@@ -362,22 +367,27 @@
                 },
                 "guid":{
                     "type":"string",
+                    "required": true,
                     "description":"guid or other physical identifier of device"
                 },
                 "settings":{
                     "type":"DeviceSettings",
+                    "required": true,
                     "description":"Misc settings"
                 },
                 "bridges":{
                     "type":"DeviceBridges",
+                    "required": true,
                     "description":"Bridges this device is seen by"
                 },
                 "permissions":{
                     "type":"string",
+                    "required": true,
                     "description":"String of one or more characters. Each character defines a permission. \nPermissions include:\n'R' - user has access to view images and video for this camera.\n'A' - user is an admin for this camera.\n'S' - user can share this camera in a group share.\nNote:  All cameras in a group must have the ‘S’ permission or the group cannot be shared"
                 },
                 "tags":{
                     "type":"array",
+                    "required": true,
                     "description":"Array of strings, which each string representing a \"tag\"",
                     "items":{
                         "type":"string"
@@ -385,19 +395,23 @@
                 },
                 "camera_settings":{
                     "type":"string",
+                    "required": true,
                     "description":"JSON string of camera settings (see <a href='#/info/device'>More Info</a> for details). If camera settings cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_settings_status_code will be 404."
                 },
                 "camera_settings_status_code":{
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"200 if camera_settings were retrieved.  404 if camera_settings were unable to be retrieved."
                 },
                 "camera_info":{
                     "type":"DeviceCameraInfo",
+                    "required": true,
                     "description":"Camera related info, which only applies to devices that are cameras"
                 },
                 "camera_info_status_code":{
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"200 if camera_info was retrieved. 404 if camera_info was unable to be retrieved."
                 }
@@ -409,62 +423,77 @@
             "properties":{
                 "username":{
                     "type":"string",
+                    "required": true,
                     "description":"Username to login to camera. Only applies to Cameras."
                 },
                 "password":{
                     "type":"string",
+                    "required": true,
                     "description":"Password to login to camera. Only applies to Cameras."
                 },
                 "bridge": {
                     "type":"string",
+                    "required": true,
                     "description":"Device ID of bridge to attach camera to. Only applies to Cameras. Required for PUT for Cameras."
                 },
                 "guid": {
                     "type":"string",
+                    "required": true,
                     "description":"GUID of physical device. Only applies to Cameras. Required for PUT for Cameras."
                 },
                 "roi_names": {
                     "type":"DeviceSettingsRoiNames",
+                    "required": true,
                     "description":"ROI names keyed by ROI ID. Only applies to Cameras."
                 },
                 "alert_notifications": {
                     "type":"DeviceSettingsAlertNotifications",
+                    "required": true,
                     "description":"Arrays of User IDs keyed by ROI ID. Only applies to Cameras."
                 },
                 "alert_modes": {
                     "type":"DeviceSettingsAlertModes",
+                    "required": true,
                     "description":"Arrays of Alert modes keyed by ROI ID. Only applies to Cameras."
                 },
                 "alert_levels": {
                     "type":"DeviceSettingsAlertLevels",
+                    "required": true,
                     "description":"Arrays of Alert levels keyed by ROI ID. Only applies to Cameras."
                 },
                 "notes": {
                     "type":"string",
+                    "required": true,
                     "description":"Notes."
                 },
                 "latitude": {
                     "type":"float",
+                    "required": true,
                     "description":"Latitude of the cameras location."
                 },
                 "longitude": {
                     "type":"float",
+                    "required": true,
                     "description":"Longitude of the cameras location."
                 },
                 "street_address": {
                     "type":"string",
+                    "required": true,
                     "description":"Street Address of the cameras location."
                 },
                 "azimuth": {
                     "type":"float",
+                    "required": true,
                     "description":"Direction that the center of the camera faces.  Values from 0.0-360.0 North=0.0."
                 },
                 "range": {
                     "type":"integer",
+                    "required": true,
                     "description":"Effective distance the camera can 'see' in feet."
                 },
                 "floor": {
                     "type":"integer",
+                    "required": true,
                     "description":"The floor of the building given that it is multiple stories."
                 }
             }
@@ -475,6 +504,7 @@
             "properties":{
                 "roi_id":{
                     "type":"string",
+                    "required": true,
                     "description": "Object with keys being ROI IDs, and values being the name"
                 }
             }
@@ -485,6 +515,7 @@
             "properties":{
                 "roi_id":{
                     "type":"array",
+                    "required": true,
                     "items":{
                         "type":"string"
                     },
@@ -498,6 +529,7 @@
             "properties":{
                 "roi_id":{
                     "type":"array",
+                    "required": true,
                     "items":{
                         "type":"string"
                     },
@@ -511,6 +543,7 @@
             "properties":{
                 "roi_id":{
                     "type":"array",
+                    "required": true,
                     "items":{
                         "type":"string"
                     },
@@ -524,6 +557,7 @@
             "properties":{
                 "device_id":{
                     "type":"string",
+                    "required": true,
                     "description": "Object with keys being Bridge Device IDs, and values being the service status of the camera on that bridge"
                 }
             }
@@ -534,96 +568,119 @@
             "properties":{
                 "bridge": {
                     "type":"string",
+                    "required": true,
                     "description":"GUID of bridge the camera is attached to"
                 },
                 "camera_retention": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Retention period in milliseconds"
                 },
                 "camera_newest": {
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "camera_oldest": {
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "camera_info_version": {
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Camera info version"
                 },
                 "connect": {
                     "type":"string",
+                    "required": true,
                     "description":"Camera connect status"
                 },
                 "camera_min_time": {
                     "type":"string",
+                    "required": true,
                     "description":"Minimum timestamp available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "uuid": {
                     "type":"string",
+                    "required": true,
                     "description":"UUID string"
                 },
                 "service": {
                     "type":"string",
+                    "required": true,
                     "description":"Service status"
                 },
                 "make": {
                     "type":"string",
+                    "required": true,
                     "description":"Make of the device"
                 },
                 "ipaddr": {
                     "type":"string",
+                    "required": true,
                     "description":"IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *"
                 },
                 "ts": {
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "version": {
                     "type":"string",
+                    "required": true,
                     "description":"Firmware version"
                 },
                 "status" : {
                     "type":"string",
+                    "required": true,
                     "description":"Status bitmask"
                 },
                 "mac": {
                     "type":"string",
+                    "required": true,
                     "description":"MAC address"
                 },
                 "proxy": {
                     "type":"string",
+                    "required": true,
                     "description":"Proxy"
                 },
                 "bridgeid": {
                     "type":"string",
+                    "required": true,
                     "description":"Device of bridge this device is attached to"
                 },
                 "now": {
                     "type":"string",
+                    "required": true,
                     "description":"Current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "class": {
                     "type":"string",
+                    "required": true,
                     "description":"Camera, or Bridge, etc."
                 },
                 "camera_now": {
                     "type":"string",
+                    "required": true,
                     "description":"Camera's current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "camera_abs_newest": {
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "camera_abs_oldest": {
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
                 },
                 "model": {
                     "type":"string",
+                    "required": true,
                     "description":"Device model"
                 }
             }
