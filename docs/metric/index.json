@@ -159,6 +159,7 @@
             "properties":{
                 "core": {
                     "type":"array",
+                    "required": true,
                     "description":"Array of core metrics",
                     "items":{
                         "$ref": "MetricBridgeBandwidthCore"
@@ -166,6 +167,7 @@
                 },
                 "bandwidth": {
                     "type":"array",
+                    "required": true,
                     "description":"Array of bandwidth metrics",
                     "items":{
                         "$ref": "MetricBridgeBandwidthBW"
@@ -173,6 +175,7 @@
                 },
                 "storage": {
                     "type":"array",
+                    "required": true,
                     "description":"Array of storage metrics",
                     "items":{
                         "$ref": "MetricBridgeBandwidthStorage"
@@ -186,10 +189,12 @@
             "properties":{
                 "time":{
                     "type":"string",
+                    "required": true,
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
                 "bytes_per_second":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Per Second"
                 }
             }
@@ -200,30 +205,37 @@
             "properties":{
                 "time":{
                     "type":"string",
+                    "required": true,
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
                 "avg_kbytes_size":{
                     "type":"float",
+                    "required": true,
                     "description":"Average Kilobytes Size"
                 },
                 "avg_kbytes_avail":{
                     "type":"float",
+                    "required": true,
                     "description":"Average Kilobytes Per Second"
                 },
                 "bytes_stored":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Stored"
                 },
                 "bytes_shaped":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Shaped"
                 },
                 "bytes_streamed":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Streamed"
                 },
                 "bytes_freed":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Freed"
                 }
             }
@@ -234,10 +246,12 @@
             "properties":{
                 "time":{
                     "type":"string",
+                    "required": true,
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
                 "diff":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Diff"
                 }
             }
@@ -248,6 +262,7 @@
             "properties":{
                 "core": {
                     "type":"array",
+                    "required": true,
                     "description":"Array of core metrics",
                     "items":{
                         "$ref": "MetricCameraBandwidthCore"
@@ -255,6 +270,7 @@
                 },
                 "motion": {
                     "type":"array",
+                    "required": true,
                     "description":"Array of motion metrics",
                     "items":{
                         "$ref": "MetricCameraBandwidthMotion"
@@ -262,6 +278,7 @@
                 },
                 "packets": {
                     "type":"array",
+                    "required": true,
                     "description":"Array of packet metrics",
                     "items":{
                         "$ref": "MetricCameraBandwidthPackets"
@@ -275,30 +292,37 @@
             "properties":{
                 "time":{
                     "type":"string",
+                    "required": true,
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
                 "avg_kbytes_on_disk":{
                     "type":"float",
+                    "required": true,
                     "description":"Average Kilobytes on Disk"
                 },
                 "avg_days_on_disk":{
                     "type":"float",
+                    "required": true,
                     "description":"Average Days on Disk"
                 },
                 "bytes_stored":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Stored"
                 },
                 "bytes_shaped":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Shaped"
                 },
                 "bytes_streamed":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Streamed"
                 },
                 "bytes_freed":{
                     "type":"float",
+                    "required": true,
                     "description":"Bytes Freed"
                 }
             }
@@ -309,10 +333,12 @@
             "properties":{
                 "time":{
                     "type":"string",
+                    "required": true,
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
                 "value":{
                     "type":"integer",
+                    "required": true,
                     "description":"Motion Activity value",
                     "format":"int64"
                 }
@@ -324,10 +350,12 @@
             "properties":{
                 "time":{
                     "type":"string",
+                    "required": true,
                     "description":"EEN Timestamp: YYYYMMDDHHMMSS.NNN"
                 },
                 "packet_loss":{
                     "type":"float",
+                    "required": true,
                     "description":"Packet loss percentage (decimal)",
                     "minimum": 0,
                     "maximum": 1
