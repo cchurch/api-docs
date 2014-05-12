@@ -639,6 +639,7 @@
             "properties":{
                 "id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier of the user"
                 }
             }
@@ -648,6 +649,7 @@
             "properties":{
                 "user_id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for authorized user"
                 }
             }
@@ -657,6 +659,7 @@
             "properties":{
                 "user_id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for validated user"
                 }
             }
@@ -667,6 +670,7 @@
             "properties":{
                 "token":{
                     "type":"string",
+                    "required": true,
                     "description":"Authentication Token needed for aaa/authorize"
                 }
             }
