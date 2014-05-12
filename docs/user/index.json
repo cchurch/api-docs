@@ -704,6 +704,7 @@
             "properties":{
                 "id":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for the user"
                 }
             }
@@ -985,6 +986,7 @@
                 },
                 "permissions": {
                     "type": "object",
+                    "required": true,
                     "description": "(DEPRECATED) Permissions for the user"
                 }
             }

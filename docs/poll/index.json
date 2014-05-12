@@ -67,10 +67,12 @@
             "properties":{
                 "device_id":{
                     "type":"PostPollCamera",
+                    "required": true,
                     "description": "Object"
                 },
                 "token":{
                     "type":"string",
+                    "required": true,
                     "description": "Token that can be used for subsequent calls to GET /poll instead of using the 'ee-poll-ses' cookie."
                 }
             }
@@ -81,6 +83,7 @@
             "properties":{
                 "resource":{
                     "type":"array",
+                    "required": true,
                     "description": "Array of resources"
                 },
                 "event":{
@@ -95,6 +98,7 @@
             "properties":{
                 "cameras":{
                     "type":"GetPollResponseCameras",
+                    "required": true,
                     "description":"Objects keyed by device ID"
                 }
             }
@@ -105,6 +109,7 @@
             "properties":{
                 "device_id":{
                     "type":"GetPollResponseCamera",
+                    "required": true,
                     "description": "Object"
                 }
             }
@@ -115,10 +120,12 @@
             "properties":{
                 "pre":{
                     "type":"string",
+                    "required": true,
                     "description":""
                 },
                 "event":{
                     "type":"GetPollResponseCameraEvents",
+                    "required": true,
                     "description":"Object of events keyed by event ID"
                 }
             }
@@ -129,6 +136,7 @@
             "properties":{
                 "event_id":{
                     "type":"GetPollResponseCameraEvent",
+                    "required": true,
                     "description":"Object"
                 }
             }
@@ -139,10 +147,12 @@
             "properties":{
                 "timestamp":{
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp in EEN format: YYYYMMDDHHMMSS.NNN"
                 },
                 "cameraid":{
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Internal unique identifier"
                 }
@@ -154,10 +164,12 @@
             "properties":{
                 "cameras":{
                     "type":"PostPollResponseCameras",
+                    "required": true,
                     "description":"Objects keyed by device ID"
                 },
                 "token":{
                     "type":"string",
+                    "required": true,
                     "description":"Token to be used for subsequent GET /poll requests."
                 }
             }
@@ -168,6 +180,7 @@
             "properties":{
                 "device_id":{
                     "type":"PostPollResponseCamera",
+                    "required": true,
                     "description": "Object"
                 }
             }
@@ -178,6 +191,7 @@
             "properties":{
                 "event":{
                     "type":"PostPollResponseCameraEvents",
+                    "required": true,
                     "description":"Object of events keyed by event ID"
                 }
             }
@@ -188,6 +202,7 @@
             "properties":{
                 "event_id":{
                     "type":"PostPollResponseCameraEvent",
+                    "required": true,
                     "description":"Object"
                 }
             }
@@ -198,10 +213,12 @@
             "properties":{
                 "timestamp":{
                     "type":"string",
+                    "required": true,
                     "description":"Timestamp in EEN format: YYYYMMDDHHMMSS.NNN"
                 },
                 "cameraid":{
                     "type":"integer",
+                    "required": true,
                     "format":"int64",
                     "description":"Internal unique identifier"
                 }

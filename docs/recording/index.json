@@ -93,6 +93,7 @@
             "properties":{
                 "recording_key":{
                     "type":"string",
+                    "required": true,
                     "description":"Unique identifier for the recording (unique to the account)"
                 }
             }
