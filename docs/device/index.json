@@ -687,6 +687,16 @@
                     "type":"string",
                     "required": true,
                     "description":"ESN id"
+                },
+                "admin_user": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Web Username"
+                },
+                "admin_password": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Web Password"
                 }
             }
         }
