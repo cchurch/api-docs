@@ -682,6 +682,11 @@
                     "type":"string",
                     "required": true,
                     "description":"Device model"
+                },
+                "esn": {
+                    "type":"string",
+                    "required": true,
+                    "description":"ESN id"
                 }
             }
         }
