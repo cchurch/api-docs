@@ -31,8 +31,8 @@
                         },
                         {
                             "name": "realm",
-                            "description": "Realm",
-                            "required": true,
+                            "description": "Realm (DEPRECATED)",
+                            "required": false,
                             "type": "string",
                             "paramType": "form"
                         }
@@ -134,8 +134,8 @@
                         },
                         {
                             "name": "realm",
-                            "description": "Realm",
-                            "required": true,
+                            "description": "Realm (DEPRECATED)",
+                            "required": false,
                             "type": "string",
                             "paramType": "form"
                         },
@@ -251,8 +251,8 @@
                         },
                         {
                             "name": "realm",
-                            "description": "Realm",
-                            "required": true,
+                            "description": "Realm (DEPRECATED)",
+                            "required": false,
                             "type": "string",
                             "paramType": "form"
                         }
@@ -420,8 +420,8 @@
                         },
                         {
                             "name": "realm",
-                            "description": "Realm in which the account was created",
-                            "required": true,
+                            "description": "Realm in which the account was created (DEPRECATED)",
+                            "required": false,
                             "type": "string",
                             "paramType": "form"
                         }
@@ -477,8 +477,8 @@
                         },
                         {
                             "name": "realm",
-                            "description": "Realm in which the user was created",
-                            "required": true,
+                            "description": "Realm in which the user was created (DEPRECATED)",
+                            "required": false,
                             "type": "string",
                             "paramType": "form"
                         }
