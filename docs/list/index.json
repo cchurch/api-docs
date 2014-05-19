@@ -10,7 +10,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "List Devices",
+                    "summary": "List Devices (DEPRECATED by 'device/list')",
                     "notes": "Returns array of arrays, with each sub-array representing a device available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached. Please note that the ListDevice model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
                     "nickname": "listDevices",
                     "type": "array",
@@ -83,7 +83,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "List Accounts",
+                    "summary": "List Accounts (DEPRECATED by 'account/list')",
                     "notes": "Returns array of arrays, with each sub-array representing an account available to the user. Please note that the ListAccount model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
                     "nickname": "listAccounts",
                     "type": "array",
@@ -117,7 +117,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "List Users",
+                    "summary": "List Users (DEPRECATED by 'user/list')",
                     "notes": "Returns array of arrays, with each sub-array representing a user available to the user. Please note that the ListUser model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
                     "nickname": "listUsers",
                     "type": "array",
@@ -151,7 +151,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "summary": "List Layouts",
+                    "summary": "List Layouts (DEPRECATED by 'layout/list')",
                     "notes": "Returns array of arrays, with each sub-array representing a layout available to the user. Please note that the ListLayout model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
                     "nickname": "listLayouts",
                     "type": "array",

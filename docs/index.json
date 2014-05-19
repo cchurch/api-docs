@@ -37,7 +37,7 @@
         },
         {
             "path": "list",
-            "description": "List devices, layouts, users, etc."
+            "description": "List devices, layouts, users, etc. (DEPRECATED)"
         },
         {
             "path": "metric",

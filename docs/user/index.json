@@ -695,6 +695,40 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/user/list",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Users",
+                    "notes": "Returns array of arrays, with each sub-array representing a user available to the user. Please note that the ListUser model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
+                    "nickname": "userList",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListUser"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "models":{
@@ -988,6 +1022,45 @@
                     "type": "object",
                     "required": true,
                     "description": "(DEPRECATED) Permissions for the user"
+                }
+            }
+        },
+        "ListUser":{
+            "id":"ListUser",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the User"
+                },
+                "first_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"First Name of the user"
+                },
+                "last_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Last Name of the user"
+                },
+                "email":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Email address of the user"
+                },
+                "permissions":{
+                    "type":"array",
+                    "required": true,
+                    "description":"List of permissions the user has",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "last_login":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN"
                 }
             }
         }

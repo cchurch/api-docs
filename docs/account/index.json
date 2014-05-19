@@ -609,6 +609,40 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/account/list",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Accounts",
+                    "notes": "Returns array of arrays, with each sub-array representing an account available to the user. Please note that the ListAccount model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
+                    "nickname": "accountList",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListAccount"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "models":{
@@ -893,6 +927,63 @@
                     "type": "string",
                     "required": true,
                     "description":"Branded company name"
+                }
+            }
+        },
+        "ListAccount":{
+            "id":"ListAccount",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Account"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the account"
+                },
+                "camera_online_count":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Number of cameras currently online in the account"
+                },
+                "camera_count":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Number of cameras currently in the account"
+                },
+                "user_count":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Number of users currently in the account"
+                },
+                "is_suspended":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the account is Suspended (1) or not (0)"
+                },
+                "is_inactive":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the account is Inactive (1) or not (0)"
+                },
+                "is_active":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the account is Active (1) or not (0)"
+                },
+                "product_edition":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Product edition in use by the account"
                 }
             }
         }

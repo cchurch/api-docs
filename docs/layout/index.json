@@ -196,6 +196,40 @@
                     ]
                 }
             ]
+        },
+        {
+            "path": "/layout/list",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Layouts",
+                    "notes": "Returns array of arrays, with each sub-array representing a layout available to the user. Please note that the ListLayout model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
+                    "nickname": "layoutList",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListLayout"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "models":{
@@ -345,6 +379,35 @@
                         4,
                         5
                     ]
+                }
+            }
+        },
+        "ListLayout":{
+            "id":"ListLayout",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Layout"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the layout"
+                },
+                "types":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of types defined for the layout. This attribute has not yet been implemented.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "permissions":{
+                    "type":"string",
+                    "required": true,
+                    "description":"String of zero or more characters.  Each character defines a permission that the current user has for the layout. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout"
                 }
             }
         }
