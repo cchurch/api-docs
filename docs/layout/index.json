@@ -68,9 +68,16 @@
                         },
                         {
                             "name": "json",
-                            "required": true,
-                            "type":"LayoutJson",
-                            "description":"String of JSON formatted data that defines the layout",
+                            "required": false,
+                            "type":"string",
+                            "description":"(DEPRECATED by 'configuration') String of JSON formatted data that defines the layout",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "configuration",
+                            "required": false,
+                            "type":"LayoutConfiguration",
+                            "description":"JSON object that defines the layout configuration. Either 'json' (deprecated) or 'configuration' is required.",
                             "paramType": "form"
                         },
                         {
@@ -126,9 +133,16 @@
                         },
                         {
                             "name": "json",
-                            "required": true,
-                            "type":"LayoutJson",
-                            "description":"String of JSON formatted data that defines the layout",
+                            "required": false,
+                            "type":"string",
+                            "description":"(DEPRECATED by 'configuration') String of JSON formatted data that defines the layout",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "configuration",
+                            "required": false,
+                            "type":"LayoutConfiguration",
+                            "description":"JSON object that defines the layout configuration. 'json' (deprecated) and 'configuration' cannot both be set to blank.",
                             "paramType": "form"
                         },
                         {
@@ -256,9 +270,14 @@
                     }
                 },
                 "json":{
-                    "type":"LayoutJson",
+                    "type":"string",
                     "required": true,
-                    "description":"String of JSON formatted data that defines the layout"
+                    "description":"(DEPRECATED by 'configuration') String of JSON formatted data that defines the layout"
+                },
+                "configuration":{
+                    "type":"LayoutConfiguration",
+                    "required": true,
+                    "description":"JSON object that defines the layout configuration"
                 },
                 "permissions":{
                     "type":"string",
@@ -280,24 +299,24 @@
                 }
             }
         },
-        "LayoutJson":{
-            "id":"LayoutJson",
+        "LayoutConfiguration":{
+            "id":"LayoutConfiguration",
             "required":[],
             "properties":{
                 "panes": {
-                    "type":"LayoutJsonPane",
+                    "type":"LayoutConfigurationPane",
                     "required": true,
                     "description":"Array of Panes"
                 },
                 "settings":{
-                    "type":"LayoutJsonSettings",
+                    "type":"LayoutConfigurationSettings",
                     "required": true,
                     "description":"Settings object"
                 }
             }
         },
-        "LayoutJsonPane":{
-            "id":"LayoutJsonPane",
+        "LayoutConfigurationPane":{
+            "id":"LayoutConfigurationPane",
             "required":[],
             "properties":{
                 "name": {
@@ -346,8 +365,8 @@
                 }
             }
         },
-        "LayoutJsonSettings":{
-            "id":"LayoutJsonSettings",
+        "LayoutConfigurationSettings":{
+            "id":"LayoutConfigurationSettings",
             "required":[],
             "properties":{
                 "camera_border": {

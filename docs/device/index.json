@@ -205,14 +205,28 @@
                         {
                             "name":"camera_settings_add",
                             "type":"string",
-                            "description":"JSON string of camera settings to add/update (see <a href='#/info/device'>More Info</a> for details).",
+                            "description":"(DEPRECATED) JSON string of camera settings to add/update (see <a href='#/info/device'>More Info</a> for details).",
                             "required":false,
                             "paramType":"form"
                         },
                         {
                             "name":"camera_settings_delete",
                             "type":"string",
-                            "description":"JSON string of camera settings to delete (see <a href='#/info/device'>More Info</a> for details).",
+                            "description":"(DEPRECATED) JSON string of camera settings to delete (see <a href='#/info/device'>More Info</a> for details).",
+                            "required":false,
+                            "paramType":"form"
+                        },
+                        {
+                            "name":"camera_parameters_add",
+                            "type":"object",
+                            "description":"JSON object of camera parameters/settings to add/update (see <a href='#/info/device'>More Info</a> for details).",
+                            "required":false,
+                            "paramType":"form"
+                        },
+                        {
+                            "name":"camera_parameters_delete",
+                            "type":"object",
+                            "description":"JSON object of camera parameters/settings to delete (see <a href='#/info/device'>More Info</a> for details).",
                             "required":false,
                             "paramType":"form"
                         },
@@ -469,13 +483,24 @@
                 "camera_settings":{
                     "type":"string",
                     "required": true,
-                    "description":"JSON string of camera settings (see <a href='#/info/device'>More Info</a> for details). If camera settings cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_settings_status_code will be 404."
+                    "description":"(DEPRECATED by 'camera_parameters') JSON string of camera settings (see <a href='#/info/device'>More Info</a> for details). If camera settings cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_settings_status_code will be 404."
                 },
                 "camera_settings_status_code":{
                     "type":"integer",
                     "required": true,
                     "format":"int64",
-                    "description":"200 if camera_settings were retrieved.  404 if camera_settings were unable to be retrieved."
+                    "description":"(DEPRECATED by 'camera_parameters_status_code') 200 if camera_settings were retrieved.  404 if camera_settings were unable to be retrieved."
+                },
+                "camera_parameters":{
+                    "type":"object",
+                    "required": true,
+                    "description":"JSON object of camera parameters/settings (see <a href='#/info/device'>More Info</a> for details). If camera parameters cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_parameters_status_code will be 404."
+                },
+                "camera_parameters_status_code":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"200 if camera_parameters were retrieved.  404 if camera_parameters were unable to be retrieved."
                 },
                 "camera_info":{
                     "type":"DeviceCameraInfo",
