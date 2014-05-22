@@ -20,6 +20,10 @@
             "description": "Actions"
         },
         {
+            "path": "annotation",
+            "description": "Annotation"
+        },
+        {
             "path": "asset",
             "description": "Asset operations"
         },
@@ -50,6 +54,10 @@
         {
             "path": "recording",
             "description": "Recording operations"
+        },
+        {
+            "path": "search",
+            "description": "Search"
         },
         {
             "path": "user",
