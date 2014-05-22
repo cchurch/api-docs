@@ -108,6 +108,13 @@
                     "type": "LayoutId",
                     "parameters": [
                         {
+                            "name": "id",
+                            "description": "Unique identifier of layout",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
                             "name": "name",
                             "description": "Layout Name",
                             "required": true,
