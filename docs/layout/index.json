@@ -1,9 +1,10 @@
 {
     "apiVersion": "1.0.0",
     "swaggerVersion": "1.2",
-    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "basePath": "https://22222.eagleeyenetworks.com/g",
     "resourcePath": "layout",
     "produces": ["application/json"],
+    "consumes": ["application/json"],
     "apis": [
         {
             "path": "/layout",
@@ -50,35 +51,11 @@
                     "type": "LayoutId",
                     "parameters": [
                         {
-                            "name": "name",
-                            "description": "Layout Name",
+                            "name": "body",
+                            "description": "Layout Object",
                             "required": true,
-                            "type": "string",
-                            "paramType": "form"
-                        },
-                        {
-                            "name": "types",
-                            "description": "Specifies target(s) for layout.  Multiple values are allowed.",
-                            "required": true,
-                            "type": "array",
-                            "paramType": "form",
-                            "items":{
-                                "type":"string"
-                            }
-                        },
-                        {
-                            "name": "configuration",
-                            "required": true,
-                            "type":"LayoutConfiguration",
-                            "description":"JSON object that defines the layout configuration",
-                            "paramType": "form"
-                        },
-                        {
-                            "name": "shares",
-                            "description": "Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user id and the second field is the list of permissions for the user. Two special user IDs exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['cafedead', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array.",
-                            "required": false,
-                            "type": "string",
-                            "paramType": "form"
+                            "type": "PutLayoutBody",
+                            "paramType": "body"
                         }
                     ],
                     "responseMessages": [
@@ -233,6 +210,37 @@
         }
     ],
     "models":{
+        "PutLayoutBody":{
+            "id":"PutLayoutBody",
+            "properties":{
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the layout"
+                },
+                "types":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Specifies target(s) for layout.  Multiple values are allowed.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "configuration":{
+                    "type":"LayoutConfiguration",
+                    "required": true,
+                    "description":"JSON object that defines the layout configuration"
+                },
+                "shares":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of arrays, one per account user for whom sharing is enabled for this layout.  Each string contains two field separated by comma.  The first field is a user aid and the second field are permissions for the user. Two special user ID exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘cafedead’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.",
+                    "items":{
+                        "type":"array"
+                    }
+                }
+            }
+        },
         "Layout":{
             "id":"Layout",
             "required":[],
