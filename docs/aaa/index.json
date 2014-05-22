@@ -11,7 +11,7 @@
                 {
                     "method": "POST",
                     "summary": "Login Step 1: Authenticate with user credentials",
-                    "notes": "Login is a 2 step process:  Authenticate, then Authorize with the token returned by Authenticate.",
+                    "notes": "Login is a 2 step process:  Authenticate, then Authorize with the token returned by Authenticate.\n\ncurl --request POST https://eagleeyenetworks.com/g/aaa/authenticate --data \"username=[USERNAME]&password=[PASSWORD]&realm=eagleeyenetworks\"",
                     "nickname": "authenticate",
                     "type": "AuthenticateToken",
                     "parameters": [
