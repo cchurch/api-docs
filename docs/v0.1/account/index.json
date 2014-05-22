@@ -1,5 +1,5 @@
 {
-    "apiVersion": "1.0.0",
+    "apiVersion": "0.1.0",
     "swaggerVersion": "1.2",
     "basePath": "https://apidocs.eagleeyenetworks.com/g",
     "resourcePath": "account",
@@ -120,6 +120,14 @@
                             "paramType": "form"
                         },
                         {
+                            "name": "contact_utc_offset",
+                            "description": "(DEPRECATED)",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form"
+                        },
+                        {
                             "name": "timezone",
                             "description": "Timezone of Account. Defaults to US/Pacific.",
                             "required": false,
@@ -150,6 +158,16 @@
                                     "pending_validation",
                                     "realm_root"
                                 ]
+                            }
+                        },
+                        {
+                            "name":"cc_info",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"(DEPRECATED)",
+                            "items":{
+                                "type":"string"
                             }
                         },
                         {
@@ -344,6 +362,14 @@
                             "paramType": "form"
                         },
                         {
+                            "name": "contact_utc_offset",
+                            "description": "(DEPRECATED)",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form"
+                        },
+                        {
                             "name": "timezone",
                             "description": "Timezone of Account. Defaults to US/Pacific.",
                             "required": false,
@@ -374,6 +400,16 @@
                                     "pending_validation",
                                     "realm_root"
                                 ]
+                            }
+                        },
+                        {
+                            "name":"cc_info",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"(DEPRECATED)",
+                            "items":{
+                                "type":"string"
                             }
                         },
                         {
@@ -573,40 +609,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "path": "/account/list",
-            "operations": [
-                {
-                    "method": "GET",
-                    "summary": "List Accounts",
-                    "notes": "Returns array of arrays, with each sub-array representing an account available to the user. Please note that the ListAccount model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
-                    "nickname": "accountList",
-                    "type": "array",
-                    "items": {
-                        "$ref": "ListAccount"
-                    },
-                    "parameters": [],
-                    "responseMessages": [
-                        {
-                            "code": 200,
-                            "message": "Request succeeded"
-                        },
-                        {
-                            "code": 400,
-                            "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 401,
-                            "message": "Unauthorized due to invalid session cookie"
-                        },
-                        {
-                            "code": 403,
-                            "message": "Forbidden due to the user missing the necessary privileges"
-                        }
-                    ]
-                }
-            ]
         }
     ],
     "models":{
@@ -672,6 +674,12 @@
                     "required": true,
                     "description":"Country of primary contact for account"
                 },
+                "contact_utc_offset":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"(DEPRECATED) Signed UTC offset in seconds where this account's contact is located"
+                },
                 "timezone":{
                     "type":"string",
                     "required": true,
@@ -706,6 +714,11 @@
                             "realm_root"
                         ]
                     }
+                },
+                "cc_info":{
+                    "type":"array",
+                    "required": true,
+                    "description":"(DEPRECATED)"
                 },
                 "access_restriction":{
                     "type":"array",
@@ -880,63 +893,6 @@
                     "type": "string",
                     "required": true,
                     "description":"Branded company name"
-                }
-            }
-        },
-        "ListAccount":{
-            "id":"ListAccount",
-            "required":[],
-            "properties":{
-                "id":{
-                    "type":"string",
-                    "required": true,
-                    "description":"Unique identifier for the Account"
-                },
-                "name":{
-                    "type":"string",
-                    "required": true,
-                    "description":"Name of the account"
-                },
-                "camera_online_count":{
-                    "type":"integer",
-                    "required": true,
-                    "format":"int64",
-                    "description":"Number of cameras currently online in the account"
-                },
-                "camera_count":{
-                    "type":"integer",
-                    "required": true,
-                    "format":"int64",
-                    "description":"Number of cameras currently in the account"
-                },
-                "user_count":{
-                    "type":"integer",
-                    "required": true,
-                    "format":"int64",
-                    "description":"Number of users currently in the account"
-                },
-                "is_suspended":{
-                    "type":"integer",
-                    "required": true,
-                    "format":"int64",
-                    "description":"Indicates the account is Suspended (1) or not (0)"
-                },
-                "is_inactive":{
-                    "type":"integer",
-                    "required": true,
-                    "format":"int64",
-                    "description":"Indicates the account is Inactive (1) or not (0)"
-                },
-                "is_active":{
-                    "type":"integer",
-                    "required": true,
-                    "format":"int64",
-                    "description":"Indicates the account is Active (1) or not (0)"
-                },
-                "product_edition":{
-                    "type":"string",
-                    "required": true,
-                    "description":"Product edition in use by the account"
                 }
             }
         }

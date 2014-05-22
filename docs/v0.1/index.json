@@ -1,5 +1,5 @@
 {
-    "apiVersion": "1.0.0",
+    "apiVersion": "0.1.0",
     "swaggerVersion": "1.2",
     "info": {
         "title": "API Documentation",
@@ -34,6 +34,10 @@
         {
             "path": "layout",
             "description": "Layout operations"
+        },
+        {
+            "path": "list",
+            "description": "List devices, layouts, users, etc."
         },
         {
             "path": "metric",

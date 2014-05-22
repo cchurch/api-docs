@@ -1,5 +1,5 @@
 {
-    "apiVersion": "1.0.0",
+    "apiVersion": "0.1.0",
     "swaggerVersion": "1.2",
     "basePath": "https://apidocs.eagleeyenetworks.com/g",
     "resourcePath": "layout",
@@ -67,10 +67,10 @@
                             }
                         },
                         {
-                            "name": "configuration",
+                            "name": "json",
                             "required": true,
-                            "type":"LayoutConfiguration",
-                            "description":"JSON object that defines the layout configuration",
+                            "type":"LayoutJson",
+                            "description":"String of JSON formatted data that defines the layout",
                             "paramType": "form"
                         },
                         {
@@ -125,10 +125,10 @@
                             }
                         },
                         {
-                            "name": "configuration",
-                            "required": false,
-                            "type":"LayoutConfiguration",
-                            "description":"JSON object that defines the layout configuration",
+                            "name": "json",
+                            "required": true,
+                            "type":"LayoutJson",
+                            "description":"String of JSON formatted data that defines the layout",
                             "paramType": "form"
                         },
                         {
@@ -196,40 +196,6 @@
                     ]
                 }
             ]
-        },
-        {
-            "path": "/layout/list",
-            "operations": [
-                {
-                    "method": "GET",
-                    "summary": "List Layouts",
-                    "notes": "Returns array of arrays, with each sub-array representing a layout available to the user. Please note that the ListLayout model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
-                    "nickname": "layoutList",
-                    "type": "array",
-                    "items": {
-                        "$ref": "ListLayout"
-                    },
-                    "parameters": [],
-                    "responseMessages": [
-                        {
-                            "code": 200,
-                            "message": "Request succeeded"
-                        },
-                        {
-                            "code": 400,
-                            "message": "Unexpected or non-identifiable arguments are supplied"
-                        },
-                        {
-                            "code": 401,
-                            "message": "Unauthorized due to invalid session cookie"
-                        },
-                        {
-                            "code": 403,
-                            "message": "Forbidden due to the user missing the necessary privileges"
-                        }
-                    ]
-                }
-            ]
         }
     ],
     "models":{
@@ -255,10 +221,10 @@
                         "type":"string"
                     }
                 },
-                "configuration":{
-                    "type":"LayoutConfiguration",
+                "json":{
+                    "type":"LayoutJson",
                     "required": true,
-                    "description":"JSON object that defines the layout configuration"
+                    "description":"String of JSON formatted data that defines the layout"
                 },
                 "permissions":{
                     "type":"string",
@@ -280,24 +246,24 @@
                 }
             }
         },
-        "LayoutConfiguration":{
-            "id":"LayoutConfiguration",
+        "LayoutJson":{
+            "id":"LayoutJson",
             "required":[],
             "properties":{
                 "panes": {
-                    "type":"LayoutConfigurationPane",
+                    "type":"LayoutJsonPane",
                     "required": true,
                     "description":"Array of Panes"
                 },
                 "settings":{
-                    "type":"LayoutConfigurationSettings",
+                    "type":"LayoutJsonSettings",
                     "required": true,
                     "description":"Settings object"
                 }
             }
         },
-        "LayoutConfigurationPane":{
-            "id":"LayoutConfigurationPane",
+        "LayoutJsonPane":{
+            "id":"LayoutJsonPane",
             "required":[],
             "properties":{
                 "name": {
@@ -346,8 +312,8 @@
                 }
             }
         },
-        "LayoutConfigurationSettings":{
-            "id":"LayoutConfigurationSettings",
+        "LayoutJsonSettings":{
+            "id":"LayoutJsonSettings",
             "required":[],
             "properties":{
                 "camera_border": {
@@ -379,35 +345,6 @@
                         4,
                         5
                     ]
-                }
-            }
-        },
-        "ListLayout":{
-            "id":"ListLayout",
-            "required":[],
-            "properties":{
-                "id":{
-                    "type":"string",
-                    "required": true,
-                    "description":"Unique identifier for the Layout"
-                },
-                "name":{
-                    "type":"string",
-                    "required": true,
-                    "description":"Name of the layout"
-                },
-                "types":{
-                    "type":"array",
-                    "required": true,
-                    "description":"Array of types defined for the layout. This attribute has not yet been implemented.",
-                    "items":{
-                        "type":"string"
-                    }
-                },
-                "permissions":{
-                    "type":"string",
-                    "required": true,
-                    "description":"String of zero or more characters.  Each character defines a permission that the current user has for the layout. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout"
                 }
             }
         }

@@ -1,5 +1,5 @@
 {
-    "apiVersion": "1.0.0",
+    "apiVersion": "0.1.0",
     "swaggerVersion": "1.2",
     "basePath": "https://apidocs.eagleeyenetworks.com/g",
     "resourcePath": "aaa",
@@ -25,6 +25,13 @@
                         {
                             "name": "password",
                             "description": "Password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
                             "required": true,
                             "type": "string",
                             "paramType": "form"
@@ -121,6 +128,13 @@
                         {
                             "name": "password",
                             "description": "Password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
                             "required": true,
                             "type": "string",
                             "paramType": "form"
@@ -231,6 +245,13 @@
                         {
                             "name": "email",
                             "description": "Email address",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
                             "required": true,
                             "type": "string",
                             "paramType": "form"
@@ -396,6 +417,13 @@
                             "required": true,
                             "type": "string",
                             "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm in which the account was created",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
                         }
                     ],
                     "responseMessages": [
@@ -443,6 +471,13 @@
                         {
                             "name": "email",
                             "description": "Email address of the new user",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm in which the user was created",
                             "required": true,
                             "type": "string",
                             "paramType": "form"
@@ -648,6 +683,11 @@
                     "type":"string",
                     "required": true,
                     "description":"Unique identifier for Authorized User"
+                },
+                "user_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"(DEPRECATED) Unique identifier for Authorized User (same as 'id')"
                 },
                 "first_name": {
                     "type":"string",
@@ -903,6 +943,10 @@
                     "type":"integer",
                     "required": true,
                     "description":"If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur."
+                },
+                "permissions": {
+                    "type": "object",
+                    "description": "(DEPRECATED) Permissions for the user"
                 }
             }
         }
