@@ -474,18 +474,6 @@
                             "type":"integer",
                             "format":"int64",
                             "paramType":"path"
-                        },
-                        {
-                            "name": "quality",
-                            "description": "Indicates requested resolution if multiple are available",
-                            "required": false,
-                            "type": "string",
-                            "paramType": "path",
-                            "enum":[
-                                "high",
-                                "med",
-                                "low"
-                            ]
                         }
                     ],
                     "responseMessages": [
@@ -542,6 +530,14 @@
                             "required": false,
                             "type": "string",
                             "paramType": "path"
+                        },
+                        {
+                            "name":"count",
+                            "description":"Used instead or with an e argument. If used with an e argument, the count is a limit on the number of entries to return, starting at the starting timestamp.  If used without the e argument, returns N entries.  Support negative value, which returns N entries before <t>, sorted in reverse order - example -5 return 5 events previous to the specified time.",
+                            "required":false,
+                            "type":"integer",
+                            "format":"int64",
+                            "paramType":"path"
                         },
                         {
                             "name": "options",
