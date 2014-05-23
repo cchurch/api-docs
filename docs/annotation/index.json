@@ -11,7 +11,7 @@
                 {
                     "method": "PUT",
                     "summary": "Create Annotation",
-                    "notes": "Create a new Annotation",
+                    "notes": "Create an annotation for a device at a particular timestamp, with data describing the annotation.",
                     "nickname": "putAnnotation",
                     "type": "AnnotationId",
                     "parameters": [
@@ -59,7 +59,7 @@
                 {
                     "method": "POST",
                     "summary": "Update Annotation",
-                    "notes": "Update an Annotation",
+                    "notes": "Update an annotation for a device at a particular timestamp.  Simple modifications ('atype'='mod') can be made and require you to pass the original 'timestamp' from when the annotation was created. Zero to N 'heartbeats' ('atype'='hb') can also be applied to describe changes over time for the annotation. The annotation can be ended ('atype'='end') which closes the annotation and lets you attach additional information.  Each annotation event is assumed to last for 10 seconds in the absence of a heartbeat extending it. After a heartbeat, it is assumed to last for another 10 seconds. Annotations can be truncated by specifying an end event ('atype'='end').",
                     "nickname": "postAnnotation",
                     "type": "AnnotationId",
                     "parameters": [
@@ -79,7 +79,7 @@
                         },
                         {
                             "name": "timestamp",
-                            "description": "Timestamp associated with the annotation being updated",
+                            "description": "If atype='mod', then this must be the timestamp associated with the annotation when originally created. If atype is 'hb' or 'end', this timestamp can be a different timestamp than the original.",
                             "required": true,
                             "type": "string",
                             "paramType": "form"
@@ -93,7 +93,7 @@
                         },
                         {
                             "name": "atype",
-                            "description": "The type of annotation update to make. Defaults to 'mod'. 'mod'='Modify the annotation'. 'hb'='Keep annotation alive with a heartbeat'. 'end'='End the annotation'",
+                            "description": "The type of annotation update to make. Defaults to 'mod'. 'mod' is a simple modification of the annotation.  'hb' indicates a heartbeat event, adding information on parameters that have changed and extending duration. 'end' indicates the end of the event, and no 'hb' with a later timestamp will be accepted.",
                             "required": false,
                             "type": "string",
                             "paramType": "form",
