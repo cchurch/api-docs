@@ -29,6 +29,13 @@
                             "paramType": "query"
                         },
                         {
+                            "name": "asset_class",
+                            "description": "Asset class of the image. This value can be set to 'all', 'pre', and 'thumb'",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
@@ -38,18 +45,6 @@
                                 "high",
                                 "med",
                                 "low"
-                            ]
-                        },
-                        {
-                            "name": "asset_class",
-                            "description": "Asset class",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "query",
-                            "enum":[
-                                "all",
-                                "pre",
-                                "thumb"
                             ]
                         }
                     ],
@@ -106,6 +101,13 @@
                             "paramType": "query"
                         },
                         {
+                            "name": "asset_class",
+                            "description": "Asset class of the image. This value can be set to 'all', 'pre', and 'thumb'",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
@@ -115,18 +117,6 @@
                                 "high",
                                 "med",
                                 "low"
-                            ]
-                        },
-                        {
-                            "name": "asset_class",
-                            "description": "Asset class",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "query",
-                            "enum":[
-                                "all",
-                                "pre",
-                                "thumb"
                             ]
                         }
                     ],
@@ -183,6 +173,13 @@
                             "paramType": "query"
                         },
                         {
+                            "name": "asset_class",
+                            "description": "Asset class of the image. This value can be set to 'all', 'pre', and 'thumb'",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
@@ -192,18 +189,6 @@
                                 "high",
                                 "med",
                                 "low"
-                            ]
-                        },
-                        {
-                            "name": "asset_class",
-                            "description": "Asset class",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "query",
-                            "enum":[
-                                "all",
-                                "pre",
-                                "thumb"
                             ]
                         },
                         {
@@ -272,6 +257,13 @@
                             "paramType": "query"
                         },
                         {
+                            "name": "asset_class",
+                            "description": "Asset class of the image. This value can be set to 'all', 'pre', and 'thumb'",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
@@ -283,18 +275,6 @@
                                 "low"
                             ]
                         },
-                        {
-                            "name": "asset_class",
-                            "description": "Asset class",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "query",
-                            "enum":[
-                                "all",
-                                "pre",
-                                "thumb"
-                            ]
-                        }
                     ],
                     "responseMessages": [
                         {
@@ -449,23 +429,18 @@
                             "paramType": "query"
                         },
                         {
+                            "name": "asset_class",
+                            "description": "Asset class of the image. This value can be set to 'all', 'pre', and 'thumb'",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
                             "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": false,
                             "type": "string",
                             "paramType": "query"
-                        },
-                        {
-                            "name": "asset_class",
-                            "description": "Asset class",
-                            "required": true,
-                            "type": "string",
-                            "paramType": "query",
-                            "enum":[
-                                "all",
-                                "pre",
-                                "thumb"
-                            ]
                         },
                         {
                             "name":"count",
