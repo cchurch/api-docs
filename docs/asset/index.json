@@ -6,7 +6,7 @@
     "produces": ["application/json"],
     "apis": [
         {
-            "path": "/asset/asset/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class}",
+            "path": "/asset/asset/image.jpeg",
             "operations": [
                 {
                     "method": "GET",
@@ -15,25 +15,25 @@
                     "nickname": "getAssetImage",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "high",
                                 "med",
@@ -45,7 +45,7 @@
                             "description": "Asset class",
                             "required": true,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "all",
                                 "pre",
@@ -83,7 +83,7 @@
             ]
         },
         {
-            "path": "/asset/prev/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class}",
+            "path": "/asset/prev/image.jpeg",
             "operations": [
                 {
                     "method": "GET",
@@ -92,25 +92,25 @@
                     "nickname": "getAssetPreviousImage",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "high",
                                 "med",
@@ -122,7 +122,7 @@
                             "description": "Asset class",
                             "required": true,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "all",
                                 "pre",
@@ -160,7 +160,7 @@
             ]
         },
         {
-            "path": "/asset/next/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class};l={time_limit}",
+            "path": "/asset/next/image.jpeg",
             "operations": [
                 {
                     "method": "GET",
@@ -169,25 +169,25 @@
                     "nickname": "getAssetNextImage",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "high",
                                 "med",
@@ -199,7 +199,7 @@
                             "description": "Asset class",
                             "required": true,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "all",
                                 "pre",
@@ -207,12 +207,12 @@
                             ]
                         },
                         {
-                            "name":"time_limit",
+                            "name":"timeout",
                             "description":"Limit of time to wait before responding in decimal milliseconds",
                             "required": false,
                             "type": "integer",
                             "format": "int64",
-                            "paramType": "path"
+                            "paramType": "query"
                         }
                     ],
                     "responseMessages": [
@@ -249,7 +249,7 @@
             ]
         },
         {
-            "path": "/asset/after/image.jpeg?c={device_id};t={timestamp};q={quality};a={asset_class}",
+            "path": "/asset/after/image.jpeg",
             "operations": [
                 {
                     "method": "GET",
@@ -258,25 +258,25 @@
                     "nickname": "getAssetAfterImage",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "timestamp",
                             "description": "Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "quality",
                             "description": "Quality of image",
                             "required": false,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "high",
                                 "med",
@@ -288,7 +288,7 @@
                             "description": "Asset class",
                             "required": true,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "all",
                                 "pre",
@@ -326,7 +326,7 @@
             ]
         },
         {
-            "path": "/asset/play/video.{video_format}?t={start_timestamp};e={end_timestamp};q={quality};c={device_id};T={playback_start_timestamp};to={to}",
+            "path": "/asset/play/video.{video_format}",
             "operations": [
                 {
                     "method": "GET",
@@ -335,25 +335,25 @@
                     "nickname": "getPlayVideo",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "start_timestamp",
                             "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "video_format",
@@ -374,7 +374,7 @@
                             "description": "Indicates requested resolution if multiple are available",
                             "required": false,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "high",
                                 "med",
@@ -386,14 +386,14 @@
                             "description": "EE timestamp of start of playback.  This is a replacement to the 'to' argument.",
                             "required": false,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
-                            "name": "to",
+                            "name": "time_offset",
                             "description": "Start the video stream N ms into the specified timespan.  Allows playing of a smaller segment",
                             "required": false,
                             "type":"string",
-                            "paramType": "path"
+                            "paramType": "query"
                         }
                     ],
                     "responseMessages": [
@@ -426,7 +426,7 @@
             ]
         },
         {
-            "path": "/asset/list/image?t={start_timestamp};e={end_timestamp};a={asset_class};c={device_id};count={count};q={quality}",
+            "path": "/asset/list/image",
             "operations": [
                 {
                     "method": "GET",
@@ -435,32 +435,32 @@
                     "nickname": "getListImage",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "start_timestamp",
                             "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": false,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "asset_class",
                             "description": "Asset class",
                             "required": true,
                             "type": "string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "all",
                                 "pre",
@@ -473,7 +473,7 @@
                             "required":false,
                             "type":"integer",
                             "format":"int64",
-                            "paramType":"path"
+                            "paramType":"query"
                         }
                     ],
                     "responseMessages": [
@@ -502,7 +502,7 @@
             ]
         },
         {
-            "path": "/asset/list/video?t={start_timestamp};e={end_timestamp};c={device_id};o={options}",
+            "path": "/asset/list/video",
             "operations": [
                 {
                     "method": "GET",
@@ -511,25 +511,25 @@
                     "nickname": "getListVideo",
                     "parameters": [
                         {
-                            "name": "device_id",
+                            "name": "id",
                             "description": "Device ID",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "start_timestamp",
                             "description": "Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": true,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name": "end_timestamp",
                             "description": "End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN",
                             "required": false,
                             "type": "string",
-                            "paramType": "path"
+                            "paramType": "query"
                         },
                         {
                             "name":"count",
@@ -537,14 +537,14 @@
                             "required":false,
                             "type":"integer",
                             "format":"int64",
-                            "paramType":"path"
+                            "paramType":"query"
                         },
                         {
                             "name": "options",
                             "description": "Additional modifier options. 'coalesce' = coalesces spans together.",
                             "required": false,
                             "type":"string",
-                            "paramType": "path",
+                            "paramType": "query",
                             "enum":[
                                 "coalesce"
                             ]

@@ -31,21 +31,21 @@
                             ]
                         },
                         {
-                            "name": "st",
+                            "name": "start_timestamp",
                             "description": "Start time of span.  +/- offsets from “now” are valid in ms. EEN timestamp format.",
                             "required": true,
                             "type": "string",
                             "paramType": "query"
                         },
                         {
-                            "name": "et",
+                            "name": "end_timestamp",
                             "description": "End time of span.  +/- offsets from “now” are valid in ms. EEN timestamp format.",
                             "required": true,
                             "type": "string",
                             "paramType": "query"
                         },
                         {
-                            "name": "w",
+                            "name": "width",
                             "description": "Width in pixels of resulting PNG. Integer greater than 0.",
                             "required": true,
                             "type":"integer",
@@ -53,21 +53,21 @@
                             "paramType": "query"
                         },
                         {
-                            "name": "c",
+                            "name": "id",
                             "description": "ID of camera being queried.",
                             "required": true,
                             "type":"string",
                             "paramType": "query"
                         },
                         {
-                            "name": "fg",
+                            "name": "foreground_color",
                             "description": "Color of foreground (active).  If both fg and bg have 0 for alpha, assumed fully opaque (0xff). 32bit ARGB color.",
                             "required": true,
                             "type":"string",
                             "paramType": "query"
                         },
                         {
-                            "name": "bg",
+                            "name": "background_color",
                             "description": "Color of background (inactive). 32bit ARGB color.",
                             "required": true,
                             "type":"string",
