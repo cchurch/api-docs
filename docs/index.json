@@ -3,13 +3,13 @@
     "swaggerVersion": "1.2",
     "info": {
         "title": "API Documentation",
-        "description": "<a href=\"#\" id=\"show_start\">Getting Started</a> | <a href=\"#\" id=\"show_terms\">Definition of Terms</a>",
+        "description": "<a href=\"#\" id=\"show_terms\">Definition of Terms</a>",
         "contact": "support@eagleeyenetworks.com"
     },
     "apis": [
         {
             "path": "aaa",
-            "description": "Authentication, authorization and registration"
+            "description": "Authentication and authorization"
         },
         {
             "path": "account",
