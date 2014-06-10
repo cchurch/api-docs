@@ -22,12 +22,17 @@
 <ul>
     <li>setting
         <ul>
-            <li>table=onoff - camera on/off settting</li>
+            <li>table=onoff - "camera_on" setting, the inverse of which represents camera "off"</li>
+        </ul>
+    </li>
+    <li>purge
+        <ul>
+            <li>fflags=LOST - filter for only purges the lost data (within retention window)</li>
         </ul>
     </li>
     <li>span
         <ul>
-            <li>table=video - video recording on/off
+            <li>table=video - video recording on
                 <ul>
                     <li>fflags=STREAM - filter for only streaming video</li>
                 </ul>
@@ -39,14 +44,12 @@
             </li>
             <li>table=roim - roi motion detected
                 <ul>
-                    <li>fflags=ALERTS - filter for only roim that triggereed alert</li>
+                    <li>fflags=ALERTS - filter for only roim that triggered alert</li>
+                    <li>flname=roiid, flval=roiid value</li>
                 </ul>
             </li>
-            <li>flname=roiid, flval=roiid value
-                <ul>
-                    <li>table=stream - bridge is streaming from camera</li>
-                </ul>
-            </li>
+            <li>table=stream - bridge is streaming from camera, the inverse of which represents camera "offline"</li>
+            <li>table=register - camera is registered with the cloud, the inverse of which represents "internet offline"</li>
         </ul>
     </li>
 </ul>
