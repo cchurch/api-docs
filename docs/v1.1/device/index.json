@@ -1,0 +1,870 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "device",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/device",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Device",
+                    "notes": "Returns device object by ID",
+                    "nickname": "getDevice",
+                    "type": "Device",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "PUT",
+                    "summary": "Create new device",
+                    "notes": "Creates a new Camera or Bridge. This requires the existence of a physical camera or bridge device. With camera devices, creating a Camera in the system requires the GUID of the physical camera device.  With bridge devices, creating a Bridge in the system requires the AttachID (aka ConnectID) of the physical bridge device.",
+                    "nickname": "putDevice",
+                    "type": "DeviceId",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "Device Name",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "If this is a bridge, defaults to the Account timezone.  If this is a camera, defaults to the camera’s Bridge timezone.  Otherwise defaults to US/Pacific.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form",
+                            "enum":[
+                                "US/Alaska",
+                                "US/Arizona",
+                                "US/Central",
+                                "US/Pacific",
+                                "US/Eastern",
+                                "US/Mountain",
+                                "US/Hawaii",
+                                "UTC"
+                            ]
+                        },
+                        {
+                            "name": "connectID",
+                            "description":"Connect ID needed to add and activate bridge to account.  All non-alphanumeric characters will be stripped. This is REQUIRED for adding bridges, and ONLY applies to bridges.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name":"tags",
+                            "type":"array",
+                            "description":"Array of strings, which each string representing a \"tag\"",
+                            "required":false,
+                            "items":{
+                                "type":"string"
+                            },
+                            "paramType":"form"
+                        },
+                        {
+                            "name":"settings",
+                            "type":"DeviceSettings",
+                            "description":"Misc settings",
+                            "required":false,
+                            "paramType":"form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "No device matching the ConnectID or GUID was found"
+                        },
+                        {
+                            "code": 409,
+                            "message": "ConnectID or GUID is currently already in use by an account"
+                        },
+                        {
+                            "code": 410,
+                            "message": "Communication cannot be made to attach the camera to the bridge"
+                        },
+                        {
+                            "code": 415,
+                            "message": "Device associated with the given GUID is unsupported"
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "summary": "Update device",
+                    "notes": "Update a bridge or camera",
+                    "nickname": "postDevice",
+                    "type": "DeviceId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Unique identifier of device",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Device Name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "If this is a bridge, defaults to the Account timezone.  If this is a camera, defaults to the camera’s Bridge timezone.  Otherwise defaults to US/Pacific.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form",
+                            "enum":[
+                                "US/Alaska",
+                                "US/Arizona",
+                                "US/Central",
+                                "US/Pacific",
+                                "US/Eastern",
+                                "US/Mountain",
+                                "US/Hawaii",
+                                "UTC"
+                            ]
+                        },
+                        {
+                            "name":"tags",
+                            "type":"array",
+                            "description":"Array of strings, which each string representing a \"tag\"",
+                            "required":false,
+                            "items":{
+                                "type":"string"
+                            },
+                            "paramType":"form"
+                        },
+                        {
+                            "name":"settings",
+                            "type":"DeviceSettings",
+                            "description":"Misc settings",
+                            "required":false,
+                            "paramType":"form"
+                        },
+                        {
+                            "name":"camera_parameters_add",
+                            "type":"object",
+                            "description":"JSON object of camera parameters/settings to add/update (see <a href='#/info/device'>More Info</a> for details).",
+                            "required":false,
+                            "paramType":"form"
+                        },
+                        {
+                            "name":"camera_parameters_delete",
+                            "type":"object",
+                            "description":"JSON object of camera parameters/settings to delete (see <a href='#/info/device'>More Info</a> for details).",
+                            "required":false,
+                            "paramType":"form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Device matching the ID was not found"
+                        },
+                        {
+                            "code": 463,
+                            "message": "Unable to communicate with the camera to add/delete camera settings, contact support"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Delete device",
+                    "notes": "Delete a bridge or camera",
+                    "nickname": "deleteDevice",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "erase",
+                            "description": "The device will be irretrievably deleted.  Default is True (1).  If erase is False (0), the device will be removed from the account and will be set idle, but it will not be erased.",
+                            "required": false,
+                            "type": "string",
+                            "enum":[
+                                "1",
+                                "0"
+                            ],
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Device matching the ID was not found"
+                        },
+                        {
+                            "code": 463,
+                            "message": "Unable to communicate with the camera or bridge, contact support"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/device/list",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Devices",
+                    "notes": "Returns array of arrays, with each sub-array representing a device available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached. Please note that the ListDevice model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
+                    "nickname": "deviceList",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListDevice"
+                    },
+                    "parameters": [
+                        {
+                            "name": "e",
+                            "description": "Device ID",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "n",
+                            "description": "Device Name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "t",
+                            "description": "Device Type",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "camera",
+                                "bridge"
+                            ]
+                        },
+                        {
+                            "name": "s",
+                            "description": "Device Service Status",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query",
+                            "enum": [
+                                "ATTD",
+                                "IDLE",
+                                "IGND",
+                                "ERRR"
+                            ]
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "DeviceId":{
+            "id":"DeviceId",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the device"
+                }
+            }
+        },
+        "Device":{
+            "id":"Device",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Device"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the device"
+                },
+                "utcOffset": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Signed UTC offset in seconds of the timezone from UTC, where this device is installed."
+                },
+                "timezone":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Supported timezones:  If this is a bridge, defaults to the Account timezone.  If this is a camera, defaults to the camers’s Bridge timezone.  Otherwise defaults to US/Pacific.",
+                    "enum":[
+                        "US/Alaska",
+                        "US/Arizona",
+                        "US/Central",
+                        "US/Pacific",
+                        "US/Eastern",
+                        "US/Mountain",
+                        "US/Hawaii",
+                        "UTC"
+                    ]
+                },
+                "guid":{
+                    "type":"string",
+                    "required": true,
+                    "description":"guid or other physical identifier of device"
+                },
+                "settings":{
+                    "type":"DeviceSettings",
+                    "required": true,
+                    "description":"Misc settings"
+                },
+                "bridges":{
+                    "type":"DeviceBridges",
+                    "required": true,
+                    "description":"Bridges this device is seen by"
+                },
+                "permissions":{
+                    "type":"string",
+                    "required": true,
+                    "description":"String of one or more characters. Each character defines a permission. \nPermissions include:\n'R' - user has access to view images and video for this camera.\n'A' - user is an admin for this camera.\n'S' - user can share this camera in a group share.\nNote:  All cameras in a group must have the ‘S’ permission or the group cannot be shared"
+                },
+                "tags":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of strings, which each string representing a \"tag\"",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "camera_parameters":{
+                    "type":"object",
+                    "required": true,
+                    "description":"JSON object of camera parameters/settings (see <a href='#/info/device'>More Info</a> for details). If camera parameters cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_parameters_status_code will be 404."
+                },
+                "camera_parameters_status_code":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"200 if camera_parameters were retrieved.  404 if camera_parameters were unable to be retrieved."
+                },
+                "camera_info":{
+                    "type":"DeviceCameraInfo",
+                    "required": true,
+                    "description":"Camera related info, which only applies to devices that are cameras"
+                },
+                "camera_info_status_code":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"200 if camera_info was retrieved. 404 if camera_info was unable to be retrieved."
+                }
+            }
+        },
+        "DeviceSettings":{
+            "id":"DeviceSettings",
+            "required":[],
+            "properties":{
+                "username":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Username to login to camera. Only applies to Cameras."
+                },
+                "password":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Password to login to camera. Only applies to Cameras."
+                },
+                "bridge": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Device ID of bridge to attach camera to. Only applies to Cameras. Required for PUT for Cameras."
+                },
+                "guid": {
+                    "type":"string",
+                    "required": true,
+                    "description":"GUID of physical device. Only applies to Cameras. Required for PUT for Cameras."
+                },
+                "roi_names": {
+                    "type":"DeviceSettingsRoiNames",
+                    "required": true,
+                    "description":"ROI names keyed by ROI ID. Only applies to Cameras."
+                },
+                "alert_notifications": {
+                    "type":"DeviceSettingsAlertNotifications",
+                    "required": true,
+                    "description":"Arrays of User IDs keyed by ROI ID. Only applies to Cameras."
+                },
+                "alert_modes": {
+                    "type":"DeviceSettingsAlertModes",
+                    "required": true,
+                    "description":"Arrays of Alert modes keyed by ROI ID. Only applies to Cameras."
+                },
+                "alert_levels": {
+                    "type":"DeviceSettingsAlertLevels",
+                    "required": true,
+                    "description":"Arrays of Alert levels keyed by ROI ID. Only applies to Cameras."
+                },
+                "notes": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Notes."
+                },
+                "latitude": {
+                    "type":"float",
+                    "required": true,
+                    "description":"Latitude of the cameras location."
+                },
+                "longitude": {
+                    "type":"float",
+                    "required": true,
+                    "description":"Longitude of the cameras location."
+                },
+                "street_address": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Street Address of the cameras location."
+                },
+                "azimuth": {
+                    "type":"float",
+                    "required": true,
+                    "description":"Direction that the center of the camera faces.  Values from 0.0-360.0 North=0.0."
+                },
+                "range": {
+                    "type":"integer",
+                    "required": true,
+                    "description":"Effective distance the camera can 'see' in feet."
+                },
+                "floor": {
+                    "type":"integer",
+                    "required": true,
+                    "description":"The floor of the building given that it is multiple stories."
+                }
+            }
+        },
+        "DeviceSettingsRoiNames":{
+            "id":"DeviceSettingsRoiNames",
+            "required":[],
+            "properties":{
+                "roi_id":{
+                    "type":"string",
+                    "required": true,
+                    "description": "Object with keys being ROI IDs, and values being the name"
+                }
+            }
+        },
+        "DeviceSettingsAlertNotifications":{
+            "id":"DeviceSettingsAlertNotifications",
+            "required":[],
+            "properties":{
+                "roi_id":{
+                    "type":"array",
+                    "required": true,
+                    "items":{
+                        "type":"string"
+                    },
+                    "description": "Object with keys being ROI IDs, and values being the array of User IDs"
+                }
+            }
+        },
+        "DeviceSettingsAlertModes":{
+            "id":"DeviceSettingsAlertModes",
+            "required":[],
+            "properties":{
+                "roi_id":{
+                    "type":"array",
+                    "required": true,
+                    "items":{
+                        "type":"string"
+                    },
+                    "description": "Object with keys being ROI IDs, and values being the array of alert modes"
+                }
+            }
+        },
+        "DeviceSettingsAlertLevels":{
+            "id":"DeviceSettingsAlertLevels",
+            "required":[],
+            "properties":{
+                "roi_id":{
+                    "type":"array",
+                    "required": true,
+                    "items":{
+                        "type":"string"
+                    },
+                    "description": "Object with keys being ROI IDs, and values being the array of alert levels"
+                }
+            }
+        },
+        "DeviceBridges":{
+            "id":"DeviceBridges",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"string",
+                    "required": true,
+                    "description": "Object with keys being Bridge Device IDs, and values being the service status of the camera on that bridge"
+                }
+            }
+        },
+        "DeviceCameraInfo":{
+            "id":"DeviceCameraInfo",
+            "required":[],
+            "properties":{
+                "bridge": {
+                    "type":"string",
+                    "required": true,
+                    "description":"GUID of bridge the camera is attached to"
+                },
+                "camera_retention": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Retention period in milliseconds"
+                },
+                "camera_newest": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "camera_oldest": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "camera_info_version": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Camera info version"
+                },
+                "connect": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Camera connect status"
+                },
+                "camera_min_time": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Minimum timestamp available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "uuid": {
+                    "type":"string",
+                    "required": true,
+                    "description":"UUID string"
+                },
+                "service": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Service status"
+                },
+                "make": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Make of the device"
+                },
+                "ipaddr": {
+                    "type":"string",
+                    "required": true,
+                    "description":"IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *"
+                },
+                "ts": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "version": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Firmware version"
+                },
+                "status" : {
+                    "type":"string",
+                    "required": true,
+                    "description":"Status bitmask"
+                },
+                "mac": {
+                    "type":"string",
+                    "required": true,
+                    "description":"MAC address"
+                },
+                "proxy": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Proxy"
+                },
+                "bridgeid": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Device of bridge this device is attached to"
+                },
+                "now": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "class": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Camera, or Bridge, etc."
+                },
+                "camera_now": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Camera's current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "camera_abs_newest": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "camera_abs_oldest": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)"
+                },
+                "model": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Device model"
+                },
+                "esn": {
+                    "type":"string",
+                    "required": true,
+                    "description":"ESN id"
+                },
+                "admin_user": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Web Username"
+                },
+                "admin_password": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Web Password"
+                }
+            }
+        },
+        "ListDevice":{
+            "id":"ListDevice",
+            "required":[],
+            "properties":{
+                "account_id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Device's Account"
+                },
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Device"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the device"
+                },
+                "type":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Type of device",
+                    "enum": [
+                        "camera",
+                        "bridge"
+                    ]
+                },
+                "bridges":{
+                    "type":"array[array[string]]",
+                    "required": true,
+                    "description":"This is an array of string arrays, each string array represents a bridge that can see the camera. The first element of the string array is the bridge ESN.  The second element is the status.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "service_status":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Device service status. ATTD = camera is attached to a bridge. IGND = camera is unattached from all bridges and is available to be attached to a bridge. IDLE and ERRR are not currently used.",
+                    "enum": [
+                        "ATTD",
+                        "IDLE",
+                        "IGND",
+                        "ERRR"
+                    ]
+                },
+                "permissions":{
+                    "type":"string",
+                    "required": true,
+                    "description":" String of zero or more characters. Each character defines a permission that the current user has for the device. Permissions include: 'R' - user can view this device. 'W' - user can modify and delete this device. 'S' - user can share this device."
+                },
+                "tags":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Tags",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "guid":{
+                    "type":"string",
+                    "required": true,
+                    "description":"GUID"
+                },
+                "serial_number":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Serial number"
+                },
+                "device_status":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Device status bit mask"
+                },
+                "timezone":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Timezone"
+                },
+                "timezone_utc_offset":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description": "Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC."
+                },
+                "is_unsupported":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the camera is NOT supported (1) or IS supported (0)"
+                },
+                "ip_address":{
+                    "type":"string",
+                    "required": true,
+                    "description":"IP Address of device"
+                },
+                "is_shared":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the camera is shared (1) or not (0)"
+                },
+                "owner_account_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the account that owns the device.  This only applies to shared cameras, since they will be owned by a different account."
+                },
+                "is_upnp":{
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Indicates whether the camera is a UPNP device. Note that this property is different then all the other 'is_*' properties in the API, which normally are integers (0 or 1).  Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP."
+                },
+                "video_input":{
+                    "type":"string",
+                    "required": true,
+                    "description":"For analog cameras only, this indicates the video input channel of the camera."
+                },
+                "video_status":{
+                    "type":"string",
+                    "required": true,
+                    "description":"For analog cameras only, this indicates the video status of the camera."
+                }
+            }
+        }
+    }
+}

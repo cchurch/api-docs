@@ -1,0 +1,64 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "manufactureddevice",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/manufactureddevice",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Manufactured Device",
+                    "notes": "Returns Manufactured Device object by ID",
+                    "nickname": "getManufacturedDevice",
+                    "type": "ManufacturedDevice",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Manufactured Device ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "ManufacturedDevice":{
+            "id":"ManufacturedDevice",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "description":"Unique identifier for the Manufactured Device"
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the Manufactured Device"
+                }
+            }
+        }
+    }
+}
