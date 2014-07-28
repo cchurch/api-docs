@@ -799,7 +799,7 @@
                     "type": "integer",
                     "required": true,
                     "format": "int64",
-                    "description":"Indicates whether the account is Active (1) or not (0)",
+                    "description":"Indicates whether the account is Enabled (1) or not (0). This parameter matches the 'is_enabled' parameter is the account/list API call",
                     "enum":[
                         0,
                         1
@@ -927,16 +927,57 @@
                     "format":"int64",
                     "description":"Indicates the account is Inactive (1) or not (0)"
                 },
-                "is_active":{
+                "is_enabled":{
                     "type":"integer",
                     "required": true,
                     "format":"int64",
-                    "description":"Indicates the account is Active (1) or not (0)"
+                    "description":"Indicates the account is Enabled (1) or not (0)"
                 },
                 "product_edition":{
                     "type":"string",
                     "required": true,
                     "description":"Product edition in use by the account"
+                },
+                "bridge_online_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of online bridges in the account"
+                },
+                "bridge_active_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of active bridges in the account (Active means there is at least 1 attached camera)"
+                },
+                "bridge_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Total number of bridges in the account"
+                },
+                "camera_off_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of 'Off' cameras in the account"
+                },
+                "camera_available_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of cameras that are available (aka 'unattached') in the account"
+                },
+                "is_active":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"boolean (0 or 1) indicating whether the account is 'active' (i.e. at least 1 attached camera)"
+                }
+                ,
+                "last_login":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp (EEN format) of the last time a user logged in"
+                },
+                "average_retention_days":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Average retention period (days) across all cameras in the account"
                 }
             }
         }
