@@ -1,0 +1,985 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "account",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/account",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Account",
+                    "notes": "Returns account object by ID",
+                    "nickname": "getAccount",
+                    "type": "Account",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Account ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "PUT",
+                    "summary": "Create new Account",
+                    "notes": "Creates a new Account",
+                    "nickname": "putAccount",
+                    "type": "AccountId",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "Name of Account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "owner_account_id",
+                            "description": "ID of parent account. If omitted, parent is set to the account of the creating user.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_first_name",
+                            "description": "First name of primary contact for account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_last_name",
+                            "description": "Last name of primary contact for account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_email",
+                            "description": "Email of primary contact for account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_street",
+                            "description": "Array of strings representing 1 or more parts of a street address of primary contact for account",
+                            "required": false,
+                            "type": "array",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_city",
+                            "description": "City of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_state",
+                            "description": "State/province of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_postal_code",
+                            "description": "Zip/postal code of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_country",
+                            "description": "Country of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "Timezone of Account. Defaults to US/Pacific.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form",
+                            "enum":[
+                                "US/Alaska",
+                                "US/Arizona",
+                                "US/Central",
+                                "US/Pacific",
+                                "US/Eastern",
+                                "US/Mountain",
+                                "US/Hawaii",
+                                "UTC"
+                            ]
+                        },
+                        {
+                            "name": "status",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Account status. This can only be edited by superusers and account_superusers of the parent/owner account.  'realm_root' can only be set by superusers.",
+                            "items":{
+                                "type":"string",
+                                "enum":[
+                                    "active",
+                                    "inactive",
+                                    "pending_validation",
+                                    "realm_root"
+                                ]
+                            }
+                        },
+                        {
+                            "name":"access_restriction",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Each entry in the list contains a restriction. Possible values: 'enable_mobile' = If present this account can has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified.",
+                            "items":{
+                                "type":"string",
+                                "enum":[
+                                    "enable_mobile",
+                                    "enable_ip_restrictions"
+                                ]
+                            }
+                        },
+                        {
+                            "name":"allowable_ip_address_ranges",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Each entry in the list specifies one address range.  Entries use the ‘/’ format.  For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"session_duration",
+                            "type":"integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Session duration in minutes.  Session duration of 0 means 'stay logged in forever'"
+                        },
+                        {
+                            "name":"holiday",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"List of dates that during which holidays are observed.  Format for dates is YYYYMMDD",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"work_days",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"String of length 7.  Each position in the string corresponds to a day of the week.  Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0.  1 means that this day is a work day."
+                        },
+                        {
+                            "name":"work_hours",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Two entries.  Each entry contains a time expressed in local time.  The first entry in the list is the work day start time .  The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM.  For example, 8AM would be 0800 and 5PM would be 1700.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"alert_mode",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"List of possible alert modes as defined for this account.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"active_alert_mode",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Must be blank or one of the values defined in alert_mode list."
+                        },
+                        {
+                            "name":"default_colo",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Name of the colo in which this account data for this account will be stored by default."
+                        },
+                        {
+                            "name":"default_camera_passwords",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Comma-delimited string of default camera passwords"
+                        },
+                        {
+                            "name":"is_without_initial_user",
+                            "type":"integer",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Indicates whether you want to NOT create an initial user with the new account. Defaults to 0, meaning an initial user (with is_account_superuser=1) will be created using the info from “contact_first_name/contact_last_name/contact_email” arguments of this new account.  If this is set to 1, NO initial user will be created.",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name":"is_initial_user_not_admin",
+                            "type":"integer",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Indicates whether you want do NOT want the initial user to be an admin.",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "summary": "Update Account",
+                    "notes": "Update an Account",
+                    "nickname": "postAccount",
+                    "type": "AccountId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Unique identifier of Account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Name of Account",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_first_name",
+                            "description": "First name of primary contact for account",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_last_name",
+                            "description": "Last name of primary contact for account",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_email",
+                            "description": "Email of primary contact for account",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_street",
+                            "description": "Array of strings representing 1 or more parts of a street address of primary contact for account",
+                            "required": false,
+                            "type": "array",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_city",
+                            "description": "City of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_state",
+                            "description": "State/province of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_postal_code",
+                            "description": "Zip/postal code of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "contact_country",
+                            "description": "Country of primary contact for account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "Timezone of Account. Defaults to US/Pacific.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form",
+                            "enum":[
+                                "US/Alaska",
+                                "US/Arizona",
+                                "US/Central",
+                                "US/Pacific",
+                                "US/Eastern",
+                                "US/Mountain",
+                                "US/Hawaii",
+                                "UTC"
+                            ]
+                        },
+                        {
+                            "name": "status",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Account status. This can only be edited by superusers and account_superusers of the parent/owner account.  'realm_root' can only be set by superusers.",
+                            "items":{
+                                "type":"string",
+                                "enum":[
+                                    "active",
+                                    "inactive",
+                                    "pending_validation",
+                                    "realm_root"
+                                ]
+                            }
+                        },
+                        {
+                            "name":"access_restriction",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Each entry in the list contains a restriction. Possible values: 'enable_mobile' = If present this account can has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified.",
+                            "items":{
+                                "type":"string",
+                                "enum":[
+                                    "enable_mobile",
+                                    "enable_ip_restrictions"
+                                ]
+                            }
+                        },
+                        {
+                            "name":"allowable_ip_address_ranges",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Each entry in the list specifies one address range.  Entries use the ‘/’ format.  For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"session_duration",
+                            "type":"integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Session duration in minutes.  Session duration of 0 means 'stay logged in forever'"
+                        },
+                        {
+                            "name":"holiday",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"List of dates that during which holidays are observed.  Format for dates is YYYYMMDD",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"work_days",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"String of length 7.  Each position in the string corresponds to a day of the week.  Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0.  1 means that this day is a work day."
+                        },
+                        {
+                            "name":"work_hours",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Two entries.  Each entry contains a time expressed in local time.  The first entry in the list is the work day start time .  The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM.  For example, 8AM would be 0800 and 5PM would be 1700.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"alert_mode",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"List of possible alert modes as defined for this account.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name":"active_alert_mode",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Must be blank or one of the values defined in alert_mode list."
+                        },
+                        {
+                            "name":"default_colo",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Name of the colo in which this account data for this account will be stored by default."
+                        },
+                        {
+                            "name":"default_camera_passwords",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Comma-delimited string of default camera passwords"
+                        },
+                        {
+                            "name":"camera_shares",
+                            "type":"array",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses.  First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the 'm' action. Example: [['m', '12345678', ['test@testing.com','test2@testing.com]]]",
+                            "items":{
+                                "type":"array"
+                            }
+                        },
+                        {
+                            "name":"is_revoke_admins",
+                            "type":"integer",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Indicates whether you want to revoke all Admin permissions for the users in the account.",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name":"is_custom_brand",
+                            "type":"integer",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Indicates whether branding is enabled for the account",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name":"brand_logo_small",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Base64 encoded image for the branded small logo"
+                        },
+                        {
+                            "name":"brand_logo_large",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Base64 encoded image for the branded large logo"
+                        },
+                        {
+                            "name":"brand_subdomain",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Sub domain for the branded url"
+                        },
+                        {
+                            "name":"brand_corp_url",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Corporate web site url"
+                        },
+                        {
+                            "name":"brand_name",
+                            "type":"string",
+                            "paramType": "form",
+                            "required":false,
+                            "description":"Branded company name"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Delete Account",
+                    "notes": "Delete an Account",
+                    "nickname": "deleteAccount",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Account ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Delete succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Account not found with the supplied ID"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/account/list",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Accounts",
+                    "notes": "Returns array of arrays, with each sub-array representing an account available to the user. Please note that the ListAccount model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
+                    "nickname": "accountList",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListAccount"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "Account":{
+            "id":"Account",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Account"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the account"
+                },
+                "owner_account_id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"ID of parent account"
+                },
+                "contact_first_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"First name of primary contact for account"
+                },
+                "contact_last_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Last name of primary contact for account"
+                },
+                "contact_email":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Email of primary contact for account"
+                },
+                "contact_street":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of strings representing 1 or more parts of a street address of primary contact for account",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "contact_city":{
+                    "type":"string",
+                    "required": true,
+                    "description":"City of primary contact for account"
+                },
+                "contact_state":{
+                    "type":"string",
+                    "required": true,
+                    "description":"State/province of primary contact for account"
+                },
+                "contact_postal_code":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Zip/postal code of primary contact for account"
+                },
+                "contact_country":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Country of primary contact for account"
+                },
+                "timezone":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Timezone of the account.  Defaults to US/Pacific.",
+                    "enum":[
+                        "US/Alaska",
+                        "US/Arizona",
+                        "US/Central",
+                        "US/Pacific",
+                        "US/Eastern",
+                        "US/Mountain",
+                        "US/Hawaii",
+                        "UTC"
+                    ]
+                },
+                "utc_offset":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Signed integer offset in seconds of the timezone from UTC"
+                },
+                "status":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Status",
+                    "items":{
+                        "type":"string",
+                        "enum":[
+                            "active",
+                            "inactive",
+                            "pending_validation",
+                            "realm_root"
+                        ]
+                    }
+                },
+                "access_restriction":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Each entry in the list contains a restriction. Possible values: 'enable_mobile' = If present this account can has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified.",
+                    "items":{
+                        "type":"string"
+                    },
+                    "enum":[
+                        "enable_mobile",
+                        "enable_ip_restrictions"
+                    ]
+                },
+                "allowable_ip_address_range":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Each entry in the list specifies one address range.  Entries use the ‘/’ format.  For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "session_duration":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"session duration in minutes.  Session duration of 0 means 'stay logged in forever'"
+                },
+                "holiday":{
+                    "type":"array",
+                    "required": true,
+                    "description":"List of dates that during which holidays are observed.  Format for dates is YYYYMMDD",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "work_days":{
+                    "type":"string",
+                    "required": true,
+                    "description":"String of length 7.  Each position in the string corresponds to a day of the week.  Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0.  1 means that this day is a work day."
+                },
+                "work_hours":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Two entries.  Each entry contains a time expressed in local time.  The first entry in the list is the work day start time .  The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM.  For example, 8AM would be 0800 and 5PM would be 1700.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "alert_mode":{
+                    "type":"array",
+                    "required": true,
+                    "description":"List of possible alert modes as defined for this account.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "active_alert_mode":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Must be blank or one of the values defined in alert_mode list."
+                },
+                "default_colo":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the colo in which this account data for this account will be stored by default."
+                },
+                "default_camera_passwords":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Comma-delimited string of default camera passwords"
+                },
+                "camera_shares":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses.  First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the 'm' action. Example: [['m', '12345678', ['test@testing.com','test2@testing.com]]]",
+                    "items":{
+                        "type":"array"
+                    }
+                },
+                "is_master":{
+                    "type": "integer",
+                    "required": true,
+                    "format": "int64",
+                    "description":"Indicates whether the account is a Master account (1) or not (0)",
+                    "enum":[
+                        0,
+                        1
+                    ]
+                },
+                "is_active":{
+                    "type": "integer",
+                    "required": true,
+                    "format": "int64",
+                    "description":"Indicates whether the account is Enabled (1) or not (0). This parameter matches the 'is_enabled' parameter is the account/list API call",
+                    "enum":[
+                        0,
+                        1
+                    ]
+                },
+                "is_inactive":{
+                    "type": "integer",
+                    "required": true,
+                    "format": "int64",
+                    "description":"Indicates whether the account is inactive (1) or not (0)",
+                    "enum":[
+                        0,
+                        1
+                    ]
+                },
+                "is_suspended":{
+                    "type": "integer",
+                    "required": true,
+                    "format": "int64",
+                    "description":"Indicates whether the account is Suspended (1) or not (0)",
+                    "enum":[
+                        0,
+                        1
+                    ]
+                },
+                "product_edition":{
+                    "type": "string",
+                    "required": true,
+                    "description":"The product edition the account is using"
+                },
+                "camera_quantity":{
+                    "type": "integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"The total number of cameras the account is allowed to use"
+                },
+                "is_custom_brand_allowed":{
+                    "type": "integer",
+                    "required": true,
+                    "format": "int64",
+                    "description":"Indicates whether the account is allowed to have branding (1) or not (0)",
+                    "enum":[
+                        0,
+                        1
+                    ]
+                },
+                "is_custom_brand":{
+                    "type": "integer",
+                    "required": true,
+                    "format": "int64",
+                    "description":"Indicates whether the account has branding enabled (1) or not (0)",
+                    "enum":[
+                        0,
+                        1
+                    ]
+                },
+                "brand_logo_small":{
+                    "type": "string",
+                    "required": true,
+                    "description":"Base64 encoded image for the branded small logo"
+                },
+                "brand_logo_large":{
+                    "type": "string",
+                    "required": true,
+                    "description":"Base64 encoded image for the branded small logo"
+                },
+                "brand_subdomain":{
+                    "type": "string",
+                    "required": true,
+                    "description":"Sub domain for the branded url"
+                },
+                "brand_corp_url":{
+                    "type": "string",
+                    "required": true,
+                    "description":"Corporate web site url"
+                },
+                "brand_name":{
+                    "type": "string",
+                    "required": true,
+                    "description":"Branded company name"
+                }
+            }
+        },
+        "ListAccount":{
+            "id":"ListAccount",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Account"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the account"
+                },
+                "camera_online_count":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Number of cameras currently online in the account"
+                },
+                "camera_count":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Number of cameras currently in the account"
+                },
+                "user_count":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Number of users currently in the account"
+                },
+                "is_suspended":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the account is Suspended (1) or not (0)"
+                },
+                "is_inactive":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the account is Inactive (1) or not (0)"
+                },
+                "is_enabled":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Indicates the account is Enabled (1) or not (0)"
+                },
+                "product_edition":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Product edition in use by the account"
+                },
+                "bridge_online_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of online bridges in the account"
+                },
+                "bridge_active_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of active bridges in the account (Active means there is at least 1 attached camera)"
+                },
+                "bridge_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Total number of bridges in the account"
+                },
+                "camera_off_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of 'Off' cameras in the account"
+                },
+                "camera_available_count":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"Number of cameras that are available (aka 'unattached') in the account"
+                },
+                "is_active":{
+                    "type":"integer",
+                    "required": true,
+                    "description":"boolean (0 or 1) indicating whether the account is 'active' (i.e. at least 1 attached camera)"
+                }
+                ,
+                "last_login":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp (EEN format) of the last time a user logged in"
+                },
+                "average_retention_days":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Average retention period (days) across all cameras in the account"
+                }
+            }
+        }
+    }
+}
