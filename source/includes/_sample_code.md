@@ -38,9 +38,118 @@ The ‘videobank_sessionid’ cookie will need to be set for any other Eagle Eye
 
 <!--===================================================================-->
 ## Constructing Layouts
-We will look into the Layouts API to learn how to construct the same layouts used in the web and mobile clients.
 
-[Learn More](http://www.eagleeyenetworks.com/video-api-example-code/constructing-layouts/)
+> Get /layout/list
+
+```json
+[
+    [
+        "fc7fa3a4-66ea-11e3-8ca8-523445989f37",
+        "Default",
+        [
+            "iphone"
+        ],
+        "SWRD"
+    ],
+    [
+        "14fbd682-66eb-11e3-8ca8-523445989f37",
+        "Ekta 2",
+        [
+            "iphone"
+        ],
+        "SWRD"
+    ],
+    [
+        "23535930-66eb-11e3-977b-ca8312ea370c",
+        "Ekta 3",
+        [
+            "desktop"
+        ],
+        "SWRD"
+    ]
+]
+```
+
+When a user logs onto the Eagle Eye system, they are greeted with a grid of cameras, with each cell representing a camera pane. These panes can be of varying size so that the user can customize the layout to their liking. In this tutorial, we will demonstrate how to use the APIs to build these layouts so they are consistent on all platforms.
+
+Upon being logged in, we make a request to the GET /layout/list API. This returns an array of Layout objects. Do note that this is not the same model as what is returned by the GET /layout API request. The one returned by the /layout/list API is an abridged version with only the most important attributes. The response of the request will look like this.
+
+`
+Get /layout/list
+`
+
+We take the layout id attribute for each layout of interest and pass it to the Get /layout API request. This will contain the information we need to construct the layout.
+
+`
+Get /layout
+`
+
+> Get /layout
+
+```json
+{
+    "id": "811dbe48-66eb-11e3-8ca8-523445989f37",
+    "shares": [
+        [
+            "ca0c35cb",
+            "SWRD"
+        ]
+    ],
+    "name": "mob dev 1",
+    "permissions": "SWRD",
+    "current_recording_key": null,
+    "types": [
+        "desktop"
+    ],
+    "configuration": {
+        "settings": {
+            "camera_row_limit": 3,
+            "automatic_rotation": false,
+            "camera_name": false,
+            "camera_border": "false",
+            "camera_aspect_ratio": "0.75"
+        },
+        "panes": [
+            {
+                "type": "preview",
+                "pane_id": 0,
+                "name": "Conference Room",
+                "cameras": [
+                    "100f6136"
+                ],
+                "size": 2
+            },
+            {
+                "type": "preview",
+                "pane_id": 1,
+                "name": "NW Parking",
+                "cameras": [
+                    "10003254"
+                ],
+                "size": 2
+            }
+        ]
+    }
+}
+```
+
+We get a wealth of good information, but the information specific to setting up the pane layout is in the ‘configuration’ json. Within that json, there is an attribute called ‘panes’ which is an array of individual pane objects. Each pane specifies the camera_id and the size of the pane. The size represents the width and height in number of cells. A size of 2 means that the pane is 2 cells in width and height, so it occupies a total of 4 cells. A size of 3 would occupy 9 cells.
+
+The other important factor to know is the size of grid holding the panes, specifically the number of columns. For the Eagle Eye web client, a browser can be resized to be a narrow strip or the full width of the screen. The layout will dynamically adjust the number of columns based on the width of the window. Mobile devices have fixed screen sizes, so for the iOS and Android smartphone clients, we set the number of columns to three.
+
+Now that we have the order of the panes, the size of each pane, and the size of the grid, we can construct our layout. This proved to be of varying difficulty depending on the platform. The web client uses a robust packing library, Packery, which is based on a bin packing algorithm. http://metafizzy.co/blog/packery-released/. This library minimizes empty space while preserving the order as best as possible. Using Packery reduced the development time for this feature significantly.
+
+At the time of this writing, Android does not have a robust library for packing the panes so the algorithm to do so was written from scratch. The goal was to mimic the Packery library as best as possible. The Android algorithm works as such:
+
+
+ 1. Remove the next image from the ‘panes’ array and place it in the ‘panes_for_analysis’ list.
+ 2. Analyze the panes in ‘panes_for_analysis’. If there is a fully packed block, remove those panes and add them to the layout
+ 3. If the ‘panes’ array is not empty, GOTO 1, else GOTO 4
+ 4. Add the remaining panes from ‘panes_for_analysis’ to the layout.
+
+This is the algorithm at a high level, though the specifics can get a little more complex, such as determining whether a fully packed block exists. The state of a fully packed block is also dependent on the number of columns for the grid.
+
+The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home grown packing algorithm.
 
 <!--===================================================================-->
 ## Annotating Previews
