@@ -5,9 +5,8 @@ language_tabs:
   - shell: cURL
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
-  - <a href='https://github.com/greatergoodguy/slate'>Submit documentation issues here</a>
+  - <a href='#get-an-api-key'>Sign Up for a Developer Key</a>
+  - <a href='https://github.com/ddrako/api-docs'>Submit documentation issues here</a>
 
 includes:
   - introduction
