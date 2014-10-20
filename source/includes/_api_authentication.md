@@ -13,9 +13,8 @@ Once the "videobank_sessionid" cookie is obtained from the "Authorize" call, the
 
 All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met, and the last one listed is the one that will be returned if none of the preceding codes' conditions are met.
 
+<!--===================================================================-->
 ## Step 1: Authenticate
-Login is a 2 step process: Authenticate, then Authorize with the token returned by Authenticate.
-
 > Request
 
 ```shell
@@ -29,6 +28,8 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data
   "token": "O3k0hNH3jQgjaxC0bLG9/5cM+Z7eWdPe0c+UpEZNXOs7PTFH45Dr9M3wxLkP6GjcPuCw8lXVTkHGA1zgx/q44HBv3Xmcj4/XzN2f6Hv+mZVIy8LorX8N5a6fNVRknWWW86nCHfbLvOP6TPcmBP1dD10ynnGeAdlQHTqMN5mvKH24WwZgVFbM4DyhyWu+eTN+t1XNROegJdZRjhaYCZ1FVKkdnrlsrMD6JSr/tE7byCLVjPcwzVabA+x0tDbGipystTNYPZyDVr3DQM70SV6kfqg2irlC8/zDu7a2EhI1IQWuZZ2GQIQm5jBtj9UR/p7ainHVhEc/bSFYUCvziepcAa=="
 }
 ```
+
+Login is a 2 step process: Authenticate, then Authorize with the token returned by Authenticate.
 
 ### HTTP Request
 
@@ -52,9 +53,8 @@ HTTP Status Code    | Data Type
 462 | User is pending. This will be thrown before 401 if username is valid and Account is active.
 200 | User has been authenticated. Body contains JSON encoded result
 
+<!--===================================================================-->
 ## Step 2: Authorize
-
-Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'videobank_sessionid' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
 
 > Request
 
@@ -132,6 +132,8 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
     "is_pending": 0
 }
 ```
+
+Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'videobank_sessionid' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
 
 ### HTTP Request
 
