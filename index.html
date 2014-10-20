@@ -46,22 +46,28 @@
       <div class="content">
         
           <h1 id='introduction'>Introduction</h1>
-<p>The Eagle Eye Video API is a comprehensive REST based API for recording, indexing, and storing camera video.  The Eagle Eye Video API handles all the heavy lifting of interfacing to the cameras, recording the video, securely transmitting it to the cloud, storing it, and then making it available to use in your applications. All of the Eagle Eye Security Camera VMS user interfaces (web, iOS, Android) have been built using this API.</p>
+<p>The Eagle Eye Video API is a comprehensive REST based API for recording, indexing, and storing camera video.  The Eagle Eye Video API handles all the heavy lifting of interfacing to the cameras, recording the video, securely transmitting it to the cloud, storing it, and making it available for use for your applications. All of the Eagle Eye Security Camera VMS user interfaces (web, iOS, Android) have been built using this API.</p>
 
-<p>We have language bindings in Shell, Java, and Objective C! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>We have language bindings in cURL! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h2 id='getting-started'>Getting Started</h1>
-<p>The Eagle Eye Video API allows you to securely record, manage, and playback video from any camera, any place, any time.  A robust annotation interface and smart bandwidth management helps you turn terabytes of raw video into useful data.</p>
+<p>The Eagle Eye Video API allows you to securely record, manage, and playback video from any camera, any place, any time.  A robust annotation interface and smart bandwidth management allows you to turn terabytes of raw video into useful data.</p>
 
-<p>Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs, and you can use many different HTTP clients in nearly any programming language. Give it a try.</p>
+<p>Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs, and you can use many different HTTP clients in nearly any programming language.</p>
 <h2 id='get-an-api-key'>Get an API Key</h1>
+<p><a href="https://login.eagleeyenetworks.com/api_signup.html">Create Developer Account</a></p>
+
 <p>To get started with the Eagle Eye Video API you will need an API Key. This is used to identify you and your application. It also makes everything secure. To get an API Key you will need an account (so that you have some place to do some testing). You can either use your existing account or create a Developer Account. You can create an API Key in your existing account under the Account Settings.</p>
 
 <p>You will have to verify your email address to create your Developer Account. You will also get an email with a shortcut to create the API Key. Click on the shortcut link to create your API Key and get started writing some code.</p>
 
 <p>You may also want to purchase a development hardware kit from us (so you can connect some cameras). These are available at a large discount for developers. You can get an Eagle Eye Bridge and even some cameras from us for development and testing. Just email us for more info and pricing.</p>
-
-<p><a href="https://login.eagleeyenetworks.com/api_signup.html">Create Developer Account</a></p>
-<h2 id='timestamp'>Timestamp</h1>
+<h3 id='visual-steps'>Visual Steps</h1>
+<p><img title="Step 1" alt="alt text" src="images/introduction/apikey_1.png" />
+<img title="Step 2" alt="alt text" src="images/introduction/apikey_2.png" />
+<img title="Step 3" alt="alt text" src="images/introduction/apikey_3.png" />
+<img title="Step 4" alt="alt text" src="images/introduction/apikey_4.png" />
+<img title="Step 5" alt="alt text" src="images/introduction/apikey_5.png" /></p>
+<h2 id='een-timestamp'>EEN Timestamp</h1>
 <p>All Assets have attached a Timestamp. The Timestamp records when the Asset happened. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.mmm.</p>
 
 <p>+/- offsets from “now” are valid in ms.</p>
@@ -79,9 +85,9 @@
 </ol>
 
 <p>All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met, and the last one listed is the one that will be returned if none of the preceding codes&#39; conditions are met.</p>
-<h2 id='step-1-authenticate'>Step 1: Authenticate</h1>
-<p>Login is a 2 step process: Authenticate, then Authorize with the token returned by Authenticate.</p>
 
+<!--===================================================================-->
+<h2 id='step-1-authenticate'>Step 1: Authenticate</h1>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -95,6 +101,8 @@
   </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"O3k0hNH3jQgjaxC0bLG9/5cM+Z7eWdPe0c+UpEZNXOs7PTFH45Dr9M3wxLkP6GjcPuCw8lXVTkHGA1zgx/q44HBv3Xmcj4/XzN2f6Hv+mZVIy8LorX8N5a6fNVRknWWW86nCHfbLvOP6TPcmBP1dD10ynnGeAdlQHTqMN5mvKH24WwZgVFbM4DyhyWu+eTN+t1XNROegJdZRjhaYCZ1FVKkdnrlsrMD6JSr/tE7byCLVjPcwzVabA+x0tDbGipystTNYPZyDVr3DQM70SV6kfqg2irlC8/zDu7a2EhI1IQWuZZ2GQIQm5jBtj9UR/p7ainHVhEc/bSFYUCvziepcAa=="</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+
+<p>Login is a 2 step process: Authenticate, then Authorize with the token returned by Authenticate.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/authenticate</code></p>
 
@@ -153,9 +161,9 @@
 <td>User has been authenticated. Body contains JSON encoded result</td>
 </tr>
 </tbody></table>
-<h2 id='step-2-authorize'>Step 2: Authorize</h1>
-<p>Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the &lsquo;videobank_sessionid&rsquo; cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the &lsquo;A&rsquo; parameter.</p>
 
+<!--===================================================================-->
+<h2 id='step-2-authorize'>Step 2: Authorize</h1>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -232,6 +240,8 @@
     </span><span class="s2">"is_pending"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+
+<p>Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the &lsquo;videobank_sessionid&rsquo; cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the &lsquo;A&rsquo; parameter.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/authorize</code></p>
 
@@ -5350,11 +5360,10 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
         </span><span class="s2">"0b58ec7a-61e4-11e3-8f7d-523445989f37"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"Everything"</span><span class="p">,</span><span class="w">
         </span><span class="p">[</span><span class="w">
-</span><span class="p">]</span><span class="w">
             </span><span class="s2">"mobile"</span><span class="w">
         </span><span class="p">],</span><span class="w">
         </span><span class="s2">"SWRD"</span><span class="w">
-    </span><span class="p">]</span><span class="err">,</span><span class="w">
+    </span><span class="p">],</span><span class="w">
     </span><span class="p">[</span><span class="w">
         </span><span class="s2">"75c03026-719a-11e3-afba-ca8312ea370c"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"Glenn"</span><span class="p">,</span><span class="w">
@@ -5362,11 +5371,11 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
             </span><span class="s2">"mobile"</span><span class="w">
         </span><span class="p">],</span><span class="w">
         </span><span class="s2">"SWRD"</span><span class="w">
-    </span><span class="p">]</span><span class="err">,</span><span class="w">
-    </span><span class="p">[</span><span class="err">...</span><span class="p">]</span><span class="err">,</span><span class="w">
-    </span><span class="p">[</span><span class="err">...</span><span class="p">]</span><span class="err">,</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
     </span><span class="p">[</span><span class="err">...</span><span class="p">]</span><span class="w">
-</span><span class="err">]</span><span class="w">
+</span><span class="p">]</span><span class="w">
 </span></pre>
 
 <p>Returns array of arrays, with each sub-array representing a layout available to the user. Please note that the ListLayout model definition below has property keys, but that&rsquo;s only for reference purposes since it&rsquo;s actually just a standard array.</p>
@@ -7874,36 +7883,537 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <p><strong>What can I do with the Eagle Eye API?</strong>
 <br>The Eagle Eye Video API provides a robust set of storage, analytics, indexing, and interfaces for quickly building or integrating applications with both live and recorded video; the applications can range from very simple or highly complex. See our HowTos and Examples page here.</p>
 
-          <h1 id='how-to39s-and-example-code'>How To&rsquo;s and Example Code</h1><h2 id='making-api-calls-with-curl'>Making API Calls With Curl</h1>
-<p>Here we will explain how to format the Eagle Eye API calls, using the curl command line tool. This allows API calls to be accessed with minimal overhead.</p>
+          <h1 id='how-to39s-and-example-code'>How To&rsquo;s and Example Code</h1>
+<!--===================================================================-->
+<h2 id='making-api-calls-with-curl'>Making API Calls With Curl</h1>
+<p>In this section, we will walk you through the process of making API requests using the ‘curl’ command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android, and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server, using a wide range of supported protocols, including HTTP/HTTPS, which is what we are interested in. Curl can be installed by going to this site. http://curl.haxx.se/.</p>
 
-<p>Yo Yo</p>
+<p>With curl installed, the next step is to log in and have a valid session, so that we can freely use any of the APIs. Logging in, is a two step process consisting of authentication and authorization. The authentication API takes in 2 parameters. Our curl common will look like this. The [USERNAME] and [PASSWORD] need to be valid for the API request to return successfully.</p>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/intro-curl/">Learn More</a></p>
-<h2 id='curl-example-api-calls'>Curl Example API Calls</h1>
-<p>This page shows sample curl formatted commands for each of the Eagle Eye APIs.</p>
+<p><code class="prettyprint">
+curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data &#39;username=[USERNAME]&amp;password=[PASSWORD]&#39;
+</code></p>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/curl-examples/">Learn More</a></p>
+<p>The ‘–request’ flag specifies the type of request and can be set to GET, POST, PUT, and DELETE. The ‘data’ flag species the parameters of the API query. Upon running this command with valid credentials, we receive a Json formatted response, containing a key/value pair for ‘token’, which will look something like this.</p>
+
+<p><code class="prettyprint">
+{ “token”: “YrZF/8jf7W0rKcqNTugqidq…………4dZWeNOcNsuenTXc9fQVtvp2vI75g==” }
+</code></p>
+
+<p>This token is a required parameter for making the Authorize API request. Copy the value of the token in order to have it on hand when creating the Authorize API request. Now we make the authorization API request using this curl command.</p>
+
+<p><code class="prettyprint">
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN]
+</code></p>
+
+<p>The output are the headers of the API request followed by the response body. The ‘-D’ flag is used to write the protocol headers. Here is the description from the man pages.</p>
+
+<p><code class="prettyprint">
+-D, –dump-header &lt;file&gt; Write the protocol headers to the specified file. This option is handy to use when you want to store the headers that a HTTP site sends to you. Cookies from the headers could then be read in a second curl invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies.
+</code></p>
+
+<p>Note that the ‘-‘ after the ‘-D’ indicates that the output “file” is stdout. One of the header elements will be “Set-Cookie: videobank_sessionid=[VIDEOBANK_SESSIONID]“. Copy ‘videobank_sessionid=[VIDEOBANK_SESSIONID]‘ into the clipboard as this cookie will need to be set for all other API requests. The curl request for getting a list of devices will look as such.</p>
+
+<p><code class="prettyprint">
+curl --cookie &quot;videobank_sessionid=[VIDEOBANK_SESSIONID]&quot; --request GET https://login.eagleeyenetworks.com/g/list/devices
+</code></p>
+
+<p>The ‘videobank_sessionid’ cookie will need to be set for any other Eagle Eye API that requires a valid session.</p>
+
+<!--===================================================================-->
 <h2 id='constructing-layouts'>Constructing Layouts</h1>
-<p>We will look into the Layouts API to learn how to construct the same layouts used in the web and mobile clients.</p>
+<blockquote>
+<p>Get /layout/list</p>
+</blockquote>
+<pre class="highlight json"><span class="p">[</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"fc7fa3a4-66ea-11e3-8ca8-523445989f37"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Default"</span><span class="p">,</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"iphone"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"SWRD"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"14fbd682-66eb-11e3-8ca8-523445989f37"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Ekta 2"</span><span class="p">,</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"iphone"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"SWRD"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"23535930-66eb-11e3-977b-ca8312ea370c"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Ekta 3"</span><span class="p">,</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"desktop"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"SWRD"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></pre>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/constructing-layouts/">Learn More</a></p>
-<h2 id='annotating-previews'>Annotating Previews</h1>
-<p>In this tutorial, you will learn how to annotate your surveillance images. We will walk you through the complete flow from logging in and retrieving camera ids, to annotating images and then searching through them.</p>
+<p>When a user logs onto the Eagle Eye system, they are greeted with a grid of cameras, with each cell representing a camera pane. These panes can be of varying size so that the user can customize the layout to their liking. In this tutorial, we will demonstrate how to use the APIs to build these layouts so they are consistent on all platforms.</p>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/annotating-previews/">Learn More</a></p>
+<p>Upon being logged in, we make a request to the GET /layout/list API. This returns an array of Layout objects. Do note that this is not the same model as what is returned by the GET /layout API request. The one returned by the /layout/list API is an abridged version with only the most important attributes. The response of the request will look like this.</p>
+
+<p><code class="prettyprint">
+Get /layout/list
+</code></p>
+
+<p>We take the layout id attribute for each layout of interest and pass it to the Get /layout API request. This will contain the information we need to construct the layout.</p>
+
+<p><code class="prettyprint">
+Get /layout
+</code></p>
+
+<blockquote>
+<p>Get /layout</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"811dbe48-66eb-11e3-8ca8-523445989f37"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"shares"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"ca0c35cb"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SWRD"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mob dev 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SWRD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"current_recording_key"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"types"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"desktop"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"configuration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"camera_row_limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"automatic_rotation"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"camera_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"camera_border"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"camera_aspect_ratio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.75"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"panes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Conference Room"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"100f6136"</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NW Parking"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="s2">"10003254"</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>We get a wealth of good information, but the information specific to setting up the pane layout is in the ‘configuration’ json. Within that json, there is an attribute called ‘panes’ which is an array of individual pane objects. Each pane specifies the camera_id and the size of the pane. The size represents the width and height in number of cells. A size of 2 means that the pane is 2 cells in width and height, so it occupies a total of 4 cells. A size of 3 would occupy 9 cells.</p>
+
+<p>The other important factor to know is the size of grid holding the panes, specifically the number of columns. For the Eagle Eye web client, a browser can be resized to be a narrow strip or the full width of the screen. The layout will dynamically adjust the number of columns based on the width of the window. Mobile devices have fixed screen sizes, so for the iOS and Android smartphone clients, we set the number of columns to three.</p>
+
+<p>Now that we have the order of the panes, the size of each pane, and the size of the grid, we can construct our layout. This proved to be of varying difficulty depending on the platform. The web client uses a robust packing library, Packery, which is based on a bin packing algorithm. http://metafizzy.co/blog/packery-released/. This library minimizes empty space while preserving the order as best as possible. Using Packery reduced the development time for this feature significantly.</p>
+
+<p>At the time of this writing, Android does not have a robust library for packing the panes so the algorithm to do so was written from scratch. The goal was to mimic the Packery library as best as possible. The Android algorithm works as such:</p>
+
+<ol>
+<li>Remove the next image from the ‘panes’ array and place it in the ‘panes_for_analysis’ list.</li>
+<li>Analyze the panes in ‘panes_for_analysis’. If there is a fully packed block, remove those panes and add them to the layout</li>
+<li>If the ‘panes’ array is not empty, GOTO 1, else GOTO 4</li>
+<li>Add the remaining panes from ‘panes_for_analysis’ to the layout.</li>
+</ol>
+
+<p>This is the algorithm at a high level, though the specifics can get a little more complex, such as determining whether a fully packed block exists. The state of a fully packed block is also dependent on the number of columns for the grid.</p>
+
+<p>The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home grown packing algorithm.</p>
+
+<!--===================================================================-->
 <h2 id='playing-live-video'>Playing Live Video</h1>
-<p>Learn how to embed live video into your own application.</p>
+<p>Video playback functionality can be accessed through the ‘/asset/play/video.{video_format}’ API. We will show you how to use this API to play live video, though the same API can also be used to play historic video.</p>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/playing-live-video/">Learn More</a></p>
+<p>Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on this site to generate the URL string. http://writecodeonline.com/javascript/.</p>
+
+<p>The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [VIDEOBANK_SESSIONID]. The [DEVICE_ID] represents the id of the camera of interest. The [VIDEOBANK_SESSIONID] is used for authentication and can be found in the response header of the /aaa/authorization API.</p>
+
+<p><code class="prettyprint">
+eagleEyeLiveVideoApiUrl = &quot;https://login.eagleeyenetworks.com/asset/play/video.flv&quot; +
+    &quot;?id=[DEVICE_ID]&quot; +
+    &quot;&amp;start_timestamp=stream_&quot;+(new Date().getTime()) +
+    &quot;&amp;end_timestamp=+300000&quot; +
+    &quot;&amp;A=[VIDEOBANK_SESSIONID]&quot;;
+</code></p>
+
+<p><code class="prettyprint">
+htmlFlashVideoPlayerUrl = &quot;https://login.eagleeyenetworks.com/strobe/embed.html?src=&quot;+encodeURIComponent(eagleEyeLiveVideoApiUrl)+&quot;&amp;autoPlay=true&amp;bufferingOverlay=false&amp;streamType=live&amp;bufferTime=1&amp;initialBufferTime=1&amp;expandedBufferTime=5&amp;liveBufferTime=2&amp;liveDynamicStreamingBufferTime=4&amp;minContinuousPlaybackTime=5&quot;;
+</code></p>
+
+<p><code class="prettyprint">
+document.write(htmlFlashVideoPlayerUrl);
+</code></p>
+
+<p>Notice that we have 2 variables; ‘eagleEyeLiveVideoApiUrl’ and ‘htmlFlashVideoPlayerUrl’. The ‘htmlFlashVideoPlayerUrl’ variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking, and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application.</p>
+
+<p><code class="prettyprint">
+https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&amp;src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[VIDEOBANK_SESSIONID]&amp;bufferingOverlay=false&amp;streamType=live&amp;bufferTime=1&amp;initialBufferTime=1&amp;expandedBufferTime=5&amp;liveBufferTime=2&amp;liveDynamicStreamingBufferTime=4&amp;minContinuousPlaybackTime=5
+</code></p>
+
+<!--===================================================================-->
 <h2 id='long-polling'>Long Polling</h1>
-<p>Learn how to subscribe to the poll stream and receive camera events in real time.</p>
+<blockquote>
+<p>Json Request for Post /poll</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+     </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"100c30ea"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+             </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                 </span><span class="s2">"event"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"pre"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"thumb"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"status"</span><span class="w">
+             </span><span class="p">],</span><span class="w">
+             </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                 </span><span class="s2">"ECON"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"ECOF"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"AELI"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"AELO"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"EMES"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"EMEE"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CECF"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CSAT"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CSDT"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CONN"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"COFF"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"ESES"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"ESEE"</span><span class="w">
+             </span><span class="p">]</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"100f6136"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+             </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                 </span><span class="s2">"event"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"pre"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"thumb"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"status"</span><span class="w">
+             </span><span class="p">],</span><span class="w">
+             </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                 </span><span class="s2">"ECON"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"ECOF"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"AELI"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"AELO"</span><span class="p">,</span><span class="w">
+             </span><span class="p">]</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"1009c1ab"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+             </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                 </span><span class="s2">"event"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"pre"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"thumb"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"status"</span><span class="w">
+             </span><span class="p">],</span><span class="w">
+             </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                 </span><span class="s2">"EMES"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"EMEE"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CECF"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CSAT"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CSDT"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"CONN"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"COFF"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"ESES"</span><span class="p">,</span><span class="w">
+                 </span><span class="s2">"ESEE"</span><span class="w">
+             </span><span class="p">]</span><span class="w">
+         </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/long-polling/">Learn More</a></p>
+<p>Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial, we will walk you through the steps to set up the poll stream for long polling using the /poll API.</p>
+
+<p>Long polling is used in the mobile clients. The process is to first register to the poll stream using the POST /poll API followed by constant API requests for GET /poll.</p>
+
+<p>The POST /poll API is used to initialize the poll stream and to register the events we want to listen for. For the mobile clients, we are listening to resource type ‘pre’ and ‘status’, which are the preview images and status bits. Since the data we are sending to the server is a json, the content-type of this request will be application/json. Here is an example of what the the data may look like.</p>
+
+<p>Once the POST /poll request has been made successfully, a token is returned to the user. This token can be used to successfully make all subsequent GET /poll requests. If the token is not desired, the same requests can be made if you have the ‘ee-poll-ses’ cookie from the POST /poll request.</p>
+
+<p>The GET /poll request should be called frequently so that new data can arrive as soon as possible. The response may be empty or it may look something like this.</p>
+
+<blockquote>
+<p>Response for Get /poll</p>
+</blockquote>
+<pre class="highlight json"><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"10003254"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"PRFR"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10003254"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20140528224954.312"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"file_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">17804500</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"frame_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">6152</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"previewid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1401314400</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"100a9541"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"PRFR"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100a9541"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20140528224955.507"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"file_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">12004385</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"frame_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">3706</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"previewid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1401314400</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"pre"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20140528224955.507"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>Only attributes with updated information will be returned in the response payload. For the mobile apps, we monitor the ‘pre’ attribute for new timestamps, and when a new timestamp does come in, we make the appropriate API call to retrieve the camera image.</p>
+
+<p>The power of this API lies in the ability of being able to control what events and resource types to listen to. This allows updates to the camera to be known in real time.</p>
+
+<!--===================================================================-->
 <h2 id='creating-timelapse-video'>Creating Timelapse Video</h1>
-<p>Learn how to create a time lapse video for a specific time range.</p>
+<p>In this tutorial, we will walk you through how to generate a timelapse video from images in a time range. The code will be shown in Objective-C and can be compiled for either iOS or OS X. We will need a library for making asynchronous network requests. In this example, we’ll be using AFNetworking: <a href="http://cocoadocs.org/docsets/AFNetworking/2.2.4/">http://cocoadocs.org/docsets/AFNetworking/2.2.4/</a>.</p>
 
-<p><a href="http://www.eagleeyenetworks.com/video-api-example-code/time-lapse/">Learn More</a></p>
+<p>The full source code is available here: <a href="https://github.com/cazares/EENTimelapse">https://github.com/cazares/EENTimelapse</a></p>
+
+<p>The first step is to initialize our HTTP request operation manager that we will be using to make asynchronous requests. We will store this manager in a property. We’ll also use three other properties – sessionID, timelapseID, and cameraID to help us make subsequent API requests.</p>
+
+<p><code class="prettyprint">
+Step 1
+</code></p>
+
+<blockquote>
+<p>Step 1</p>
+</blockquote>
+<pre class="highlight objective_c"><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">AFHTTPRequestOperationManager</span> <span class="o">*</span><span class="n">manager</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">sessionID</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">timelapseID</span><span class="p">;</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">cameraID</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">init</span> <span class="p">{</span>
+  <span class="n">self</span> <span class="o">=</span> <span class="p">[</span><span class="n">super</span> <span class="nf">init</span><span class="p">];</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">manager</span> <span class="o">=</span> <span class="p">[</span><span class="n">AFHTTPRequestOperationManager</span> <span class="nf">manager</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">manager</span><span class="p">.</span><span class="n">requestSerializer</span> <span class="o">=</span> <span class="p">[</span><span class="n">AFJSONRequestSerializer</span> <span class="nf">serializer</span><span class="p">];</span>
+    <span class="n">self</span><span class="p">.</span><span class="n">manager</span><span class="p">.</span><span class="n">responseSerializer</span> <span class="o">=</span> <span class="p">[</span><span class="n">AFHTTPResponseSerializer</span> <span class="nf">serializer</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">self</span><span class="p">;</span>
+<span class="p">}</span>
+</pre>
+
+<p>After initialization, we’ll need to log in to the Eagle Eye system through the authentication and authorization API calls. To log in, we will make a POST /aaa/authenticate request followed by a POST /aaa/authorize request. The /aaa/authorize response will contain a cookie. We will save its value in our local sessionID property to use in subsequent API calls via the ‘A’ parameter.</p>
+
+<p><code class="prettyprint">
+Step 2
+</code></p>
+
+<blockquote>
+<p>Step 2</p>
+</blockquote>
+<pre class="highlight objective_c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">authenticateWithUsername</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">username</span>
+                        <span class="nf">password</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">password</span> <span class="p">{</span>
+  <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">parameters</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span> <span class="s">@"username"</span><span class="o">:</span> <span class="n">username</span><span class="p">,</span>
+                                <span class="s">@"password"</span><span class="o">:</span> <span class="n">password</span> <span class="p">};</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">manager</span> <span class="nf">POST</span><span class="p">:</span><span class="s">@"https://login.eagleeyenetworks.com/g/aaa/authenticate"</span>
+<span class="nf">parameters</span><span class="p">:</span><span class="n">parameters</span>
+  <span class="nf">success</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="err">;</span>
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">response</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="nf">JSONObjectWithData</span><span class="p">:</span><span class="n">responseObject</span>
+                                                             <span class="nf">options</span><span class="p">:</span><span class="n">NSJSONReadingAllowFragments</span>
+                                                               <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">]</span><span class="err">;</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">authorizeUserWithToken</span><span class="p">:</span><span class="n">response</span><span class="p">[</span><span class="s">@"token"</span><span class="p">]]</span><span class="err">;</span>
+  <span class="p">}</span>
+  <span class="nf">failure</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error: %@"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span><span class="err">;</span>
+  <span class="p">}];</span>
+<span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">authorizeUserWithToken</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">token</span> <span class="p">{</span>
+  <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">parameters</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span> <span class="s">@"token"</span><span class="o">:</span> <span class="n">token</span> <span class="p">};</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">manager</span> <span class="nf">POST</span><span class="p">:</span><span class="s">@"https://login.eagleeyenetworks.com/g/aaa/authorize"</span>
+<span class="nf">parameters</span><span class="p">:</span><span class="n">parameters</span>
+  <span class="nf">success</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSArray</span> <span class="o">*</span><span class="n">cookies</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSHTTPCookie</span> <span class="nf">cookiesWithResponseHeaderFields</span><span class="p">:</span><span class="n">operation</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">allHeaderFields</span>
+                                                              <span class="nf">forURL</span><span class="p">:</span><span class="n">operation</span><span class="p">.</span><span class="n">response</span><span class="p">.</span><span class="n">URL</span><span class="p">]</span><span class="err">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">cookies</span><span class="p">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">NSHTTPCookie</span> <span class="o">*</span><span class="n">cookie</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSHTTPCookie</span> <span class="o">*</span><span class="p">)</span><span class="n">cookies</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="err">;</span>
+      <span class="n">self</span><span class="p">.</span><span class="n">sessionID</span> <span class="o">=</span> <span class="n">cookie</span><span class="p">.</span><span class="n">value</span><span class="err">;</span>
+    <span class="p">}</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">getDeviceListAndRequestTimelapseOnSuccess</span><span class="p">]</span><span class="err">;</span>
+  <span class="p">}</span>
+  <span class="nf">failure</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error: %@"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span><span class="err">;</span>
+  <span class="p">}];</span>
+<span class="p">}</span>
+</pre>
+
+<p>Now that we are logged in, we will select a camera to be the source of the timelapse video. We need to first get a list of all camera devices by making a request to /device/list. We’ll want to only get devices of type ‘camera’ by using the ‘t’ parameter. Additionally, we’ll do a quick check of the camera status to make sure we don’t grab any offline cameras.</p>
+
+<p><code class="prettyprint">
+Step 3
+</code></p>
+
+<blockquote>
+<p>Step 3</p>
+</blockquote>
+<pre class="highlight objective_c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">getDeviceListAndRequestTimelapseOnSuccess</span> <span class="p">{</span>
+  <span class="c1">// specify device type of camera
+</span>  <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">parameters</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span> <span class="s">@"t"</span><span class="o">:</span> <span class="s">@"camera"</span><span class="p">,</span>
+                                <span class="s">@"A"</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">sessionID</span> <span class="p">};</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">manager</span> <span class="nf">GET</span><span class="p">:</span><span class="s">@"https://login.eagleeyenetworks.com/g/device/list"</span>
+<span class="nf">parameters</span><span class="p">:</span><span class="n">parameters</span>
+   <span class="nf">success</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="err">;</span>
+     <span class="n">NSArray</span> <span class="o">*</span><span class="n">response</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="nf">JSONObjectWithData</span><span class="p">:</span><span class="n">responseObject</span>
+                                                         <span class="nf">options</span><span class="p">:</span><span class="n">NSJSONReadingMutableContainers</span>
+                                                           <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">]</span><span class="err">;</span>
+     <span class="c1">// see https://apidocs.eagleeyenetworks.com/apidocs/#!/device/deviceList_get_4
+</span>     <span class="c1">// for indexing of subarrays and parsing more information
+</span>     <span class="c1">// from the /device/list api call
+</span>     <span class="k">for</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="n">subarray</span> <span class="k">in</span> <span class="n">response</span><span class="p">)</span> <span class="p">{</span>
+       <span class="kt">int</span> <span class="n">cameraStatus</span> <span class="o">=</span> <span class="p">[</span><span class="n">subarray</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="nf">intValue</span><span class="p">]</span><span class="err">;</span>
+       <span class="n">BOOL</span> <span class="n">cameraRegistered</span> <span class="o">=</span> <span class="p">(</span><span class="n">cameraStatus</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">0</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="err">;</span>
+       <span class="n">BOOL</span> <span class="n">cameraOnline</span> <span class="o">=</span> <span class="p">(</span><span class="n">cameraStatus</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="err">;</span>
+       <span class="n">BOOL</span> <span class="n">cameraOn</span> <span class="o">=</span> <span class="p">(</span><span class="n">cameraStatus</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="err">;</span>
+       <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">cameraOn</span> <span class="o">||</span> <span class="o">!</span><span class="n">cameraRegistered</span> <span class="o">||</span> <span class="o">!</span><span class="n">cameraOnline</span><span class="p">)</span> <span class="p">{</span>
+         <span class="k">continue</span><span class="err">;</span>
+       <span class="p">}</span>
+       <span class="c1">// for the purposes of this example, we'll just request timelapse for first camera
+</span>       <span class="n">self</span><span class="p">.</span><span class="n">cameraID</span> <span class="o">=</span> <span class="n">subarray</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="err">;</span>
+       <span class="p">[</span><span class="n">self</span> <span class="nf">putTimelapseWithStartTimeString</span><span class="p">:</span><span class="s">@"20140530163000.000"</span>
+                               <span class="nf">endTimeString</span><span class="p">:</span><span class="s">@"20140530163500.000"</span><span class="p">]</span><span class="err">;</span>
+       <span class="k">break</span><span class="err">;</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nf">failure</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error: %@"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span><span class="err">;</span>
+   <span class="p">}];</span>
+<span class="p">}</span>
+</pre>
+
+<p>We’ll pick the first non-offline camera from the /device/list response and request an arbitrary start and end time for the timelapse video. PUT /time_lapse starts a timelapse video job to create the video from images in the time frame. In this method, we will kick off a local timer to repeatedly check the status of the timelapse job.</p>
+
+<p><code class="prettyprint">
+Step 4
+</code></p>
+
+<blockquote>
+<p>Step 4</p>
+</blockquote>
+<pre class="highlight objective_c"><span class="n">bool</span> <span class="n">timelapseReadyToDownload</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">putTimelapseWithStartTimeString</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">startTimeString</span>
+                          <span class="nf">endTimeString</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">endTimeString</span> <span class="p">{</span>
+  <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">parameters</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span> <span class="s">@"device_id"</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">cameraID</span><span class="p">,</span>
+                                <span class="s">@"start_timestamp"</span><span class="o">:</span> <span class="n">startTimeString</span><span class="p">,</span>
+                                <span class="s">@"end_timestamp"</span><span class="o">:</span> <span class="n">endTimeString</span><span class="p">,</span>
+                                <span class="s">@"A"</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">sessionID</span> <span class="p">};</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">manager</span> <span class="nf">PUT</span><span class="p">:</span><span class="s">@"https://login.eagleeyenetworks.com/g/time_lapse"</span>
+<span class="nf">parameters</span><span class="p">:</span><span class="n">parameters</span>
+   <span class="nf">success</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="err">;</span>
+     <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">response</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="nf">JSONObjectWithData</span><span class="p">:</span><span class="n">responseObject</span>
+                                                              <span class="nf">options</span><span class="p">:</span><span class="n">NSJSONReadingAllowFragments</span>
+                                                                <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">]</span><span class="err">;</span>
+     <span class="n">self</span><span class="p">.</span><span class="n">timelapseID</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s">@"id"</span><span class="p">]</span><span class="err">;</span>
+     <span class="p">[</span><span class="n">NSTimer</span> <span class="nf">scheduledTimerWithTimeInterval</span><span class="p">:</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span>
+                                      <span class="nf">target</span><span class="p">:</span><span class="n">self</span>
+                                    <span class="nf">selector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">checkTimelapseProgress</span><span class="p">)</span>
+                                    <span class="nf">userInfo</span><span class="p">:</span><span class="nb">nil</span>
+                                     <span class="nf">repeats</span><span class="p">:</span><span class="nb">YES</span><span class="p">]</span><span class="err">;</span>
+   <span class="p">}</span>
+   <span class="nf">failure</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error: %@"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span><span class="err">;</span>
+   <span class="p">}];</span>
+<span class="p">}</span>
+</pre>
+
+<p>After the timelapse job is created, we need to check on its status. We can check status of the job via the GET /time_lapse API request. The server responds to the GET request with a percent_complete and a download_url. We’ll repeatedly check the percent_complete until it reaches 100 and we have a download_url.</p>
+
+<p><code class="prettyprint">
+Step 5
+</code></p>
+
+<blockquote>
+<p>Step 5</p>
+</blockquote>
+<pre class="highlight objective_c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">checkTimelapseProgress</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">timelapseReadyToDownload</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">parameters</span> <span class="o">=</span> <span class="err">@</span><span class="p">{</span> <span class="s">@"id"</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">timelapseID</span><span class="p">,</span>
+                                <span class="s">@"device_id"</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">cameraID</span><span class="p">,</span>
+                                <span class="s">@"A"</span><span class="o">:</span> <span class="n">self</span><span class="p">.</span><span class="n">sessionID</span> <span class="p">};</span>
+  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">manager</span> <span class="nf">GET</span><span class="p">:</span><span class="s">@"https://login.eagleeyenetworks.com/g/time_lapse"</span>
+<span class="nf">parameters</span><span class="p">:</span><span class="n">parameters</span>
+   <span class="nf">success</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="err">;</span>
+     <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">response</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSJSONSerialization</span> <span class="nf">JSONObjectWithData</span><span class="p">:</span><span class="n">responseObject</span>
+                                                              <span class="nf">options</span><span class="p">:</span><span class="n">NSJSONReadingAllowFragments</span>
+                                                                <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">error</span><span class="p">]</span><span class="err">;</span>
+     <span class="n">CGFloat</span> <span class="n">percentComplete</span> <span class="o">=</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)[</span><span class="n">response</span><span class="p">[</span><span class="s">@"percent_complete"</span><span class="p">]</span> <span class="nf">floatValue</span><span class="p">]</span><span class="err">;</span>
+     <span class="n">NSString</span> <span class="o">*</span><span class="n">downloadUrl</span> <span class="o">=</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">response</span><span class="p">[</span><span class="s">@"url"</span><span class="p">]</span><span class="err">;</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">percentComplete</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">.</span><span class="mi">0</span><span class="n">f</span> <span class="o">&amp;&amp;</span> <span class="n">downloadUrl</span><span class="p">)</span> <span class="p">{</span>
+       <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Ready for download!"</span><span class="p">)</span><span class="err">;</span>
+       <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Here's your url to download the video: %@"</span><span class="p">,</span> <span class="n">downloadUrl</span><span class="p">)</span><span class="err">;</span>
+       <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Your session id is: %@"</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">sessionID</span><span class="p">)</span><span class="err">;</span>
+       <span class="n">timelapseReadyToDownload</span> <span class="o">=</span> <span class="nb">true</span><span class="err">;</span>
+       <span class="n">downloadUrl</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"%@?A=%@"</span><span class="p">,</span> <span class="n">downloadUrl</span><span class="p">,</span> <span class="n">self</span><span class="p">.</span><span class="n">sessionID</span><span class="p">]</span><span class="err">;</span>
+       <span class="p">[</span><span class="n">self</span> <span class="nf">playVideoFromDownloadUrl</span><span class="p">:</span><span class="n">downloadUrl</span><span class="p">]</span><span class="err">;</span>
+     <span class="p">}</span>
+     <span class="k">else</span> <span class="p">{</span>
+       <span class="n">NSLog</span><span class="p">(</span><span class="s">@"percent complete: %f"</span><span class="p">,</span> <span class="n">percentComplete</span><span class="p">)</span><span class="err">;</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nf">failure</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error: %@"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span><span class="err">;</span>
+   <span class="p">}];</span>
+<span class="p">}</span>
+</pre>
+
+<p>Now that we have a download url, the last step is to actually download the video and play it. On iOS, we will need to explicitly download the video and then tell a new instance of MPMoviePlayerViewController to play the video file. On OS X, Safari will automatically handle the downloading for us if we just tell our shell to open up the download url.</p>
+
+<p><code class="prettyprint">
+Step 6
+</code></p>
+
+<blockquote>
+<p>Step 6</p>
+</blockquote>
+<pre class="highlight objective_c"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">playVideoFromDownloadUrl</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">downloadUrl</span> <span class="p">{</span>
+<span class="cp">#if TARGET_OS_IPHONE
+</span>  <span class="n">NSURLRequest</span> <span class="o">*</span><span class="n">request</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURLRequest</span> <span class="nf">requestWithURL</span><span class="p">:[</span><span class="n">NSURL</span> <span class="nf">URLWithString</span><span class="p">:</span><span class="n">downloadUrl</span><span class="p">]];</span>
+  <span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span> <span class="o">=</span> <span class="p">[[</span><span class="n">AFHTTPRequestOperation</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithRequest</span><span class="p">:</span><span class="n">request</span><span class="p">];</span>
+  <span class="n">NSArray</span> <span class="o">*</span><span class="n">paths</span> <span class="o">=</span> <span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">);</span>
+  <span class="n">NSString</span> <span class="o">*</span><span class="n">path</span> <span class="o">=</span> <span class="p">[[</span><span class="n">paths</span> <span class="nf">objectAtIndex</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span> <span class="nf">stringByAppendingPathComponent</span><span class="p">:</span><span class="s">@"een-timelapse.mp4"</span><span class="p">];</span>
+  <span class="n">operation</span><span class="p">.</span><span class="n">outputStream</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSOutputStream</span> <span class="nf">outputStreamToFileAtPath</span><span class="p">:</span><span class="n">path</span> <span class="nf">append</span><span class="p">:</span><span class="nb">NO</span><span class="p">];</span>
+  <span class="p">[</span><span class="n">operation</span> <span class="nf">setCompletionBlockWithSuccess</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">id</span> <span class="n">responseObject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Successfully downloaded file to %@"</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span><span class="err">;</span>
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">contentUrl</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">path</span><span class="p">]</span><span class="err">;</span>
+    <span class="n">MPMoviePlayerViewController</span> <span class="o">*</span><span class="n">videoController</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MPMoviePlayerViewController</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithContentURL</span><span class="p">:</span><span class="n">contentUrl</span><span class="p">]</span><span class="err">;</span>
+    <span class="n">videoController</span><span class="p">.</span><span class="n">moviePlayer</span><span class="p">.</span><span class="n">movieSourceType</span> <span class="o">=</span> <span class="n">MPMovieSourceTypeFile</span><span class="err">;</span>
+    <span class="p">[</span><span class="n">videoController</span><span class="p">.</span><span class="n">moviePlayer</span> <span class="nf">prepareToPlay</span><span class="p">]</span><span class="err">;</span>
+    <span class="p">[</span><span class="n">videoController</span><span class="p">.</span><span class="n">moviePlayer</span> <span class="nf">play</span><span class="p">]</span><span class="err">;</span>
+    <span class="p">[</span><span class="n">self</span> <span class="nf">presentMoviePlayerViewControllerAnimated</span><span class="p">:</span><span class="n">videoController</span><span class="p">]</span><span class="err">;</span>
+  <span class="p">}</span> <span class="nf">failure</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">AFHTTPRequestOperation</span> <span class="o">*</span><span class="n">operation</span><span class="p">,</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span><span class="err">;</span>
+  <span class="p">}];</span>
+  <span class="p">[</span><span class="n">operation</span> <span class="nf">start</span><span class="p">];</span>
+<span class="cp">#else
+</span>  <span class="n">NSString</span> <span class="o">*</span><span class="n">commandString</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSString</span> <span class="nf">stringWithFormat</span><span class="p">:</span><span class="s">@"open %@"</span><span class="p">,</span> <span class="n">downloadUrl</span><span class="p">];</span>
+  <span class="n">system</span><span class="p">([</span><span class="n">commandString</span> <span class="nf">cStringUsingEncoding</span><span class="p">:</span><span class="n">NSUTF8StringEncoding</span><span class="p">]);</span>
+<span class="cp">#endif
+</span><span class="p">}</span>
+</pre>
+
+<p>And that was it! We’ve now gone through the entire flow of creating and playing a timelapse video. Now you can use this knowledge to use in your own Eagle Eye app.</p>
 
           <h1 id='definition-of-terms'>Definition of Terms</h1>
 <p><strong>Eagle Eye Video Bank (EEVB)</strong>
