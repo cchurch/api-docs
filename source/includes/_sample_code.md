@@ -298,6 +298,237 @@ The power of this API lies in the ability of being able to control what events a
 
 <!--===================================================================-->
 ## Creating Timelapse Video
-Learn how to create a time lapse video for a specific time range.
+In this tutorial, we will walk you through how to generate a timelapse video from images in a time range. The code will be shown in Objective-C and can be compiled for either iOS or OS X. We will need a library for making asynchronous network requests. In this example, we’ll be using AFNetworking: [http://cocoadocs.org/docsets/AFNetworking/2.2.4/](http://cocoadocs.org/docsets/AFNetworking/2.2.4/).
 
-[Learn More](http://www.eagleeyenetworks.com/video-api-example-code/time-lapse/)
+The full source code is available here: [https://github.com/cazares/EENTimelapse](https://github.com/cazares/EENTimelapse)
+
+The first step is to initialize our HTTP request operation manager that we will be using to make asynchronous requests. We will store this manager in a property. We’ll also use three other properties – sessionID, timelapseID, and cameraID to help us make subsequent API requests.
+
+`
+Step 1
+`
+
+> Step 1
+
+```objc
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@property (nonatomic, strong) NSString *sessionID;
+@property (nonatomic, strong) NSString *timelapseID;
+@property (nonatomic, strong) NSString *cameraID;
+ 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+  }
+  return self;
+}
+```
+
+After initialization, we’ll need to log in to the Eagle Eye system through the authentication and authorization API calls. To log in, we will make a POST /aaa/authenticate request followed by a POST /aaa/authorize request. The /aaa/authorize response will contain a cookie. We will save its value in our local sessionID property to use in subsequent API calls via the ‘A’ parameter.
+
+`
+Step 2
+`
+
+> Step 2
+
+```objc
+- (void)authenticateWithUsername:(NSString *)username
+                        password:(NSString *)password {
+  NSDictionary *parameters = @{ @"username": username,
+                                @"password": password };
+  [self.manager POST:@"https://login.eagleeyenetworks.com/g/aaa/authenticate"
+parameters:parameters
+  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSError *error;
+    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                             options:NSJSONReadingAllowFragments
+                                                               error:&error];
+    [self authorizeUserWithToken:response[@"token"]];
+  }
+  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
+}
+ 
+- (void)authorizeUserWithToken:(NSString *)token {
+  NSDictionary *parameters = @{ @"token": token };
+  [self.manager POST:@"https://login.eagleeyenetworks.com/g/aaa/authorize"
+parameters:parameters
+  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:operation.response.allHeaderFields
+                                                              forURL:operation.response.URL];
+    if (cookies.count > 0) {
+      NSHTTPCookie *cookie = (NSHTTPCookie *)cookies[0];
+      self.sessionID = cookie.value;
+    }
+    [self getDeviceListAndRequestTimelapseOnSuccess];
+  }
+  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"Error: %@", error);
+  }];
+}
+```
+
+Now that we are logged in, we will select a camera to be the source of the timelapse video. We need to first get a list of all camera devices by making a request to /device/list. We’ll want to only get devices of type ‘camera’ by using the ‘t’ parameter. Additionally, we’ll do a quick check of the camera status to make sure we don’t grab any offline cameras.
+
+`
+Step 3
+`
+
+> Step 3
+
+```objc
+- (void)getDeviceListAndRequestTimelapseOnSuccess {
+  // specify device type of camera
+  NSDictionary *parameters = @{ @"t": @"camera",
+                                @"A": self.sessionID };
+  [self.manager GET:@"https://login.eagleeyenetworks.com/g/device/list"
+parameters:parameters
+   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSError *error;
+     NSArray *response = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:&error];
+     // see https://apidocs.eagleeyenetworks.com/apidocs/#!/device/deviceList_get_4
+     // for indexing of subarrays and parsing more information
+     // from the /device/list api call
+     for (NSArray *subarray in response) {
+       int cameraStatus = [subarray[10] intValue];
+       BOOL cameraRegistered = (cameraStatus & (1 << 0)) != 0;
+       BOOL cameraOnline = (cameraStatus & (1 << 1)) != 0;
+       BOOL cameraOn = (cameraStatus & (1 << 2)) != 0;
+       if (!cameraOn || !cameraRegistered || !cameraOnline) {
+         continue;
+       }
+       // for the purposes of this example, we'll just request timelapse for first camera
+       self.cameraID = subarray[1];
+       [self putTimelapseWithStartTimeString:@"20140530163000.000"
+                               endTimeString:@"20140530163500.000"];
+       break;
+     }
+   }
+   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"Error: %@", error);
+   }];
+}
+```
+
+We’ll pick the first non-offline camera from the /device/list response and request an arbitrary start and end time for the timelapse video. PUT /time_lapse starts a timelapse video job to create the video from images in the time frame. In this method, we will kick off a local timer to repeatedly check the status of the timelapse job.
+
+`
+Step 4
+`
+
+> Step 4
+
+```objc
+bool timelapseReadyToDownload = false;
+- (void)putTimelapseWithStartTimeString:(NSString *)startTimeString
+                          endTimeString:(NSString *)endTimeString {
+  NSDictionary *parameters = @{ @"device_id": self.cameraID,
+                                @"start_timestamp": startTimeString,
+                                @"end_timestamp": endTimeString,
+                                @"A": self.sessionID };
+  [self.manager PUT:@"https://login.eagleeyenetworks.com/g/time_lapse"
+parameters:parameters
+   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSError *error;
+     NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                              options:NSJSONReadingAllowFragments
+                                                                error:&error];
+     self.timelapseID = response[@"id"];
+     [NSTimer scheduledTimerWithTimeInterval:1.0
+                                      target:self
+                                    selector:@selector(checkTimelapseProgress)
+                                    userInfo:nil
+                                     repeats:YES];
+   }
+   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"Error: %@", error);
+   }];
+}
+```
+
+After the timelapse job is created, we need to check on its status. We can check status of the job via the GET /time_lapse API request. The server responds to the GET request with a percent_complete and a download_url. We’ll repeatedly check the percent_complete until it reaches 100 and we have a download_url.
+
+`
+Step 5
+`
+
+> Step 5
+
+```objc
+- (void)checkTimelapseProgress {
+  if (timelapseReadyToDownload) {
+    return;
+  }
+  NSDictionary *parameters = @{ @"id": self.timelapseID,
+                                @"device_id": self.cameraID,
+                                @"A": self.sessionID };
+  [self.manager GET:@"https://login.eagleeyenetworks.com/g/time_lapse"
+parameters:parameters
+   success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSError *error;
+     NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseObject
+                                                              options:NSJSONReadingAllowFragments
+                                                                error:&error];
+     CGFloat percentComplete = (CGFloat)[response[@"percent_complete"] floatValue];
+     NSString *downloadUrl = (NSString *)response[@"url"];
+     if (percentComplete >= 100.0f && downloadUrl) {
+       NSLog(@"Ready for download!");
+       NSLog(@"Here's your url to download the video: %@", downloadUrl);
+       NSLog(@"Your session id is: %@", self.sessionID);
+       timelapseReadyToDownload = true;
+       downloadUrl = [NSString stringWithFormat:@"%@?A=%@", downloadUrl, self.sessionID];
+       [self playVideoFromDownloadUrl:downloadUrl];
+     }
+     else {
+       NSLog(@"percent complete: %f", percentComplete);
+     }
+   }
+   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     NSLog(@"Error: %@", error);
+   }];
+}
+```
+
+Now that we have a download url, the last step is to actually download the video and play it. On iOS, we will need to explicitly download the video and then tell a new instance of MPMoviePlayerViewController to play the video file. On OS X, Safari will automatically handle the downloading for us if we just tell our shell to open up the download url.
+
+`
+Step 6
+`
+
+> Step 6
+
+```objc
+- (void)playVideoFromDownloadUrl:(NSString *)downloadUrl {
+#if TARGET_OS_IPHONE
+  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:downloadUrl]];
+  AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *path = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"een-timelapse.mp4"];
+  operation.outputStream = [NSOutputStream outputStreamToFileAtPath:path append:NO];
+  [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSLog(@"Successfully downloaded file to %@", path);
+    NSURL *contentUrl = [NSURL fileURLWithPath:path];
+    MPMoviePlayerViewController *videoController = [[MPMoviePlayerViewController alloc] initWithContentURL:contentUrl];
+    videoController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+    [videoController.moviePlayer prepareToPlay];
+    [videoController.moviePlayer play];
+    [self presentMoviePlayerViewControllerAnimated:videoController];
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSLog(@"%@", error);
+  }];
+  [operation start];
+#else
+  NSString *commandString = [NSString stringWithFormat:@"open %@", downloadUrl];
+  system([commandString cStringUsingEncoding:NSUTF8StringEncoding]);
+#endif
+}
+```
+
+And that was it! We’ve now gone through the entire flow of creating and playing a timelapse video. Now you can use this knowledge to use in your own Eagle Eye app.
