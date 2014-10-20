@@ -152,12 +152,6 @@ This is the algorithm at a high level, though the specifics can get a little mor
 The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home grown packing algorithm.
 
 <!--===================================================================-->
-## Annotating Previews
-In this tutorial, you will learn how to annotate your surveillance images. We will walk you through the complete flow from logging in and retrieving camera ids, to annotating images and then searching through them.
-
-[Learn More](http://www.eagleeyenetworks.com/video-api-example-code/annotating-previews/)
-
-<!--===================================================================-->
 ## Playing Live Video
 Learn how to embed live video into your own application.
 
