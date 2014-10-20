@@ -8,12 +8,12 @@ This service is used to retrieve and update recording info for recordings that w
 <!--===================================================================-->
 ## Get Recording Object
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -40,12 +40,12 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Update Recording Object
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```

@@ -234,6 +234,8 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Create Timelapse Video
 
+> Request TODO
+
 This api is used to request the creation of a new time lapse video for a particular camera and time range. An ID will be returned that you can then use (see GET below) to find out the progress and the download URL of the video, which will be in .mp4 format.
 
 ### HTTP Request
@@ -266,6 +268,8 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Retrieve Timelapse Video
+
+> Request TODO
 
 Using the ID returned when requesting the time lapse (see PUT above), this api returns information about the time lapse request. It allows you to find out the progress and how to download the resulting video, which will be in .mp4 format.
 

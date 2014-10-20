@@ -8,6 +8,16 @@ This service allows for search across various types of data. Currenlty only supp
 <!--===================================================================-->
 ## Search Recordings
 
+> Request TODO
+
+```shell
+```
+
+> Json Response TODO
+
+```json
+```
+
 Returns array of recording objects that match a search value.
 
 ### HTTP Request
@@ -48,8 +58,17 @@ HTTP Status Code    | Data Type
 403 | Forbidden due to the user missing the necessary privileges
 
 <!--===================================================================-->
-
 ## Search Annotations
+
+> Request TODO
+
+```shell
+```
+
+> Json Response TODO
+
+```json
+```
 
 Returns array of annotation objects that match a search value.
 

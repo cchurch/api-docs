@@ -140,12 +140,12 @@ ALRE      | Alert Region Of Interest End
 <!--===================================================================-->
 ## Initialize Poll
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -162,12 +162,12 @@ PostPollCameras | json        | Cameras
 <!--===================================================================-->
 ## Polling
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```

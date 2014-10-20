@@ -10,7 +10,7 @@ Given the macro nature and the number of devices and operations that may occur, 
 <!--===================================================================-->
 ## Recording On
 
-> Request
+> Request TODO
 
 ```shell
 ```
@@ -39,7 +39,7 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Recording Off
 
-> Request
+> Request TODO
 
 ```shell
 ```

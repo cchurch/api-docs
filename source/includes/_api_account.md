@@ -8,12 +8,12 @@ The account service allows managing accounts by superusers and account_superuser
 <!--===================================================================-->
 ## Get Account
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -40,12 +40,12 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Create Account
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -86,12 +86,12 @@ is_initial_user_not_admin| int      	| Indicates whether you want do NOT want th
 <!--===================================================================-->
 ## Update Account
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -139,12 +139,12 @@ brand_name				| string      	| Branded company name
 <!--===================================================================-->
 ## Delete Account
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -172,12 +172,12 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Get List of Accounts
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```

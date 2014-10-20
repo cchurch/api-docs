@@ -3,6 +3,8 @@
 <!--===================================================================-->
 ## Create Account 
 
+> Request TODO
+
 This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link the user must click to activate the account. Account cannot be used until it is activated.
 
 ### HTTP Request
@@ -27,6 +29,8 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Validate Account 
+
+> Request TODO
 
 This is used to verify the email address supplied when the account is created. When successful, the account is set to active and a user session is created. User will not be required to login again.
 
@@ -60,6 +64,8 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Forgot Password
 
+> Request TODO
+
 Password recovery is a multi-step process. Step one requests a reset email be sent to the email address of a registered user. Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience). Step three uses allows the user to change the password. The results of step three is that a user session is created for the user.
 
 ### HTTP Request
@@ -86,6 +92,8 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Check Password Reset Token
 
+> Request TODO
+
 This is step two of the password recover/reset process. It verifies that the supplied token is a valid reset token.
 
 ### HTTP Request
@@ -110,6 +118,8 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Reset Password
+
+> Request TODO
 
 This is step three of the password recover/reset process. It both verifies that the supplied token is a valid reset token and then, if valid resets the password associated with the token to the newly supplied password. Upon completion, a user login session is created.
 
@@ -143,6 +153,8 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Resend Registration Email
 
+> Request TODO
+
 This is used by users who have registered for an account, but never confirmed the registration. This will allow the registration confirmation email to be re-sent to the user.
 
 ### HTTP Request
@@ -167,6 +179,8 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Resend User Verification Email
+
+> Request TODO
 
 This is used by users who have had a user account created for them, but they never confirmed their user account. This will re-send the user confirmation email so that they can then confirm their user account.
 
@@ -194,6 +208,8 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Change Password
 
+> Request TODO
+
 This allows a user to change their password directly while authenticated, and also allows super users to change the password of the users they manage. If someone is changing their own password, they must send their current password as well. If someone is changing one of the users they manage, they only need to send the new password.
 
 ### HTTP Request
@@ -219,6 +235,8 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Switch Account
 
+> Request TODO
+
 This allows a user to "log in" to another account that the user has access to (see "list/accounts"). Most commonly this be would be needed for a master account user accessing their sub accounts.
 
 ### HTTP Request
@@ -240,6 +258,8 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Logout
+
+> Request TODO
 
 Log out user and invalidate HTTP session cookie
 

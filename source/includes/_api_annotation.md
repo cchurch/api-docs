@@ -10,12 +10,12 @@ Annotations are associated with a device and a timestamp. They are subject to no
 <!--===================================================================-->
 ## Create Annotation
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
@@ -44,12 +44,12 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Update Annotation
 
-> Request
+> Request TODO
 
 ```shell
 ```
 
-> Json Response
+> Json Response TODO
 
 ```json
 ```
