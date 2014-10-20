@@ -183,9 +183,117 @@ https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%
 
 <!--===================================================================-->
 ## Long Polling
-Learn how to subscribe to the poll stream and receive camera events in real time.
 
-[Learn More](http://www.eagleeyenetworks.com/video-api-example-code/long-polling/)
+> Json Request for Post /poll
+
+```json
+{
+     "cameras": {
+         "100c30ea": {
+             "resource": [
+                 "event",
+                 "pre",
+                 "thumb",
+                 "status"
+             ],
+             "event": [
+                 "ECON",
+                 "ECOF",
+                 "AELI",
+                 "AELO",
+                 "EMES",
+                 "EMEE",
+                 "CECF",
+                 "CSAT",
+                 "CSDT",
+                 "CONN",
+                 "COFF",
+                 "ESES",
+                 "ESEE"
+             ]
+         },
+         "100f6136": {
+             "resource": [
+                 "event",
+                 "pre",
+                 "thumb",
+                 "status"
+             ],
+             "event": [
+                 "ECON",
+                 "ECOF",
+                 "AELI",
+                 "AELO",
+             ]
+         },
+         "1009c1ab": {
+             "resource": [
+                 "event",
+                 "pre",
+                 "thumb",
+                 "status"
+             ],
+             "event": [
+                 "EMES",
+                 "EMEE",
+                 "CECF",
+                 "CSAT",
+                 "CSDT",
+                 "CONN",
+                 "COFF",
+                 "ESES",
+                 "ESEE"
+             ]
+         }
+}
+```
+
+Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial, we will walk you through the steps to set up the poll stream for long polling using the /poll API.
+
+Long polling is used in the mobile clients. The process is to first register to the poll stream using the POST /poll API followed by constant API requests for GET /poll.
+
+The POST /poll API is used to initialize the poll stream and to register the events we want to listen for. For the mobile clients, we are listening to resource type ‘pre’ and ‘status’, which are the preview images and status bits. Since the data we are sending to the server is a json, the content-type of this request will be application/json. Here is an example of what the the data may look like.
+
+Once the POST /poll request has been made successfully, a token is returned to the user. This token can be used to successfully make all subsequent GET /poll requests. If the token is not desired, the same requests can be made if you have the ‘ee-poll-ses’ cookie from the POST /poll request.
+
+The GET /poll request should be called frequently so that new data can arrive as soon as possible. The response may be empty or it may look something like this.
+
+> Response for Get /poll
+
+```json
+
+{
+    "cameras": {
+        "10003254": {
+            "event": {
+                "PRFR": {
+                    "cameraid": "10003254",
+                    "timestamp": "20140528224954.312",
+                    "file_offset": 17804500,
+                    "frame_size": 6152,
+                    "previewid": 1401314400
+                }
+            }
+        },
+        "100a9541": {
+            "event": {
+                "PRFR": {
+                    "cameraid": "100a9541",
+                    "timestamp": "20140528224955.507",
+                    "file_offset": 12004385,
+                    "frame_size": 3706,
+                    "previewid": 1401314400
+                }
+            },
+            "pre": "20140528224955.507"
+        }
+    }
+}
+```
+
+Only attributes with updated information will be returned in the response payload. For the mobile apps, we monitor the ‘pre’ attribute for new timestamps, and when a new timestamp does come in, we make the appropriate API call to retrieve the camera image.
+
+The power of this API lies in the ability of being able to control what events and resource types to listen to. This allows updates to the camera to be known in real time.
 
 
 <!--===================================================================-->
