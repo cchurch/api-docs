@@ -11,11 +11,7 @@ This service allows users to send feedback to support.
 > Request TODO
 
 ```shell
-```
-
-> Json Response TODO
-
-```json
+curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/feedback --data "subject=[SUBJECT]&message=[MESSAGE]"
 ```
 
 Sends feedback to support
