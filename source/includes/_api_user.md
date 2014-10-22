@@ -362,7 +362,7 @@ Returns array of arrays, with each sub-array representing a user available to th
 
 `GET https://login.eagleeyenetworks.com/g/user/list`
 
-### User Model
+### User Array Attributes
 
 Array Index     | Attribute   | Data Type       | Description
 ---------       | ----------- | -----------     | -----------
