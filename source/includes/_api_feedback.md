@@ -8,7 +8,7 @@ This service allows users to send feedback to support.
 <!--===================================================================-->
 ## Send Feedback
 
-> Request TODO
+> Request
 
 ```shell
 curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/feedback --data "subject=[SUBJECT]&message=[MESSAGE]"
