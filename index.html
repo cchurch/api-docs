@@ -1022,7 +1022,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <p>Returns array of arrays, with each sub-array representing a user available to the current user. Please note that the ListUser model definition below has property keys, but that&rsquo;s only for reference purposes since it&rsquo;s actually just a standard array.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/user/list</code></p>
-<h3 id='user-model'>User Model</h1>
+<h3 id='user-array-attributes'>User Array Attributes</h1>
 <table><thead>
 <tr>
 <th>Array Index</th>
@@ -4209,6 +4209,10 @@ content-type: image/jpeg </li>
 
 <!--===================================================================-->
 <h2 id='create-timelapse-video'>Create Timelapse Video</h1>
+<blockquote>
+<p>Request TODO</p>
+</blockquote>
+
 <p>This api is used to request the creation of a new time lapse video for a particular camera and time range. An ID will be returned that you can then use (see GET below) to find out the progress and the download URL of the video, which will be in .mp4 format.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">PUT https://login.eagleeyenetworks.com/asset/time_lapse</code></p>
@@ -4295,6 +4299,10 @@ content-type: image/jpeg </li>
 
 <!--===================================================================-->
 <h2 id='retrieve-timelapse-video'>Retrieve Timelapse Video</h1>
+<blockquote>
+<p>Request TODO</p>
+</blockquote>
+
 <p>Using the ID returned when requesting the time lapse (see PUT above), this api returns information about the time lapse request. It allows you to find out the progress and how to download the resulting video, which will be in .mp4 format.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">GET https://login.eagleeyenetworks.com/asset/time_lapse</code></p>
@@ -4780,12 +4788,12 @@ content-type: image/jpeg </li>
 <!--===================================================================-->
 <h2 id='initialize-poll'>Initialize Poll</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 
@@ -4809,12 +4817,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='polling'>Polling</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 
@@ -5259,12 +5267,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='update-layout'>Update Layout</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 <h3 id='error-status-codes'>Error Status Codes</h1>
@@ -5443,6 +5451,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
           <h1 id='aaa'>AAA</h1>
 <!--===================================================================-->
 <h2 id='create-account'>Create Account</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/create_account --data <span class="s2">"email=[EMAIL]&amp;password=[PASSWORD]"</span>
+</pre>
+
 <p>This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link the user must click to activate the account. Account cannot be used until it is activated.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/create_account</code></p>
@@ -5507,6 +5521,20 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='validate-account'>Validate Account</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/validate_account --data <span class="s2">"id=[ID]&amp;token=[TOKEN]"</span>
+</pre>
+
+<blockquote>
+<p>Response Json</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca103fea"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
 <p>This is used to verify the email address supplied when the account is created. When successful, the account is set to active and a user session is created. User will not be required to login again.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/validate_account</code></p>
@@ -5585,6 +5613,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='forgot-password'>Forgot Password</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/forgot_password --data <span class="s2">"email=[EMAIL]"</span>
+</pre>
+
 <p>Password recovery is a multi-step process. Step one requests a reset email be sent to the email address of a registered user. Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience). Step three uses allows the user to change the password. The results of step three is that a user session is created for the user.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/forgot_password</code></p>
@@ -5647,6 +5681,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='check-password-reset-token'>Check Password Reset Token</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_token --data <span class="s2">"token=[TOKEN]"</span>
+</pre>
+
 <p>This is step two of the password recover/reset process. It verifies that the supplied token is a valid reset token.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_token</code></p>
@@ -5705,6 +5745,20 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='reset-password'>Reset Password</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/reset_password --data <span class="s2">"token=[TOKEN]&amp;password=[PASSWORD]"</span>
+</pre>
+
+<blockquote>
+<p>Response Json</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca0e1cf2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
 <p>This is step three of the password recover/reset process. It both verifies that the supplied token is a valid reset token and then, if valid resets the password associated with the token to the newly supplied password. Upon completion, a user login session is created.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/reset_password</code></p>
@@ -5783,6 +5837,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='resend-registration-email'>Resend Registration Email</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/resend_registration_email --data <span class="s2">"email=[EMAIL]"</span>
+</pre>
+
 <p>This is used by users who have registered for an account, but never confirmed the registration. This will allow the registration confirmation email to be re-sent to the user.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/resend_registration_email</code></p>
@@ -5841,6 +5901,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='resend-user-verification-email'>Resend User Verification Email</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email --data <span class="s2">"email=[EMAIL]"</span>
+</pre>
+
 <p>This is used by users who have had a user account created for them, but they never confirmed their user account. This will re-send the user confirmation email so that they can then confirm their user account.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email</code></p>
@@ -5903,6 +5969,20 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='change-password'>Change Password</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email --data <span class="s2">"password=[EMAIL]&amp;current_password=[CURRENT_PASSWORD]"</span>
+</pre>
+
+<blockquote>
+<p>Response Json</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca02c000"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
 <p>This allows a user to change their password directly while authenticated, and also allows super users to change the password of the users they manage. If someone is changing their own password, they must send their current password as well. If someone is changing one of the users they manage, they only need to send the new password.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/change_password</code></p>
@@ -5931,7 +6011,7 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <td>current_password</td>
 <td>string</td>
 <td>Current password of the user. Optional. If &ldquo;id&rdquo; argument is empty, or is equal to the authenticated user&rsquo;s id, then this is required.</td>
-<td>true</td>
+<td></td>
 </tr>
 </tbody></table>
 <h3 id='error-status-codes'>Error Status Codes</h1>
@@ -5965,6 +6045,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='switch-account'>Switch Account</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> --request POST https://login.eagleeyenetworks.com/g/aaa/switch_account
+</pre>
+
 <p>This allows a user to &ldquo;log in&rdquo; to another account that the user has access to (see &ldquo;list/accounts&rdquo;). Most commonly this be would be needed for a master account user accessing their sub accounts.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/switch_account</code></p>
@@ -6011,6 +6097,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='logout'>Logout</h1>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> --request POST https://login.eagleeyenetworks.com/g/aaa/logout
+</pre>
+
 <p>Log out user and invalidate HTTP session cookie</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/logout</code></p>
@@ -6033,16 +6125,291 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <p>The account service allows managing accounts by superusers and account_superusers.</p>
 
 <!--===================================================================-->
+<h2 id='account-model'>Account Model</h1>
+<blockquote>
+<p>Account Model</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00004206"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Greater Good"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"owner_account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_first_name"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_last_name"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john.doe@eagleeyenetworks.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_street"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"contact_city"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_state"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_postal_code"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US/Pacific"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"utc_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">-25200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"access_restriction"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"enable_mobile"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"allowable_ip_address_range"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"session_duration"</span><span class="p">:</span><span class="w"> </span><span class="mi">720</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"holiday"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"20130101"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"20130527"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"20130704"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"20130902"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"20131128"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"20131225"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"work_days"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1111111"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"work_hours"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"0800"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"1730"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"alert_mode"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"default"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"active_alert_mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"camera_shares"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"default_colo"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"default_camera_passwords"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_master"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_active"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_inactive"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_suspended"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"product_edition"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"camera_quantity"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_custom_brand_allowed"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_custom_brand"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"brand_logo_small"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"brand_logo_large"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"brand_subdomain"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"brand_corp_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"brand_name"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_phone"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"cc_info"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"street1"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"street2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"number"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"postal_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"expire"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"US"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"brand_support_email"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"brand_support_phone"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"map_lines"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_mobile_phone"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"is_rtsp_cameras_enabled"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_utc_offset"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<h3 id='account-attributes'>Account Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Unique identifier for the Account</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>Name of the account</td>
+</tr>
+<tr>
+<td>owner_account_id</td>
+<td>string</td>
+<td>Id of parent account</td>
+</tr>
+<tr>
+<td>contact_first_name</td>
+<td>string</td>
+<td>First name of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_last_name</td>
+<td>string</td>
+<td>Last name of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_email</td>
+<td>string</td>
+<td>Email of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_street</td>
+<td>array[string]</td>
+<td>Array of strings representing 1 or more parts of a street address of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_city</td>
+<td>string</td>
+<td>City of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_state</td>
+<td>string</td>
+<td>State/province of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_postal_code</td>
+<td>string</td>
+<td>Zip/postal code of primary contact for account</td>
+</tr>
+<tr>
+<td>contact_country</td>
+<td>string</td>
+<td>Country of primary contact for account</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>string</td>
+<td>[&lsquo;US/Alaska&rsquo; or &lsquo;US/Arizona&rsquo; or &lsquo;US/Central&rsquo; or &lsquo;US/Pacific&rsquo; or &lsquo;US/Eastern&rsquo; or &lsquo;US/Mountain&rsquo; or &lsquo;US/Hawaii&rsquo; or &lsquo;UTC&rsquo;]: Timezone of the account. Defaults to US/Pacific.</td>
+</tr>
+<tr>
+<td>utc_offset</td>
+<td>int</td>
+<td>Signed integer offset in seconds of the timezone from UTC</td>
+</tr>
+<tr>
+<td>access_restriction</td>
+<td>array[string]</td>
+<td>[&lsquo;enable_mobile&rsquo; or &lsquo;enable_ip_restrictions&rsquo;]: Each entry in the list contains a restriction. Possible values: &lsquo;enable_mobile&rsquo; = If present this account can has access to mobile clients. &lsquo;enable_ip_restrictions&rsquo; = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified.,</td>
+</tr>
+<tr>
+<td>allowable_ip_address_range</td>
+<td>array[string]</td>
+<td>Each entry in the list specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied.</td>
+</tr>
+<tr>
+<td>session_duration</td>
+<td>int</td>
+<td>session duration in minutes. Session duration of 0 means &lsquo;stay logged in forever&rsquo;</td>
+</tr>
+<tr>
+<td>holiday</td>
+<td>array[string]</td>
+<td>List of dates that during which holidays are observed. Format for dates is YYYYMMDD</td>
+</tr>
+<tr>
+<td>work_days</td>
+<td>string</td>
+<td>String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc&hellip; Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.</td>
+</tr>
+<tr>
+<td>work_hours</td>
+<td>array[string]</td>
+<td>Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time . The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.</td>
+</tr>
+<tr>
+<td>alert_mode</td>
+<td>array[string]</td>
+<td>List of possible alert modes as defined for this account.</td>
+</tr>
+<tr>
+<td>active_alert_mode</td>
+<td>string</td>
+<td>Must be blank or one of the values defined in alert_mode list.</td>
+</tr>
+<tr>
+<td>default_colo</td>
+<td>string</td>
+<td>Name of the colo in which this account data for this account will be stored by default.</td>
+</tr>
+<tr>
+<td>default_camera_passwords</td>
+<td>string</td>
+<td>Comma-delimited string of default camera passwords</td>
+</tr>
+<tr>
+<td>camera_shares</td>
+<td>array[array[string]])</td>
+<td>Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses. First element of sub array is action, with &rsquo;m&#39; for add/update, and &rsquo;d&#39; for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the &rsquo;m&#39; action. Example: [[&rsquo;m&#39;, &lsquo;12345678&rsquo;, [&lsquo;test@testing.com&rsquo;,&lsquo;test2@testing.com]]]</td>
+</tr>
+<tr>
+<td>is_master</td>
+<td>int</td>
+<td>[&#39;0&rsquo; or &lsquo;1&rsquo;]: Indicates whether the account is a Master account (1) or not (0)</td>
+</tr>
+<tr>
+<td>is_active</td>
+<td>int</td>
+<td>[&lsquo;0&rsquo; or &lsquo;1&rsquo;]: Indicates whether the account is Active (1) or not (0)</td>
+</tr>
+<tr>
+<td>is_inactive</td>
+<td>int</td>
+<td>[&lsquo;0&rsquo; or &lsquo;1&rsquo;]: Indicates whether the account is inactive (1) or not (0)</td>
+</tr>
+<tr>
+<td>is_suspended</td>
+<td>int</td>
+<td>[&lsquo;0&rsquo; or &lsquo;1&rsquo;]: Indicates whether the account is Suspended (1) or not (0)</td>
+</tr>
+<tr>
+<td>product_edition</td>
+<td>string</td>
+<td>The product edition the account is using</td>
+</tr>
+<tr>
+<td>camera_quantity</td>
+<td>int</td>
+<td>The total number of cameras the account is allowed to use,</td>
+</tr>
+<tr>
+<td>is_custom_brand_allowed</td>
+<td>int</td>
+<td>[&lsquo;0&rsquo; or &lsquo;1&rsquo;]: Indicates whether the account is allowed to have branding (1) or not (0)</td>
+</tr>
+<tr>
+<td>is_custom_brand</td>
+<td>int</td>
+<td>[&lsquo;0&rsquo; or &lsquo;1&rsquo;]: Indicates whether the account has branding enabled (1) or not (0)</td>
+</tr>
+<tr>
+<td>brand_logo_small</td>
+<td>string</td>
+<td>Base64 encoded image for the branded small logo</td>
+</tr>
+<tr>
+<td>brand_logo_large</td>
+<td>string</td>
+<td>Base64 encoded image for the branded large logo</td>
+</tr>
+<tr>
+<td>brand_subdomain</td>
+<td>string</td>
+<td>Sub domain for the branded url</td>
+</tr>
+<tr>
+<td>brand_corp_url</td>
+<td>string</td>
+<td>Corporate web site url</td>
+</tr>
+<tr>
+<td>brand_name</td>
+<td>string</td>
+<td>Branded company name</td>
+</tr>
+</tbody></table>
+
+<p>TODO Update Account Attributes</p>
+
+<!--===================================================================-->
 <h2 id='get-account'>Get Account</h1>
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre class="highlight shell"></pre>
-
-<blockquote>
-<p>Json Response</p>
-</blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight shell">curl -G https://login.eagleeyenetworks.com/g/account -d <span class="s2">"id=[ID]&amp;A=[VIDEOBANK_SESSIONID]"</span>
+</pre>
 
 <p>Returns account object by Id</p>
 <h3 id='http-request'>HTTP Request</h1>
@@ -6093,12 +6460,16 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre class="highlight shell"></pre>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> -X PUT -v -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/account -d <span class="s1">'{"name": "[NAME]", "contact_first_name": "[CONTACT_FIRST_NAME]", "contact_last_name": "[CONTACT_LAST_NAME]", "contact_email": "[CONTACT_EMAIL]"}'</span>
+</pre>
 
 <blockquote>
 <p>Json Response</p>
 </blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234abcd"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
 <p>Creates a new Account</p>
 <h3 id='http-request'>HTTP Request</h1>
@@ -6263,12 +6634,16 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre class="highlight shell"></pre>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> -X POST -v -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/account -d <span class="s1">'{"id": "[ACCOUNT_ID]", "contact_first_name": "[CONTACT_FIRST_NAME]"}'</span>
+</pre>
 
 <blockquote>
 <p>Json Response</p>
 </blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234abcd"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
 <p>Update an Account</p>
 <h3 id='http-request'>HTTP Request</h1>
@@ -6469,12 +6844,8 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre class="highlight shell"></pre>
-
-<blockquote>
-<p>Json Response</p>
-</blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> -X DELETE -v -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/account -d <span class="s2">"id=[ACCOUNT_ID]"</span> -G
+</pre>
 
 <p>Delete an Account</p>
 <h3 id='http-request'>HTTP Request</h1>
@@ -6527,12 +6898,106 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre class="highlight shell"></pre>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> --request GET https://login.eagleeyenetworks.com/g/account/list
+</pre>
 
 <blockquote>
 <p>Json Response</p>
 </blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight json"><span class="p">[</span><span class="w">
+    </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"00004206"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Greater Good"</span><span class="p">,</span><span class="w">
+        </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"20141022214539.000"</span><span class="p">,</span><span class="w">
+        </span><span class="mf">14.0</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+    </span><span class="p">[</span><span class="err">...</span><span class="p">]</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></pre>
+
+<p>Returns array of arrays, with each sub-array representing an account available to the user. Please note that the ListAccount model definition below has property keys, but that&rsquo;s only for reference purposes since it&rsquo;s actually just a standard array.</p>
+<h3 id='http-request'>HTTP Request</h1>
+<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/account/list</code></p>
+<h3 id='account-array-attributes'>Account Array Attributes</h1>
+<table><thead>
+<tr>
+<th>Array Index</th>
+<th>Attribute</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>id</td>
+<td>string</td>
+<td>Unique identifier for the Account</td>
+</tr>
+<tr>
+<td>1</td>
+<td>name</td>
+<td>string</td>
+<td>Name of the account</td>
+</tr>
+<tr>
+<td>2</td>
+<td>camera_online_count</td>
+<td>int</td>
+<td>Number of cameras currently online in the account</td>
+</tr>
+<tr>
+<td>3</td>
+<td>camera_count</td>
+<td>int</td>
+<td>Number of cameras currently in the account</td>
+</tr>
+<tr>
+<td>4</td>
+<td>user_count</td>
+<td>int</td>
+<td>Number of users currently in the account</td>
+</tr>
+<tr>
+<td>5</td>
+<td>is_suspended</td>
+<td>int</td>
+<td>Indicates the account is Suspended (1) or not (0)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>is_inactive</td>
+<td>int</td>
+<td>Indicates the account is Inactive (1) or not (0)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>is_active</td>
+<td>int</td>
+<td>Indicates the account is Active (1) or not (0)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>product_edition</td>
+<td>string</td>
+<td>Product edition in use by the account</td>
+</tr>
+</tbody></table>
+
+<p>TODO Update Account Array Attributes</p>
 <h3 id='error-status-codes'>Error Status Codes</h1>
 <table><thead>
 <tr>
@@ -6568,7 +7033,7 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='recording-on'>Recording On</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
@@ -6627,7 +7092,7 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='recording-off'>Recording Off</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
@@ -6760,12 +7225,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='create-annotation'>Create Annotation</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 
@@ -6824,12 +7289,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='update-annotation'>Update Annotation</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 
@@ -6911,12 +7376,8 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre class="highlight shell"></pre>
-
-<blockquote>
-<p>Json Response</p>
-</blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight shell">curl --cookie <span class="s2">"videobank_sessionid=[VIDEOBANK_SESSIONID]"</span> --request POST https://login.eagleeyenetworks.com/g/feedback --data <span class="s2">"subject=[SUBJECT]&amp;message=[MESSAGE]"</span>
+</pre>
 
 <p>Sends feedback to support</p>
 <h3 id='http-request'>HTTP Request</h1>
@@ -7515,12 +7976,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='get-recording-object'>Get Recording Object</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 
@@ -7569,12 +8030,12 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <!--===================================================================-->
 <h2 id='update-recording-object'>Update Recording Object</h1>
 <blockquote>
-<p>Request</p>
+<p>Request TODO</p>
 </blockquote>
 <pre class="highlight shell"></pre>
 
 <blockquote>
-<p>Json Response</p>
+<p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
 
@@ -7632,6 +8093,16 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='search-recordings'>Search Recordings</h1>
+<blockquote>
+<p>Request TODO</p>
+</blockquote>
+<pre class="highlight shell"></pre>
+
+<blockquote>
+<p>Json Response TODO</p>
+</blockquote>
+<pre class="highlight json"></pre>
+
 <p>Returns array of recording objects that match a search value.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/search/recordings</code></p>
@@ -7744,6 +8215,16 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 
 <!--===================================================================-->
 <h2 id='search-annotations'>Search Annotations</h1>
+<blockquote>
+<p>Request TODO</p>
+</blockquote>
+<pre class="highlight shell"></pre>
+
+<blockquote>
+<p>Json Response TODO</p>
+</blockquote>
+<pre class="highlight json"></pre>
+
 <p>Returns array of annotation objects that match a search value.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/search/recordings</code></p>
