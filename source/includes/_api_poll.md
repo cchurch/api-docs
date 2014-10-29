@@ -150,6 +150,10 @@ ALRE      | Alert Region Of Interest End
 ```json
 ```
 
+### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/poll`
+
 Subscribe to poll service, which is required for GET /poll. 
 Response headers: set_cookie: ee-poll-ses=xxxxxx
 
@@ -173,6 +177,10 @@ PostPollCameras | json        | Cameras
 ```
 
 Used to receive updates on real-time changes. Either requires a valid 'ee-poll-ses' cookie from POST /poll or the 'token' response from POST /poll.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/poll`
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
