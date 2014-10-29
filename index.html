@@ -4796,6 +4796,8 @@ content-type: image/jpeg </li>
 <p>Json Response TODO</p>
 </blockquote>
 <pre class="highlight json"></pre>
+<h3 id='http-request'>HTTP Request</h1>
+<p><code class="prettyprint">POST https://login.eagleeyenetworks.com/poll</code></p>
 
 <p>Subscribe to poll service, which is required for GET /poll. 
 Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
@@ -4827,6 +4829,8 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <pre class="highlight json"></pre>
 
 <p>Used to receive updates on real-time changes. Either requires a valid &lsquo;ee-poll-ses&rsquo; cookie from POST /poll or the &lsquo;token&rsquo; response from POST /poll.</p>
+<h3 id='http-request'>HTTP Request</h1>
+<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/poll</code></p>
 
 <table><thead>
 <tr>
