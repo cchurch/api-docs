@@ -66,6 +66,13 @@ The H264 codec has the concept of profiles and levels to convey whether a playba
   * High: high quality video has a maximum profile of high
 
 <!--===================================================================-->
+## EEN Timestamp
+
+All Assets have an EEN timestamp attached. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.mmm.
+
++/- offsets from “now” are valid in ms.
+
+<!--===================================================================-->
 ## Get Image
 
 > Request

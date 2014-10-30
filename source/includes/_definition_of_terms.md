@@ -126,10 +126,7 @@ Shared Assets are Assets that a User has indicated should be shared to the publi
 <br>Webservers that serve up the HTTP Javascript User interface to control and view Cameras. http://v.eagleeyenetworks.com This user interface is built on the EEVB API.
 
 **EE Archiver**
-<br>The architectural element that communicates with the Cameras and stores all the Assets. It serves up the Assets to the EE GUI as well as the EE IPhone App and EE Android App. EE Archivers are accessed via IP address.
-
-**EE Iphone App/EE Android App**
-<br>Applications that using the EEVB API displays historic and realtime video for all the Cameras in an Account.
+<br>The architectural element that communicates with the Cameras and stores all the Assets. It serves up the Assets to the EE GUI as well as the iOS App and Android App. EE Archivers are accessed via IP address.
 
 **EE Locator**
 <br>The EE Locator has a fixed IP address that does not change. Camera and Bridges when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it, and directs it to the appropriate Archiver and other connections it will need to communicate with the EEVB. If the Locator goes down, the only function that will stop working is adding new Cameras.

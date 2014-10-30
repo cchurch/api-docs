@@ -6,7 +6,6 @@ language_tabs:
 
 toc_footers:
   - <a href='#get-an-api-key'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/ddrako/api-docs'>Submit documentation issues here</a>
 
 includes:
   - introduction

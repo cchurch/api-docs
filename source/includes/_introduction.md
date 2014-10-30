@@ -27,9 +27,3 @@ You may also want to purchase a development hardware kit from us (so you can con
 ![alt text](introduction/apikey_3.png "Step 3")
 ![alt text](introduction/apikey_4.png "Step 4")
 ![alt text](introduction/apikey_5.png "Step 5")
-
-## EEN Timestamp
-
-All Assets have attached a Timestamp. The Timestamp records when the Asset happened. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.mmm.
-
-+/- offsets from “now” are valid in ms.
