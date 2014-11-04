@@ -29,11 +29,11 @@ The image request model provides an efficient mechanism for accessing image sequ
 
 ### Retrieve List of Images
 
-There are a couple different ways to get a list of images. There first is to get all preview images between April 1st and April 2nd: https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;
+There are a couple different ways to get a list of images. There first is to get all preview images between April 1st and April 2nd: https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;
 
-The second way is to get 500 images before April 1st: https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;
+The second way is to get 500 images before April 1st: https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;
 
-The third way is to get the next 500 images after April 1st: https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;
+The third way is to get the next 500 images after April 1st: https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;
 
 ### Retrieve Video
 
