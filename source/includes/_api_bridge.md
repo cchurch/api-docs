@@ -416,7 +416,7 @@ Array Index | Attribute       | Data Type
 7           | tags            | array[string]
 8           | guid            | string
 9           | serial_number   | string
-10          | device_status   | int
+10          | [device_status](#status-bitmask)   | int
 11          | timezone        | string
 12          | timezone_utc_offset | int
 13          | is_unsupported  | int

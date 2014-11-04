@@ -57,8 +57,8 @@ PNG images can be retrieved for supporting metric visualization. PNG types inclu
 
 Parameter          		| Data Type     | Description   | Is Required
 ---------          		| -----------   | -----------   | -----------
-**start_timestamp**		| string        | Start Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#timestamp) | true
-**end_timestamp**  		| string        | End Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#timestamp) | true
+**start_timestamp**		| string        | Start Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#een-timestamp) | true
+**end_timestamp**  		| string        | End Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#een-timestamp) | true
 **width**         		| int        	| Width in pixels of resulting PNG. Must be an integer greater than 0. | true
 **id**         			| string        | Camera Id | true
 **foreground_color**    | string        | Color of foreground (active). If both fg and bg have 0 for alpha, assumed fully opaque (0xff). 32bit ARGB color. | true

@@ -1020,7 +1020,7 @@ make                | string            | Make of the device
 ipaddr              | string            | IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *
 ts                  | string            | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
 version             | string            | Firmware version
-status              | string            | Status bitmask
+[status](#status-bitmask) | string            | Status bitmask
 mac                 | string            | MAC address
 proxy               | string            | Proxy
 bridgeid            | string            | Device of bridge this device is attached to
@@ -1335,7 +1335,7 @@ Array Index | Attribute           | Data Type             | Description
 7           | tags                | array[string]         | Tags
 8           | guid                | string                | GUID
 9           | serial_number       | string                | Serial number
-10          | device_status       | int                   | Device status bit mask
+10          | [device_status](#status-bitmask) | int                   | Device status bit mask
 11          | timezone            | string                | Timezone
 12          | timezone_utc_offset | int                   | Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC.
 13          | is_unsupported      | int                   | Indicates the camera is NOT supported (1) or IS supported (0)

@@ -9,7 +9,7 @@ The poll service provides a mechanism for an application to receive notification
   * pre - Preview resource. Provides a timestamp for a preview image. One can use the timestamp to grab the actual preview image.
   * video - Video resource. Provides a start and end timestamp of a video event.
   * event - Event resource. Provides full event information.
-  * status - A bitmask flag defining the state of a bridge or a camera.
+  * [status](#status-bitmask) - A bitmask flag defining the state of a bridge or a camera.
   * registry - A boolean field determining if a camera or bridge became registered.
 
 Events can come from lots of sources:
@@ -34,7 +34,7 @@ video       | [startts, endts]  | List of start, end Timestamps for video segmen
 thumb       | thumbts           | Timestamp of latest thumbnail image
 pre         | prets             | Timestamp of latest preview image
 registry    | boolean           | True is returned if a camera/bridge becomes registered. False if the camera/bridge becomes unregistered.
-status      | bitmask           | A numerical bitmask defining the status. Bit position defines status. The meaning of each bit is defined in the table below.
+[status](#status-bitmask) | bitmask           | A numerical bitmask defining the status. Bit position defines status. The meaning of each bit is defined in the table below.
 event       | object            | Events are a key value pair, where the key is the four CC of the event, and event structure are the actual meta data for that specific event. Available events are shown in the table below.
 
 ### Status Bitmask
