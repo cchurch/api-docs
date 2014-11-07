@@ -32,7 +32,6 @@ motion_interval | int      		| Motion Interval used for Motion Activity metric, 
 
 ```json
 {
-    "motion": [],
     "core": [
         [
             "20141002190000.000",
@@ -81,7 +80,8 @@ motion_interval | int      		| Motion Interval used for Motion Activity metric, 
             "20141009190000.000",
             0.0
         ]
-    ]
+    ],
+    "motion": []
 }
 ```
 
@@ -89,16 +89,9 @@ motion_interval | int      		| Motion Interval used for Motion Activity metric, 
 
 Parameter       | Data Type                     | Description   
 ---------       | -----------                   | -----------  
-motion          | array[[CameraMotion](#cameramotion-json-array-elements)] | Array of motion metrics
 core            | array[[CameraCore](#cameracore-json-array-elements)]     | Array of core metrics
 packets         | array[[CameraPackets](#camerapackets-json-array-elements)]  | Array of packet metrics
-
-### CameraMotion Json Array Elements
-
-Index       | Data Type     | Description
----------   | -----------   | -----------  
-0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
-1           | int           | motion activity value
+motion          | array[[CameraMotion](#cameramotion-json-array-elements)] | Array of motion metrics
 
 ### CameraCore Json Array Elements
 
@@ -118,6 +111,13 @@ Index       | Data Type     | Description
 ---------   | -----------   | -----------  
 0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
 1           | float         | Packet loss percentage (decimal)
+
+### CameraMotion Json Array Elements
+
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | int           | motion activity value
 
 ### Error Status Codes
 
