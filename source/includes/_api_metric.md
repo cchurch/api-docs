@@ -14,6 +14,20 @@ This service defines metrics that can be queried from the system.
 curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[VIDEOBANK_SESSIONID]&id=[CAMERA_ID]"
 ```
 
+Used to query the bandwidth usage for a particular camera device.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/metric/camerabandwidth`
+
+Parameter       | Data Type   	| Description  	| Is Required
+---------       | ----------- 	| -----------  	| ----------- 
+**id**   		| string      	| Bridge Id 	| true
+start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago.
+end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
+group_by 		| string, enum  | Hour or Day, indicating how the results should be grouped. <br><br>enum: day, hour, minute
+motion_interval | int      		| Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000.
+
 > Json Response
 
 ```json
@@ -38,36 +52,9 @@ curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[VIDEO
             36128066.0,
             223484133.0
         ],
-        [
-            "20141002210000.000",
-            0.0,
-            0.0,
-            222334641.0,
-            136879553.0,
-            37816477.0,
-            204892625.0
-        ],
-        [
-            "20141002220000.000",
-            0.0,
-            0.0,
-            121790883.0,
-            103091573.0,
-            33450507.0,
-            103373171.0
-        ],
         [...],
         [...],
         [...],
-        [
-            "20141009180000.000",
-            0.0,
-            0.0,
-            286694378.0,
-            175494759.0,
-            37023695.0,
-            153388458.0
-        ],
         [
             "20141009190000.000",
             0.0,
@@ -87,21 +74,9 @@ curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[VIDEO
             "20141002200000.000",
             0.0018439999999999999
         ],
-        [
-            "20141002210000.000",
-            0.0018500000000000001
-        ],
-        [
-            "20141002220000.000",
-            0.001848
-        ],
         [...],
         [...],
         [...],
-        [
-            "20141009180000.000",
-            0.0019380000000000001
-        ],
         [
             "20141009190000.000",
             0.0
@@ -110,19 +85,39 @@ curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[VIDEO
 }
 ```
 
-Used to query the bandwidth usage for a particular camera device.
+### Response Json Attributes
 
-### HTTP Request
+Parameter       | Data Type                     | Description   
+---------       | -----------                   | -----------  
+motion          | array[[CameraMotion](#cameramotion-json-array-elements)] | Array of motion metrics
+core            | array[[CameraCore](#cameracore-json-array-elements)]     | Array of core metrics
+packets         | array[[CameraPackets](#camerapackets-json-array-elements)]  | Array of packet metrics
 
-`GET https://login.eagleeyenetworks.com/g/metric/camerabandwidth`
+### CameraMotion Json Array Elements
 
-Parameter       | Data Type   	| Description  	| Is Required
----------       | ----------- 	| -----------  	| ----------- 
-**id**   		| string      	| Bridge Id 	| true
-start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago.
-end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
-group_by 		| string, enum  | Hour or Day, indicating how the results should be grouped. <br><br>enum: day, hour, minute
-motion_interval | int      		| Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000.
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | int           | motion activity value
+
+### CameraCore Json Array Elements
+
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | float         | Average Kilobytes on Disk
+2           | float         | Average Days on Disk
+3           | float         | Bytes Stored
+4           | float         | Bytes Shaped
+5           | float         | Bytes Streamed
+6           | float         | Bytes Freed
+
+### CameraPackets Json Array Elements
+
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | float         | Packet loss percentage (decimal)
 
 ### Error Status Codes
 
@@ -142,6 +137,19 @@ HTTP Status Code    | Data Type
 ```shell
 curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[VIDEOBANK_SESSIONID]&id=[BRIDGE_ID]"
 ```
+
+Used to query the bandwidth usage for a particular bridge device.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/metric/bridgebandwidth`
+
+Parameter       | Data Type   	| Description  	| Is Required
+---------       | ----------- 	| -----------  	| ----------- 
+**id**   		| string      	| Bridge Id 	| true
+start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago.
+end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
+group_by 		| string, enum  | Hour or Day, indicating how the results should be grouped. <br><br>enum: day, hour, minute
 
 > Json Response
 
@@ -166,27 +174,9 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[VIDEO
             30849223.0,
             70446106.0
         ],
-        [
-            "20141002190000.000",
-            711610368.0,
-            673748992.0,
-            71676103.0,
-            45096053.0,
-            30430053.0,
-            45046744.0
-        ],
         [...],
         [...],
         [...],
-        [
-            "20141009160000.000",
-            711610368.0,
-            674055509.33333302,
-            37737528.0,
-            16296475.0,
-            28883191.0,
-            23120171.0
-        ],
         [
             "20141009170000.000",
             711610368.0,
@@ -206,21 +196,9 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[VIDEO
             "20141002220000.000",
             240255.52353499999
         ],
-        [
-            "20141006030000.000",
-            234217.22846400001
-        ],
-        [
-            "20141006070000.000",
-            233561.15779600001
-        ],
         [...],
         [...],
         [...],
-        [
-            "20141009110000.000",
-            217483.47826100001
-        ],
         [
             "20141009150000.000",
             232692.09302299999
@@ -235,21 +213,9 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[VIDEO
             "20141002180000.000",
             69247498
         ],
-        [
-            "20141002190000.000",
-            26629359
-        ],
-        [
-            "20141002200000.000",
-            105790941
-        ],
         [...],
         [...],
         [...],
-        [
-            "20141009160000.000",
-            14617357
-        ],
         [
             "20141009170000.000",
             1279678
@@ -258,18 +224,41 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[VIDEO
 }
 ```
 
-Used to query the bandwidth usage for a particular bridge device.
+### Response Json Attributes
 
-### HTTP Request
+Parameter       | Data Type         | Description   
+---------       | -----------       | -----------  
+core            | array[[BridgeCore](#bridgecore-json-array-elements)]       | Array of core metrics
+bandwith        | array[[BridgeBandwidth](#bridgecore-json-array-elements)]  | Array of bandwidth metrics
+storage         | array[BridgeStorage](#bridgestorage-json-array-elements)]    | Array of storage metrics
 
-`GET https://login.eagleeyenetworks.com/g/metric/bridgebandwidth`
+### BridgeCore Json Array Elements
 
-Parameter       | Data Type   	| Description  	| Is Required
----------       | ----------- 	| -----------  	| ----------- 
-**id**   		| string      	| Bridge Id 	| true
-start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago.
-end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
-group_by 		| string, enum  | Hour or Day, indicating how the results should be grouped. <br><br>enum: day, hour, minute
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | float         | Average Kilobytes on Disk
+2           | float         | Average Days on Disk
+3           | float         | Bytes Stored
+4           | float         | Bytes Shaped
+5           | float         | Bytes Streamed
+6           | float         | Bytes Freed
+
+### BridgeBandwidth Json Array Elements
+
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | float         | Bytes per second
+
+### BandwidthStorage Json Array Elements
+
+Index       | Data Type     | Description
+---------   | -----------   | -----------  
+0           | string        | EEN Timestamp: YYYYMMDDHHMMSS.NNN
+1           | float         | Bytes Diff
+
+### Error Status Codes
 
 HTTP Status Code    | Data Type   
 ------------------- | ----------- 

@@ -222,6 +222,8 @@ is_notify_enable      | int     | 1 or 0. If 1, user will receive alert notifica
 notify_rule           | array   | Contains alert notification rules Each rule contains three fields separated by dashes And takes the form: Alert_Label-Notification_Method-Delay. Alert_Label: a name defined by the user. Notification_Method: Valid values: email, sms, gui. Delay: the amount of time, in minutes between between notifications. |
 -->
 
+
+
 ### Response Json Attributes
 
 Parameter       | Data Type   | Description
