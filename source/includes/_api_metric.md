@@ -27,6 +27,7 @@ start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMM
 end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
 group_by 		| string, enum  | Hour or Day, indicating how the results should be grouped. <br><br>enum: day, hour, minute
 motion_interval | int      		| Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000.
+metric          | string, enum  | String delimited list used to filter which metrics gets returned. Setting this parameter to 'core,motion' will return data only for core and motion. <br><br>enum: core, packets, motion
 
 > Json Response
 
