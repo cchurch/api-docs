@@ -167,16 +167,18 @@ HTTP Status Code    | Data Type
 ## Prefetch Image
 
 > Request
+
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[VIDEOBANK_SESSIONID]"
 ```
 
 > Webhook JSON POST Response
+
 ```json
 { "event:": "[EVENT]" }
 ```
 
-This API call will ensure the image is in the cloud. If the image is no in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
+This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
 
 ### HTTP Request
 `GET https://login.eagleeyenetworks.com/asset/cloud/image.jpg`
@@ -185,12 +187,7 @@ Parameter           | Data Type     | Description   | Is Required
 ---------           | -----------   | -----------   | -----------
 **id**              | string        | Camera Id     | true
 **start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-webhook_url         | string        | The webhook url (must be urlencoded) to trigger | true
-
-### HTTP Status Codes
-HTTP Status Code    | Data Type   
-------------------- | ----------- 
-201 | Request has been created and webhook will be triggered upon completion or error.
+**webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
 
 ### JSON **EVENT** Values
 Value                              | Description
@@ -201,20 +198,27 @@ ASSET_CLOUD_EVENT_NOTHING_UPLOAD   | Nothing was uploaded since the image was al
 ASSET_CLOUD_EVENT_INVALID_RANGE    | An invalid range (timestamp) was requested.
 ASSET_CLOUD_EVENT_ABORT            | General error occurred.
 
+### HTTP Status Codes
+HTTP Status Code    | Data Type   
+------------------- | ----------- 
+201 | Request has been created and webhook will be triggered upon completion or error.
+
 <!--===================================================================-->
 ## Prefetch Video
 
 > Request
+
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[VIDEOBANK_SESSIONID]"
 ```
 
 > Webhook JSON POST Response
+
 ```json
 { "event:": "[EVENT]" }
 ```
 
-This API call will ensure the video is in the cloud. If the video is no in the cloud it will do a background upload request to the bridge to aquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
+This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to aquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
 
 ### HTTP Request
 `GET https://login.eagleeyenetworks.com/asset/cloud/video.jpg`
@@ -224,12 +228,7 @@ Parameter           | Data Type     | Description   | Is Required
 **id**              | string        | Camera Id     | true
 **start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-webhook_url         | string        | The webhook url (must be urlencoded) to trigger | true
-
-### HTTP Status Codes
-HTTP Status Code    | Data Type   
-------------------- | ----------- 
-201 | Request has been created and webhook will be triggered upon completion or error.
+**webhook_url**         | string        | The webhook url (must be urlencoded) to trigger | true
 
 ### JSON **EVENT** Values
 Value                              | Description
@@ -240,6 +239,10 @@ ASSET_CLOUD_EVENT_NOTHING_UPLOAD   | Nothing was uploaded since the video was al
 ASSET_CLOUD_EVENT_INVALID_RANGE    | An invalid range (timestamp) was requested.
 ASSET_CLOUD_EVENT_ABORT            | General error occurred.
 
+### HTTP Status Codes
+HTTP Status Code    | Data Type   
+------------------- | ----------- 
+201 | Request has been created and webhook will be triggered upon completion or error.
 
 <!--===================================================================-->
 ## Get List of Images
