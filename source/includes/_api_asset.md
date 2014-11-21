@@ -221,7 +221,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_times
 This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to aquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
 
 ### HTTP Request
-`GET https://login.eagleeyenetworks.com/asset/cloud/video.jpg`
+`GET https://login.eagleeyenetworks.com/asset/cloud/video.flv`
 
 Parameter           | Data Type     | Description   | Is Required
 ---------           | -----------   | -----------   | -----------
@@ -325,8 +325,6 @@ HTTP Status Code    | Data Type
 <!--===================================================================-->
 ## Create Timelapse Video
 
-> Request TODO
-
 This api is used to request the creation of a new time lapse video for a particular camera and time range. An ID will be returned that you can then use (see GET below) to find out the progress and the download URL of the video, which will be in .mp4 format.
 
 ### HTTP Request
@@ -359,8 +357,6 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Retrieve Timelapse Video
-
-> Request TODO
 
 Using the ID returned when requesting the time lapse (see PUT above), this api returns information about the time lapse request. It allows you to find out the progress and how to download the resulting video, which will be in .mp4 format.
 
