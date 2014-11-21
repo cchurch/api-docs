@@ -150,7 +150,9 @@ ALRE      | Alert Region Of Interest End
                 "status",
                 "event"
             ],
-            "event": []
+            "event": [
+            	"MRBX"
+            ]
         },
         "10097d15": {
             "resource": [
@@ -159,7 +161,9 @@ ALRE      | Alert Region Of Interest End
                 "status",
                 "event"
             ],
-            "event": []
+            "event": [
+            	"MRBX"
+            ]
         },
         "[camera_id]": {...},
         "[camera_id]": {...},
@@ -220,7 +224,7 @@ event 			| array[string, enum] | enum: [event objects](#event-objects)
 
 Parameter       | Data Type   	| Description
 ---------       | ----------- 	| -----------
-cameras         | [PostPollResponseCameras](#postpollresponsecameras-json-attributes) | Objects keyed by device ID
+cameras         | [PostPollResponseCameras](#postpollresponsecameras-json-attributes) | Objects keyed by camera id
 token 			| string 		| Token to be used for subsequent GET /poll requests
 
 ### PostPollResponseCameras Json Attributes
@@ -242,16 +246,6 @@ status          | string 		| A bitmask flag defining the state of a bridge or a 
 <!--===================================================================-->
 ## Polling
 
-> Request TODO
-
-```shell
-```
-
-> Json Response TODO
-
-```json
-```
-
 Used to receive updates on real-time changes. Either requires a valid 'ee-poll-ses' cookie from POST /poll or the 'token' response from POST /poll.
 
 ### HTTP Request
@@ -261,6 +255,101 @@ Used to receive updates on real-time changes. Either requires a valid 'ee-poll-s
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
 token           | string      | Token from POST /poll. Not required if you have the 'ee-poll-ses' cookie from POST /poll.
+
+> Json Response
+
+```json
+{
+    "cameras": {
+        "100e1e23": {
+            "pre": "20141121165011.233",
+            "event": {
+                "MRBX": {
+                    "timestamp": "20141121165011.499",
+                    "cameraid": "100c299e",
+                    "boxes": [
+                        {
+                            "x": 24575,
+                            "y": 29126,
+                            "w": 4095,
+                            "h": 5825
+                        }
+                    ]
+                },
+                "PRFU": {
+                    "timestamp": "20141121165011.233",
+                    "cameraid": "100c299e",
+                    "file_offset": 26311872,
+                    "frame_size": 7838
+                },
+                "PRFR": {
+                    "timestamp": "20141121165011.233",
+                    "cameraid": "100c299e",
+                    "previewid": 1416585600,
+                    "file_offset": 26311872,
+                    "frame_size": 7830
+                }
+            }
+        },
+        "10097d15": {
+            "pre": "20141121165011.281",
+            "event": {
+                "PRFU": {
+                    "timestamp": "20141121165011.281",
+                    "cameraid": "1002a2a4",
+                    "file_offset": 6126297,
+                    "frame_size": 4014
+                },
+                "PRFR": {
+                    "timestamp": "20141121165011.281",
+                    "cameraid": "1002a2a4",
+                    "previewid": 1416585600,
+                    "file_offset": 6126297,
+                    "frame_size": 4006
+                }
+            }
+        }
+    }
+}
+```
+
+### Response Json Attributes
+
+Parameter       | Data Type   	| Description
+---------       | ----------- 	| -----------
+cameras         | [GetPollResponseCameras](#getpollresponsecameras-json-attributes) | Objects keyed by camera id
+
+### GetPollResponseCameras Json Attributes
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+[camera_id 1] 	| [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | Camera 1
+[camera_id 2] 	| [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | Camera 2
+... | ... | ...
+[camera_id N]   | [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | Camera N
+
+### GetPollResponseCamera Json Attributes
+
+Parameter       | Data Type   	| Description
+---------       | ----------- 	| -----------
+pre          	| string 		| Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+event 			| [GetPollResponseCameraEvents](#getpollresponsecameraevents-json-attributes) |  Object of events keyed by event id
+
+### GetPollResponseCameraEvents Json Attributes
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+[event_id 1] 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | Event 1
+[event_id 2] 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | Event 2
+... | ... | ...
+[event_id N] 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | Event N
+
+### GetPollResponseCameraEvent Json Attributes
+
+Parameter       | Data Type   	| Description
+---------       | ------------- | -----------
+timestamp 		| string 		| Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+cameraid 		| string 		| internal unique identifier
 
 ### Error Status Codes
 
