@@ -38,7 +38,6 @@
       </div>
         <ul class="toc-footer">
             <li><a href='#get-an-api-key'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/ddrako/api-docs'>Submit documentation issues here</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
@@ -67,10 +66,6 @@
 <img title="Step 3" alt="alt text" src="images/introduction/apikey_3.png" />
 <img title="Step 4" alt="alt text" src="images/introduction/apikey_4.png" />
 <img title="Step 5" alt="alt text" src="images/introduction/apikey_5.png" /></p>
-<h2 id='een-timestamp'>EEN Timestamp</h1>
-<p>All Assets have attached a Timestamp. The Timestamp records when the Asset happened. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.mmm.</p>
-
-<p>+/- offsets from “now” are valid in ms.</p>
 
           <h1 id='authentication'>Authentication</h1><h2 id='overview'>Overview</h1>
 <p>Gaining access to the Eagle Eye API is a two-stage process: Clients first present their credentials and Realm to obtain a single use Authentication Token. This single use token is valid for 30 seconds or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the &ldquo;videobank_sessionid&rdquo; Cookie) that provides access to resources. This two phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over an https connection.</p>
@@ -2307,7 +2302,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <td>Firmware version</td>
 </tr>
 <tr>
-<td>status</td>
+<td><a href="#status-bitmask">status</a></td>
 <td>string</td>
 <td>Status bitmask</td>
 </tr>
@@ -2968,7 +2963,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 </tr>
 <tr>
 <td>10</td>
-<td>device_status</td>
+<td><a href="#status-bitmask">device_status</a></td>
 <td>int</td>
 <td>Device status bit mask</td>
 </tr>
@@ -3697,7 +3692,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 </tr>
 <tr>
 <td>10</td>
-<td>device_status</td>
+<td><a href="#status-bitmask">device_status</a></td>
 <td>int</td>
 </tr>
 <tr>
@@ -3809,11 +3804,14 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <li>Thumbnail navigation. The system provides a “thumbnail” image for each event which is intended to provide a small representation of the event. The easiest mechanism to get a thumbnail for an event is to do an /asset/after/image.jpeg?a=thumb&hellip; image request with the starting timestamp of the event.</li>
 </ul>
 <h3 id='retrieve-list-of-images'>Retrieve List of Images</h1>
-<p>There are a couple different ways to get a list of images. There first is to get all preview images between April 1st and April 2nd: https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;</p>
+<p>There are a couple different ways to get a list of images. There first is to get all preview images between April 1st and April 2nd:
+<code class="prettyprint">https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;</code></p>
 
-<p>The second way is to get 500 images before April 1st: https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;</p>
+<p>The second way is to get 500 images before April 1st: 
+<code class="prettyprint">https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;</code></p>
 
-<p>The third way is to get the next 500 images after April 1st: https://apidocs.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;</p>
+<p>The third way is to get the next 500 images after April 1st: 
+<code class="prettyprint">https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;</code></p>
 <h3 id='retrieve-video'>Retrieve Video</h1>
 <p>Video is accessed via the “play” command. Video is captured in segments, and is limited to 5 minutes per segment in storage. The video command will seamlessly rewrite headers within the video format to join segments as necessary to deliver the requested data span.</p>
 
@@ -3842,6 +3840,12 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <li>Med: medium quality video has a maximum profile of main</li>
 <li>High: high quality video has a maximum profile of high</li>
 </ul>
+
+<!--===================================================================-->
+<h2 id='een-timestamp'>EEN Timestamp</h1>
+<p>All Assets have an EEN timestamp attached. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.mmm.</p>
+
+<p>+/- offsets from “now” are valid in ms.</p>
 
 <!--===================================================================-->
 <h2 id='get-image'>Get Image</h1>
@@ -4032,6 +4036,184 @@ content-type: image/jpeg </li>
 <tr>
 <td>404</td>
 <td>Video was not found</td>
+</tr>
+</tbody></table>
+
+<!--===================================================================-->
+<h2 id='prefetch-image'>Prefetch Image</h1>
+<blockquote>
+<p>Request
+<code class="prettyprint">shell
+curl -v -G &quot;https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[VIDEOBANK_SESSIONID]&quot;
+</code></p>
+
+<p>Webhook JSON POST Response
+<code class="prettyprint">json
+{ &quot;event:&quot;: &quot;[EVENT]&quot; }
+</code></p>
+</blockquote>
+
+<p>This API call will ensure the image is in the cloud. If the image is no in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.</p>
+<h3 id='http-request'>HTTP Request</h1>
+<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/asset/cloud/image.jpg</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Is Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>Camera Id</td>
+<td>true</td>
+</tr>
+<tr>
+<td><strong>start_timestamp</strong></td>
+<td>string</td>
+<td>Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN</td>
+<td>true</td>
+</tr>
+<tr>
+<td>webhook_url</td>
+<td>string</td>
+<td>The webhook url (must be urlencoded) to trigger</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-codes'>HTTP Status Codes</h1>
+<table><thead>
+<tr>
+<th>HTTP Status Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>Request has been created and webhook will be triggered upon completion or error.</td>
+</tr>
+</tbody></table>
+<h3 id='json-event-values'>JSON <strong>EVENT</strong> Values</h1>
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ASSET_CLOUD_EVENT_UPLOADED</td>
+<td>The image has been successfully uploaded into the cloud.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_DEMAND_FAILED</td>
+<td>The image failed aquiring a connection to the bridge.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_NOTHING_UPLOAD</td>
+<td>Nothing was uploaded since the image was already in the cloud.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_INVALID_RANGE</td>
+<td>An invalid range (timestamp) was requested.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_ABORT</td>
+<td>General error occurred.</td>
+</tr>
+</tbody></table>
+
+<!--===================================================================-->
+<h2 id='prefetch-video'>Prefetch Video</h1>
+<blockquote>
+<p>Request
+<code class="prettyprint">shell
+curl -v -G &quot;https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[VIDEOBANK_SESSIONID]&quot;
+</code></p>
+
+<p>Webhook JSON POST Response
+<code class="prettyprint">json
+{ &quot;event:&quot;: &quot;[EVENT]&quot; }
+</code></p>
+</blockquote>
+
+<p>This API call will ensure the video is in the cloud. If the video is no in the cloud it will do a background upload request to the bridge to aquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.</p>
+<h3 id='http-request'>HTTP Request</h1>
+<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/asset/cloud/video.jpg</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Is Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>Camera Id</td>
+<td>true</td>
+</tr>
+<tr>
+<td><strong>start_timestamp</strong></td>
+<td>string</td>
+<td>Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN</td>
+<td>true</td>
+</tr>
+<tr>
+<td><strong>end_timestamp</strong></td>
+<td>string</td>
+<td>End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN</td>
+<td>true</td>
+</tr>
+<tr>
+<td>webhook_url</td>
+<td>string</td>
+<td>The webhook url (must be urlencoded) to trigger</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h3 id='http-status-codes'>HTTP Status Codes</h1>
+<table><thead>
+<tr>
+<th>HTTP Status Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>Request has been created and webhook will be triggered upon completion or error.</td>
+</tr>
+</tbody></table>
+<h3 id='json-event-values'>JSON <strong>EVENT</strong> Values</h1>
+<table><thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ASSET_CLOUD_EVENT_UPLOADED</td>
+<td>The video has been successfully uploaded into the cloud.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_DEMAND_FAILED</td>
+<td>The video failed aquiring a connection to the bridge.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_NOTHING_UPLOAD</td>
+<td>Nothing was uploaded since the video was already in the cloud.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_INVALID_RANGE</td>
+<td>An invalid range (timestamp) was requested.</td>
+</tr>
+<tr>
+<td>ASSET_CLOUD_EVENT_ABORT</td>
+<td>General error occurred.</td>
 </tr>
 </tbody></table>
 
@@ -4390,8 +4572,7 @@ content-type: image/jpeg </li>
 <li>pre - Preview resource. Provides a timestamp for a preview image. One can use the timestamp to grab the actual preview image.</li>
 <li>video - Video resource. Provides a start and end timestamp of a video event.</li>
 <li>event - Event resource. Provides full event information.</li>
-<li>status - A bitmask flag defining the state of a bridge or a camera.</li>
-<li>registry - A boolean field determining if a camera or bridge became registered.</li>
+<li><a href="#status-bitmask">status</a> - A bitmask flag defining the state of a bridge or a camera.</li>
 </ul>
 
 <p>Events can come from lots of sources:</p>
@@ -4435,12 +4616,7 @@ content-type: image/jpeg </li>
 <td>Timestamp of latest preview image</td>
 </tr>
 <tr>
-<td>registry</td>
-<td>boolean</td>
-<td>True is returned if a camera/bridge becomes registered. False if the camera/bridge becomes unregistered.</td>
-</tr>
-<tr>
-<td>status</td>
+<td><a href="#status-bitmask">status</a></td>
 <td>bitmask</td>
 <td>A numerical bitmask defining the status. Bit position defines status. The meaning of each bit is defined in the table below.</td>
 </tr>
@@ -4450,7 +4626,7 @@ content-type: image/jpeg </li>
 <td>Events are a key value pair, where the key is the four CC of the event, and event structure are the actual meta data for that specific event. Available events are shown in the table below.</td>
 </tr>
 </tbody></table>
-<h3 id='status-bitmask'>Status Bitmask</h1>
+<h2 id='status-bitmask'>Status Bitmask</h1>
 <table><thead>
 <tr>
 <th>Bit (LSB)</th>
@@ -4556,7 +4732,7 @@ content-type: image/jpeg </li>
 <p>IF &ldquo;Recording&rdquo; (bit 19) THEN Recording (green circle icon)</p>
 
 <p>IF &ldquo;Invalid&rdquo; (bit 16)==1 THEN no status change (use whatever status bits were set previously)</p>
-<h3 id='event-objects'>Event Objects</h1>
+<h2 id='event-objects'>Event Objects</h1>
 <table><thead>
 <tr>
 <th>Four CC</th>
@@ -4788,14 +4964,38 @@ content-type: image/jpeg </li>
 <!--===================================================================-->
 <h2 id='initialize-poll'>Initialize Poll</h1>
 <blockquote>
-<p>Request TODO</p>
+<p>Request Json</p>
 </blockquote>
-<pre class="highlight shell"></pre>
-
-<blockquote>
-<p>Json Response TODO</p>
-</blockquote>
-<pre class="highlight json"></pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"100e1e23"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"pre"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"thumb"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"status"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"event"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"MRBX"</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"10097d15"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"pre"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"thumb"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"status"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"event"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"MRBX"</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"[camera_id]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"[camera_id]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"[camera_id]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">POST https://login.eagleeyenetworks.com/poll</code></p>
 
@@ -4810,24 +5010,198 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>PostPollCameras</td>
-<td>json</td>
+<td>cameras</td>
+<td><a href="#postpollcameras-attributes">PostPollCameras</a></td>
 <td>Cameras</td>
+</tr>
+</tbody></table>
+<h3 id='postpollcameras-attributes'>PostPollCameras Attributes</h1>
+<p>This json attribute contains as many PostPollCamera json objects as the user desires. The key for each PostPollCamera is the camera_id.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[camera_id 1]</td>
+<td><a href="#postpollcamera-attributes">PostPollCamera</a></td>
+<td>Camera 1</td>
+</tr>
+<tr>
+<td>[camera_id 2]</td>
+<td><a href="#postpollcamera-attributes">PostPollCamera</a></td>
+<td>Camera 2</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>[camera_id N]</td>
+<td><a href="#postpollcamera-attributes">PostPollCamera</a></td>
+<td>Camera N</td>
+</tr>
+</tbody></table>
+<h3 id='postpollcamera-attributes'>PostPollCamera Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>resource</td>
+<td>array[string, enum]</td>
+<td>enum: pre, thumb, status, event</td>
+</tr>
+<tr>
+<td>event</td>
+<td>array[string, enum]</td>
+<td>enum: <a href="#event-objects">event objects</a></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Json Response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"100e1e23"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">1441847</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"10097d15"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">1441847</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"[camera_id]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"[camera_id]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"[camera_id]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="err">...}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ooe0eoEAMNsF"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<h3 id='response-json-attributes'>Response Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cameras</td>
+<td><a href="#postpollresponsecameras-json-attributes">PostPollResponseCameras</a></td>
+<td>Objects keyed by camera id</td>
+</tr>
+<tr>
+<td>token</td>
+<td>string</td>
+<td>Token to be used for subsequent GET /poll requests</td>
+</tr>
+</tbody></table>
+<h3 id='postpollresponsecameras-json-attributes'>PostPollResponseCameras Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[camera_id 1]</td>
+<td><a href="#postpollresponsecamera-json-attributes">PostPollResponseCamera</a></td>
+<td>Camera 1</td>
+</tr>
+<tr>
+<td>[camera_id 2]</td>
+<td><a href="#postpollresponsecamera-json-attributes">PostPollResponseCamera</a></td>
+<td>Camera 2</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>[camera_id N]</td>
+<td><a href="#postpollresponsecamera-json-attributes">PostPollResponseCamera</a></td>
+<td>Camera N</td>
+</tr>
+</tbody></table>
+<h3 id='postpollresponsecamera-json-attributes'>PostPollResponseCamera Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>A bitmask flag defining the state of a bridge or a camera. <a href="#status-bitmask">More Info</a></td>
+</tr>
+<tr>
+<td>event</td>
+<td><a href="#postpollresponsecameraevents-json-attributes">PostPollResponseCameraEvents</a></td>
+<td>Object of events keyed by event id</td>
+</tr>
+</tbody></table>
+<h3 id='postpollresponsecameraevents-json-attributes'>PostPollResponseCameraEvents Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[event_id 1]</td>
+<td><a href="#postpollresponsecameraevent-json-attributes">PostPollResponseCameraEvent</a></td>
+<td>Event 1</td>
+</tr>
+<tr>
+<td>[event_id 2]</td>
+<td><a href="#postpollresponsecameraevent-json-attributes">PostPollResponseCameraEvent</a></td>
+<td>Event 2</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>[event_id N]</td>
+<td><a href="#postpollresponsecameraevent-json-attributes">PostPollResponseCameraEvent</a></td>
+<td>Event N</td>
+</tr>
+</tbody></table>
+<h3 id='postpollresponsecameraevent-json-attributes'>PostPollResponseCameraEvent Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>Timestamp in EEN format: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>cameraid</td>
+<td>string</td>
+<td>internal unique identifier</td>
 </tr>
 </tbody></table>
 
 <!--===================================================================-->
 <h2 id='polling'>Polling</h1>
-<blockquote>
-<p>Request TODO</p>
-</blockquote>
-<pre class="highlight shell"></pre>
-
-<blockquote>
-<p>Json Response TODO</p>
-</blockquote>
-<pre class="highlight json"></pre>
-
 <p>Used to receive updates on real-time changes. Either requires a valid &lsquo;ee-poll-ses&rsquo; cookie from POST /poll or the &lsquo;token&rsquo; response from POST /poll.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">GET https://login.eagleeyenetworks.com/poll</code></p>
@@ -4843,6 +5217,173 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <td>token</td>
 <td>string</td>
 <td>Token from POST /poll. Not required if you have the &lsquo;ee-poll-ses&rsquo; cookie from POST /poll.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Json Response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"100e1e23"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"pre"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.233"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"MRBX"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.499"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100c299e"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"boxes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="p">{</span><span class="w">
+                            </span><span class="s2">"x"</span><span class="p">:</span><span class="w"> </span><span class="mi">24575</span><span class="p">,</span><span class="w">
+                            </span><span class="s2">"y"</span><span class="p">:</span><span class="w"> </span><span class="mi">29126</span><span class="p">,</span><span class="w">
+                            </span><span class="s2">"w"</span><span class="p">:</span><span class="w"> </span><span class="mi">4095</span><span class="p">,</span><span class="w">
+                            </span><span class="s2">"h"</span><span class="p">:</span><span class="w"> </span><span class="mi">5825</span><span class="w">
+                        </span><span class="p">}</span><span class="w">
+                    </span><span class="p">]</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="s2">"PRFU"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.233"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100c299e"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"file_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">26311872</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"frame_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">7838</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="s2">"PRFR"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.233"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100c299e"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"previewid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1416585600</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"file_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">26311872</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"frame_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">7830</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"10097d15"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"pre"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.281"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"PRFU"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.281"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1002a2a4"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"file_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">6126297</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"frame_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">4014</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="s2">"PRFR"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20141121165011.281"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"cameraid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1002a2a4"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"previewid"</span><span class="p">:</span><span class="w"> </span><span class="mi">1416585600</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"file_offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">6126297</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"frame_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">4006</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<h3 id='response-json-attributes'>Response Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>cameras</td>
+<td><a href="#getpollresponsecameras-json-attributes">GetPollResponseCameras</a></td>
+<td>Objects keyed by camera id</td>
+</tr>
+</tbody></table>
+<h3 id='getpollresponsecameras-json-attributes'>GetPollResponseCameras Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[camera_id 1]</td>
+<td><a href="#getpollresponsecamera-json-attributes">GetPollResponseCamera</a></td>
+<td>Camera 1</td>
+</tr>
+<tr>
+<td>[camera_id 2]</td>
+<td><a href="#getpollresponsecamera-json-attributes">GetPollResponseCamera</a></td>
+<td>Camera 2</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>[camera_id N]</td>
+<td><a href="#getpollresponsecamera-json-attributes">GetPollResponseCamera</a></td>
+<td>Camera N</td>
+</tr>
+</tbody></table>
+<h3 id='getpollresponsecamera-json-attributes'>GetPollResponseCamera Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pre</td>
+<td>string</td>
+<td>Timestamp in EEN format: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>event</td>
+<td><a href="#getpollresponsecameraevents-json-attributes">GetPollResponseCameraEvents</a></td>
+<td>Object of events keyed by event id</td>
+</tr>
+</tbody></table>
+<h3 id='getpollresponsecameraevents-json-attributes'>GetPollResponseCameraEvents Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[event_id 1]</td>
+<td><a href="#getpollresponsecameraevent-json-attributes">GetPollResponseCameraEvent</a></td>
+<td>Event 1</td>
+</tr>
+<tr>
+<td>[event_id 2]</td>
+<td><a href="#getpollresponsecameraevent-json-attributes">GetPollResponseCameraEvent</a></td>
+<td>Event 2</td>
+</tr>
+<tr>
+<td>&hellip;</td>
+<td>&hellip;</td>
+<td>&hellip;</td>
+</tr>
+<tr>
+<td>[event_id N]</td>
+<td><a href="#getpollresponsecameraevent-json-attributes">GetPollResponseCameraEvent</a></td>
+<td>Event N</td>
+</tr>
+</tbody></table>
+<h3 id='getpollresponsecameraevent-json-attributes'>GetPollResponseCameraEvent Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>Timestamp in EEN format: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>cameraid</td>
+<td>string</td>
+<td>internal unique identifier</td>
 </tr>
 </tbody></table>
 <h3 id='error-status-codes'>Error Status Codes</h1>
@@ -4899,22 +5440,9 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
             </span><span class="s2">"ca0c7d2c"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"R"</span><span class="w">
         </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"ca02a9bd"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"R"</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"ca09ae1d"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"R"</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"ca010672"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"R"</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"ca0c92ee"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"R"</span><span class="w">
-        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
         </span><span class="p">[</span><span class="w">
             </span><span class="s2">"ca05e8c2"</span><span class="p">,</span><span class="w">
             </span><span class="s2">"R"</span><span class="w">
@@ -4940,60 +5468,9 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
                 </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
             </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"100a9fdf"</span><span class="w">
-                </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"100fc5ce"</span><span class="w">
-                </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"10088295"</span><span class="w">
-                </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"100bc4a3"</span><span class="w">
-                </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"10001ca4"</span><span class="w">
-                </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                    </span><span class="s2">"100b0c11"</span><span class="w">
-                </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"preview"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"pane_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
-            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
+            </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
+            </span><span class="p">{</span><span class="err">...}</span><span class="p">,</span><span class="w">
             </span><span class="p">{</span><span class="w">
                 </span><span class="s2">"cameras"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                     </span><span class="s2">"100891b7"</span><span class="w">
@@ -7443,102 +7920,6 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <pre class="highlight shell">curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d <span class="s2">"A=[VIDEOBANK_SESSIONID]&amp;id=[CAMERA_ID]"</span>
 </pre>
 
-<blockquote>
-<p>Json Response</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"motion"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"core"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002190000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">215910545.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">76733036.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">32049659.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">52716510.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002200000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">252051927.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">164214711.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">36128066.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">223484133.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002210000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">222334641.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">136879553.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">37816477.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">204892625.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002220000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">121790883.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">103091573.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">33450507.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">103373171.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009180000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">286694378.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">175494759.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">37023695.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">153388458.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009190000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">41425890.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">10373660.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">5029677.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">78599812.0</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"packets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002190000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.00183</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002200000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0018439999999999999</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002210000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0018500000000000001</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002220000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.001848</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009180000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0019380000000000001</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009190000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">0.0</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
-
 <p>Used to query the bandwidth usage for a particular camera device.</p>
 <h3 id='http-request'>HTTP Request</h1>
 <p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/metric/camerabandwidth</code></p>
@@ -7581,6 +7962,175 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <td>Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000.</td>
 <td></td>
 </tr>
+<tr>
+<td>metric</td>
+<td>string, enum</td>
+<td>String delimited list used to filter which metrics gets returned. Setting this parameter to &lsquo;core,motion&rsquo; will return data only for core and motion. <br><br>enum: core, packets, motion</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Json Response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"core"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002190000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">215910545.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">76733036.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">32049659.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">52716510.0</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002200000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">252051927.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">164214711.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">36128066.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">223484133.0</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141009190000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">41425890.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">10373660.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">5029677.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">78599812.0</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"packets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002190000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.00183</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002200000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0018439999999999999</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141009190000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">0.0</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"motion"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<h3 id='response-json-attributes'>Response Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>core</td>
+<td>array[<a href="#cameracore-json-array-elements">CameraCore</a>]</td>
+<td>Array of core metrics</td>
+</tr>
+<tr>
+<td>packets</td>
+<td>array[<a href="#camerapackets-json-array-elements">CameraPackets</a>]</td>
+<td>Array of packet metrics</td>
+</tr>
+<tr>
+<td>motion</td>
+<td>array[<a href="#cameramotion-json-array-elements">CameraMotion</a>]</td>
+<td>Array of motion metrics</td>
+</tr>
+</tbody></table>
+<h3 id='cameracore-json-array-elements'>CameraCore Json Array Elements</h1>
+<table><thead>
+<tr>
+<th>Index</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>string</td>
+<td>EEN Timestamp: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>1</td>
+<td>float</td>
+<td>Average Kilobytes on Disk</td>
+</tr>
+<tr>
+<td>2</td>
+<td>float</td>
+<td>Average Days on Disk</td>
+</tr>
+<tr>
+<td>3</td>
+<td>float</td>
+<td>Bytes Stored</td>
+</tr>
+<tr>
+<td>4</td>
+<td>float</td>
+<td>Bytes Shaped</td>
+</tr>
+<tr>
+<td>5</td>
+<td>float</td>
+<td>Bytes Streamed</td>
+</tr>
+<tr>
+<td>6</td>
+<td>float</td>
+<td>Bytes Freed</td>
+</tr>
+</tbody></table>
+<h3 id='camerapackets-json-array-elements'>CameraPackets Json Array Elements</h1>
+<table><thead>
+<tr>
+<th>Index</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>string</td>
+<td>EEN Timestamp: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>1</td>
+<td>float</td>
+<td>Packet loss percentage (decimal)</td>
+</tr>
+</tbody></table>
+<h3 id='cameramotion-json-array-elements'>CameraMotion Json Array Elements</h1>
+<table><thead>
+<tr>
+<th>Index</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>string</td>
+<td>EEN Timestamp: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>1</td>
+<td>int</td>
+<td>motion activity value</td>
+</tr>
 </tbody></table>
 <h3 id='error-status-codes'>Error Status Codes</h1>
 <table><thead>
@@ -7618,121 +8168,6 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 </blockquote>
 <pre class="highlight shell">curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d <span class="s2">"A=[VIDEOBANK_SESSIONID]&amp;id=[BRIDGE_ID]"</span>
 </pre>
-
-<blockquote>
-<p>Json Response</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"core"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002170000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">673860608.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">21533380.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">10299.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">10064282.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">9903.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002180000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">673802922.66666698</span><span class="p">,</span><span class="w">
-            </span><span class="mf">139693604.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">16579176.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">30849223.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">70446106.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002190000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">673748992.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">71676103.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">45096053.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">30430053.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">45046744.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009160000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">674055509.33333302</span><span class="p">,</span><span class="w">
-            </span><span class="mf">37737528.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">16296475.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">28883191.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">23120171.0</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009170000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">674052608.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">20663486.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">8637204.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">18879693.0</span><span class="p">,</span><span class="w">
-            </span><span class="mf">19383808.0</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"bandwidth"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002180000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">253117.37089200001</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002220000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">240255.52353499999</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141006030000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">234217.22846400001</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141006070000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">233561.15779600001</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009110000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">217483.47826100001</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009150000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mf">232692.09302299999</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"storage"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002170000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mi">21523477</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002180000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mi">69247498</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002190000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mi">26629359</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141002200000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mi">105790941</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009160000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mi">14617357</span><span class="w">
-        </span><span class="p">],</span><span class="w">
-        </span><span class="p">[</span><span class="w">
-            </span><span class="s2">"20141009170000.000"</span><span class="p">,</span><span class="w">
-            </span><span class="mi">1279678</span><span class="w">
-        </span><span class="p">]</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
 
 <p>Used to query the bandwidth usage for a particular bridge device.</p>
 <h3 id='http-request'>HTTP Request</h1>
@@ -7772,6 +8207,185 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 </tr>
 </tbody></table>
 
+<blockquote>
+<p>Json Response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"core"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002170000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">673860608.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">21533380.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">10299.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">10064282.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">9903.0</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002180000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">673802922.66666698</span><span class="p">,</span><span class="w">
+            </span><span class="mf">139693604.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">16579176.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">30849223.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">70446106.0</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141009170000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">711610368.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">674052608.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">20663486.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">8637204.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">18879693.0</span><span class="p">,</span><span class="w">
+            </span><span class="mf">19383808.0</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"bandwidth"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002180000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">253117.37089200001</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002220000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">240255.52353499999</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141009150000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mf">232692.09302299999</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"storage"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002170000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mi">21523477</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141002180000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mi">69247498</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"20141009170000.000"</span><span class="p">,</span><span class="w">
+            </span><span class="mi">1279678</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+<h3 id='response-json-attributes'>Response Json Attributes</h1>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>core</td>
+<td>array[<a href="#bridgecore-json-array-elements">BridgeCore</a>]</td>
+<td>Array of core metrics</td>
+</tr>
+<tr>
+<td>bandwith</td>
+<td>array[<a href="#bridgecore-json-array-elements">BridgeBandwidth</a>]</td>
+<td>Array of bandwidth metrics</td>
+</tr>
+<tr>
+<td>storage</td>
+<td>array<a href="#bridgestorage-json-array-elements">BridgeStorage</a>]</td>
+<td>Array of storage metrics</td>
+</tr>
+</tbody></table>
+<h3 id='bridgecore-json-array-elements'>BridgeCore Json Array Elements</h1>
+<table><thead>
+<tr>
+<th>Index</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>string</td>
+<td>EEN Timestamp: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>1</td>
+<td>float</td>
+<td>Average Kilobytes on Disk</td>
+</tr>
+<tr>
+<td>2</td>
+<td>float</td>
+<td>Average Days on Disk</td>
+</tr>
+<tr>
+<td>3</td>
+<td>float</td>
+<td>Bytes Stored</td>
+</tr>
+<tr>
+<td>4</td>
+<td>float</td>
+<td>Bytes Shaped</td>
+</tr>
+<tr>
+<td>5</td>
+<td>float</td>
+<td>Bytes Streamed</td>
+</tr>
+<tr>
+<td>6</td>
+<td>float</td>
+<td>Bytes Freed</td>
+</tr>
+</tbody></table>
+<h3 id='bridgebandwidth-json-array-elements'>BridgeBandwidth Json Array Elements</h1>
+<table><thead>
+<tr>
+<th>Index</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>string</td>
+<td>EEN Timestamp: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>1</td>
+<td>float</td>
+<td>Bytes per second</td>
+</tr>
+</tbody></table>
+<h3 id='bandwidthstorage-json-array-elements'>BandwidthStorage Json Array Elements</h1>
+<table><thead>
+<tr>
+<th>Index</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0</td>
+<td>string</td>
+<td>EEN Timestamp: YYYYMMDDHHMMSS.NNN</td>
+</tr>
+<tr>
+<td>1</td>
+<td>float</td>
+<td>Bytes Diff</td>
+</tr>
+</tbody></table>
+<h3 id='error-status-codes'>Error Status Codes</h1>
 <table><thead>
 <tr>
 <th>HTTP Status Code</th>
@@ -7879,13 +8493,13 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 <tr>
 <td><strong>start_timestamp</strong></td>
 <td>string</td>
-<td>Start Timestamp in EEN format: <a href="#timestamp">YYYYMMDDHHMMSS.NNN</a></td>
+<td>Start Timestamp in EEN format: <a href="#een-timestamp">YYYYMMDDHHMMSS.NNN</a></td>
 <td>true</td>
 </tr>
 <tr>
 <td><strong>end_timestamp</strong></td>
 <td>string</td>
-<td>End Timestamp in EEN format: <a href="#timestamp">YYYYMMDDHHMMSS.NNN</a></td>
+<td>End Timestamp in EEN format: <a href="#een-timestamp">YYYYMMDDHHMMSS.NNN</a></td>
 <td>true</td>
 </tr>
 <tr>
@@ -9027,10 +9641,7 @@ Shared Assets are Assets that a User has indicated should be shared to the publi
 <br>Webservers that serve up the HTTP Javascript User interface to control and view Cameras. http://v.eagleeyenetworks.com This user interface is built on the EEVB API.</p>
 
 <p><strong>EE Archiver</strong>
-<br>The architectural element that communicates with the Cameras and stores all the Assets. It serves up the Assets to the EE GUI as well as the EE IPhone App and EE Android App. EE Archivers are accessed via IP address.</p>
-
-<p><strong>EE Iphone App/EE Android App</strong>
-<br>Applications that using the EEVB API displays historic and realtime video for all the Cameras in an Account.</p>
+<br>The architectural element that communicates with the Cameras and stores all the Assets. It serves up the Assets to the EE GUI as well as the iOS App and Android App. EE Archivers are accessed via IP address.</p>
 
 <p><strong>EE Locator</strong>
 <br>The EE Locator has a fixed IP address that does not change. Camera and Bridges when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it, and directs it to the appropriate Archiver and other connections it will need to communicate with the EEVB. If the Locator goes down, the only function that will stop working is adding new Cameras.</p>
