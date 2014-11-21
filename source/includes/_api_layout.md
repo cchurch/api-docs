@@ -30,22 +30,9 @@ The ordering of the panes is determined by the order of the array of LayoutJsonP
             "ca0c7d2c",
             "R"
         ],
-        [
-            "ca02a9bd",
-            "R"
-        ],
-        [
-            "ca09ae1d",
-            "R"
-        ],
-        [
-            "ca010672",
-            "R"
-        ],
-        [
-            "ca0c92ee",
-            "R"
-        ],
+        [...],
+        [...],
+        [...],
         [
             "ca05e8c2",
             "R"
@@ -71,60 +58,9 @@ The ordering of the panes is determined by the order of the array of LayoutJsonP
                 "name": "",
                 "size": 1
             },
-            {
-                "cameras": [
-                    "100a9fdf"
-                ],
-                "type": "preview",
-                "pane_id": 0,
-                "name": "",
-                "size": 1
-            },
-            {
-                "cameras": [
-                    "100fc5ce"
-                ],
-                "type": "preview",
-                "pane_id": 0,
-                "name": "",
-                "size": 1
-            },
-            {
-                "cameras": [
-                    "10088295"
-                ],
-                "type": "preview",
-                "pane_id": 0,
-                "name": "",
-                "size": 1
-            },
-            {
-                "cameras": [
-                    "100bc4a3"
-                ],
-                "type": "preview",
-                "pane_id": 0,
-                "name": "",
-                "size": 1
-            },
-            {
-                "cameras": [
-                    "10001ca4"
-                ],
-                "type": "preview",
-                "pane_id": 0,
-                "name": "",
-                "size": 1
-            },
-            {
-                "cameras": [
-                    "100b0c11"
-                ],
-                "type": "preview",
-                "pane_id": 0,
-                "name": "",
-                "size": 1
-            },
+            {...},
+            {...},
+            {...},
             {
                 "cameras": [
                     "100891b7"

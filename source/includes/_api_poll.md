@@ -35,7 +35,7 @@ pre         | prets             | Timestamp of latest preview image
 [status](#status-bitmask) | bitmask           | A numerical bitmask defining the status. Bit position defines status. The meaning of each bit is defined in the table below.
 event       | object            | Events are a key value pair, where the key is the four CC of the event, and event structure are the actual meta data for that specific event. Available events are shown in the table below.
 
-### Status Bitmask
+## Status Bitmask
 
 Bit (LSB) | Status
 --------- | -----------      
@@ -75,7 +75,7 @@ IF "Recording" (bit 19) THEN Recording (green circle icon)
 
 IF "Invalid" (bit 16)==1 THEN no status change (use whatever status bits were set previously)
 
-### Event Objects
+## Event Objects
 
 Four CC   | Description
 --------- | -----------      
@@ -138,14 +138,34 @@ ALRE      | Alert Region Of Interest End
 <!--===================================================================-->
 ## Initialize Poll
 
-> Request TODO
-
-```shell
-```
-
-> Json Response TODO
+> Request Json
 
 ```json
+{
+    "cameras": {
+        "100e1e23": {
+            "resource": [
+                "pre",
+                "thumb",
+                "status",
+                "event"
+            ],
+            "event": []
+        },
+        "10097d15": {
+            "resource": [
+                "pre",
+                "thumb",
+                "status",
+                "event"
+            ],
+            "event": []
+        },
+        "[camera_id]": {...},
+        "[camera_id]": {...},
+        "[camera_id]": {...}
+    }
+}
 ```
 
 ### HTTP Request
@@ -157,8 +177,66 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-PostPollCameras | json        | Cameras
+cameras 		| [PostPollCameras](#postpollcameras-attributes) | Cameras
 
+### PostPollCameras Attributes
+
+This json attribute contains as many PostPollCamera json objects as the user desires. The key for each PostPollCamera is the camera_id.
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+[camera_id 1] 	| [PostPollCamera](#postpollcamera-attributes) | Camera 1
+[camera_id 2] 	| [PostPollCamera](#postpollcamera-attributes) | Camera 2
+... | ... | ...
+[camera_id N]   | [PostPollCamera](#postpollcamera-attributes) | Camera N
+
+### PostPollCamera Attributes
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+resource 		| array[string, enum] | enum: pre, thumb, status, event
+event 			| array[string, enum] | enum: [event objects](#event-objects)
+
+> Json Response
+
+```json
+{
+    "cameras": {
+        "100e1e23": {
+            "status": 1441847
+        },
+        "10097d15": {
+            "status": 1441847
+        },
+        "[camera_id]": {...},
+        "[camera_id]": {...},
+        "[camera_id]": {...}
+    },
+    "token": "ooe0eoEAMNsF"
+}
+```
+
+### Response Json Attributes
+
+Parameter       | Data Type   	| Description
+---------       | ----------- 	| -----------
+cameras         | [PostPollResponseCameras](#postpollresponsecameras-json-attributes) | Objects keyed by device ID
+token 			| string 		| Token to be used for subsequent GET /poll requests
+
+### PostPollResponseCameras Json Attributes
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+[camera_id 1] 	| [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | Camera 1
+[camera_id 2] 	| [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | Camera 2
+... | ... | ...
+[camera_id N]   | [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | Camera N
+
+### PostPollResponseCamera Json Attributes
+
+Parameter       | Data Type   	| Description
+---------       | ----------- 	| -----------
+status          | string 		| A bitmask flag defining the state of a bridge or a camera. [More Info](#status-bitmask)
 
 
 <!--===================================================================-->
