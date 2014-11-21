@@ -241,7 +241,23 @@ Parameter       | Data Type   | Description
 Parameter       | Data Type   	| Description
 ---------       | ----------- 	| -----------
 status          | string 		| A bitmask flag defining the state of a bridge or a camera. [More Info](#status-bitmask)
+event 			| [PostPollResponseCameraEvents](#postpollresponsecameraevents-json-attributes) |  Object of events keyed by event id
 
+### PostPollResponseCameraEvents Json Attributes
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+[event_id 1] 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | Event 1
+[event_id 2] 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | Event 2
+... | ... | ...
+[event_id N] 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | Event N
+
+### PostPollResponseCameraEvent Json Attributes
+
+Parameter       | Data Type   	| Description
+---------       | ------------- | -----------
+timestamp 		| string 		| Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+cameraid 		| string 		| internal unique identifier
 
 <!--===================================================================-->
 ## Polling
