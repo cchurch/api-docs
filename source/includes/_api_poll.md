@@ -37,29 +37,29 @@ event       | object            | Events are a key value pair, where the key is 
 
 ## Status Bitmask
 
-Bit (LSB) | Status
---------- | -----------      
-0         | Camera registered to EEVBS (DEPRECATED)
-1         | Camera Online (DEPRECATED)
-2         | Camera On (User Setting) (DEPRECATED)
-3         | Camera Recording (DEPRECATED)
-4         | Camera Sending Previews
-5         | Camera Located
-6         | Camera Not Supported
-7         | Camera Configuration in Process
-8         | Camera Needs Password
-9         | Camera Available But Not Attached
-10        | Reserved Bit
-11        | Camera Error
-12        | Reserved Bit
-13        | Reserved Bit
-14        | Reserved Bit
-15        | Reserved Bit
-16        | Invalid
-17        | Camera On
-18        | Streaming
-19        | Recording
-20        | Registered
+HEX Value | Status
+--------- | ----------
+0x000001  | Camera Online **(DEPRECATED)**
+0x000002  | Stream Attached (Camera Communicating With Bridge) **(DEPRECATED)**
+0x000004  | Camera On (User Setting) **(DEPRECATED)**
+0x000008  | Camera Recording **(DEPRECATED)**
+0x000010  | Camera Sending Previews
+0x000020  | Camera Located (Bridge has found the camera)
+0x000040  | Camera Not Supported
+0x000080  | Camera Configuration in Process (Bridge Configuring Camera)
+0x000100  | Camera Needs ONVIF Password
+0x000200  | Camera Available But Not Yet Attached
+0x000400  | *Internal Status*
+0x000800  | Camera Error
+0x001000  | *Internal Status*
+0x002000  | *Internal Status*
+0x004000  | *Reserved*
+0x008000  | *Reserved*
+0x010000  | Invalid State (Unknown State)
+0x020000  | Camera On (User Setting)
+0x040000  | Camera Streaming Video
+0x080000  | Camera Recording
+0x100000  | Camera Online
 
 This status bit mask is used to determine what the high-level/overall camera status is, using the following logic:
 
