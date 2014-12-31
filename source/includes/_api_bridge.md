@@ -114,8 +114,56 @@ curl -G https://login.eagleeyenetworks.com/g/device -d "A=[VIDEOBANK_SESSIONID]&
                 "v": 1
             }
         },
-        "active_filters": [],
-        "user_settings": {}
+        "active_filters": [
+            "schedule_bandwidth_background",
+            "user_user"
+        ],
+        "user_settings": {
+            "versions": {},
+            "settings": {
+                "upnp_enable": "0",
+                "bandwidth_background": 50000
+            },
+            "schedules": {
+                "bandwidth_background": {
+                    "priority": 1,
+                    "start": {
+                        "seconds": 0,
+                        "hours": 8,
+                        "months": "*",
+                        "minutes": 0,
+                        "wdays": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7
+                        ]
+                    },
+                    "end": {
+                        "seconds": 0,
+                        "hours": 17,
+                        "months": "*",
+                        "minutes": 30,
+                        "wdays": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7
+                        ]
+                    },
+                    "when": "work",
+                    "settings": {
+                        "bandwidth_background": "100000"
+                    }
+                }
+            }
+        }
     },
     "tags": [],
     "permissions": "swr"
