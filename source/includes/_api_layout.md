@@ -3,9 +3,13 @@
 <!--===================================================================-->
 ## Overview
 
-Layouts contain panes, which is a group of cameras arranged for viewing on screen. Layouts can be created for both mobile and desktop browsers. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a cameras, gain access to all cameras included in layouts shared with them.
+Layouts contain panes, which is a group of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a cameras, gain access to all cameras included in layouts shared with them.
 
 The ordering of the panes is determined by the order of the array of LayoutJsonPane returned by the API. Each pane will have a size of 1, 2, or 3. A size of 1 is the smallest, and fills up 1x1 on the layout grid. A size of 3 is the largest and fills up 3x3 on the layout grid. If the grid does not have enough columns to fit the pane, then the size of the pane is decreased until it is able to fit on the grid.
+
+Visual Examples:
+<img src="images/api_layout/example_1.png" alt="Example 1" width="1000">
+<img src="images/api_layout/example_2.png" alt="Example 2" width="400">
 
 <!--===================================================================-->
 ## Layout Model
