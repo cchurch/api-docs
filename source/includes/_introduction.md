@@ -1,8 +1,8 @@
 # Introduction
 
-The Eagle Eye Video API is a comprehensive REST based API for recording, indexing, and storing camera video.  The Eagle Eye Video API handles all the heavy lifting of interfacing to the cameras, recording the video, securely transmitting it to the cloud, storing it, and making it available for use for your applications. All of the Eagle Eye Security Camera VMS user interfaces (web, iOS, Android) have been built using this API.
+The Eagle Eye Video API is a comprehensive REST based API for recording, indexing, and storing camera video.  The Eagle Eye Video API handles all the heavy lifting of interfacing to the cameras, recording video, securely transmitting video to the cloud, storing video, and making video available for use for your applications. All of the Eagle Eye Security Camera VMS user interfaces (web, iOS, Android) have been built using this API.
 
-We have language bindings in cURL! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in cURL. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 ## Getting Started
 
@@ -10,6 +10,7 @@ The Eagle Eye Video API allows you to securely record, manage, and playback vide
 
 Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs, and you can use many different HTTP clients in nearly any programming language.
 
+<!-- 
 ## Get an API Key
 
 [Create Developer Account](https://login.eagleeyenetworks.com/api_signup.html)
@@ -27,3 +28,4 @@ You may also want to purchase a development hardware kit from us (so you can con
 ![alt text](introduction/apikey_3.png "Step 3")
 ![alt text](introduction/apikey_4.png "Step 4")
 ![alt text](introduction/apikey_5.png "Step 5")
+-->
