@@ -1098,7 +1098,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","utcOffset":[UTC_OFFSET],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}'
+curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}'
 ```
 
 > Json Response
@@ -1118,7 +1118,7 @@ Adds an Unattached Camera to the Bridge
 Parameter     | Data Type     | Description | Is Required
 ---------     | -----------   | ----------- | -----------
 **name**      | string        | Camera Name | true
-**settings**  | json          | Misc Settings | true
+**settings**  | [DeviceSettings](#devicesettings-attributes)          | Misc Settings | true
 timezone      | string        | If unspecified, this will default to the camera’s Bridge timezone
 tags          | array[string] | Array of strings, which each string representing a "tag"
 

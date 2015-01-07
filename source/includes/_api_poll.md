@@ -262,15 +262,11 @@ cameraid 		| string 		| internal unique identifier
 <!--===================================================================-->
 ## Polling
 
-Used to receive updates on real-time changes. Either requires a valid 'ee-poll-ses' cookie from POST /poll or the 'token' response from POST /poll.
+Used to receive updates on real-time changes. This API call requires a valid 'ee-poll-ses' cookie from POST /poll.
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/poll`
-
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-token           | string      | Token from POST /poll. Not required if you have the 'ee-poll-ses' cookie from POST /poll.
 
 > Json Response
 
