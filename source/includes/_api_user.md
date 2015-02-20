@@ -84,7 +84,7 @@ Parameter               | Data Type     | Description
 id                      | string        | Unique identifier for Authorized User
 first_name              | string        | First name of Authorized User
 last_name               | string        | Last name of Authorized User
-email                   | string        | Email of Authorized User
+email                   | string        | Email of Authorized User (* this email must only contain ASCII characters)
 owner_account_id        | string        | Unique identifier of user's Account
 active_account_id       | string        | Unique identifier of user's active Account
 uid                     | string        | UID
