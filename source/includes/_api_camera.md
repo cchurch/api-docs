@@ -999,9 +999,11 @@ street_address      | string                            | Street Address of the 
 azimuth             | float                             | Direction that the center of the camera faces. Values from 0.0-360.0 North=0.0.
 range               | int                               | Effective distance the camera can 'see' in feet.
 floor               | int                               | The floor of the building given that it is multiple stories.
-share_email         | ???
-retention_days      | ???
-cloud_retention_days| ???
+share_email         | string                            | Comma delimited list of emails to share this device with
+local_retention_days| json                              | JSON object of total retention days         e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
+cloud_retention_days| json                              | JSON object of retention days in the cloud  e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
+bridge_retention_days| json                             | JSON object of retention days on the bridge e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
+* Note local_retention_days and cloud_retention_days are meaningless in **CMVR** mode
 
 ### DeviceCameraInfo Attributes
 

@@ -318,6 +318,143 @@ HTTP Status Code    | Data Type
 200	| Account context switch successful
 
 <!--===================================================================-->
+## Single Sign On
+
+> Request
+
+```shell
+curl --request POST https://login.eagleeyenetworks.com/g/sso --data "brand_saml_publickey_cert=[BRAND_SAML_PUBLICKEY_CERT]&
+brand_saml_namedid_path=[BRAND_SAML_NAMEDID_PATH]"
+```
+
+This allows a reseller to to maintain account management and have their system proxy the requests to Eagle Eye Network servers after they have logged into the third parties system.
+
+The **brand_saml_publickey_cert** is an x509 certificate that contains a public key with which Eagle Eye Networks can validate that an SSO message is valid and verify that it has not been altered.
+The format of this certificate is PEM (ascii encoded base 64 surrounded by lines containing **'-----BEGIN CERTIFICATE——‘** and **'——END CERTIFICATE——'**
+
+The **brand_saml_namedid_path** is the xml xpath to the node that contains the email address of the user being logged in.
+
+
+### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/g/sso`
+
+Parameter  		| Data Type   | Description   	| Is Required
+---------  		| ----------- | -----------   	| -----------
+brand_saml_publickey_cert| string      | an x509 certificate that contains the public key| true
+brand_saml_namedid_path| string |xml xpath containing the email address| true
+
+### Error Status Codes
+
+HTTP Status Code    | Data Type
+------------------- | -----------
+401 | Unauthorized due to invalid session cookie
+400	| Unexpected or non-identifiable arguments are supplied
+404	| Account with the "account_id" provided cannot be found
+200	| Account context switch successful
+
+
+<!--===================================================================-->
+## Get Notice
+
+> Request
+
+```shell
+curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID] -X GET https://login.eagleeyenetworks.com/g/users/notice?id=[ID]
+```
+
+> Response List
+
+```list
+[[ u'cafe1866',
+  u'example@eagleeyenetworks.com',
+  u'Terms And Condtions (2015)',
+  u'',
+  1,
+  14]]
+```
+
+This is to push important notices such as "Terms and Conditions (2015)".
+The client software must call **GET** to see if the user needs to agree to the notice.
+If the user does then the client software should popup a notice box.  If the user agrees to the terms then then **PUT** call should be placed for the notice.
+A past due user is subject to suspension of services, and may not be allowed to login.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/users/notice`
+
+Parameter  		| Data Type   | Description   	| Is Required
+---------  		| ----------- | -----------   	| -----------
+**id**   		| string      | User Id 		| false
+
+### HTTP List Attributes
+
+Parameter 	| Data Type     | Description
+---------  	| -----------   | -----------
+user_id 	| string 		| Unique identifier for validated user
+email       | string        | Email address of the user
+notice title| string 		| Title of the notice
+timestamp   | string        | last time the user accepted the terms and conditions
+action_needed| bool         | 0 or 1 indicating if action is required of the user
+past_due    | int           | This is the number of days past due
+
+* If action is needed then the client software should popup a notice box for the requested notice title.
+
+### Error Status Codes
+
+HTTP Status Code    | Data Type
+------------------- | -----------
+400 | Unexpected or non-identifiable arguments are supplied
+406	| Information supplied could not be verified
+402	| Account is suspended
+460	| Account is inactive
+409	| Account has already been activated
+412	| User is disabled
+200	| User has been authorized for access to the realm
+
+
+<!--===================================================================-->
+## Put Notice
+
+> Request
+
+```shell
+curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -H "content-type: application/json" https://login.eagleeyenetworks.com/g/users/notice -d '{"notice_title": [NOTICE_TITLE]}'
+```
+
+> Response Json
+
+``` json
+{ "id": "cafe1866"}
+```
+
+This is called to record acceptance of the notice. Account Super Users will not be able to accept for other people.
+
+### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/g/users/notice`
+
+Parameter  		| Data Type   | Description   	| Is Required
+---------  		| ----------- | -----------   	| -----------
+**notice_title**| string      | Title of the notice | true
+
+### HTTP Json
+Parameter  		| Data Type   | Description
+---------  		| ----------- | -----------
+**id**| string      | user id |
+
+### Error Status Codes
+ Code    | Data Type
+-------- | -----------
+400 | Unexpected or non-identifiable arguments are supplied
+406	| Information supplied could not be verified
+402	| Account is suspended
+460	| Account is inactive
+409	| Account has already been activated
+412	| User is disabled
+200	| User has been authorized for access to the realm
+
+<!--===================================================================-->
 ## Logout
 
 > Request
