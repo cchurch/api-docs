@@ -1,0 +1,352 @@
+{
+    "apiVersion": "0.1.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "layout",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/layout",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get Layout",
+                    "notes": "Returns layout object by ID",
+                    "nickname": "getLayout",
+                    "type": "Layout",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Layout ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "PUT",
+                    "summary": "Create new layout",
+                    "notes": "Creates a new layout",
+                    "nickname": "putLayout",
+                    "type": "LayoutId",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "Layout Name",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "types",
+                            "description": "Specifies target(s) for layout.  Multiple values are allowed.",
+                            "required": true,
+                            "type": "array",
+                            "paramType": "form",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "json",
+                            "required": true,
+                            "type":"LayoutJson",
+                            "description":"String of JSON formatted data that defines the layout",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "shares",
+                            "description": "Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user id and the second field is the list of permissions for the user. Two special user IDs exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['cafedead', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "summary": "Update layout",
+                    "notes": "Update a layout",
+                    "nickname": "postLayout",
+                    "type": "LayoutId",
+                    "parameters": [
+                        {
+                            "name": "name",
+                            "description": "Layout Name",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "types",
+                            "description": "Specifies target(s) for layout.  Multiple values are allowed.",
+                            "required": true,
+                            "type": "array",
+                            "paramType": "form",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "json",
+                            "required": true,
+                            "type":"LayoutJson",
+                            "description":"String of JSON formatted data that defines the layout",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "shares",
+                            "description": "Array of arrays, one per account user for whom sharing is enabled for this layout.  Each string contains two field separated by comma.  The first field is a user aid and the second field are permissions for the user. Two special user ID exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘cafedead’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Delete layout",
+                    "notes": "Delete a layout",
+                    "nickname": "deleteLayout",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Layout ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Layout matching the ID was not found"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "Layout":{
+            "id":"Layout",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the Layout"
+                },
+                "name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of the layout"
+                },
+                "types":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Specifies target(s) for layout.  Multiple values are allowed.",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "json":{
+                    "type":"LayoutJson",
+                    "required": true,
+                    "description":"String of JSON formatted data that defines the layout"
+                },
+                "permissions":{
+                    "type":"string",
+                    "required": true,
+                    "description":"String of zero or more characters.  Each character defines a permission. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout"
+                },
+                "shares":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of arrays, one per account user for whom sharing is enabled for this layout.  Each string contains two field separated by comma.  The first field is a user aid and the second field are permissions for the user. Two special user ID exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘cafedead’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.",
+                    "items":{
+                        "type":"array"
+                    }
+                },
+                "current_recording_key":{
+                    "type":"string",
+                    "required": true,
+                    "description":"String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service."
+                }
+            }
+        },
+        "LayoutJson":{
+            "id":"LayoutJson",
+            "required":[],
+            "properties":{
+                "panes": {
+                    "type":"LayoutJsonPane",
+                    "required": true,
+                    "description":"Array of Panes"
+                },
+                "settings":{
+                    "type":"LayoutJsonSettings",
+                    "required": true,
+                    "description":"Settings object"
+                }
+            }
+        },
+        "LayoutJsonPane":{
+            "id":"LayoutJsonPane",
+            "required":[],
+            "properties":{
+                "name": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Layout pane name"
+                },
+                "type": {
+                    "type":"string",
+                    "required": true,
+                    "description":"‘preview’ - shows live preview images form cameras. ‘carousel’- rotates between preview images, ids of cameras needs to be include in the cameras array along with an integer in the delay array.  The delay is an integer value of milliseconds as too how long the Camera will be displayed before switching to the next Camera.  A “carousel” with only one camera is the same as preview. ‘click’ - respond to click for other cameras in layout. ‘motion’ - respond to motion for other cameras in layout. ‘map’ - a static map with camera icons located on it. ‘url’ - displays the contents of the url in the pane as a frame."
+                },
+                "pane_id": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"ID given to pane when created from Layout Manager"
+                },
+                "size": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Size to display image: 1 = small, 2 = medium, 3 = large",
+                    "enum":[
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "cameras": {
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of camera ids. For ‘carousel’, cycle through the camera ids with the delay setting in the corresponding ‘delay’ property",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "delay":{
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of integers indicating amount of delay before changing to next camera image.  Time is in milliseconds.  Only used for type ‘carousel’",
+                    "items":{
+                        "type":"integer",
+                        "format":"int64"
+                    }
+                }
+            }
+        },
+        "LayoutJsonSettings":{
+            "id":"LayoutJsonSettings",
+            "required":[],
+            "properties":{
+                "camera_border": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Show camera pane borders"
+                },
+                "camera_name": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Show camera name"
+                },
+                "camera_aspect_ratio": {
+                    "type":"float",
+                    "required": true,
+                    "description":"Aspect ratio of images. .5625 = 16x9, .75 = 4x3",
+                    "enum":[
+                        0.5625,
+                        0.75
+                    ]
+                },
+                "camera_row_limit": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Max number of cameras to show per row",
+                    "enum":[
+                        3,
+                        4,
+                        5
+                    ]
+                }
+            }
+        }
+    }
+}

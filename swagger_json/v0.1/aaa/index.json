@@ -1,0 +1,954 @@
+{
+    "apiVersion": "0.1.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "aaa",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/aaa/authenticate",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Login Step 1: Authenticate with user credentials",
+                    "notes": "Login is a 2 step process:  Authenticate, then Authorize with the token returned by Authenticate.",
+                    "nickname": "authenticate",
+                    "type": "AuthenticateToken",
+                    "parameters": [
+                        {
+                            "name": "username",
+                            "description": "Username",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "Password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Some argument(s) are missing or invalid"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Supplied credentials are not valid"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 462,
+                            "message": "User is pending. This will be thrown before 401 if username is valid and Account is active."
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authenticated. Body contains JSON encoded result"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/authorize",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Login Step 2: Authorize user with token",
+                    "notes": "Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'videobank_sessionid' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.",
+                    "nickname": "authorize",
+                    "type": "AuthorizeUser",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Token returned by authenticate. Must be URL Encoded.",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Some argument(s) are missing or invalid"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Invalid Token supplied"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/create_account",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Register for a new account",
+                    "notes": "This is used to create a new account and the super user for the account.  As a part of the creation process, the service sends a confirmation email containing a link the user must click to activate the account.  Account cannot be used until it is activated.",
+                    "nickname": "createAccount",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "Password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "name",
+                            "description": "Account name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "Timezone name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Realm is invalid due to not being a root realm"
+                        },
+                        {
+                            "code": 409,
+                            "message": "Email address has already been registered for the specified realm"
+                        },
+                        {
+                            "code": 202,
+                            "message": "Account has been created and a confirmation email has been sent to the provided email address"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/validate_account",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Validate a new account",
+                    "notes": "This is used to verify the email address supplied when the account is created.  When successful, the account is set to active and a user session is created. User will not be required to login again.",
+                    "nickname": "validateAccount",
+                    "type": "ValidateAccountUserId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Account ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "token",
+                            "description": "Account validation token",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Information supplied could not be verified"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 409,
+                            "message": "Account has already been activated"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/forgot_password",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Password recovery/reset",
+                    "notes": "Password recovery is a multi-step process.  Step one requests a reset email be sent to the email address of a registered user.  Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience).  Step three uses allows the user to change  the password.  The results of step three is that a user session is created for the user.",
+                    "nickname": "forgotPassword",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Information supplied could not be verified"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 462,
+                            "message": "User is pending"
+                        },
+                        {
+                            "code": 202,
+                            "message": "An reset email has been sent to the supplied email address. This status will be provided even if the email address was not found.  This prevents attacks to discover user accounts."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/check_pw_reset_token",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Check password reset token",
+                    "notes": "This is step two of the password recover/reset process. It verifies that the supplied token is a valid reset token.",
+                    "nickname": "forgotPassword",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Password reset token provided in email",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Token not valid or not found"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 202,
+                            "message": "Token is valid"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/reset_password",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Reset password",
+                    "notes": "This is step three of the password recover/reset process. It both verifies that the supplied token is a valid reset token and then, if valid resets the password associated with the token to the newly supplied password.  Upon completion, a user login session is created.",
+                    "nickname": "resetPassword",
+                    "type": "ResetPasswordUserId",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Password reset token provided in email",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "New password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 406,
+                            "message": "Token not valid or not found"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User has been authorized for access to the realm"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/resend_registration_email",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Resend Registration Email",
+                    "notes": "This is used by users who have registered for an account, but never confirmed the registration.  This will allow the registration confirmation email to be re-sent to the user.",
+                    "nickname": "resendRegistrationEmail",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address of the account contact for a pending account",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm in which the account was created",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Account with this email address and realm could not be found"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 409,
+                            "message": "Account is already active (not pending)"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 202,
+                            "message": "Account was located and verified to be in the pending state.  A registration email has been recreated and sent to the provided email address."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/resend_user_verification_email",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Resend New-User Email",
+                    "notes": "This is used by users who have had a user account created for them, but they never confirmed their user account.  This will re-send the user confirmation email so that they can then confirm their user account.",
+                    "nickname": "resendNewUserEmail",
+                    "parameters": [
+                        {
+                            "name": "email",
+                            "description": "Email address of the new user",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "realm",
+                            "description": "Realm in which the user was created",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "User with this email address and realm could not be found"
+                        },
+                        {
+                            "code": 402,
+                            "message": "Account is suspended"
+                        },
+                        {
+                            "code": 460,
+                            "message": "Account is inactive"
+                        },
+                        {
+                            "code": 461,
+                            "message": "Account is pending"
+                        },
+                        {
+                            "code": 412,
+                            "message": "User is disabled"
+                        },
+                        {
+                            "code": 409,
+                            "message": "User is already active (not pending)"
+                        },
+                        {
+                            "code": 202,
+                            "message": "User was located and verified to be in the pending state.  A verification email has been recreated and sent to the provided email address."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/change_password",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Change Password",
+                    "notes": "This allows a user to change their password directly while authenticated, and also allows super users to change the password of the users they manage.  If someone is changing their own password, they must send their current password as well.  If someone is changing one of the users they manage, they only need to send the new password.",
+                    "nickname": "changePassword",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "ID of the user having their password changed.  Optional.  Defaults to the ID of the authenticated user.  If empty or equal to authenticated user, then \"current_password\" becomes required.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "password",
+                            "description": "New password",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "current_password",
+                            "description": "Current password of the user.  Optional.  If \"id\" argument is empty, or is equal to the authenticated user's id, then this is required.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "User with the \"id\" provided cannot be found"
+                        },
+                        {
+                            "code": 406,
+                            "message": "The \"current_password\" provided does not match the password of the authenticated user"
+                        },
+                        {
+                            "code": 200,
+                            "message": "User password was changed successfully"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/switch_account",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Switch Account Context",
+                    "notes": "This allows a user to \"log in\" to another account that the user has access to (see \"list/accounts\").  Most commonly this be would be needed for a master account user accessing their sub accounts.",
+                    "nickname": "switchAccount",
+                    "parameters": [
+                        {
+                            "name": "account_id",
+                            "description": "ID of the account to login to.  Optional.  Defaults to the account ID that the user belongs to.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 404,
+                            "message": "Account with the \"account_id\" provided cannot be found"
+                        },
+                        {
+                            "code": 200,
+                            "message": "Account context switch successful"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/aaa/logout",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Log out",
+                    "notes": "Log out user and invalidate HTTP session cookie",
+                    "nickname": "logout",
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 204,
+                            "message": "User has been logged out"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "ChangePasswordId":{
+            "id":"ChangePasswordId",
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier of the user"
+                }
+            }
+        },
+        "ResetPasswordUserId":{
+            "id":"ResetPasswordUserId",
+            "properties":{
+                "user_id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for authorized user"
+                }
+            }
+        },
+        "ValidateAccountUserId":{
+            "id":"ValidateAccountUserId",
+            "properties":{
+                "user_id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for validated user"
+                }
+            }
+        },
+        "AuthenticateToken":{
+            "id":"AuthenticateToken",
+            "required":[],
+            "properties":{
+                "token":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Authentication Token needed for aaa/authorize"
+                }
+            }
+        },
+        "AuthorizeUser":{
+            "id":"AuthorizeUser",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for Authorized User"
+                },
+                "user_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"(DEPRECATED) Unique identifier for Authorized User (same as 'id')"
+                },
+                "first_name": {
+                    "type":"string",
+                    "required": true,
+                    "description":"First name of Authorized User"
+                },
+                "last_name": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Last name of Authorized User"
+                },
+                "email": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Email of Authorized User"
+                },
+                "owner_account_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier of user's Account"
+                },
+                "active_account_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier of user's active Account"
+                },
+                "uid": {
+                    "type":"string",
+                    "required": true,
+                    "description":"UID"
+                },
+                "is_superuser": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Super User"
+                },
+                "is_account_superuser": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user an Account Super User"
+                },
+                "is_staff": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Staff User"
+                },
+                "is_active": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user Active"
+                },
+                "is_pending": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Pending user"
+                },
+                "is_master": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user in a Master Account"
+                },
+                "is_user_admin": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a User Admin"
+                },
+                "is_layout_admin": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Layout Admin"
+                },
+                "is_live_video": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user authorized to access Live Video"
+                },
+                "is_device_admin": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Device Admin"
+                },
+                "is_export_video": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user authorized to Export Video"
+                },
+                "is_recorded_video": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user authorized to view Recorded Video"
+                },
+                "street": {
+                    "type":"array",
+                    "required": true,
+                    "description":"Street Address as array [address line 1, address line 2, ...])",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "city": {
+                    "type":"string",
+                    "required": true,
+                    "description":"City"
+                },
+                "state": {
+                    "type":"string",
+                    "required": true,
+                    "description":"State"
+                },
+                "country": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Country"
+                },
+                "postal_code": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Postal Code"
+                },
+                "phone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Phone number"
+                },
+                "mobile_phone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Mobile phone number"
+                },
+                "utc_offset": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Timezone offset from UTC in seconds (signed integer)"
+                },
+                "timezone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timezone"
+                },
+                "last_login": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN"
+                },
+                "alternate_email": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Alternate email address"
+                },
+                "sms_phone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"SMS phone number"
+                },
+                "is_sms_include_picture": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Include picture in sms notifications"
+                },
+                "json":{
+                    "type":"UserJson",
+                    "required": true,
+                    "description":"Misc settings for the user as a JSON string"
+                },
+                "camera_access": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of devices (IDs) the user has access to",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "layouts": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of layouts (IDs) the user has access to",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "is_notify_enable": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is notifications enabled for the User"
+                },
+                "notify_period": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of notification time periods, in the form: D-HHMM-HHMM",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "notify_rule": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of notification rules, in the form: id-type-delay (e.g. one-email-0)",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "access_period": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of access time periods, in the form: D-HHMM-HHMM",
+                    "items":{
+                        "type":"string"
+                    }
+                }
+            }
+        },
+        "UserJson":{
+            "id":"UserJson",
+            "required":[],
+            "properties":{
+                 "een": {
+                     "type": "UserJsonEen",
+                     "required": true,
+                     "description":"EEN Object"
+                 }
+            }
+        },
+        "UserJsonEen":{
+            "id":"UserJsonEen",
+            "required":[],
+            "properties":{
+                "show_AMPM": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Show times with AM/PM"
+                },
+                "milliseconds_display": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Show time with milliseconds"
+                },
+                "layout_rotation_seconds": {
+                    "type":"integer",
+                    "required": true,
+                    "description":"If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur."
+                },
+                "permissions": {
+                    "type": "object",
+                    "description": "(DEPRECATED) Permissions for the user"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,191 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "action",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/action/recordnow",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Record Now",
+                    "notes": "Used to turn on recording for 1 camera, all cameras, or all cameras in a specific layout. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 1 (on), and 'video_capture_mode' is set to 'always'.",
+                    "nickname": "recordNow",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "ID of the camera to record. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "layout_id",
+                            "description": "ID of the layout whose cameras will be set to record. All cameras in the layout will be affected.  If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "recording_key",
+                            "description": "A key used to tag this recording. Can be used to retrieve this recording info later using the GET 'recording' service.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/recordoff",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "Record Off",
+                    "notes": "Used to turn off recording for 1 camera, all cameras, or all cameras in a specific layout. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 0 (off), and 'video_capture_mode' is set back to 'event' (the default).",
+                    "nickname": "recordNow",
+                    "parameters": [
+                        {
+                            "name": "device_id",
+                            "description": "ID of the camera to turn off recording for. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "layout_id",
+                            "description": "ID of the layout whose cameras will have recording turned off. All cameras in the layout will be affected.  If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/allon",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "All On",
+                    "notes": "Used to turn on all cameras in the caller user’s account. Caller must be an account_superuser.",
+                    "nickname": "allOn",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "description": "Either the keyword, ‘now’, or the time at which the motion based recording and previews  should begin.  The format for the time is 'YYYYMMDDHHMMSS.NNN'. If this parameter is omitted, ‘now’ is used. THIS ARGUMENT IS IGNORED FOR NOW.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/action/alloff",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "All Off",
+                    "notes": "Used to turn off all cameras in the caller user’s account. Caller must be an account_superuser.",
+                    "nickname": "allOff",
+                    "parameters": [
+                        {
+                            "name": "start",
+                            "description": "Either the keyword, ‘now’, or the time at which the motion based recording and previews  should begin.  The format for the time is 'YYYYMMDDHHMMSS.NNN'. If this parameter is omitted, ‘now’ is used. THIS ARGUMENT IS IGNORED FOR NOW.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "duration",
+                            "description": "Duration of the recording in seconds.  If omitted, the value 600 (10 minutes) will be used. THIS ARGUMENT IS IGNORED FOR NOW.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 202,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{}
+}

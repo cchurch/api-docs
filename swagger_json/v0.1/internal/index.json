@@ -1,0 +1,19 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "info": {
+        "title": "API Documentation (Internal)",
+        "description": "",
+        "contact": "support@eagleeyenetworks.com"
+    },
+    "apis": [
+        {
+            "path": "manufactureddevice",
+            "description": "Manufactured Device operations"
+        },
+        {
+            "path": "action",
+            "description": "Actions"
+        }
+    ]
+}

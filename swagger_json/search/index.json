@@ -1,0 +1,177 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "search",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/search/recordings",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Search Recordings",
+                    "notes": "Returns array of recording objects that match a search value.",
+                    "nickname": "getSearchRecordings",
+                    "type": "array",
+                    "items": {
+                        "$ref": "SearchRecording"
+                    },
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "description": "Value to search for",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/search/annotations",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Search Annotations",
+                    "notes": "Returns array of annotation objects that match a search value.",
+                    "nickname": "getSearchAnnotations",
+                    "type": "array",
+                    "items": {
+                        "$ref": "object"
+                    },
+                    "parameters": [
+                        {
+                            "name": "value",
+                            "description": "Value to search for",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "start_timestamp",
+                            "description": "Start timestamp (in EEN format) to use to limit search results",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        },
+                        {
+                            "name": "end_timestamp",
+                            "description": "End timestamp (in EEN format) to use to limit search results. Defaults to now.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "SearchRecording":{
+            "id":"SearchRecording",
+            "required":[],
+            "properties":{
+                "_key":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier (within the user's account) of the recording"
+                },
+                "current_recording_timestamp": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp of when the current recording (if any) was started"
+                },
+                "recording_%s_start": {
+                    "type":"string",
+                    "required": true,
+                    "type": "RecordingInfo",
+                    "description":"Object of info about the recording start event, where '%s' is the timestamp it started. Could be N number of these."
+                },
+                "recording_%s_stop": {
+                    "type":"string",
+                    "required": true,
+                    "type": "RecordingInfo",
+                    "description":"Object of info about the recording stop event, where '%s' is the timestamp it started. Must have a matching 'recording_%s_start' event. Could be N number of these."
+                },
+                "recording_%s_meta": {
+                    "type":"string",
+                    "required": true,
+                    "type": "object",
+                    "description":"Object of info about the recording, where '%s' is the timestamp it started. Must have a matching 'recording_%s_start' event."
+                }
+            }
+        },
+        "RecordingInfo":{
+            "id":"RecordingInfo",
+            "required":[],
+            "properties":{
+                "timestamp": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp the recording was started, in EEN format."
+                },
+                "layout_id": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"ID of a layout the recording was started for"
+                },
+                "camera_ids": {
+                    "type":"array",
+                    "required": true,
+                    "description":"Array of camera ids who had recording started for",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "layout_name": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Name of layout at the time the recording started"
+                },
+                "user_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"ID of the user who started/stopped the recording"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "info": {
+        "title": "API Documentation",
+        "description": "<a href=\"#\" id=\"show_terms\">Definition of Terms</a>",
+        "contact": "support@eagleeyenetworks.com"
+    },
+    "apis": [
+        {
+            "path": "aaa",
+            "description": "Authentication and authorization"
+        },
+        {
+            "path": "account",
+            "description": "Account operations"
+        },
+        {
+            "path": "action",
+            "description": "Actions"
+        },
+        {
+            "path": "annotation",
+            "description": "Annotation"
+        },
+        {
+            "path": "asset",
+            "description": "Asset operations"
+        },
+        {
+            "path": "device",
+            "description": "Camera and Bridge operations"
+        },
+        {
+            "path": "feedback",
+            "description": "Feedback operations"
+        },
+        {
+            "path": "layout",
+            "description": "Layout operations"
+        },
+        {
+            "path": "metric",
+            "description": "Metric queries"
+        },
+        {
+            "path": "pngspan",
+            "description": "PNG Span image retrieval"
+        },
+        {
+            "path": "poll",
+            "description": "Polling operations"
+        },
+        {
+            "path": "recording",
+            "description": "Recording operations"
+        },
+        {
+            "path": "search",
+            "description": "Search"
+        },
+        {
+            "path": "user",
+            "description": "User operations"
+        }
+    ]
+}

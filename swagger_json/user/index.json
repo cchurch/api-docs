@@ -1,0 +1,1021 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com/g",
+    "resourcePath": "user",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/user",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Get User",
+                    "notes": "Returns user object by ID. Not passing an ID will return the current authorized user.",
+                    "nickname": "getUser",
+                    "type": "User",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "User ID",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                },
+                {
+                    "method": "PUT",
+                    "summary": "Create new User",
+                    "notes": "Creates a new User",
+                    "nickname": "putUser",
+                    "type": "UserId",
+                    "parameters": [
+                        {
+                            "name": "first_name",
+                            "description": "First Name",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "last_name",
+                            "description": "Last Name",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "email",
+                            "description": "Email Address",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "phone",
+                            "description": "Phone Number",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "mobile_phone",
+                            "description": "Mobile Phone Number",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "uid",
+                            "description": "An identifier of the user. Only Super Users can set this.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "owner_account_id",
+                            "description": "ID of owner account. Defaults to account of the user creating it.  Must be an account the user has access to. For SuperUsers, it can be any account, for Account SuperUsers, it can be theirs or a child account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "street",
+                            "description": "Street address",
+                            "required": false,
+                            "type": "array",
+                            "paramType": "form",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "city",
+                            "description": "City",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "state",
+                            "description": "State",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "country",
+                            "description": "Country",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "postal_code",
+                            "description": "Postal code",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "json",
+                            "description": "JSON formatted data representing various user settings.",
+                            "required": false,
+                            "type": "UserJson",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "is_staff",
+                            "description": "1 or 0 indicating the user has Staff permission. Only Super Users can set this.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_superuser",
+                            "description": "1 or 0 indicating the user has Super User permission. Only Super Users can set this.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_account_superuser",
+                            "description": "1 or 0 indicating the user as Account Super User permission. Only Super Users and Account Super Users can set this.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_layout_admin",
+                            "description": "1 or 0 indicating whether the user is a layout admin or not.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_device_admin",
+                            "description": "1 or 0 indicating whether the user is a device admin or not",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "camera_access",
+                            "description": "Array of arrays, one per device for which the uer has permissions.  Each sub array contains two elements.  The first field is a device id, and the second field is a string of 1 or more chacterse indicating permissions for the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an admin for this camera. 'S' - user can share this camera in a group share. Only superusers or account_superusers can edit this field.",
+                            "required": false,
+                            "type": "array",
+                            "paramType": "form",
+                            "items":{
+                                "type":"array"
+                            }
+                        },
+                        {
+                            "name": "sms_phone",
+                            "description": "Phone number to be used for SMS messaging",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "is_sms_include_picture",
+                            "description": "1 or 0. If 1, use MMS messaging to include a picture w with alert messages sent to the sms_phone number.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "alternate_email",
+                            "description": "Email address to be used for alert notifications",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "User timezone. Defaults to US/Pacific",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form",
+                            "enum":[
+                                "US/Alaska",
+                                "US/Arizona",
+                                "US/Central",
+                                "US/Pacific",
+                                "US/Eastern",
+                                "US/Mountain",
+                                "US/Hawaii",
+                                "UTC"
+                            ]
+                        },
+                        {
+                            "name": "access_period",
+                            "type":"array",
+                            "paramType": "form",
+                            "description":"Contains the time periods during which the user has access to the account.  Each element of the array contains three field separated by dashes.  The first field is the day of the week where Monday is 0.  The second element is the start time.  The third element is the end time. If empty, user has no time restrictions for access to the account.   All times are expressed in local time and use a 24 hour clock formatted as HHMM.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "notify_period",
+                            "type":"array",
+                            "paramType": "form",
+                            "description":"Contains the time periods during which the user will receive alert notifications..  Each element of the array contains three field separated by dashes.  The first field is the day of the week where Monday is 0.  The second element is the start time.  The third element is the end time. If empty, user  will not receive any alert notifications.   All times are expressed in local time and use a 24 hour clock formatted as HHMM.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "is_notify_enable",
+                            "description": "1 or 0. If 1, user will receive alert notifications as specified in notify_period.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "notify_rule",
+                            "type":"array",
+                            "paramType": "form",
+                            "description":"Contains alert notification rules  Each rule contains three fields separated by dashes And takes the form: Alert_Label-Notification_Method-Delay. Alert_Label: a name defined by the user. Notification_Method:  Valid values: email, sms, gui. Delay: the amount of time, in minutes between between notifications.",
+                            "items":{
+                                "type":"string"
+                            }
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code":409,
+                            "message":"Email address is already in use by another user"
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "summary": "Update User",
+                    "notes": "Update a User",
+                    "nickname": "postUser",
+                    "type": "UserId",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "Unique identifier of user",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "first_name",
+                            "description": "First Name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "last_name",
+                            "description": "Last Name",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "email",
+                            "description": "Email Address",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "phone",
+                            "description": "Phone Number",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "mobile_phone",
+                            "description": "Mobile Phone Number",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "uid",
+                            "description": "An identifier of the user. Only Super Users can set this.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "owner_account_id",
+                            "description": "ID of owner account. Defaults to account of the user creating it.  Must be an account the user has access to. For SuperUsers, it can be any account, for Account SuperUsers, it can be theirs or a child account.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "street",
+                            "description": "Street address",
+                            "required": false,
+                            "type": "array",
+                            "paramType": "form",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "city",
+                            "description": "City",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "state",
+                            "description": "State",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "country",
+                            "description": "Country",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "postal_code",
+                            "description": "Postal code",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "json",
+                            "description": "JSON formatted data representing various user settings.",
+                            "required": false,
+                            "type": "UserJson",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "is_staff",
+                            "description": "1 or 0 indicating the user has Staff permission. Only Super Users can set this.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_active",
+                            "description": "1 or 0 indicating the user has Active permission. Only Account Super Users and Super Users can set this.  Cannot update this if the user is 'pending'.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_superuser",
+                            "description": "1 or 0 indicating the user has Super User permission. Only Super Users can set this.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_account_superuser",
+                            "description": "1 or 0 indicating the user as Account Super User permission. Only Super Users and Account Super Users can set this.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_layout_admin",
+                            "description": "1 or 0 indicating whether the user is a layout admin or not.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "is_device_admin",
+                            "description": "1 or 0 indicating whether the user is a device admin or not",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "camera_access",
+                            "description": "Array of arrays, one per device for which the uer has permissions.  Each sub array contains two elements.  The first field is a device id, and the second field is a string of 1 or more chacterse indicating permissions for the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an admin for this camera. 'S' - user can share this camera in a group share. Only superusers or account_superusers can edit this field.",
+                            "required": false,
+                            "type": "array",
+                            "paramType": "form",
+                            "items":{
+                                "type":"array"
+                            }
+                        },
+                        {
+                            "name": "sms_phone",
+                            "description": "Phone number to be used for SMS messaging",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "is_sms_include_picture",
+                            "description": "1 or 0. If 1, use MMS messaging to include a picture w with alert messages sent to the sms_phone number.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "alternate_email",
+                            "description": "Email address to be used for alert notifications",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form"
+                        },
+                        {
+                            "name": "timezone",
+                            "description": "User timezone. Defaults to US/Pacific",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "form",
+                            "enum":[
+                                "US/Alaska",
+                                "US/Arizona",
+                                "US/Central",
+                                "US/Pacific",
+                                "US/Eastern",
+                                "US/Mountain",
+                                "US/Hawaii",
+                                "UTC"
+                            ]
+                        },
+                        {
+                            "name": "access_period",
+                            "type":"array",
+                            "paramType": "form",
+                            "description":"Contains the time periods during which the user has access to the account.  Each element of the array contains three field separated by dashes.  The first field is the day of the week where Monday is 0.  The second element is the start time.  The third element is the end time. If empty, user has no time restrictions for access to the account.   All times are expressed in local time and use a 24 hour clock formatted as HHMM.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "notify_period",
+                            "type":"array",
+                            "paramType": "form",
+                            "description":"Contains the time periods during which the user will receive alert notifications..  Each element of the array contains three field separated by dashes.  The first field is the day of the week where Monday is 0.  The second element is the start time.  The third element is the end time. If empty, user  will not receive any alert notifications.   All times are expressed in local time and use a 24 hour clock formatted as HHMM.",
+                            "items":{
+                                "type":"string"
+                            }
+                        },
+                        {
+                            "name": "is_notify_enable",
+                            "description": "1 or 0. If 1, user will receive alert notifications as specified in notify_period.",
+                            "required": false,
+                            "type": "integer",
+                            "format":"int64",
+                            "paramType": "form",
+                            "enum":[
+                                0,
+                                1
+                            ]
+                        },
+                        {
+                            "name": "notify_rule",
+                            "type":"array",
+                            "description":"Contains alert notification rules  Each rule contains three fields separated by dashes And takes the form: Alert_Label-Notification_Method-Delay. Alert_Label: a name defined by the user. Notification_Method:  Valid values: email, sms, gui. Delay: the amount of time, in minutes between between notifications.",
+                            "paramType": "form",
+                            "items":{
+                                "type":"string"
+                            }
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code":409,
+                            "message":"Email address is already in use by another user"
+                        }
+                    ]
+                },
+                {
+                    "method": "DELETE",
+                    "summary": "Delete User",
+                    "notes": "Delete a user",
+                    "nickname": "deleteUser",
+                    "parameters": [
+                        {
+                            "name": "id",
+                            "description": "User ID",
+                            "required": true,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Delete succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        },
+                        {
+                            "code": 404,
+                            "message": "User not found with the supplied ID"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/user/list",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "List Users",
+                    "notes": "Returns array of arrays, with each sub-array representing a user available to the user. Please note that the ListUser model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.",
+                    "nickname": "userList",
+                    "type": "array",
+                    "items": {
+                        "$ref": "ListUser"
+                    },
+                    "parameters": [],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "UserId":{
+            "id":"UserId",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the user"
+                }
+            }
+        },
+        "User":{
+            "id":"User",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for Authorized User"
+                },
+                "first_name": {
+                    "type":"string",
+                    "required": true,
+                    "description":"First name of Authorized User"
+                },
+                "last_name": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Last name of Authorized User"
+                },
+                "email": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Email of Authorized User"
+                },
+                "owner_account_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier of user's Account"
+                },
+                "active_account_id": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier of user's active Account"
+                },
+                "uid": {
+                    "type":"string",
+                    "required": true,
+                    "description":"UID"
+                },
+                "is_superuser": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Super User"
+                },
+                "is_account_superuser": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user an Account Super User"
+                },
+                "is_staff": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Staff User"
+                },
+                "is_active": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user Active"
+                },
+                "is_pending": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Pending user"
+                },
+                "is_master": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user in a Master Account"
+                },
+                "is_user_admin": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a User Admin"
+                },
+                "is_layout_admin": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Layout Admin"
+                },
+                "is_live_video": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user authorized to access Live Video"
+                },
+                "is_device_admin": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user a Device Admin"
+                },
+                "is_export_video": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user authorized to Export Video"
+                },
+                "is_recorded_video": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is the user authorized to view Recorded Video"
+                },
+                "street": {
+                    "type":"array",
+                    "required": true,
+                    "description":"Street Address as array [address line 1, address line 2, ...])",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "city": {
+                    "type":"string",
+                    "required": true,
+                    "description":"City"
+                },
+                "state": {
+                    "type":"string",
+                    "required": true,
+                    "description":"State"
+                },
+                "country": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Country"
+                },
+                "postal_code": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Postal Code"
+                },
+                "phone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Phone number"
+                },
+                "mobile_phone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Mobile phone number"
+                },
+                "utc_offset": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Timezone offset from UTC in seconds (signed integer)"
+                },
+                "timezone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Timezone"
+                },
+                "last_login": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN"
+                },
+                "alternate_email": {
+                    "type":"string",
+                    "required": true,
+                    "description":"Alternate email address"
+                },
+                "sms_phone": {
+                    "type":"string",
+                    "required": true,
+                    "description":"SMS phone number"
+                },
+                "is_sms_include_picture": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Include picture in sms notifications"
+                },
+                "json":{
+                    "type":"UserJson",
+                    "required": true,
+                    "description":"Misc settings for the user as a JSON string"
+                },
+                "camera_access": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of devices (IDs) the user has access to",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "layouts": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of layouts (IDs) the user has access to",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "is_notify_enable": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Is notifications enabled for the User"
+                },
+                "notify_period": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of notification time periods, in the form: D-HHMM-HHMM",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "notify_rule": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of notification rules, in the form: id-type-delay (e.g. one-email-0)",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "access_period": {
+                    "type":"array",
+                    "required": true,
+                    "description":"List of access time periods, in the form: D-HHMM-HHMM",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "is_branded": {
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description": "Is the user associated with an account that currently has branding enabled"
+                },
+                "active_brand_subdomain": {
+                    "type": "string",
+                    "required": true,
+                    "description": "If the user is associated with an account that has brandinge enabled, this will have that brand's subdomain if one exists"
+                }
+            }
+        },
+        "UserJson":{
+            "id":"UserJson",
+            "required":[],
+            "properties":{
+                 "een": {
+                     "type": "UserJsonEen",
+                     "required": true,
+                     "description":"EEN Object"
+                 }
+            }
+        },
+        "UserJsonEen":{
+            "id":"UserJsonEen",
+            "required":[],
+            "properties":{
+                "show_AMPM": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Show times with AM/PM"
+                },
+                "milliseconds_display": {
+                    "type":"boolean",
+                    "required": true,
+                    "description":"Show time with milliseconds"
+                },
+                "layout_rotation_seconds": {
+                    "type":"integer",
+                    "required": true,
+                    "description":"If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur."
+                }
+            }
+        },
+        "ListUser":{
+            "id":"ListUser",
+            "required":[],
+            "properties":{
+                "id":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Unique identifier for the User"
+                },
+                "first_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"First Name of the user"
+                },
+                "last_name":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Last Name of the user"
+                },
+                "email":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Email address of the user"
+                },
+                "permissions":{
+                    "type":"array",
+                    "required": true,
+                    "description":"List of permissions the user has",
+                    "items":{
+                        "type":"string"
+                    }
+                },
+                "last_login":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN"
+                }
+            }
+        }
+    }
+}

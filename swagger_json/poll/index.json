@@ -1,0 +1,228 @@
+{
+    "apiVersion": "1.0.0",
+    "swaggerVersion": "1.2",
+    "basePath": "https://apidocs.eagleeyenetworks.com",
+    "resourcePath": "poll",
+    "produces": ["application/json"],
+    "apis": [
+        {
+            "path": "/poll",
+            "operations": [
+                {
+                    "method": "POST",
+                    "summary": "POST Poll",
+                    "notes": "Subscribe to poll service, which is required for GET /poll. <br/>Response headers: set_cookie: ee-poll-ses=xxxxxx",
+                    "nickname": "postPoll",
+                    "type": "PostPoll",
+                    "parameters": [
+                        {
+                            "description": "Cameras",
+                            "required": true,
+                            "type": "PostPollCameras",
+                            "paramType": "body"
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "summary": "GET Poll",
+                    "notes": "Used to receive updates on real-time changes. Either requires a valid 'ee-poll-ses' cookie from POST /poll or the 'token' response from POST /poll",
+                    "nickname": "getPoll",
+                    "type": "GetPoll",
+                    "parameters": [
+                        {
+                            "name": "token",
+                            "description": "Token from POST /poll.  Not required if you have the 'ee-poll-ses' cookie from POST /poll.",
+                            "required": false,
+                            "type": "string",
+                            "paramType": "query"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Request succeeded"
+                        },
+                        {
+                            "code": 400,
+                            "message": "Unexpected or non-identifiable arguments are supplied"
+                        },
+                        {
+                            "code": 401,
+                            "message": "Unauthorized due to invalid session cookie"
+                        },
+                        {
+                            "code": 403,
+                            "message": "Forbidden due to the user missing the necessary privileges"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "models":{
+        "PostPollCameras":{
+            "id":"PostPollCameras",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"PostPollCamera",
+                    "required": true,
+                    "description": "Object"
+                },
+                "token":{
+                    "type":"string",
+                    "required": true,
+                    "description": "Token that can be used for subsequent calls to GET /poll instead of using the 'ee-poll-ses' cookie."
+                }
+            }
+        },
+        "PostPollCamera":{
+            "id":"PostPollCamera",
+            "required":[],
+            "properties":{
+                "resource":{
+                    "type":"array",
+                    "required": true,
+                    "description": "Array of resources"
+                },
+                "event":{
+                    "type":"array",
+                    "description":"Array of events"
+                }
+            }
+        },
+        "GetPoll":{
+            "id":"GetPoll",
+            "required":[],
+            "properties":{
+                "cameras":{
+                    "type":"GetPollResponseCameras",
+                    "required": true,
+                    "description":"Objects keyed by device ID"
+                }
+            }
+        },
+        "GetPollResponseCameras":{
+            "id":"GetPollResponseCameras",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"GetPollResponseCamera",
+                    "required": true,
+                    "description": "Object"
+                }
+            }
+        },
+        "GetPollResponseCamera":{
+            "id":"GetPollResponseCamera",
+            "required":[],
+            "properties":{
+                "pre":{
+                    "type":"string",
+                    "required": true,
+                    "description":""
+                },
+                "event":{
+                    "type":"GetPollResponseCameraEvents",
+                    "required": true,
+                    "description":"Object of events keyed by event ID"
+                }
+            }
+        },
+        "GetPollResponseCameraEvents":{
+            "id":"GetPollResponseCameraEvents",
+            "required":[],
+            "properties":{
+                "event_id":{
+                    "type":"GetPollResponseCameraEvent",
+                    "required": true,
+                    "description":"Object"
+                }
+            }
+        },
+        "GetPollResponseCameraEvent":{
+            "id":"GetPollResponseCameraEvent",
+            "required":[],
+            "properties":{
+                "timestamp":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp in EEN format: YYYYMMDDHHMMSS.NNN"
+                },
+                "cameraid":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Internal unique identifier"
+                }
+            }
+        },
+        "PostPoll":{
+            "id":"PostPoll",
+            "required":[],
+            "properties":{
+                "cameras":{
+                    "type":"PostPollResponseCameras",
+                    "required": true,
+                    "description":"Objects keyed by device ID"
+                },
+                "token":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Token to be used for subsequent GET /poll requests."
+                }
+            }
+        },
+        "PostPollResponseCameras":{
+            "id":"PostPollResponseCameras",
+            "required":[],
+            "properties":{
+                "device_id":{
+                    "type":"PostPollResponseCamera",
+                    "required": true,
+                    "description": "Object"
+                }
+            }
+        },
+        "PostPollResponseCamera":{
+            "id":"PostPollResponseCamera",
+            "required":[],
+            "properties":{
+                "event":{
+                    "type":"PostPollResponseCameraEvents",
+                    "required": true,
+                    "description":"Object of events keyed by event ID"
+                }
+            }
+        },
+        "PostPollResponseCameraEvents":{
+            "id":"PostPollResponseCameraEvents",
+            "required":[],
+            "properties":{
+                "event_id":{
+                    "type":"PostPollResponseCameraEvent",
+                    "required": true,
+                    "description":"Object"
+                }
+            }
+        },
+        "PostPollResponseCameraEvent":{
+            "id":"PostPollResponseCameraEvent",
+            "required":[],
+            "properties":{
+                "timestamp":{
+                    "type":"string",
+                    "required": true,
+                    "description":"Timestamp in EEN format: YYYYMMDDHHMMSS.NNN"
+                },
+                "cameraid":{
+                    "type":"integer",
+                    "required": true,
+                    "format":"int64",
+                    "description":"Internal unique identifier"
+                }
+            }
+        }
+    }
+}
