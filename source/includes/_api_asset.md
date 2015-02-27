@@ -161,7 +161,10 @@ HTTP Status Code    | Data Type
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
-404 | Video was not found
+404 | Camera not provisioned
+404 | Camera get error
+410 | Video is out of retention
+503 | Camera tag maps not loaded
 
 <!--===================================================================-->
 ## Prefetch Image
