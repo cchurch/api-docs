@@ -323,26 +323,25 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --request POST https://login.eagleeyenetworks.com/g/sso --data "brand_saml_publickey_cert=[BRAND_SAML_PUBLICKEY_CERT]&
-brand_saml_namedid_path=[BRAND_SAML_NAMEDID_PATH]"
+curl --request POST https://login.eagleeyenetworks.com/g/sso
 ```
 
-This allows a reseller to to maintain account management and have their system proxy the requests to Eagle Eye Network servers after they have logged into the third parties system.
+SSO allows a reseller to maintain account management and act as an identity provider to have their system proxy the authorization requests to Eagle Eye Network servers after users have logged into the identity providers system.
 
-The **brand_saml_publickey_cert** is an x509 certificate that contains a public key with which Eagle Eye Networks can validate that an SSO message is valid and verify that it has not been altered.
-The format of this certificate is PEM (ascii encoded base 64 surrounded by lines containing **'-----BEGIN CERTIFICATE——‘** and **'——END CERTIFICATE——'**
+This is done through the standard SAML (Security Assertion Markup Language) and as such the identity provider will setup their account with a **brand_saml_publickey_ret** and **brand_saml_namedid_path**.
 
-The **brand_saml_namedid_path** is the xml xpath to the node that contains the email address of the user being logged in.
+  - The **brand_saml_publickey_cert** is a x509 certificate that contains a public key with which Eagle Eye Networks can validate that an SSO message is valid and verify that it has not been altered.  The format of this certificate is PEM (ascii encoded base 64 surrounded by lines containing **'-----BEGIN CERTIFICATE——‘** and **'——END CERTIFICATE——'**
 
+  - The **brand_saml_namedid_path** is the xml xpath to the node that contains the email address of the user being logged in.
+
+Once the identity provider's account has been registered for SSO, then the identity provider can validate their users and then make a single sign on request with the users email address and the return link.
+This 64 bit encrypted message will be extracted from teh header to be decoded and verified using the saml public key.
+Then using the saml named id path, the user's email will be extracted and an auth_key will be provide for that user.
 
 ### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/sso`
 
-Parameter  		| Data Type   | Description   	| Is Required
----------  		| ----------- | -----------   	| -----------
-brand_saml_publickey_cert| string      | an x509 certificate that contains the public key| true
-brand_saml_namedid_path| string |xml xpath containing the email address| true
 
 ### Error Status Codes
 
