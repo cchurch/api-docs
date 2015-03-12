@@ -377,7 +377,7 @@ Parameter           | Data Type     | Description   | Is Required
 Parameter           | Data Type     | Description 
 ---------           | -----------   | ----------- 
 percent_complete    | float         | Id of the time lapse, which was returned when it was created/requested
-**device_id**       | string        | Id of the device associated with the time lapse when it was created/requested | true
+device_id       | string        | Id of the device associated with the time lapse when it was created/requested
 
 ### Error Status Codes
 

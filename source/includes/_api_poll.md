@@ -165,19 +165,19 @@ ALRE      | Alert Region Of Interest End
             	"MRBX"
             ]
         },
-        "[camera_id]": {...},
-        "[camera_id]": {...},
-        "[camera_id]": {...}
+        "<camera_id>": {...},
+        "<camera_id>": {...},
+        "<camera_id>": {...}
     }
 }
 ```
+Subscribe to poll service, which is required for GET /poll.
+Response headers: set_cookie: ee-poll-ses=xxxxxx
+
 
 ### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/poll`
-
-Subscribe to poll service, which is required for GET /poll. 
-Response headers: set_cookie: ee-poll-ses=xxxxxx
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
@@ -185,14 +185,10 @@ cameras 		| [PostPollCameras](#postpollcameras-attributes) | Cameras
 
 ### PostPollCameras Attributes
 
-This json attribute contains as many PostPollCamera json objects as the user desires. The key for each PostPollCamera is the camera_id.
-
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-[camera_id 1] 	| [PostPollCamera](#postpollcamera-attributes) | Camera 1
-[camera_id 2] 	| [PostPollCamera](#postpollcamera-attributes) | Camera 2
-... | ... | ...
-[camera_id N]   | [PostPollCamera](#postpollcamera-attributes) | Camera N
+<camera_id> 	| [PostPollCamera](#postpollcamera-attributes) | camera_id holding the data structure for the camera
+* Note This json attribute contains as many PostPollCamera json objects as the user desires. The key for each PostPollCamera is the camera_id.
 
 ### PostPollCamera Attributes
 
@@ -212,13 +208,14 @@ event 			| array[string, enum] | enum: [event objects](#event-objects)
         "10097d15": {
             "status": 1441847
         },
-        "[camera_id]": {...},
-        "[camera_id]": {...},
-        "[camera_id]": {...}
+        "<camera_id>": {...},
+        "<camera_id>": {...},
+        "<camera_id>": {...}
     },
     "token": "ooe0eoEAMNsF"
 }
 ```
+TODO Ask TOM about this
 
 ### Response Json Attributes
 
@@ -231,10 +228,7 @@ token 			| string 		| Token to be used for subsequent GET /poll requests
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-[camera_id 1] 	| [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | Camera 1
-[camera_id 2] 	| [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | Camera 2
-... | ... | ...
-[camera_id N]   | [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | Camera N
+<camera_id> 	| [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | PostPollResponse keyed on camera_id
 
 ### PostPollResponseCamera Json Attributes
 
@@ -247,10 +241,7 @@ event 			| [PostPollResponseCameraEvents](#postpollresponsecameraevents-json-att
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-[event_id 1] 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | Event 1
-[event_id 2] 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | Event 2
-... | ... | ...
-[event_id N] 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | Event N
+<event_id> 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | PostPollResponseCameraEvent keyed on event_id
 
 ### PostPollResponseCameraEvent Json Attributes
 
@@ -335,10 +326,7 @@ cameras         | [GetPollResponseCameras](#getpollresponsecameras-json-attribut
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-[camera_id 1] 	| [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | Camera 1
-[camera_id 2] 	| [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | Camera 2
-... | ... | ...
-[camera_id N]   | [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | Camera N
+<camera_id> 	| [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | GetPollResponseCamera keyed on camera_id
 
 ### GetPollResponseCamera Json Attributes
 
@@ -351,10 +339,7 @@ event 			| [GetPollResponseCameraEvents](#getpollresponsecameraevents-json-attri
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-[event_id 1] 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | Event 1
-[event_id 2] 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | Event 2
-... | ... | ...
-[event_id N] 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | Event N
+<event_id> 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | GetPollResponseCameraEvent keyed on event_id
 
 ### GetPollResponseCameraEvent Json Attributes
 
