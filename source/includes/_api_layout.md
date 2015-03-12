@@ -129,7 +129,7 @@ camera_row_limit        | int               | ['3' or '4' or '5']: Max number of
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/layout -d "A=[VIDEOBANK_SESSIONID]&id=[LAYOUT_ID]"
+curl -G https://login.eagleeyenetworks.com/g/layout -d "A=[AUTH_KEY]&id=[LAYOUT_ID]"
 ```
 
 Returns layout object by Id
@@ -157,7 +157,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/layout -d '{"name": "[NAME]", "json":"{\"panes\":[ {} ] }", "types":[""]}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/layout -d '{"name": "[NAME]", "json":"{\"panes\":[ {} ] }", "types":[""]}'
 ```
 
 > Json Response
@@ -219,7 +219,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -G
+curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -G
 ```
 
 ### HTTP Request
@@ -246,7 +246,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request GET https://login.eagleeyenetworks.com/g/layout/list
+curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/layout/list
 ```
 
 > Json Response

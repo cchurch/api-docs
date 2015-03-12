@@ -11,7 +11,7 @@ This service defines metrics that can be queried from the system.
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[VIDEOBANK_SESSIONID]&id=[CAMERA_ID]"
+curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[AUTH_KEY]&id=[CAMERA_ID]"
 ```
 
 Used to query the bandwidth usage for a particular camera device.
@@ -136,7 +136,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[VIDEOBANK_SESSIONID]&id=[BRIDGE_ID]"
+curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
 ```
 
 Used to query the bandwidth usage for a particular bridge device.

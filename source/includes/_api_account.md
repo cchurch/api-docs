@@ -139,7 +139,7 @@ TODO Update Account Attributes
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/account -d "id=[ID]&A=[VIDEOBANK_SESSIONID]"
+curl -G https://login.eagleeyenetworks.com/g/account -d "id=[ID]&A=[AUTH_KEY]"
 ```
 
 Returns account object by Id
@@ -167,7 +167,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"name": "[NAME]", "contact_first_name": "[CONTACT_FIRST_NAME]", "contact_last_name": "[CONTACT_LAST_NAME]", "contact_email": "[CONTACT_EMAIL]"}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"name": "[NAME]", "contact_first_name": "[CONTACT_FIRST_NAME]", "contact_last_name": "[CONTACT_LAST_NAME]", "contact_email": "[CONTACT_EMAIL]"}'
 ```
 
 > Json Response
@@ -217,7 +217,7 @@ is_initial_user_not_admin| int      	| Indicates whether you want do NOT want th
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"id": "[ACCOUNT_ID]", "contact_first_name": "[CONTACT_FIRST_NAME]"}'
+curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"id": "[ACCOUNT_ID]", "contact_first_name": "[CONTACT_FIRST_NAME]"}'
 ```
 
 > Json Response
@@ -274,7 +274,7 @@ brand_name				| string      	| Branded company name
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -G
+curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -G
 ```
 
 Delete an Account
@@ -303,7 +303,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request GET https://login.eagleeyenetworks.com/g/account/list
+curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/account/list
 ```
 
 > Json Response

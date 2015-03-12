@@ -144,11 +144,11 @@ layout_rotation_seconds | int           | If set, indicates how long to wait bet
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/user -d "A=[VIDEOBANK_SESSIONID]"
+curl -G https://login.eagleeyenetworks.com/g/user -d "A=[AUTH_KEY]"
 
 or
 
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -G https://login.eagleeyenetworks.com/g/user -d id=[USER_ID]
+curl --cookie "auth_key=[AUTH_KEY]" -G https://login.eagleeyenetworks.com/g/user -d id=[USER_ID]
 ```
 
 Returns user object by ID. Not passing an ID will return the current authorized user.
@@ -167,7 +167,7 @@ id        | string      | User Id     | false
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}'
 ```
 
 > Json Response
@@ -236,7 +236,7 @@ id              | string      | Unique identifier for the user
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"id": "[USER_ID]", "first_name": "[FIRST_NAME]"}'
+curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"id": "[USER_ID]", "first_name": "[FIRST_NAME]"}'
 ```
 
 > Json Response
@@ -296,7 +296,7 @@ id              | string      | Unique identifier for the user
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -G
+curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -G
 ```
 
 Deletes a user
@@ -315,7 +315,7 @@ Parameter     | Data Type   | Description
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request GET https://login.eagleeyenetworks.com/g/user/list
+curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/user/list
 ```
 
 > Json Response

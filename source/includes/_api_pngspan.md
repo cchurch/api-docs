@@ -40,7 +40,7 @@ Hit detection (for rollover) can be done in a browser by rendering opaque colors
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/pngspan/span.png -d "start_timestamp=[START_TIMESTAMP]&end_timestamp=[END_TIMESTAMP]&width=[WIDTH]&id=[CAMERA_ID]&foreground_color=[FOREGROUND_COLOR]&background_color=[BACKGROUND_COLOR]&table=[TABLE]&A=[VIDEOBANK_SESSIONID]"
+curl -G https://login.eagleeyenetworks.com/pngspan/span.png -d "start_timestamp=[START_TIMESTAMP]&end_timestamp=[END_TIMESTAMP]&width=[WIDTH]&id=[CAMERA_ID]&foreground_color=[FOREGROUND_COLOR]&background_color=[BACKGROUND_COLOR]&table=[TABLE]&A=[AUTH_KEY]"
 ```
 
 PNG images can be retrieved for supporting metric visualization. PNG types include

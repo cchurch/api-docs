@@ -28,13 +28,13 @@ The output are the headers of the API request followed by the response body. The
 -D, –dump-header <file> Write the protocol headers to the specified file. This option is handy to use when you want to store the headers that a HTTP site sends to you. Cookies from the headers could then be read in a second curl invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies.
 `
 
-Note that the ‘-‘ after the ‘-D’ indicates that the output “file” is stdout. One of the header elements will be “Set-Cookie: videobank_sessionid=[VIDEOBANK_SESSIONID]“. Copy ‘videobank_sessionid=[VIDEOBANK_SESSIONID]‘ into the clipboard as this cookie will need to be set for all other API requests. The curl request for getting a list of devices will look as such.
+Note that the ‘-‘ after the ‘-D’ indicates that the output “file” is stdout. One of the header elements will be “Set-Cookie: auth_key=[AUTH_KEY]“. Copy ‘auth_key=[AUTH_KEY]‘ into the clipboard as this cookie will need to be set for all other API requests. The curl request for getting a list of devices will look as such.
 
 `
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request GET https://login.eagleeyenetworks.com/g/list/devices
+curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/list/devices
 `
 
-The ‘videobank_sessionid’ cookie will need to be set for any other Eagle Eye API that requires a valid session.
+The ‘auth_key’ cookie will need to be set for any other Eagle Eye API that requires a valid session.
 
 <!--===================================================================-->
 ## Constructing Layouts
@@ -157,14 +157,14 @@ Video playback functionality can be accessed through the ‘/asset/play/video.{v
 
 Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on this site to generate the URL string. http://writecodeonline.com/javascript/.
 
-The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [VIDEOBANK_SESSIONID]. The [DEVICE_ID] represents the id of the camera of interest. The [VIDEOBANK_SESSIONID] is used for authentication and can be found in the response header of the /aaa/authorization API.
+The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [AUTH_KEY]. The [DEVICE_ID] represents the id of the camera of interest. The [AUTH_KEY] is used for authentication and can be found in the response header of the /aaa/authorization API.
 
 `
 eagleEyeLiveVideoApiUrl = "https://login.eagleeyenetworks.com/asset/play/video.flv" +
     "?id=[DEVICE_ID]" +
     "&start_timestamp=stream_"+(new Date().getTime()) +
     "&end_timestamp=+300000" +
-    "&A=[VIDEOBANK_SESSIONID]";
+    "&A=[AUTH_KEY]";
 `
 
 `     
@@ -178,7 +178,7 @@ document.write(htmlFlashVideoPlayerUrl);
 Notice that we have 2 variables; ‘eagleEyeLiveVideoApiUrl’ and ‘htmlFlashVideoPlayerUrl’. The ‘htmlFlashVideoPlayerUrl’ variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking, and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application.
 
 `
-https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[VIDEOBANK_SESSIONID]&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5
+https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[AUTH_KEY]&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5
 `
 
 <!--===================================================================-->

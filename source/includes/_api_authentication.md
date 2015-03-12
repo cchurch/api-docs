@@ -2,17 +2,30 @@
 
 ## Overview
 
-Gaining access to the Eagle Eye API is a two-stage process: Clients first present their credentials and Realm to obtain a single use Authentication Token. This single use token is valid for 30 seconds or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the "videobank_sessionid" Cookie) that provides access to resources. This two phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over an https connection.
+Gaining access to the Eagle Eye API is a two-stage process: Clients first present their credentials and Realm to obtain a single use Authentication Token. This single use token is valid for 30 seconds or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the "auth_key" Cookie) that provides access to resources. This two phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over an https connection.
 
-Once the "videobank_sessionid" cookie is obtained from the "Authorize" call, there are 2 methods for which you can use the session ID to make subsequent calls to the API. The first, is simply to pass the "videobank_sessionid" cookie with all API requests. The second method, is to take the value of the "videobank_sessionid" cookie and pass it in the request as the "A" parameter. The "A" parameter can be used with any method (GET, PUT, POST, DELETE). The order of precedence for session ID retrieval is as follows:
+Once the "auth_key" cookie is obtained from the "Authorize" call, there are 2 methods for which you can use the session ID to make subsequent calls to the API. The first, is simply to pass the "auth_key" cookie with all API requests. The second method, is to take the value of the "auth_key" cookie and pass it in the request as the "A" parameter. The "A" parameter can be used with any method (GET, PUT, POST, DELETE). The order of precedence for session ID retrieval is as follows:
 
 1. "A" parameter in the query string of any method (GET, PUT, POST, DELETE)
 2. "A" parameter in the POST data
 3. "A" parameter in the request body (e.g. PUT)
-4. "videobank_sessionid" cookie
+4. "auth_key" cookie
 
 All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met, and the last one listed is the one that will be returned if none of the preceding codes' conditions are met.
 
+<!--===================================================================-->
+## API Key
+
+The API Key needs to be sent with every API.
+The API Key are publicly open for anyone to use at no additional cost.
+> Request
+
+An API Key can be obtained by filling out this [form](https://login.eagleeyenetworks.com/api_signup.html).
+
+User password authentication is still required.
+* Please see the section on Single Sign On for alternatives to password authentication.
+
+For any further questions about API Key please submit a request [here](http://www.eagleeyenetworks.com/support/)
 <!--===================================================================-->
 ## Step 1: Authenticate
 > Request
@@ -133,7 +146,7 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
 }
 ```
 
-Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'videobank_sessionid' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
+Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'auth_key' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
 
 ### HTTP Request
 

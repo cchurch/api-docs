@@ -1072,7 +1072,7 @@ device_id   | string            | Object with keys being Bridge Device IDs, and 
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/device -d "A=[VIDEOBANK_SESSIONID]&id=[CAMERA_ID]"
+curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[CAMERA_ID]"
 ```
 
 Returns camera object by id
@@ -1100,7 +1100,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}'
 ```
 
 > Json Response
@@ -1147,7 +1147,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[CAMERA_ID], "name": "[NAME]"}'
+curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[CAMERA_ID], "name": "[NAME]"}'
 ```
 
 > Json Response
@@ -1195,7 +1195,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G
+curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G
 ```
 
 ### HTTP Request
@@ -1223,7 +1223,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request GET https://login.eagleeyenetworks.com/g/device/list
+curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/device/list
 ```
 
 > Json Response

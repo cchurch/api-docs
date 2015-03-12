@@ -70,7 +70,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/action/allon
+curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/allon
 ```
 
 Used to turn on all cameras in the caller user’s account. Caller must be an account_superuser.
@@ -94,7 +94,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/action/alloff
+curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/alloff
 ```
 
 Used to turn off all cameras in the caller user’s account. Caller must be an account_superuser.

@@ -255,7 +255,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email --data "password=[EMAIL]&current_password=[CURRENT_PASSWORD]"
+curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email --data "password=[EMAIL]&current_password=[CURRENT_PASSWORD]"
 ```
 
 > Response Json
@@ -295,7 +295,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/aaa/switch_account
+curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/switch_account
 ```
 
 This allows a user to "log in" to another account that the user has access to (see "list/accounts"). Most commonly this be would be needed for a master account user accessing their sub accounts.
@@ -359,7 +359,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID] -X GET https://login.eagleeyenetworks.com/g/users/notice?id=[ID]
+curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/users/notice?id=[ID]
 ```
 
 > Response List
@@ -418,7 +418,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -H "content-type: application/json" https://login.eagleeyenetworks.com/g/users/notice -d '{"notice_title": [NOTICE_TITLE]}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -H "content-type: application/json" https://login.eagleeyenetworks.com/g/users/notice -d '{"notice_title": [NOTICE_TITLE]}'
 ```
 
 > Response Json
@@ -459,7 +459,7 @@ Parameter  		| Data Type   | Description
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request POST https://login.eagleeyenetworks.com/g/aaa/logout
+curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/logout
 ```
 
 Log out user and invalidate HTTP session cookie

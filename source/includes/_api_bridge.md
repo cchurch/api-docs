@@ -10,7 +10,7 @@ The Bridge is a product of Eagle Eye that sits at the customer location and talk
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/device -d "A=[VIDEOBANK_SESSIONID]&id=[BRIDGE_ID]"
+curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
 ```
 
 > Json Response
@@ -195,7 +195,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectId":[CONNECT_ID]}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectId":[CONNECT_ID]}'
 ```
 
 > Json Response
@@ -242,7 +242,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[BRIDGE_ID], "name": "[NAME]"}'
+curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[BRIDGE_ID], "name": "[NAME]"}'
 ```
 
 > Json Response
@@ -290,7 +290,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -G
+curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -G
 ```
 
 ### HTTP Request
@@ -318,7 +318,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "videobank_sessionid=[VIDEOBANK_SESSIONID]" --request GET https://login.eagleeyenetworks.com/g/device/list
+curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/device/list
 ```
 
 > Json Response

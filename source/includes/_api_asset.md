@@ -81,7 +81,7 @@ All Assets have an EEN timestamp attached. Timestamps are always in UTC and main
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];quality=[QUALITY];asset_class=[ASSET_CLASS];A=[VIDEOBANK_SESSIONID]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];quality=[QUALITY];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
 ```
 
 Get an image jpeg based on the specified timestamp. This will return binary image data in JPEG format. 
@@ -129,7 +129,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_ID];start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];A=[VIDEOBANK_SESSIONID]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_ID];start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];A=[AUTH_KEY]"
 ```
 
 Returns a video stream in the requested format. Formats include
@@ -172,7 +172,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[VIDEOBANK_SESSIONID]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
 ```
 
 > Webhook JSON POST Response
@@ -212,7 +212,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[VIDEOBANK_SESSIONID]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
 ```
 
 > Webhook JSON POST Response
@@ -253,7 +253,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];asset_class=[ASSET_CLASS];A=[VIDEOBANK_SESSIONID]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
 ```
 
 > Json Response
@@ -292,7 +292,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];options=coalesce;A=[VIDEOBANK_SESSIONID]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];options=coalesce;A=[AUTH_KEY]"
 ```
 
 > Json Response
