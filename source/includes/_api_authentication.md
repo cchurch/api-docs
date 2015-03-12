@@ -14,19 +14,6 @@ Once the "auth_key" cookie is obtained from the "Authorize" call, there are 2 me
 All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met, and the last one listed is the one that will be returned if none of the preceding codes' conditions are met.
 
 <!--===================================================================-->
-## API Key
-
-The API Key needs to be sent with every API.
-The API Key are publicly open for anyone to use at no additional cost.
-> Request
-
-An API Key can be obtained by filling out this [form](https://login.eagleeyenetworks.com/api_signup.html).
-
-User password authentication is still required.
-* Please see the section on Single Sign On for alternatives to password authentication.
-
-For any further questions about API Key please submit a request [here](http://www.eagleeyenetworks.com/support/)
-<!--===================================================================-->
 ## Step 1: Authenticate
 > Request
 

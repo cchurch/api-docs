@@ -418,7 +418,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT -H "content-type: application/json" https://login.eagleeyenetworks.com/g/users/notice -d '{"notice_title": [NOTICE_TITLE]}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT  -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/users/notice -d '{"notice_title": [NOTICE_TITLE]}'
 ```
 
 > Response Json

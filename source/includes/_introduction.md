@@ -10,9 +10,7 @@ The Eagle Eye Video API allows you to securely record, manage, and playback vide
 
 Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs, and you can use many different HTTP clients in nearly any programming language.
 
-<!-- 
 ## Get an API Key
-
 [Create Developer Account](https://login.eagleeyenetworks.com/api_signup.html)
 
 To get started with the Eagle Eye Video API you will need an API Key. This is used to identify you and your application. It also makes everything secure. To get an API Key you will need an account (so that you have some place to do some testing). You can either use your existing account or create a Developer Account. You can create an API Key in your existing account under the Account Settings.
@@ -21,6 +19,25 @@ You will have to verify your email address to create your Developer Account. You
 
 You may also want to purchase a development hardware kit from us (so you can connect some cameras). These are available at a large discount for developers. You can get an Eagle Eye Bridge and even some cameras from us for development and testing. Just email us for more info and pricing.
 
+The API Key should be located in the header under the "Authorization" key with a colon appended to it.
+
+**Note user password authentication is still required**. Please see the section on [Single Sign On](#single-sign-on) for alternatives to password authentication.
+
+> Request
+
+```shell
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}'
+```
+
+> Json Response
+
+```json
+{
+    "id": "ca0ffa8c"
+}
+```
+
+
 ### Visual Steps
 
 ![alt text](introduction/apikey_1.png "Step 1")
@@ -28,4 +45,3 @@ You may also want to purchase a development hardware kit from us (so you can con
 ![alt text](introduction/apikey_3.png "Step 3")
 ![alt text](introduction/apikey_4.png "Step 4")
 ![alt text](introduction/apikey_5.png "Step 5")
--->
