@@ -375,7 +375,9 @@ curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/u
 
 This is to push important notices such as "Terms and Conditions (2015)".
 The client software must call **GET** to see if the user needs to agree to the notice.
-If the user does then the client software should popup a notice box.  If the user agrees to the terms then then **PUT** call should be placed for the notice.
+If the user has an **action needed** then the client software should popup a notice box for the given **notice title**.
+
+If the user agrees to the terms then a **PUT** call should be placed for the notice.
 A past due user is subject to suspension of services, and may not be allowed to login.
 
 ### HTTP Request
