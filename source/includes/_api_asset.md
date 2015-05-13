@@ -149,8 +149,6 @@ Parameter                 | Data Type     | Description   | Is Required
 **start_timestamp**       | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**         | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 quality                   | string, enum  | Indicates requested resolution if multiple are available. <br><br>enum: low, mid, high
-playback_start_timestamp  | string        | EE timestamp where playback will begin. This value should be between the start_timestamp and end_timestamp.
-time_offset               | string        | Start the video stream N ms into the specified timespan. Allows playing of a smaller segment.
 
 ### Error Status Codes
 
