@@ -9,7 +9,7 @@ Assets are identified by a tuple of timestamp, cameraid, quality, and format.
 
   * Timestamp: Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specifined in GMT time. In most contexts, special tokens can also be used to specify relative times - “now” is the current time, a value starting with + or - is an offset from the current time.
   * CameraID: Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit id associated with a specific camera. Note CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage.
-  * Quality: (low,med,high) Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. For video, low quality is targeted at around 100kbps, medium quality is under 500kbps, and high quality is around 1mbps. Additional quality levels will be supported in time.
+  * Quality: (low,med,high) **Future Feature:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. For video, low quality is targeted at around 100kbps, medium quality is under 500kbps, and high quality is around 1mbps. Additional quality levels will be supported in time.
   * Format: Images are always returned as JPEG images. Video can currently returned as either FLV format (playback in browsers via Flash), MP4 (download and export format), and m3u/mpegts (HttpStreaming for iOS and newer android devices).
 
 ### Request Image
@@ -81,7 +81,7 @@ All Assets have an EEN timestamp attached. Timestamps are always in UTC and main
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];quality=[QUALITY];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
 ```
 
 Get an image jpeg based on the specified timestamp. This will return binary image data in JPEG format. 
@@ -110,7 +110,7 @@ Parameter         | Data Type     | Description   | Is Required
 **id**            | string        | Camera Id     | true
 **timestamp**     | string        | Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**   | string, enum  | Asset class of the image <br><br>enum: all, pre, thumb | true
-quality           | string, enum  | Quality of image <br><br>enum: low, med, high
+quality           | string, enum  | **Future Feature:** Quality of image <br><br>enum: low, med, high
 
 ### Error Status Codes
 
@@ -148,7 +148,7 @@ Parameter                 | Data Type     | Description   | Is Required
 **id**                    | string        | Camera Id     | true
 **start_timestamp**       | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**         | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-quality                   | string, enum  | Indicates requested resolution if multiple are available. <br><br>enum: low, mid, high
+quality                   | string, enum  | **Future Feature:** Indicates requested resolution if multiple are available. <br><br>enum: low, mid, high
 
 ### Error Status Codes
 

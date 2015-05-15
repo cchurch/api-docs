@@ -3,7 +3,7 @@
 <!--===================================================================-->
 ## Overview
 
-The poll service provides a mechanism for an application to receive notifications of events or spans from the Eagle Eye service. These entities are grouped by resource. There are six main resources:
+The poll service provides a mechanism for an application to receive notifications of events or spans from the Eagle Eye service. These entities are grouped by resource. There are five main resources:
 
   * thumb - Thumbnail resource. Provides a timestamp for a thumbnail image. One can use the timestamp to grab the actual thumbnail image.
   * pre - Preview resource. Provides a timestamp for a preview image. One can use the timestamp to grab the actual preview image.
