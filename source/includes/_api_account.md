@@ -86,6 +86,7 @@ The account service allows managing accounts by superusers and account_superuser
     "contact_mobile_phone": null,
     "is_rtsp_cameras_enabled": 0,
     "contact_utc_offset": null
+    ...
 }
 ```
 
@@ -130,8 +131,9 @@ brand_logo_large 		| string 		| Base64 encoded image for the branded large logo
 brand_subdomain 		| string 		| Sub domain for the branded url
 brand_corp_url 			| string 		| Corporate web site url
 brand_name 				| string 		| Branded company name
+brand_saml_publickey_cert | string      | Public Certificate that Eagle Eye Networks will use to decrypt the SAML for SSO
+brand_saml_nameid_path | string      | The path within the SAML xml to find the users email address
 
-TODO Update Account Attributes
 
 <!--===================================================================-->
 ## Get Account
@@ -266,6 +268,8 @@ brand_logo_large		| string      	| Base64 encoded image for the branded large lo
 brand_subdomain			| string      	| Sub domain for the branded url
 brand_corp_url			| string      	| Corporate web site url
 brand_name				| string      	| Branded company name
+brand_saml_publickey_cert | string      | Public Certificate that Eagle Eye Networks will use to decrypt the SAML for SSO
+brand_saml_nameid_path | string      | The path within the SAML xml to find the users email address
 
 
 <!--===================================================================-->
