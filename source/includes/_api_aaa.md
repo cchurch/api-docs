@@ -354,7 +354,7 @@ HTTP Status Code    | Data Type
 
 
 <!--===================================================================-->
-## Get Notice
+## Get Notice for User
 
 > Request
 
@@ -375,7 +375,8 @@ curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/u
 
 This is to push important notices such as "Terms and Conditions (2015)".
 The client software must call **GET** to see if the user needs to agree to the notice.
-If the user has an **action needed** then the client software should popup a notice box for the given **notice title**.
+If the user has an **action needed** then the client software should popup a notice box for each of the given **notice title**.
+It is preferred to have this as a single combined notice, but is returned as a list of notices.
 
 If the user agrees to the terms then a **PUT** call should be placed for the notice.
 A past due user is subject to suspension of services, and may not be allowed to login.
@@ -394,10 +395,12 @@ Parameter 	| Data Type     | Description
 ---------  	| -----------   | -----------
 user_id 	| string 		| Unique identifier for validated user
 email       | string        | Email address of the user
-notice title| string 		| Title of the notice
-timestamp   | string        | last time the user accepted the terms and conditions
+notice_title| string 		| Title of the notice
+company     | string        | String of the company requiring the notice
+timestamp   | string        | Last time the user accepted the terms and conditions
 action_needed| bool         | 0 or 1 indicating if action is required of the user
 past_due    | int           | This is the number of days past due
+text        | string        | Text of the notice of agreement (this will be empty if no action is needed)
 
 * If action is needed then the client software should popup a notice box for the requested notice title.
 
@@ -415,7 +418,7 @@ HTTP Status Code    | Data Type
 
 
 <!--===================================================================-->
-## Put Notice
+## Put Notice for User
 
 > Request
 
@@ -433,11 +436,11 @@ This is called to record acceptance of the notice. Account Super Users will not 
 
 ### HTTP Request
 
-`POST https://login.eagleeyenetworks.com/g/users/notice`
+`PUT https://login.eagleeyenetworks.com/g/users/notice`
 
 Parameter  		| Data Type   | Description   	| Is Required
 ---------  		| ----------- | -----------   	| -----------
-**notice_title**| string      | Title of the notice | true
+**notice_title**| list of strings      | Title of the notices to accept | true
 
 ### HTTP Json
 Parameter  		| Data Type   | Description
@@ -447,6 +450,135 @@ Parameter  		| Data Type   | Description
 ### Error Status Codes
  Code    | Data Type
 -------- | -----------
+400 | Unexpected or non-identifiable arguments are supplied
+402	| Account is suspended
+404 | Notice Title was not found
+406	| Information supplied could not be verified
+460	| Account is inactive
+409	| Account has already been activated
+412	| User is disabled
+200	| User has been authorized for access to the realm
+
+<!--===================================================================-->
+## Put Notice for Account
+
+Master Accounts (Resellers) may require their own notice for terms.
+For that case, this api endpoint is to submit the text of the terms of the aggreement.
+First the new terms can be submitted with a PUT command, then a GET command can be done to see the state of notices.
+
+* Only master accounts can **PUT** an account notice
+* A master account can have up to two notices, with the oldest notice being replaced.
+
+
+> Request
+
+```shell
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT  -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/accounts/notice -d '{"notice_title": "Company Notice", "notice_text": "This is example text for a notice", "id": "00008832", "days": 7, "admins": False, "users": True, all_required: True'
+```
+
+> Response Json
+
+``` json
+{ "id": ["00008832"]}
+```
+
+This is called to record acceptance of the notice. Account Super Users will not be able to accept for other people.
+
+### HTTP Request
+
+`PUT https://login.eagleeyenetworks.com/g/accounts/notice`
+
+Parameter  		   | Data Type       | Description   	| Is Required
+---------  		   | -----------     | -----------   	| -----------
+**notice_title**   | string          | Title of the notices to accept                   | true
+**notice_text**    | string          | Text of the notices to accept                    | true
+account_id         | string          | Unique Identifier of the sub account (defaults to all sub accounts) | false
+timestamp          | string          | Date to start pushing the notice (defaults to now) | false
+days               | int             | Number of days users have to accept (defaults to 7 days)| false
+admins             | bool            | If admins have to accept (defaults to False)| false
+users              | bool            | If users have to accept  (defaults to True) | false
+all_required       | bool            | If all or one have to accept (defaults to True) | false
+reacknowledge_required | bool        | Determines if users or admins have to reaccept the notice (defauls to True) | false
+
+* A notice with admins = False and users = False, is an empty notice that will simply
+
+### HTTP list attributes
+Parameter  		| Data Type   | Description
+---------  		| ----------- | -----------
+**id**          | string      | returns a string of account affected by this put
+
+### Error Status Codes
+ Code    | Data Type
+-------- | -----------
+400 | Unexpected or non-identifiable arguments are supplied
+402	| Account is suspended
+404 | Notice Title was not found
+406	| Information supplied could not be verified
+460	| Account is inactive
+409	| Account has already been activated
+412	| User is disabled
+200	| User has been authorized for access to the realm
+
+<!--===================================================================-->
+
+
+## Get Notice for Account
+
+> Request
+
+```shell
+curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/accounts/notice?id=[ID]
+```
+
+> Response List
+
+```list
+[[ u'Eagle Eye Networks',
+  u'Terms and Conditions (2015)',
+  u'20150528120000.000',
+  True,
+  7,
+  False,
+  True,
+  True,
+  u'This is example text for a notice'
+  ]]
+```
+
+This is to push important notices such as "Terms and Conditions (2015)".
+The client software must call **GET** to see if the user needs to agree to the notice.
+If the user has an **action needed** then the client software should popup a notice box for each of the given **notice title**.
+It is preferred to have this as a single combined notice, but it is returned as a list of notices.
+
+If the user agrees to the terms then a **PUT** call should be placed for the notice.
+A past due user is subject to suspension of services, and may not be allowed to login.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/accounts/notice`
+
+Parameter  		| Data Type   | Description   	| Is Required
+---------  		| ----------- | -----------   	| -----------
+**id**   		| string      | User Id 		| false
+
+### HTTP List Attributes
+Parameter 	| Data Type     | Description
+---------  	| -----------   | -----------
+company     | string        | String of the company requiring this notice
+notice_title| string        | Title of the notice
+timestamp   | string        | String of the date the notice was published
+action_needed| bool         | Bool if there is a user or admin still haven't accept the notice
+days        | int           | This is the number of days set for the notice
+admins      | bool          | If admins have to accept
+users       | bool          | If users have to accept
+all_required| bool          | If all or one have to accept
+notice_text | string        | String of the text of the notice
+
+
+### Error Status Codes
+
+HTTP Status Code    | Data Type
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Information supplied could not be verified
 402	| Account is suspended
