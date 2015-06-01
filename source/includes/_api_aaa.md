@@ -398,8 +398,7 @@ email       | string        | Email address of the user
 notice_title| string 		| Title of the notice
 company     | string        | String of the company requiring the notice
 timestamp   | string        | Last time the user accepted the terms and conditions
-action_needed| bool         | 0 or 1 indicating if action is required of the user
-past_due    | int           | This is the number of days past due
+is_action_needed| bool         | 0 or 1 indicating if action is required of the user
 text        | string        | Text of the notice of agreement (this will be empty if no action is needed)
 
 * If action is needed then the client software should popup a notice box for the requested notice title.
@@ -493,12 +492,10 @@ Parameter  		   | Data Type       | Description   	| Is Required
 **notice_title**   | string          | Title of the notices to accept                   | true
 **notice_text**    | string          | Text of the notices to accept                    | true
 account_id         | string          | Unique Identifier of the sub account (defaults to all sub accounts) | false
-timestamp          | string          | Date to start pushing the notice (defaults to now) | false
-days               | int             | Number of days users have to accept (defaults to 7 days)| false
-admins             | bool            | If admins have to accept (defaults to False)| false
-users              | bool            | If users have to accept  (defaults to True) | false
-all_required       | bool            | If all or one have to accept (defaults to True) | false
-reacknowledge_required | bool        | Determines if users or admins have to reaccept the notice (defauls to True) | false
+is_admin_required  | bool            | If admins have to accept (defaults to False)| false
+is_user_required   | bool            | If users have to accept  (defaults to True) | false
+ia_all_required    | bool            | If all or one have to accept (defaults to True) | false
+is_reacknowledge_required | bool        | Determines if users or admins have to reaccept the notice (defauls to True) | false
 
 * A notice with admins = False and users = False, is an empty notice that will simply
 
@@ -566,12 +563,10 @@ Parameter 	| Data Type     | Description
 ---------  	| -----------   | -----------
 company     | string        | String of the company requiring this notice
 notice_title| string        | Title of the notice
-timestamp   | string        | String of the date the notice was published
 action_needed| bool         | Bool if there is a user or admin still haven't accept the notice
-days        | int           | This is the number of days set for the notice
-admins      | bool          | If admins have to accept
-users       | bool          | If users have to accept
-all_required| bool          | If all or one have to accept
+is_admin_required      | bool          | If admins have to accept
+is_user_required       | bool          | If users have to accept
+is_all_required| bool          | If all or one have to accept
 notice_text | string        | String of the text of the notice
 
 
