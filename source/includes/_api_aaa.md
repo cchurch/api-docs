@@ -396,12 +396,14 @@ Parameter 	| Data Type     | Description
 user_id 	| string 		| Unique identifier for validated user
 email       | string        | Email address of the user
 notice_title| string 		| Title of the notice
+version     | int    		| Version number for the notice title
 company     | string        | String of the company requiring the notice
 timestamp   | string        | Last time the user accepted the terms and conditions
-is_action_needed| bool         | 0 or 1 indicating if action is required of the user
-text        | string        | Text of the notice of agreement (this will be empty if no action is needed)
+is_action_needed| bool      | 0 or 1 indicating if action is required of the user
+notice_text | string        | **Plain text** of the notice of agreement (this will be empty if no action is needed)
 
 * If action is needed then the client software should popup a notice box for the requested notice title.
+* Note notice_text will use a single LF Character for line breaks.
 
 ### Error Status Codes
 
@@ -490,12 +492,12 @@ This is called to record acceptance of the notice. Account Super Users will not 
 Parameter  		   | Data Type       | Description   	| Is Required
 ---------  		   | -----------     | -----------   	| -----------
 **notice_title**   | string          | Title of the notices to accept                   | true
-**notice_text**    | string          | Text of the notices to accept                    | true
+**notice_text**    | string          | Text of the notices to accept (use single LF character for line break  | true
+**version**        | int             | Version number of the notice title | true
 account_id         | string          | Unique Identifier of the sub account (defaults to all sub accounts) | false
 is_admin_required  | bool            | If admins have to accept (defaults to False)| false
 is_user_required   | bool            | If users have to accept  (defaults to True) | false
 ia_all_required    | bool            | If all or one have to accept (defaults to True) | false
-is_reacknowledge_required | bool        | Determines if users or admins have to reaccept the notice (defauls to True) | false
 
 * A notice with admins = False and users = False, is an empty notice that will simply
 
@@ -563,6 +565,7 @@ Parameter 	| Data Type     | Description
 ---------  	| -----------   | -----------
 company     | string        | String of the company requiring this notice
 notice_title| string        | Title of the notice
+version | int | Version number for the notice title, a larger version number will retire other versions
 action_needed| bool         | Bool if there is a user or admin still haven't accept the notice
 is_admin_required      | bool          | If admins have to accept
 is_user_required       | bool          | If users have to accept
