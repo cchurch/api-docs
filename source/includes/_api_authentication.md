@@ -77,7 +77,7 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
     "postal_code": null,
     "is_account_superuser": 1,
     "timezone": "US/Pacific",
-    "active_brand_subdomain": "login",
+    "active_brand_subdomain": "c001",
     "sms_phone": null,
     "city": null,
     "first_name": null,
@@ -130,10 +130,21 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
     "country": "US",
     "is_master": 0,
     "is_pending": 0
+
+
 }
 ```
 
 Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'auth_key' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
+
+The host url for API calls can originally be done against "https://login.eagleeyenetworks.com", but after authorization is returned the API should then use the **branded subdomain** as returned from authorization.
+As such the branded host url will become "https://[active_brand_subdomain].eagleeyenetworks.com" where the **active_brand_subdomain** field is returned in the authorization response.
+
+For example after the authorization in the example on the right, the host url should be changed to "https://c001.eagleyenetworks.com".
+
+Each account will consistently have the same **branded subdomain** and as such will not change throughout the life of the session.
+Caching the subdomain is safe to do as long as the client software validates against the active_brand_subdomain after authorization.  Using the **branded subdomain** is important for speed and robustness.
+
 
 ### HTTP Request
 
