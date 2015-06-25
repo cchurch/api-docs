@@ -152,7 +152,6 @@ title              | string          | Title of the terms to accept             
 version            | string          | Version of the title, which should be unique | false         | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required  | bool            | If admins have to accept                     | false         | not updating             |
 is_user_required   | bool            | If users have to accept                      | false         | not updating             |
-ia_all_required    | bool            | If all or one have to accept                 | false         | not updating             |
 timestamp          | string          | Date the terms goes into affect              | false         | now                      |
 
 ### HTTP JSON Attributes
@@ -162,7 +161,6 @@ title                  | string        | Title of the notice
 version                | int           | Version number for the notice title, a larger version number will retire other versions
 is_admin_required      | bool          | If admins have to accept
 is_user_required       | bool          | If users have to accept
-is_all_required        | bool          | If all or one have to accept
 timestamp              | string        | date of the  term of service
 url                    | string        | URL of the file containing the text for the notice
 status                 | string        | Status of the term of service (active, retired)
@@ -211,7 +209,6 @@ title              | string          | Title of the terms to accept             
 version            | string          | Version of the title, which should be unique | false         | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required  | bool            | If admins have to accept                     | false         | not updating             |
 is_user_required   | bool            | If users have to accept                      | false         | not updating             |
-ia_all_required    | bool            | If all or one have to accept                 | false         | not updating             |
 timestamp          | string          | Date the term of service goes into affect    | false         | now                      |
 
 
@@ -222,7 +219,6 @@ title                  | string        | Title of the notice
 version                | int           | Version number for the notice title, a larger version number will retire other versions
 is_admin_required      | bool          | If admins have to accept
 is_user_required       | bool          | If users have to accept
-is_all_required        | bool          | If all or one have to accept
 timestamp              | string        | date of the  term of service
 url                    | string        | URL of the file containing the text for the notice
 status                 | string        | Status of the term of service (active, retired)
@@ -262,7 +258,6 @@ title              | string        | Title of the term of service
 version            | int           | Version number for the term title
 is_admin_required  | bool          | If admins have to accept
 is_user_required   | bool          | If users have to accept
-is_all_required    | bool          | If all or one have to accept
 timestamp          | string        | date of the term of service
 url                | string        | URL of the file containing the text for the term of service
 status             | string        | This will be **retired**
@@ -322,7 +317,6 @@ title                  | string        | Title of the notice
 version                | int           | Version number for the notice title, a larger version number will retire other versions
 is_admin_required      | bool          | If admins have to accept
 is_user_required       | bool          | If users have to accept
-is_all_required        | bool          | If all or one have to accept
 timestamp              | string        | date of the term of service
 url                    | string        | URL of the file containing the text for the notice
 status                 | string        | Status of the term of service (active, retired)
