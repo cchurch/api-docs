@@ -19,18 +19,13 @@ The basic work process is as follows:
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/users/terms?id=[ID]
+curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --cookie "auth_key=[AUTH_KEY]"
 ```
 
 > Response List
 
 ```list
-[[ u'cafe1866',
-  u'example@eagleeyenetworks.com',
-  u'Terms And Condtions (2015)',
-  u'',
-  1,
-  14]]
+[['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service2', '2', 1, 0, '20150626191625', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20150626191625.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '1', 1, 1, '20150626191617', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20150626191617.txt', 'retired'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '2', 0, 1, '20150626191622', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20150626191622.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'EEN_Terms_of_Service', '1.2', 1, 1, '20150626191610', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20150626191610.txt', 'active']]
 ```
 
 This is to push important terms of service such as "Terms and Conditions (2015)".
@@ -43,7 +38,7 @@ A past due user is subject to suspension of services, and may not be allowed to 
 
 ### HTTP Request
 
-`GET https://login.eagleeyenetworks.com/g/users/terms`
+`GET https://login.eagleeyenetworks.com/g/user/terms`
 
 Parameter  		| Data Type   | Description   	| Is Required
 ---------  		| ----------- | -----------   	| -----------
@@ -80,18 +75,18 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT  -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/users/terms -d '{"urls": [URLS]}'
+curl -X PUT https://28888.eagleeyenetworks.com/g/user/terms -d '{"id": "cafe81f5", "urls": ["https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20150626191625.txt", "https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20150626191610.txt"]}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 > Response Json
 
 ``` json
-{ "id": "cafe1866"}
+{'id': 'cafe81f5'}
 ```
 
 ### HTTP Request
 
-`PUT https://login.eagleeyenetworks.com/g/users/terms`
+`PUT https://login.eagleeyenetworks.com/g/user/terms`
 
 Parameter  		| Data Type     | Description                     | Is Required
 ---------  		| -----------   | -----------   	              | -----------
@@ -131,18 +126,18 @@ Resellers are limited to 5 terms of service titles and each title will only have
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT  -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/accounts/terms -d '{"title": "Company Notice", "text": "This is example text for a terms of service", "id": "00008832", "days": 7, "admins": False, "users": True, all_required: True'
+curl -X PUT https://28888.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 1, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "1", "id": "00009436"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 > Response Json
 
 ``` json
-{ "id": ["00008832"]}
+{'status': 'active', 'is_admin_required': 1, 'is_user_required': 1, 'title': 'Test_Terms_of_Service', 'url': 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20150626191617.txt', 'timestamp': '20150626191617', 'version': '1', 'user': 'cafebead', 'account_id': '00009074'}
 ```
 
 ### HTTP Request
 
-`PUT https://login.eagleeyenetworks.com/g/accounts/terms`
+`PUT https://login.eagleeyenetworks.com/g/account/terms`
 
 Parameter  		   | Data Type       | Description   	                            | Is Required   | Default                  | Limitation
 ---------  		   | -----------     | -----------                  	            | -----------   | -------                  | ----------
@@ -188,18 +183,18 @@ Users are not required to accept terms of the same version again, so if users sh
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X POST  -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/accounts/terms -d '{"title": "Company Notice", "text": "This is example text for a terms of service", "id": "00008832", "days": 7, "admins": False, "users": True, all_required: True'
+curl -X POST https://28888.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 0, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "2", "id": "00009436"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 > Response Json
 
 ``` json
-{ "id": ["00008832"]}
+{'status': 'active', 'is_admin_required': 0, 'is_user_required': 1, 'title': 'Test_Terms_of_Service', 'url': 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20150626191622.txt', 'timestamp': '20150626191622', 'version': '1', 'user': 'cafebead', 'account_id': '00009074'}
 ```
 
 ### HTTP Request
 
-`POST https://login.eagleeyenetworks.com/g/accounts/terms`
+`POST https://login.eagleeyenetworks.com/g/account/terms`
 
 Parameter  		   | Data Type       | Description   	                            | Is Required   | Default                  | Limitation
 ---------  		   | -----------     | -----------                  	            | -----------   | -------                  | ----------
@@ -242,7 +237,20 @@ status                 | string        | Status of the term of service (active, 
 This will **retire** a term of service.
 * Only master accounts can **DELETE** an account's terms of service
 
-`DELETE https://login.eagleeyenetworks.com/g/accounts/terms`
+```shell
+curl -X DELETE https://28888.eagleeyenetworks.com/g/user/terms?id=cafe81f5 --cookie "auth_key=[AUTH_KEY]"
+```
+
+> Response Json
+
+``` json
+{ 'cafe81f5': { 'EEN_Terms_of_Service': { '1.2': '20150626193818.274'},
+                 'Test_Terms_of_Service': { '2': '20150626193626.502'}}}
+```
+
+
+
+`DELETE https://login.eagleeyenetworks.com/g/account/terms`
 
 Parameter  		| Data Type   | Description      	| Is Required
 ---------  		| ----------- | -----------      	| -----------
@@ -282,27 +290,18 @@ status             | string        | This will be **retired**
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/accounts/terms?id=[ID]
+curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --cookie "auth_key=[AUTH_KEY]"
 ```
 
 > Response List
 
 ```list
-[[ u'Eagle Eye Networks',
-  u'Terms and Conditions (2015)',
-  u'20150528120000.000',
-  True,
-  7,
-  False,
-  True,
-  True,
-  u'This is example text for a notice'
-  ]]
+[['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service2', '2', 1, 0, '20150626191625', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20150626191625.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '1', 1, 1, '20150626191617', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20150626191617.txt', 'retired'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '2', 0, 1, '20150626191622', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20150626191622.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'EEN_Terms_of_Service', '1.2', 1, 1, '20150626191610', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20150626191610.txt', 'active']]
 ```
 
 ### HTTP Request
 
-`GET https://login.eagleeyenetworks.com/g/accounts/terms`
+`GET https://login.eagleeyenetworks.com/g/account/terms`
 
 Parameter  		| Data Type   | Description   	| Is Required
 ---------  		| ----------- | -----------   	| -----------
@@ -333,23 +332,3 @@ HTTP Status Code    | Data Type
 412	| User is disabled
 200	| User has been authorized for access to the realm
 
-> Request
-
-```shell
-curl --cookie "auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/accounts/terms?id=[ID]
-```
-
-> Response List
-
-```list
-[[ u'Eagle Eye Networks',
-  u'Terms and Conditions (2015)',
-  u'20150528120000.000',
-  True,
-  7,
-  False,
-  True,
-  True,
-  u'This is example text for a notice'
-  ]]
-```
