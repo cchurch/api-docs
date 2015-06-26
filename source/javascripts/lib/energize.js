@@ -164,6 +164,6 @@
   document.addEventListener('touchstart', touchstart, false);
   document.addEventListener('touchmove', touchmove, false);
   document.addEventListener('touchend', touchend, false);
-  document.addEventListener('click', click, true);  // TODO: why does this use capture?
+  document.addEventListener('click', click, true);  <!--- TODO: why does this use capture? -->
   
 })();

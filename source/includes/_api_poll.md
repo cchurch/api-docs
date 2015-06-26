@@ -215,7 +215,7 @@ event 			| array[string, enum] | enum: [event objects](#event-objects)
     "token": "ooe0eoEAMNsF"
 }
 ```
-TODO Ask TOM about this
+<!---TODO Ask TOM about this-->
 
 ### Response Json Attributes
 

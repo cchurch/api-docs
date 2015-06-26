@@ -3438,7 +3438,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT -v -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/device -d <span class="s1">'{"name":"[NAME]","connectId":[CONNECT_ID]}'</span>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT -v -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/device -d <span class="s1">'{"name":"[NAME]","connectID":[CONNECT_ID]}'</span>
 </code></pre>
 
 <blockquote>
@@ -3465,10 +3465,10 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <tr>
 <td>name</td>
 <td>string</td>
-<td>Camera Name</td>
+<td>Bridge Name</td>
 </tr>
 <tr>
-<td>connectId</td>
+<td>connectID</td>
 <td>string</td>
 <td>Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.</td>
 </tr>
@@ -5219,7 +5219,7 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>TODO Ask TOM about this</p>
+<!---TODO Ask TOM about this-->
 
 <h3 id="response-json-attributes">Response Json Attributes</h3>
 
@@ -6859,12 +6859,59 @@ Then using the saml named id path, the user&rsquo;s email will be extracted and 
 
 <!--===================================================================-->
 
-<h2 id="get-notice">Get Notice</h2>
+<h2 id="logout">Logout</h2>
 
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/users/notice?id=[ID]
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> --request POST https://login.eagleeyenetworks.com/g/aaa/logout
+</code></pre>
+
+<p>Log out user and invalidate HTTP session cookie</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/logout</code></p>
+
+<h3 id="error-status-codes">Error Status Codes</h3>
+
+<table><thead>
+<tr>
+<th>HTTP Status Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>204</td>
+<td>User has been logged out</td>
+</tr>
+</tbody></table>
+
+          <h1 id="terms-of-service">Terms of Service</h1>
+
+<p>The following API endpoints are to facilitate presenting and accepting the <strong>Terms of Service</strong>.
+Eagle Eye Networks has their own terms of services which will be presented through the <a href="#get-terms-of-service-for-user">Get Terms of Service for User</a>.
+Additionally resellers can add their own <strong>Terms of Service</strong> through the <a href="#create-terms-of-service-for-account">Get Terms of Service for Account</a>, which
+will then also be presented with Eagle Eye Network&rsquo;s terms.</p>
+
+<p>Resellers can assign their own terms at the master account level or give each sub account custom terms at the sub account level.</p>
+
+<p>The basic work process is as follows:</p>
+
+<ol>
+<li>Resellers create their own terms with the <a href="#create-terms-of-service-for-account">Get Terms of Service for Account</a></li>
+<li>Client UI will display terms if not accepted from a <a href="#get-terms-of-service-for-user">Get Terms of Service for User</a></li>
+<li>Client UI will accept the terms from a <a href="#accept-terms-of-service-for-user">Accept Terms of Service for User</a></li>
+</ol>
+
+<!--===================================================================-->
+
+<h2 id="get-terms-of-service-for-user">Get Terms of Service for User</h2>
+
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/users/terms?id=[ID]
 </span></code></pre>
 
 <blockquote>
@@ -6878,16 +6925,17 @@ Then using the saml named id path, the user&rsquo;s email will be extracted and 
   14]]
 </code></pre>
 
-<p>This is to push important notices such as &ldquo;Terms and Conditions (2015)&rdquo;.
-The client software must call <strong>GET</strong> to see if the user needs to agree to the notice.
-If the user has an <strong>action needed</strong> then the client software should popup a notice box for the given <strong>notice title</strong>.</p>
+<p>This is to push important terms of service such as &ldquo;Terms and Conditions (2015)&rdquo;.
+The client software must call <strong>GET</strong> to see if the user needs to agree to any new terms of service.
+If the user has a <strong>is_compliant</strong> of False then the client software should popup a message box containing the terms of service.
+It is preferred to have this as a single combined message box.</p>
 
-<p>If the user agrees to the terms then a <strong>PUT</strong> call should be placed for the notice.
+<p>If the user agrees to the terms then a <strong>PUT</strong> call should be placed containing array all of the notices.
 A past due user is subject to suspension of services, and may not be allowed to login.</p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/users/notice</code></p>
+<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/users/terms</code></p>
 
 <table><thead>
 <tr>
@@ -6920,35 +6968,26 @@ A past due user is subject to suspension of services, and may not be allowed to 
 <td>Unique identifier for validated user</td>
 </tr>
 <tr>
-<td>email</td>
+<td>title</td>
 <td>string</td>
-<td>Email address of the user</td>
+<td>Title of the terms of service</td>
 </tr>
 <tr>
-<td>notice title</td>
+<td>url</td>
 <td>string</td>
-<td>Title of the notice</td>
+<td>Url of a file with the text of the terms of service</td>
 </tr>
 <tr>
-<td>timestamp</td>
+<td>version</td>
 <td>string</td>
-<td>last time the user accepted the terms and conditions</td>
+<td>Version string for the title of the terms of service</td>
 </tr>
 <tr>
-<td>action_needed</td>
+<td>is_compliant</td>
 <td>bool</td>
-<td>0 or 1 indicating if action is required of the user</td>
-</tr>
-<tr>
-<td>past_due</td>
-<td>int</td>
-<td>This is the number of days past due</td>
+<td>If False then the user needs to accept the terms of service</td>
 </tr>
 </tbody></table>
-
-<ul>
-<li>If action is needed then the client software should popup a notice box for the requested notice title.</li>
-</ul>
 
 <h3 id="error-status-codes">Error Status Codes</h3>
 
@@ -6990,12 +7029,15 @@ A past due user is subject to suspension of services, and may not be allowed to 
 
 <!--===================================================================-->
 
-<h2 id="put-notice">Put Notice</h2>
+<h2 id="accept-terms-of-service-for-user">Accept Terms of Service for User</h2>
+
+<p>This is called to record acceptance of the notice.
+  Account Super Users will not be able to accept for other people.</p>
 
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT  -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/users/notice -d <span class="s1">'{"notice_title": [NOTICE_TITLE]}'</span>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT  -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/users/terms -d <span class="s1">'{"urls": [URLS]}'</span>
 </code></pre>
 
 <blockquote>
@@ -7004,11 +7046,9 @@ A past due user is subject to suspension of services, and may not be allowed to 
 <pre><code class="highlight json"><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cafe1866"</span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>This is called to record acceptance of the notice. Account Super Users will not be able to accept for other people.</p>
-
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/users/notice</code></p>
+<p><code class="prettyprint">PUT https://login.eagleeyenetworks.com/g/users/terms</code></p>
 
 <table><thead>
 <tr>
@@ -7019,9 +7059,9 @@ A past due user is subject to suspension of services, and may not be allowed to 
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>notice_title</strong></td>
-<td>string</td>
-<td>Title of the notice</td>
+<td><strong>urls</strong></td>
+<td>array[string]</td>
+<td>Array of urls that are accepted</td>
 <td>true</td>
 </tr>
 </tbody></table>
@@ -7055,6 +7095,649 @@ A past due user is subject to suspension of services, and may not be allowed to 
 <td>Unexpected or non-identifiable arguments are supplied</td>
 </tr>
 <tr>
+<td>402</td>
+<td>Account is suspended</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Notice Title was not found</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Information supplied could not be verified</td>
+</tr>
+<tr>
+<td>460</td>
+<td>Account is inactive</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Account has already been activated</td>
+</tr>
+<tr>
+<td>412</td>
+<td>User is disabled</td>
+</tr>
+<tr>
+<td>200</td>
+<td>User has been authorized for access to the realm</td>
+</tr>
+</tbody></table>
+
+<!--===================================================================-->
+
+<h2 id="create-terms-of-service-for-account">Create Terms of Service for Account</h2>
+
+<p>Master Accounts (Resellers) may require their own terms of service.
+For that case, this api endpoint is to submit the text of the terms of service.</p>
+
+<p>New terms can be submitted with a PUT command, then a GET command can be done to see the state of the terms.
+<strong>PUT</strong> will retire <strong>terms of service</strong> of the same title and account.
+Notices can be stored in the sub account or the parent account of the user.
+Resellers are limited to 5 terms of service titles and each title will only have one active version.</p>
+
+<ul>
+<li>Only master accounts can <strong>PUT</strong> an account&rsquo;s terms of service</li>
+</ul>
+
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT  -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/accounts/terms -d <span class="s1">'{"title": "Company Notice", "text": "This is example text for a terms of service", "id": "00008832", "days": 7, "admins": False, "users": True, all_required: True'</span>
+</code></pre>
+
+<blockquote>
+<p>Response Json</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"00008832"</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">PUT https://login.eagleeyenetworks.com/g/accounts/terms</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Is Required</th>
+<th>Default</th>
+<th>Limitation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>text</td>
+<td>string</td>
+<td>Text of the terms to accept</td>
+<td>true</td>
+<td></td>
+<td>use single LF character for line break</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Unique id of the Account</td>
+<td>false</td>
+<td>requester&rsquo;s account</td>
+<td></td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the terms to accept</td>
+<td>false</td>
+<td>&ldquo;Terms and Conditions&rdquo;</td>
+<td>32 bytes of alpha numeric characters</td>
+</tr>
+<tr>
+<td>version</td>
+<td>string</td>
+<td>Version of the title, which should be unique</td>
+<td>false</td>
+<td>auto incrementing number</td>
+<td>32 bytes of alpha numeric characters</td>
+</tr>
+<tr>
+<td>is_admin_required</td>
+<td>bool</td>
+<td>If admins have to accept</td>
+<td>false</td>
+<td>not updating</td>
+<td></td>
+</tr>
+<tr>
+<td>is_user_required</td>
+<td>bool</td>
+<td>If users have to accept</td>
+<td>false</td>
+<td>not updating</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>Date the terms goes into affect</td>
+<td>false</td>
+<td>now</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h3 id="http-json-attributes">HTTP JSON Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the notice</td>
+</tr>
+<tr>
+<td>version</td>
+<td>int</td>
+<td>Version number for the notice title, a larger version number will retire other versions</td>
+</tr>
+<tr>
+<td>is_admin_required</td>
+<td>bool</td>
+<td>If admins have to accept</td>
+</tr>
+<tr>
+<td>is_user_required</td>
+<td>bool</td>
+<td>If users have to accept</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>date of the  term of service</td>
+</tr>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>URL of the file containing the text for the notice</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>Status of the term of service (active, retired)</td>
+</tr>
+</tbody></table>
+
+<h3 id="error-status-codes">Error Status Codes</h3>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Unexpected or non-identifiable arguments are supplied</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Account is suspended</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Terms Title was not found</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Information supplied could not be verified</td>
+</tr>
+<tr>
+<td>460</td>
+<td>Account is inactive</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Account has already been activated</td>
+</tr>
+<tr>
+<td>412</td>
+<td>User is disabled</td>
+</tr>
+<tr>
+<td>200</td>
+<td>User has been authorized for access to the realm</td>
+</tr>
+</tbody></table>
+
+<!--===================================================================-->
+
+<h2 id="update-terms-of-service-for-account">Update Terms of Service for Account</h2>
+
+<p>Updates an account terms of service as specified by Put Terms of Service for Account.
+Users are not required to accept terms of the same version again, so if users should be forced to accept again then PUT should be done</p>
+
+<ul>
+<li>Only master account can <strong>Post</strong> an account&rsquo;s terms of service</li>
+</ul>
+
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X POST  -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/accounts/terms -d <span class="s1">'{"title": "Company Notice", "text": "This is example text for a terms of service", "id": "00008832", "days": 7, "admins": False, "users": True, all_required: True'</span>
+</code></pre>
+
+<blockquote>
+<p>Response Json</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w"> </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"00008832"</span><span class="p">]}</span><span class="w">
+</span></code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/accounts/terms</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Is Required</th>
+<th>Default</th>
+<th>Limitation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>text</td>
+<td>string</td>
+<td>Text of the terms to accept</td>
+<td>false</td>
+<td></td>
+<td>use single LF character for line break</td>
+</tr>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Unique id of the Account</td>
+<td>false</td>
+<td>requester&rsquo;s account</td>
+<td></td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the terms to accept</td>
+<td>false</td>
+<td>&ldquo;Terms and Conditions&rdquo;</td>
+<td>32 bytes of alpha numeric characters</td>
+</tr>
+<tr>
+<td>version</td>
+<td>string</td>
+<td>Version of the title, which should be unique</td>
+<td>false</td>
+<td>auto incrementing number</td>
+<td>32 bytes of alpha numeric characters</td>
+</tr>
+<tr>
+<td>is_admin_required</td>
+<td>bool</td>
+<td>If admins have to accept</td>
+<td>false</td>
+<td>not updating</td>
+<td></td>
+</tr>
+<tr>
+<td>is_user_required</td>
+<td>bool</td>
+<td>If users have to accept</td>
+<td>false</td>
+<td>not updating</td>
+<td></td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>Date the term of service goes into affect</td>
+<td>false</td>
+<td>now</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<h3 id="http-json-attributes">HTTP JSON Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the notice</td>
+</tr>
+<tr>
+<td>version</td>
+<td>int</td>
+<td>Version number for the notice title, a larger version number will retire other versions</td>
+</tr>
+<tr>
+<td>is_admin_required</td>
+<td>bool</td>
+<td>If admins have to accept</td>
+</tr>
+<tr>
+<td>is_user_required</td>
+<td>bool</td>
+<td>If users have to accept</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>date of the  term of service</td>
+</tr>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>URL of the file containing the text for the notice</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>Status of the term of service (active, retired)</td>
+</tr>
+</tbody></table>
+
+<h3 id="error-status-codes">Error Status Codes</h3>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Unexpected or non-identifiable arguments are supplied</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Account is suspended</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Notice Title was not found</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Information supplied could not be verified</td>
+</tr>
+<tr>
+<td>460</td>
+<td>Account is inactive</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Account has already been activated</td>
+</tr>
+<tr>
+<td>412</td>
+<td>User is disabled</td>
+</tr>
+<tr>
+<td>200</td>
+<td>User has been authorized for access to the realm</td>
+</tr>
+</tbody></table>
+
+<!--===================================================================-->
+
+<h2 id="delete-terms-of-service-for-account">Delete Terms of Service for Account</h2>
+
+<p>This will <strong>retire</strong> a term of service.
+* Only master accounts can <strong>DELETE</strong> an account&rsquo;s terms of service</p>
+
+<p><code class="prettyprint">DELETE https://login.eagleeyenetworks.com/g/accounts/terms</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Is Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Account Id</td>
+<td>false</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the terms</td>
+<td>false</td>
+</tr>
+</tbody></table>
+
+<h3 id="http-list-attributes">HTTP List Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_id</td>
+<td>string</td>
+<td>Unique Id of the account that is requesting this term of service</td>
+</tr>
+<tr>
+<td>account_name</td>
+<td>string</td>
+<td>Name of the account that is requesting this term of service</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the term of service</td>
+</tr>
+<tr>
+<td>version</td>
+<td>int</td>
+<td>Version number for the term title</td>
+</tr>
+<tr>
+<td>is_admin_required</td>
+<td>bool</td>
+<td>If admins have to accept</td>
+</tr>
+<tr>
+<td>is_user_required</td>
+<td>bool</td>
+<td>If users have to accept</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>date of the term of service</td>
+</tr>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>URL of the file containing the text for the term of service</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>This will be <strong>retired</strong></td>
+</tr>
+</tbody></table>
+
+<h3 id="error-status-codes">Error Status Codes</h3>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Unexpected or non-identifiable arguments are supplied</td>
+</tr>
+<tr>
+<td>402</td>
+<td>Account is suspended</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Notice Title was not found</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Information supplied could not be verified</td>
+</tr>
+<tr>
+<td>460</td>
+<td>Account is inactive</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Account has already been activated</td>
+</tr>
+<tr>
+<td>412</td>
+<td>User is disabled</td>
+</tr>
+<tr>
+<td>200</td>
+<td>User has been authorized for access to the realm</td>
+</tr>
+</tbody></table>
+
+<!--===================================================================-->
+
+<h2 id="get-terms-of-service-for-account">Get Terms of Service for Account</h2>
+
+<blockquote>
+<p>Request</p>
+</blockquote>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/accounts/terms?id=[ID]
+</span></code></pre>
+
+<blockquote>
+<p>Response List</p>
+</blockquote>
+<pre><code class="highlight plaintext">[[ u'Eagle Eye Networks',
+  u'Terms and Conditions (2015)',
+  u'20150528120000.000',
+  True,
+  7,
+  False,
+  True,
+  True,
+  u'This is example text for a notice'
+  ]]
+</code></pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://login.eagleeyenetworks.com/g/accounts/terms</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+<th>Is Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>Account Id</td>
+<td>false</td>
+</tr>
+</tbody></table>
+
+<h3 id="http-list-attributes">HTTP List Attributes</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Data Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>account_id</td>
+<td>string</td>
+<td>Unique Id of the account that is requesting this notice</td>
+</tr>
+<tr>
+<td>account_name</td>
+<td>string</td>
+<td>Name of the account that is requesting this notice</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>Title of the notice</td>
+</tr>
+<tr>
+<td>version</td>
+<td>int</td>
+<td>Version number for the notice title, a larger version number will retire other versions</td>
+</tr>
+<tr>
+<td>is_admin_required</td>
+<td>bool</td>
+<td>If admins have to accept</td>
+</tr>
+<tr>
+<td>is_user_required</td>
+<td>bool</td>
+<td>If users have to accept</td>
+</tr>
+<tr>
+<td>timestamp</td>
+<td>string</td>
+<td>date of the term of service</td>
+</tr>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>URL of the file containing the text for the notice</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>Status of the term of service (active, retired)</td>
+</tr>
+</tbody></table>
+
+<h3 id="error-status-codes">Error Status Codes</h3>
+
+<table><thead>
+<tr>
+<th>HTTP Status Code</th>
+<th>Data Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Unexpected or non-identifiable arguments are supplied</td>
+</tr>
+<tr>
 <td>406</td>
 <td>Information supplied could not be verified</td>
 </tr>
@@ -7080,35 +7763,26 @@ A past due user is subject to suspension of services, and may not be allowed to 
 </tr>
 </tbody></table>
 
-<!--===================================================================-->
-
-<h2 id="logout">Logout</h2>
-
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> --request POST https://login.eagleeyenetworks.com/g/aaa/logout
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY] -X GET https://login.eagleeyenetworks.com/g/accounts/terms?id=[ID]
+</span></code></pre>
+
+<blockquote>
+<p>Response List</p>
+</blockquote>
+<pre><code class="highlight plaintext">[[ u'Eagle Eye Networks',
+  u'Terms and Conditions (2015)',
+  u'20150528120000.000',
+  True,
+  7,
+  False,
+  True,
+  True,
+  u'This is example text for a notice'
+  ]]
 </code></pre>
-
-<p>Log out user and invalidate HTTP session cookie</p>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">POST https://login.eagleeyenetworks.com/g/aaa/logout</code></p>
-
-<h3 id="error-status-codes">Error Status Codes</h3>
-
-<table><thead>
-<tr>
-<th>HTTP Status Code</th>
-<th>Data Type</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>204</td>
-<td>User has been logged out</td>
-</tr>
-</tbody></table>
 
           <h1 id="account">Account</h1>
 
@@ -8042,7 +8716,7 @@ A past due user is subject to suspension of services, and may not be allowed to 
 </tr>
 </tbody></table>
 
-<p>TODO Update Account Array Attributes</p>
+<!---TODO Update Account Array Attributes-->
 
 <h3 id="error-status-codes">Error Status Codes</h3>
 

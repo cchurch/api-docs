@@ -195,7 +195,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectId":[CONNECT_ID]}'
+curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectID":[CONNECT_ID]}'
 ```
 
 > Json Response
@@ -214,8 +214,8 @@ Adds a bridge to the Eagle Eye Video Bank
 
 Parameter | Data Type     | Description 
 --------- | -----------   | ----------- 
-name      | string        | Camera Name 
-connectId | string        | Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped. 
+name      | string        | Bridge Name
+connectID | string        | Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.
 
 ### Response Json Attributes
 
