@@ -3428,7 +3428,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <blockquote>
 <p>Request</p>
 </blockquote>
-<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT -v -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/device -d <span class="s1">'{"name":"[NAME]","connectId":[CONNECT_ID]}'</span>
+<pre><code class="highlight shell">curl --cookie <span class="s2">"auth_key=[AUTH_KEY]"</span> -X PUT -v -H <span class="s2">"Authentication: [API_KEY]:"</span> -H <span class="s2">"content-type: application/json"</span> https://login.eagleeyenetworks.com/g/device -d <span class="s1">'{"name":"[NAME]","connectID":[CONNECT_ID]}'</span>
 </code></pre>
 
 <blockquote>
@@ -3455,10 +3455,10 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 <tr>
 <td>name</td>
 <td>string</td>
-<td>Camera Name</td>
+<td>Bridge Name</td>
 </tr>
 <tr>
-<td>connectId</td>
+<td>connectID</td>
 <td>string</td>
 <td>Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.</td>
 </tr>
@@ -5209,7 +5209,7 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
-<p>TODO Ask TOM about this</p>
+<!---TODO Ask TOM about this-->
 
 <h3 id="response-json-attributes">Response Json Attributes</h3>
 
@@ -7205,14 +7205,6 @@ Resellers are limited to 5 terms of service titles and each title will only have
 <td></td>
 </tr>
 <tr>
-<td>ia_all_required</td>
-<td>bool</td>
-<td>If all or one have to accept</td>
-<td>false</td>
-<td>not updating</td>
-<td></td>
-</tr>
-<tr>
 <td>timestamp</td>
 <td>string</td>
 <td>Date the terms goes into affect</td>
@@ -7250,11 +7242,6 @@ Resellers are limited to 5 terms of service titles and each title will only have
 <td>is_user_required</td>
 <td>bool</td>
 <td>If users have to accept</td>
-</tr>
-<tr>
-<td>is_all_required</td>
-<td>bool</td>
-<td>If all or one have to accept</td>
 </tr>
 <tr>
 <td>timestamp</td>
@@ -7401,14 +7388,6 @@ Users are not required to accept terms of the same version again, so if users sh
 <td></td>
 </tr>
 <tr>
-<td>ia_all_required</td>
-<td>bool</td>
-<td>If all or one have to accept</td>
-<td>false</td>
-<td>not updating</td>
-<td></td>
-</tr>
-<tr>
 <td>timestamp</td>
 <td>string</td>
 <td>Date the term of service goes into affect</td>
@@ -7446,11 +7425,6 @@ Users are not required to accept terms of the same version again, so if users sh
 <td>is_user_required</td>
 <td>bool</td>
 <td>If users have to accept</td>
-</tr>
-<tr>
-<td>is_all_required</td>
-<td>bool</td>
-<td>If all or one have to accept</td>
 </tr>
 <tr>
 <td>timestamp</td>
@@ -7580,11 +7554,6 @@ Users are not required to accept terms of the same version again, so if users sh
 <td>is_user_required</td>
 <td>bool</td>
 <td>If users have to accept</td>
-</tr>
-<tr>
-<td>is_all_required</td>
-<td>bool</td>
-<td>If all or one have to accept</td>
 </tr>
 <tr>
 <td>timestamp</td>
@@ -7728,11 +7697,6 @@ Users are not required to accept terms of the same version again, so if users sh
 <td>is_user_required</td>
 <td>bool</td>
 <td>If users have to accept</td>
-</tr>
-<tr>
-<td>is_all_required</td>
-<td>bool</td>
-<td>If all or one have to accept</td>
 </tr>
 <tr>
 <td>timestamp</td>
@@ -8742,7 +8706,7 @@ Users are not required to accept terms of the same version again, so if users sh
 </tr>
 </tbody></table>
 
-<p>TODO Update Account Array Attributes</p>
+<!---TODO Update Account Array Attributes-->
 
 <h3 id="error-status-codes">Error Status Codes</h3>
 
