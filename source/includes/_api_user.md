@@ -73,7 +73,8 @@ If a user isn't requesting their own user record, these apis requires SuperUser 
     "is_branded": 1,
     "active_brand_subdomain": "login",
     "account_map_lines": null,
-    "access_period": []
+    "access_period": [],
+    "is_terms_noncompliant": 1
 }
 ```
 
@@ -123,6 +124,7 @@ is_branded              | int           | Is the user associated with an account
 active_brand_subdomain  | string        | If the user is associated with an account that has brandinge enabled, this will have that brand's subdomain if one exists
 account_map_lines       | ???           | 
 access_period           | ???           | 
+is_terms_noncompliant   | int           | True if user has not accepted terms of service
 
 ### UserJson Attributes
 
