@@ -139,6 +139,9 @@ Parameter               | Data Type     | Description
 show_AMPM               | boolean       | Show times with AM/PM
 milliseconds_display    | boolean       | Show time with milliseconds
 layout_rotation_seconds | int           | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur.
+motion_boxes            | boolean       | Determines if motion boxes should be shown
+notify_levels           | array[int]    | 
+
 
 <!--===================================================================-->
 ## Get User
