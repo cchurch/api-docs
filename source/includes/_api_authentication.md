@@ -18,7 +18,7 @@ All status codes are listed in order of precedence, meaning the first one listed
 > Request
 
 ```shell
-curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data "username=[USERNAME]&password=[PASSWORD]"
+curl -v --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data-urlencode "username=[USERNAME]" --data-urlencode "password=[PASSWORD]"
 ```
 
 > Json Response
