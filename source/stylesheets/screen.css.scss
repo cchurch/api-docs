@@ -529,6 +529,19 @@ html, body {
   }
 }
 
+
+table.model {
+  tr.editable td.edit:before {
+       content: "\2713";
+       text-align: center;
+  }
+  tr.editable td.key {
+       font-weight: bold;
+       color: #333333;
+
+  }
+
+}
 ////////////////////////////////////////////////////////////////////////////////
 // CODE SAMPLE STYLES
 ////////////////////////////////////////////////////////////////////////////////
