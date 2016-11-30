@@ -531,9 +531,13 @@ html, body {
 
 
 table.model {
-  tr.editable td.edit:before {
+  tr.editable {
+    td.edit:before {
        content: "\2713";
+    }
+    td.edit {
        text-align: center;
+    }
   }
   tr.editable td.key {
        font-weight: bold;
