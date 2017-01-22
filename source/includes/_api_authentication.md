@@ -2,7 +2,13 @@
 
 ## Overview
 
-Gaining access to the Eagle Eye API is a two-stage process: Clients first present their credentials and Realm to obtain a single use Authentication Token. This single use token is valid for 30 seconds or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the "auth_key" Cookie) that provides access to resources. This two phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over an https connection.
+Gaining access to the Eagle Eye API is a two-stage process: Clients first present their credentials and Realm to obtain a single use Authentication Token. This single use token is valid for a pre-defined duration or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the "auth_key" Cookie) that provides access to resources. This two phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over an https connection.
+
+In addition to the simple authentication scheme described above, also a more secure authentication scheme, known as **Two Factor Authentication** (TFA) may be used. TFA is a method of confirming a user's claimed identity by utilizing a combination of two different components. The first component is a user's password and the second is a one-time TFA code delivered to the user via another communication channel - e-mail or a text message sent to the user's mobile phone.
+
+Whether simple or TFA authentication scheme is used for a particular user's login is determined by this user's settings in the system. Note, however, that an account administrator may enforce all users in a particular account to use TFA scheme.
+
+If TFA scheme is in use, the Authorize call will expect the TFA code to be passed in addition to the token obtained from the Authenticate call.
 
 Once the "auth_key" cookie is obtained from the "Authorize" call, there are 2 methods for which you can use the session ID to make subsequent calls to the API. The first, is simply to pass the "auth_key" cookie with all API requests. The second method, is to take the value of the "auth_key" cookie and pass it in the request as the "A" parameter. The "A" parameter can be used with any method (GET, PUT, POST, DELETE). The order of precedence for session ID retrieval is as follows:
 
@@ -36,14 +42,14 @@ Login is a 2 step process: Authenticate, then Authorize with the token returned 
 `POST https://login.eagleeyenetworks.com/g/aaa/authenticate`
 
 Parameter   	| Data Type   
----------   	| ----------- 
+---------   	| -----------
 **username** 	| string      
 **password** 	| string     
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
----------           | ----------- 
+---------           | -----------
 400 | Some argument(s) are missing or invalid
 401 | Supplied credentials are not valid
 402 | Account is suspended
@@ -157,7 +163,7 @@ Parameter   | Data Type
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
----------           | ----------- 
+---------           | -----------
 400 | Some argument(s) are missing or invalid
 401 | Invalid Token supplied
 200 | User has been authorized for access to the realm
