@@ -27,7 +27,7 @@ All status codes are listed in order of precedence, meaning the first one listed
 curl -v --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data-urlencode "username=[USERNAME]" --data-urlencode "password=[PASSWORD]"
 ```
 
-> Json Response
+> Json Response, simple authentication
 
 ```json
 {
@@ -35,7 +35,23 @@ curl -v --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --d
 }
 ```
 
-Login is a 2 step process: Authenticate, then Authorize with the token returned by Authenticate.
+> Json Response, TFA authentication
+
+```json
+{
+  "token": "O3k0hNH3jQgjaxC0bLG9/5cM+Z7eWdPe0c+UpEZNXOs7PTFH45Dr9M3wxLkP6GjcPuCw8lXVTkHGA1zgx/q44HBv3Xmcj4/XzN2f6Hv+mZVIy8LorX8N5a6fNVRknWWW86nCHfbLvOP6TPcmBP1dD10ynnGeAdlQHTqMN5mvKH24WwZgVFbM4DyhyWu+eTN+t1XNROegJdZRjhaYCZ1FVKkdnrlsrMD6JSr/tE7byCLVjPcwzVabA+x0tDbGipystTNYPZyDVr3DQM70SV6kfqg2irlC8/zDu7a2EhI1IQWuZZ2GQIQm5jBtj9UR/p7ainHVhEc/bSFYUCvziepcAa==",
+  "two_factor_authentication_code": "???"
+
+}
+```
+
+Login is a 2 step process when using simple authentication and a 3 step process using TFA scheme.
+
+*Simple scheme:*  
+Authenticate, then Authorize with the token returned by Authenticate.  
+
+*TFA scheme:*  
+Authenticate, Send TFA Code, Authorize with the token received from step 1 and the TFA code received from step 2
 
 ### HTTP Request
 
@@ -45,6 +61,14 @@ Parameter   	| Data Type
 ---------   	| -----------
 **username** 	| string      
 **password** 	| string     
+
+### HTTP Response
+
+Returned parameters  | Data Type  |  Description
+----------       | ---------  | ------------
+**token**            | string     | token to be used in Authorize step
+**two_factor_authentication_code**            | string ???    | present in response only if TFA scheme is being used. ???
+
 
 ### Error Status Codes
 
@@ -60,13 +84,57 @@ HTTP Status Code    | Data Type
 200 | User has been authenticated. Body contains JSON encoded result
 
 <!--===================================================================-->
-## Step 2: Authorize
+## Step 2: Send TFA Code (only if using TFA Scheme)
 
-> Request
+This step is only used when TFA scheme is used for the user log in, i.e., the Authenticate call returned ??? parameter.
+Otherwise proceed to step 3: Authorize.
+
+### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate`
+
+Parameter   	| Data Type   
+---------   	| -----------
+**???** 	| string      
+**???** 	| string     
+
+### HTTP Response
+
+Returned parameters  | Data Type  |  Description
+----------       | ---------  | ------------
+**???**            | string     | token to be used in Authorize step
+
+
+### Error Status Codes
+
+HTTP Status Code    | Data Type   
+---------           | -----------
+??? 400 | Some argument(s) are missing or invalid
+401 | Supplied credentials are not valid
+402 | Account is suspended
+460 | Account is inactive
+461 | Account is pending
+412 | User is disabled
+462 | User is pending. This will be thrown before 401 if username is valid and Account is active.
+200 | User has been authenticated. Body contains JSON encoded result
+
+
+
+<!--===================================================================-->
+## Step 3: Authorize
+
+> Request, simple authentitaction scheme
 
 ```shell
 curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN]
 ```
+
+> Request, TFA scheme
+
+```shell
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN]  ????=[???]
+```
+
 
 > Json Response
 
@@ -141,7 +209,8 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
 }
 ```
 
-Authorize is the second step of the Login process, by using the token from the first step (Authenticate). This returns an authorized user object, and sets the 'auth_key' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
+Authorize is the final step of the Login process, by using the token from the first step (Authenticate) and - if TFA scheme is used - the TFA code delivered to the user by e-mail or SMS.
+A Successful Authorize call returns an authorized user object, and sets the 'auth_key' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
 
 The host url for API calls can originally be done against "https://login.eagleeyenetworks.com", but after authorization is returned the API should then use the **branded subdomain** as returned from authorization.
 As such the branded host url will become "https://[active_brand_subdomain].eagleeyenetworks.com" where the **active_brand_subdomain** field is returned in the authorization response.
@@ -159,6 +228,15 @@ Caching the subdomain is safe to do as long as the client software validates aga
 Parameter   | Data Type		
 ---------	| -----------   
 **token**   | string      	
+**???**   | string      	
+
+### HTTP Response
+
+Returned parameters  | Data Type  |  Description
+----------       | ---------  | ------------
+**???**            | string     | token to be used in Authorize step
+
+
 
 ### Error Status Codes
 
