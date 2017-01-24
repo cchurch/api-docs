@@ -39,9 +39,12 @@ curl -v --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --d
 
 ```json
 {
-  "token": "O3k0hNH3jQgjaxC0bLG9/5cM+Z7eWdPe0c+UpEZNXOs7PTFH45Dr9M3wxLkP6GjcPuCw8lXVTkHGA1zgx/q44HBv3Xmcj4/XzN2f6Hv+mZVIy8LorX8N5a6fNVRknWWW86nCHfbLvOP6TPcmBP1dD10ynnGeAdlQHTqMN5mvKH24WwZgVFbM4DyhyWu+eTN+t1XNROegJdZRjhaYCZ1FVKkdnrlsrMD6JSr/tE7byCLVjPcwzVabA+x0tDbGipystTNYPZyDVr3DQM70SV6kfqg2irlC8/zDu7a2EhI1IQWuZZ2GQIQm5jBtj9UR/p7ainHVhEc/bSFYUCvziepcAa==",
-  "two_factor_authentication_code": "???"
-
+  "token": "MiDUwMQqwP1JsfKqbqT1DQ8hJFHEOZfROEUtBvnuqv0ICxvcOybkS1n9/awjrJ9YKijb60GqdUDPP8TW4o8Ei8iI8OXC/dj74KC2cLMxJ2vs/hmYPfbW8OpCwf0k683a2LfIbjcC3Uy/SmDpOsxVdPMTXQEGJHXD3ItmAvoQ5MOoRKfHBNOu7OJBWQjPUjeP0fkHSrx8JgAHSqT5SwRM0mLysFmiFHF0h7/5Apt81dDhZwLBDwwSrl+kTqgn+wnw6rJ432liESdK+yp3Qefk1wAtytoTJkkBE2srqsHJdW4ryVYKk9SKA62Cz7pO3VUaD8Yxx9Ff2Os9ez6TdfBmqg==",
+  "two_factor_authentication_code":
+  {
+    "sms": "+xxxxxxxx779",
+    "email": "xxxxxxxxxxx.01@gmail.com"
+  }
 }
 ```
 
@@ -51,7 +54,7 @@ Login is a 2 step process when using simple authentication and a 3 step process 
 Authenticate, then Authorize with the token returned by Authenticate.  
 
 *TFA scheme:*  
-Authenticate, Send TFA Code, Authorize with the token received from step 1 and the TFA code received from step 2
+Authenticate, Send TFA Code to the user, Authorize with the token received from step 1 and the TFA code received from step 2
 
 ### HTTP Request
 
@@ -67,7 +70,15 @@ Parameter   	| Data Type
 Returned parameters  | Data Type  |  Description
 ----------       | ---------  | ------------
 **token**            | string     | token to be used in Authorize step
-**two_factor_authentication_code**            | string ???    | present in response only if TFA scheme is being used. ???
+**two_factor_authentication_code**            | JSON dictionary with two keys:<br/>**sms** - x'd out user's SMS number,<br/>**email** - x'd out user's e-mail address    | present in response only if TFA scheme is being used.
+
+*NOTE 1:  
+For TFA scheme, the system uses the parameter `sms_phone` of the user's model (see **User Model** section). That parameter MUST be specified at the user's creation time (see **Create User** API Call)*
+
+*NOTE 2:  
+If user's parameter `sms_phone` has not been set, the value of the **sms** key will be `No sms phone found.`*
+
+
 
 
 ### Error Status Codes
@@ -83,10 +94,12 @@ HTTP Status Code    | Data Type
 462 | User is pending. This will be thrown before 401 if username is valid and Account is active.
 200 | User has been authenticated. Body contains JSON encoded result
 
+<!-- TODO: verify if the list above is complete==-->
+
 <!--===================================================================-->
 ## Step 2: Send TFA Code (only if using TFA Scheme)
 
-This step is only used when TFA scheme is used for the user log in, i.e., the Authenticate call returned ??? parameter.
+This step is only to be executed when TFA scheme is used for the user log in, i.e., if the Authenticate call returned `two_factor_authentication_code` key in response.
 Otherwise proceed to step 3: Authorize.
 
 ### HTTP Request
@@ -95,8 +108,9 @@ Otherwise proceed to step 3: Authorize.
 
 Parameter   	| Data Type   
 ---------   	| -----------
-**???** 	| string      
-**???** 	| string     
+**token** 	| string <br/> token received in step 1    
+**wo_factor_authentication_type** 	| string <br/> Must be 'sms'  or 'email'
+
 
 ### HTTP Response
 
