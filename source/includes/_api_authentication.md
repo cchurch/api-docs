@@ -70,14 +70,19 @@ Parameter   	| Data Type
 Returned parameters  | Data Type  |  Description
 ----------       | ---------  | ------------
 **token**            | string     | token to be used in Authorize step
-**two_factor_authentication_code**            | JSON dictionary with two keys:<br/>**sms** - x'd out user's SMS number,<br/>**email** - x'd out user's e-mail address    | present in response only if TFA scheme is being used.
+**two_factor_authentication_code**            | JSON dictionary with two keys:<br/>**sms** - scrubbed user's SMS number,<br/>**email** - scrubbed user's e-mail address    | present in response only if TFA scheme is being used.
 
-*NOTE 1:  
-For TFA scheme, the system uses the parameter `sms_phone` of the user's model (see **User Model** section). That parameter MUST be specified at the user's creation time (see **Create User** API Call)*
+*NOTE 1:*  
+The validity of token is:
 
-*NOTE 2:  
-If user's parameter `sms_phone` has not been set, the value of the **sms** key will be `No sms phone found.`*
+* 30 seconds, for simple authentication
+* 15 minutes, for TFA scheme
 
+
+*NOTE 2:*  
+For TFA scheme, the system uses the parameter `sms_phone` of the user's model (see **User Model** section).
+That parameter MUST be specified at the user's creation time (see **Create User** API Call)*
+If user's parameter `sms_phone` has not been set, the value of the **sms** key will be `No sms phone found.`
 
 
 
@@ -90,14 +95,28 @@ HTTP Status Code    | Data Type
 402 | Account is suspended
 460 | Account is inactive
 461 | Account is pending
-412 | User is disabled
+412\* | User is disabled  
 462 | User is pending. This will be thrown before 401 if username is valid and Account is active.
 200 | User has been authenticated. Body contains JSON encoded result
+
+\* Code 412 is also returned if TFA scheme is used and the user's account has been locked due to more than 3 failed attempts to authorize with a TFA code.
+
 
 <!-- TODO: verify if the list above is complete==-->
 
 <!--===================================================================-->
 ## Step 2: Send TFA Code (only if using TFA Scheme)
+
+> Request, simple authentitaction scheme
+
+```shell
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate --data-urlencode token=[TOKEN] two_factor_authentication_type=sms
+```
+
+```shell
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate --data-urlencode token=[TOKEN] two_factor_authentication_type=email
+```
+
 
 This step is only to be executed when TFA scheme is used for the user log in, i.e., if the Authenticate call returned `two_factor_authentication_code` key in response.
 Otherwise proceed to step 3: Authorize.
@@ -109,28 +128,25 @@ Otherwise proceed to step 3: Authorize.
 Parameter   	| Data Type   
 ---------   	| -----------
 **token** 	| string <br/> token received in step 1    
-**wo_factor_authentication_type** 	| string <br/> Must be 'sms'  or 'email'
+**two_factor_authentication_type** 	| string <br/> Must be 'sms'  or 'email'
 
 
 ### HTTP Response
 
-Returned parameters  | Data Type  |  Description
-----------       | ---------  | ------------
-**???**            | string     | token to be used in Authorize step
+This API call does not return data in response.
+
+*NOTE 1:*  
+The validity of TFA code sent to the user is 15 minutes.
 
 
-### Error Status Codes
+### Response Status Codes
 
 HTTP Status Code    | Data Type   
 ---------           | -----------
-??? 400 | Some argument(s) are missing or invalid
-401 | Supplied credentials are not valid
-402 | Account is suspended
-460 | Account is inactive
-461 | Account is pending
-412 | User is disabled
-462 | User is pending. This will be thrown before 401 if username is valid and Account is active.
-200 | User has been authenticated. Body contains JSON encoded result
+400 | Some argument(s) are missing or invalid
+412 | Unable to send TFA code with the TFA authentication type selected
+415 | Specified TFA authentication type not supported
+200 | Success, TFA code has been sent to the user
 
 
 
@@ -146,7 +162,7 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
 > Request, TFA scheme
 
 ```shell
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN]  ????=[???]
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN] two_factor_authentication_code=[TFA_CODE]
 ```
 
 
@@ -242,20 +258,35 @@ Caching the subdomain is safe to do as long as the client software validates aga
 Parameter   | Data Type		
 ---------	| -----------   
 **token**   | string      	
-**???**   | string      	
+**two_factor_authentication_code**   | string, 4 decimal digits
+
+*NOTE 1:*  
+More than 3 failed attempts to Authorize with TFA code will lock the user's account. It then can only be unlocked by Eagle Eye's technical support staff.  
+When the user's account has been locked the user is notified of this fact by e-mail.
+
+
 
 ### HTTP Response
 
-Returned parameters  | Data Type  |  Description
-----------       | ---------  | ------------
-**???**            | string     | token to be used in Authorize step
-
+When successful, this API call returns JSON data structure corresponding to User Model (see section User Model)
 
 
 ### Error Status Codes
+
+**When using simple authentication scheme**
 
 HTTP Status Code    | Data Type   
 ---------           | -----------
 400 | Some argument(s) are missing or invalid
 401 | Invalid Token supplied
+200 | User has been authorized for access to the realm
+
+**When using TFA authentication scheme**
+
+HTTP Status Code    | Data Type   
+---------           | -----------
+400 | Some argument(s) are missing or invalid
+401 | Invalid Token supplied, or missing TFA code, or attempting to authorize with expired TFA code
+406 | Invalid TFA supplied or Invalid TFA and invalid Token supplied
+429 | This user's account has been locked due to more than 3 failed attempts to Authorize
 200 | User has been authorized for access to the realm

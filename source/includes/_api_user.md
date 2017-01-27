@@ -122,8 +122,8 @@ notify_period           | array[string] | List of notification time periods, in 
 notify_rule             | array[string] | List of notification rules, in the form: id-type-delay (e.g. one-email-0)
 is_branded              | int           | Is the user associated with an account that currently has branding enabled
 active_brand_subdomain  | string        | If the user is associated with an account that has brandinge enabled, this will have that brand's subdomain if one exists
-account_map_lines       | ???           | 
-access_period           | ???           | 
+account_map_lines       | ???           |
+access_period           | ???           |
 is_terms_noncompliant   | int           | True if user has not accepted terms of service
 
 ### UserJson Attributes
@@ -140,7 +140,7 @@ show_AMPM               | boolean       | Show times with AM/PM
 milliseconds_display    | boolean       | Show time with milliseconds
 layout_rotation_seconds | int           | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur.
 motion_boxes            | boolean       | Determines if motion boxes should be shown
-notify_levels           | array[int]    | 
+notify_levels           | array[int]    |
 
 
 <!--===================================================================-->
@@ -193,7 +193,13 @@ Parameter         | Data Type   | Description
 ---------         | ----------- | -----------   
 **first_name**    | string      | First Name    
 **last_name**     | string      | Last Name     
-**email**         | string      | Email Address 
+**email**         | string      | Email Address
+**sms_phone**     | string  | Optional\* <br/>Phone number to be used for SMS messaging
+
+
+\* When TFA authentication scheme is used, and authorization code delivery via SMS at first user's log in is required, the user's SMS phone number must be specified at this time.
+
+
 
 <!--
 Parameter         | Data Type   | Description   | Is Required
@@ -211,7 +217,7 @@ state         | string  | State |
 country       | string  | Country |
 postal_code   | string  | Postal Code |
 json          | string  | JSON formatted data representing various user settings. |
-is_staff              | int     | 1 or 0 indicating the user has Staff permission. Only Super Users can set this. | 
+is_staff              | int     | 1 or 0 indicating the user has Staff permission. Only Super Users can set this. |
 is_superuser          | int     | 1 or 0 indicating the user has Super User permission. Only Super Users can set this. |
 is_account_superuser  | int     | 1 or 0 indicating the user as Account Super User permission. Only Super Users and Account Super Users can set this. |
 is_layout_admin       | int     | 1 or 0 indicating whether the user is a layout admin or not. |
