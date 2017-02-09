@@ -170,20 +170,20 @@ curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_
   }
 ```
 
-Returns user object by id. Not passing an id will return the current authorized user.
+Returns bridge object by id.
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Bridge Id
+Parameter     | Data Type   | Description | Is Required
+---------     | ----------- | ----------- | -----------
+**id**        | string      | Bridge Id   | true
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -212,8 +212,8 @@ Adds a bridge to the Eagle Eye Video Bank
 
 `PUT https://login.eagleeyenetworks.com/g/device`
 
-Parameter | Data Type     | Description 
---------- | -----------   | ----------- 
+Parameter | Data Type     | Description
+--------- | -----------   | -----------
 name      | string        | Bridge Name
 connectID | string        | Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.
 
@@ -226,7 +226,7 @@ id              | string      | Unique identifier for the device
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -276,7 +276,7 @@ id              | string      | Unique identifier for the device
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -304,7 +304,7 @@ Parameter     | Data Type   | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -478,7 +478,7 @@ Array Index | Attribute       | Data Type
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
