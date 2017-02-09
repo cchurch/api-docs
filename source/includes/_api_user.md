@@ -81,11 +81,11 @@ If a user isn't requesting their own user record, these apis requires SuperUser 
 ### User Attributes
 
 Parameter               | Data Type     | Description
----------               | -----------   | -----------
+---------               | ---------     | -----------
 id                      | string        | Unique identifier for Authorized User
 first_name              | string        | First name of Authorized User
 last_name               | string        | Last name of Authorized User
-email                   | string        | Email of Authorized User (* this email must only contain ASCII characters)
+email                   | string        | Email of Authorized User (email must only contain ASCII characters)
 owner_account_id        | string        | Unique identifier of user's Account
 active_account_id       | string        | Unique identifier of user's active Account
 uid                     | string        | UID
@@ -101,7 +101,7 @@ is_live_video           | int           | Is the user authorized to access Live 
 is_device_admin         | int           | Is the user a Device Admin
 is_export_video         | int           | Is the user authorized to Export Video
 is_recorded_video       | int           | Is the user authorized to view Recorded Video
-street                  | array[string] | Street Address as array [address line 1, address line 2, ...])
+street                  | array[string] | Array of strings containing Street Addresses [address line 1, address line 2, ...]
 city                    | string        | City
 state                   | string        | State
 country                 | string        | Country
@@ -274,7 +274,7 @@ phone                   | string        | Phone Number
 mobile_phone            | string        | Mobile Phone Number
 uid                     | string        | An identifier of the user. Only Super Users can set this.
 owner_account_id        | string        | ID of owner account. Defaults to account of the user creating it. Must be an account the user has access to. For SuperUsers, it can be any account, for Account SuperUsers, it can be theirs or a child account.
-street                  | string        | Street Address
+street                  | array[string] | Array of strings containing Street Addresses [address line 1, address line 2, ...]
 city                    | string        | City
 state                   | string        | State
 country                 | string        | Country

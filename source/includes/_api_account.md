@@ -136,59 +136,58 @@ The account service allows managing accounts by superusers and account_superuser
 <!--Need to update the recording and search sections-->
 ### Account Attributes
 
-Parameter  | Data Type     | Description | Editable | Required
------------- | ----------- | -------- | --------  | ---------
-id 						| string 		| Unique identifier for the Account |false | GET, POST, DELETE
-name 					| string 		| Name of the account | true | PUT
-owner_account_id 		| string 		| Id of parent account | false |
-contact_first_name 		| string 		| First name of primary contact for account | true | PUT
-contact_last_name  		| string 		| Last name of primary contact for account | true | PUT
-contact_email 			| string 		| Email of primary contact for account | true |
-contact_street 			| array[string] | Array of strings representing 1 or more parts of a street address of primary contact for account | true |
-contact_city 			| string 		| City of primary contact for account | true |
-contact_state 			| string 		| State/province of primary contact for account | true |
-contact_postal_code 	| string 		| Zip/postal code of primary contact for account | true |
-contact_country 		| string 		| Country of primary contact for account | true |
-timezone 				| string 		| ['US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Pacific' or 'US/Eastern' or 'US/Mountain' or 'US/Hawaii' or 'UTC']: Timezone of the account. Defaults to US/Pacific. | true |
-utc_offset 				| int 			| Signed integer offset in seconds of the timezone from UTC | false |
-access_restriction 		| array[string] | ['enable_mobile' or 'enable_ip_restrictions']: Each entry in the list contains a restriction. Possible values: 'enable_mobile' = If present this account can has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified. | false |
-allowable_ip_address_range | array[string] | Each entry in the list specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied. | false |
-session_duration 		| int 			| session duration in minutes. Session duration of 0 means 'stay logged in forever' | true|
-holiday 				| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD | true |
-work_days 				| string 		| String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.| true |
-work_hours 				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time. The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.| true |
-alert_mode 				| array[string] | List of possible alert modes as defined for this account.| true |
-active_alert_mode 		| string 		| Must be blank or one of the values defined in alert_mode list.| true |
-default_colo  			| string 		| Name of the colo in which this account data for this account will be stored by default.| falae |
-default_camera_passwords| string 		| Comma-delimited string of default camera passwords | true |
-camera_shares 			| array[array[string]]) | Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses. First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the 'm' action. Example: [['m', '12345678', ['test@testing.com','test2@testing.com]]] | true |
-is_master 				| int 			| ['0' or '1']: Indicates whether the account is a Master account (1) or not (0) | false |
-is_active 				| int 			| ['0' or '1']: Indicates whether the account is Active (1) or not (0)   | false |
-is_inactive 			| int 			| ['0' or '1']: Indicates whether the account is inactive (1) or not (0) | true |
-is_suspended 			| int 			| ['0' or '1']: Indicates whether the account is Suspended (1) or not (0) | true |
-product_edition 		| string 		| The product edition the account is using | false |
-camera_quantity 		| int 			| The total number of cameras the account is allowed to use, | false |
-is_custom_brand_allowed | int 			| ['0' or '1']: Indicates whether the account is allowed to have branding (1) or not (0) | true |
-is_custom_brand 		| int 			| ['0' or '1']: Indicates whether the account has branding enabled (1) or not (0)  | true |
-brand_logo_small 		| string 		| Base64 encoded image for the branded small logo | true |
-brand_logo_large 		| string 		| Base64 encoded image for the branded large logo | true |
-brand_subdomain 		| string 		| Sub domain for the branded url | true |
-brand_corp_url 			| string 		| Corporate web site url | true |
-brand_name 				| string 		| Branded company name | true |
-brand_saml_publickey_cert | string      | Public Certificate that Eagle Eye Networks will use to decrypt the SAML for SSO | true |
-brand_saml_nameid_path | string      | The path within the SAML xml to find the users email address | true |
-is_without_initial_user | string | desiginates an account at creation to not have a contact user created automatically | true |
-customer_id | string | an arbitrary id assigned to a sub account by a master | true |
-is_master_video_disabled_allowed | int | 1 or 0 designating whether or not a sub account can block video access to reseller | true |
-is_master_video_disabled | int | 1 or 0 designating whether or not video access is blocked to reseller | true |
-is_contract_recording | int | 1 or 0 designating if the account is of type contract_recording | true |
-is_advanced_disabled | int | 1 or 0 set by reseller disabling advanced functionality | true |
-is_billing_disabled | int | 1 or 0 set by reseller disables setting settings in a sub that affect billing | true |
-is_add_delete_disabled | int | 1 or 0 set by reseller disables adding or deleting devices | true|
-is_disable_all_settings | int | 1 or 0 set by reseller disables all device and most account settings | true |
-first_responders | array[array[string]] | array[[responder_email,responder_first_name,responder_last_name,responder_organization]] | true |
-responder_cameras | array[esn] | array of camera esns that are shared to first responders | true |
-inactive_session_timeout | int | time without activity until the web session expires | true |
+Parameter                      | Data Type            | Description                                                                 | Editable | Required
+---------                      | ---------            | -----------                                                                 | -------- | --------
+id 						                 | string 		          | Unique identifier for the account.                                          | false    | GET, POST, DELETE
+name 					                 | string 		          | Name of the account.                                                        | true     | PUT
+owner_account_id 		           | string 		          | Id of the parent account.                                                   | false    |
+contact_first_name 		         | string 		          | First name of primary contact for account.                                  | true     | PUT
+contact_last_name  		         | string 		          | Last name of primary contact for account.                                   | true     | PUT
+contact_email 			           | string 		          | Email of primary contact for account.                                       | true     |
+contact_street 			           | array[string]        | Array of strings containing street addresses of the primary contact for account [address line 1, address line 2, ...] | true      |
+contact_city 			             | string 		          | City of primary contact for account.                                        | true     |
+contact_state 			           | string 		          | State/province of primary contact for account.                              | true     |
+contact_postal_code 	         | string 		          | Zip/postal code of primary contact for account.                             | true     |
+contact_country 		           | string 		          | Country of primary contact for account.                                     | true     |
+timezone 				               | string 		          | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'.                                                                                        | true     |
+utc_offset 				             | int 			            | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field. | false |
+access_restriction 		         | array[string]        | List of access restrictions. Possible values: 'enable_mobile' = If present this account has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified. | false |
+allowable_ip_address_range     | array[string]        | Each entry in the list specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied.               | false     |
+session_duration 		           | int 			            | Session duration in minutes. Session duration of 0 means 'stay logged in forever'. | true      |
+holiday 				               | array[string]        | List of dates that during which holidays are observed. Format for dates is YYYYMMDD. | true      |
+work_days 				             | string 		          | String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.                                       | true      |
+work_hours 				             | array[string]        | Two entries. Each entry containing a time expressed in local time. The first entry in the list is the work day start time. The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700. | true      |
+alert_mode 				             | array[string]        | List of possible alert modes as defined for this account. Accepts an array of any number of strings of varying length. This controls what values are able to be chosen for the 'active_alert_mode field'.                                                                | true      |
+active_alert_mode 		         | string 		          | A string chosen from values in the account 'alert_mode' array. Must be blank or one of the values defined in the alert_mode list. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account 'active_alert_mode' is also set to that same Alert Mode string defined for that motion alert.                                                                                                      | true      |
+default_camera_passwords       | string 		          | Comma-delimited string of default camera passwords.                         | true      |
+camera_shares 			           | array[array[string]] | Array of arrays, with each sub array representing a camera to be shared to 1 or more recipients. First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,Account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His Account', joe2@dd.com,That Account']]. | true      |
+is_master 				             | int 			            | ['0' or '1']: Indicates whether the account is a Master account (1) or not (0). | false |
+is_active 				             | int 			            | ['0' or '1']: Indicates whether the account is Active (1) or not (0).       | false     |
+is_inactive 			             | int 			            | ['0' or '1']: Indicates whether the account is Inactive (1) or not (0).     | true      |
+is_suspended 			             | int 		            	| ['0' or '1']: Indicates whether the account is Suspended (1) or not (0).    | true      |
+product_edition 		           | string 		          | The product edition the account is using.                                   | false     |
+camera_quantity 		           | int 			            | The total number of cameras the account is allowed to use.                  | false     |
+is_custom_brand_allowed        | int 			            | ['0' or '1']: Indicates whether the account is allowed to have branding (1) or not (0). | true      |
+is_custom_brand 		           | int 			            | ['0' or '1']: Indicates whether the account has branding enabled (1) or not (0). | true      |
+brand_logo_small 		           | string 		          | Base64 encoded image for the branded small logo (PNG, 160x52, transparent background). | true      |
+brand_logo_large 		           | string 		          | Base64 encoded image for the branded large logo (PNG, 460x184, white background). | true      |
+brand_subdomain 		           | string 		          | Sub domain for the branded url.                                             | true      |
+brand_corp_url 			           | string 		          | Corporate web site url.                                                     | true      |
+brand_name 				             | string 		          | Branded company name.                                                       | true      |
+brand_saml_publickey_cert      | string               | Public Certificate that Eagle Eye Networks will use to decrypt the SAML for SSO. | true      |
+brand_saml_nameid_path         | string               | The path within the SAML xml to find the users email address.               | true      |
+is_without_initial_user        | string               | desiginates an account at creation to not have a contact user created automatically. | true      |
+customer_id                    | string               | an arbitrary id assigned to a sub account by a master.                      | true      |
+is_master_video_disabled_allowed | int                | 1 or 0 designating whether or not a sub account can block video access to reseller. | true      |
+is_master_video_disabled       | int                  | 1 or 0 designating whether or not video access is blocked to reseller.      | true      |
+is_contract_recording          | int                  | 1 or 0 designating if the account is of type contract_recording. Controls whether contract recording features are enabled for the users in this account on the front-end GUI.                                                                                         | true      |
+is_advanced_disabled           | int                  | 1 or 0 set by reseller disabling advanced functionality.                    | true      |
+is_billing_disabled            | int                  | 1 or 0 set by reseller disables editing settings in a sub account that affect billing. This controls whether users can change camera resolution/retention, add/delete cameras, etc.                                                                                      | true      |
+is_add_delete_disabled         | int                  | 1 or 0 set by reseller disables adding or deleting devices.                 | true      |
+is_disable_all_settings        | int                  | 1 or 0 set by reseller disables all device and most account settings. Disables bridge, camera and account settings. Does not affect editing users, layouts, or sharing.                                                                                                 | true      |
+first_responders               | array[array[string]] | Array of strings [[responder_email,responder_first_name,responder_last_name,responder_organization]]. | true      |
+responder_cameras              | array[string]        | Array of camera esns that are shared to first responders.                   | true      |
+inactive_session_timeout       | int                  | Allowed time period without activity before web session expires.            | true      |
 
 
 <!--===================================================================-->
@@ -244,29 +243,29 @@ Creates a new Account
 
 Parameter 				| Data Type   	| Description 	| Is Required
 --------- 				| ----------- 	| ----------- 	| -----------
-**name**  				| string  		| Name of Account	| true
+**name**  				| string  		| Name of the account.	| true
 owner_account_id  		| string      	| ID of parent account. If omitted, parent is set to the account of the creating user. |
-**contact_first_name**	| string      	| First name of primary contact for account | true
-**contact_last_name**	| string      	| Last name of primary contact for account | true
-**contact_email**		| string      	| Email of primary contact for account | true
-contact_street			| array[string] | Array of strings representing 1 or more parts of a street address of primary contact for account
+**contact_first_name**	| string      	| First name of primary contact for account. | true
+**contact_last_name**	| string      	| Last name of primary contact for account. | true
+**contact_email**		| string      	| Email of primary contact for account. | true
+contact_street			| array[string] | Array of strings containing street addresses of the primary contact for account [address line 1, address line 2, ...]
 contact_city			| string      	| City of primary contact for account.
 contact_state			| string      	| State/province of primary contact for account.
 contact_postal_code		| string      	| Zip/postal code of primary contact for account.
 contact_country			| string      	| Country of primary contact for account.
-timezone				| string, enum  | Timezone of Account. Defaults to US/Pacific. <br><br>enum: "US/Alaska", "US/Arizona", "US/Central", "US/Pacific", "US/Eastern", "US/Mountain", "US/Hawaii", "UTC"
+timezone				| string, enum  | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'.
 status					| array[string] | Account status. This can only be edited by superusers and account_superusers of the parent/owner account. 'realm_root' can only be set by superusers.
 access_restriction		| array[string] | Each entry in the list contains a restriction. Possible values: 'enable_mobile' = If present this account can has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified.
 allowable_ip_address_ranges | array[string] | Each entry in the list specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied.
-session_duration		| int      		| Session duration in minutes. Session duration of 0 means 'stay logged in forever'
-holiday					| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD
+session_duration		| int      		| Session duration in minutes. Session duration of 0 means 'stay logged in forever'.
+holiday					| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD.
 work_days				| array[string] | String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.
-work_hours				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time. The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
-alert_mode 				| array[string] | List of possible alert modes as defined for this account.
-active_alert_mode 		| string      	| Must be blank or one of the values defined in alert_mode list.
+work_hours				| array[string] | Two entries. Each entry containing a time expressed in local time. The first entry in the list is the work day start time. The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
+alert_mode 				| array[string] | List of possible alert modes as defined for this account. Accepts an array of any number of strings of varying length. This controls what values are able to be chosen for the 'active_alert_mode field'.
+active_alert_mode 		| string      	| A string chosen from values in the account 'alert_mode' array. Must be blank or one of the values defined in the alert_mode list. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account 'active_alert_mode' is also set to that same Alert Mode string defined for that motion alert.
 default_colo			| string      	| Name of the colo in which this account data for this account will be stored by default.
-default_camera_passwords| string      	| Comma-delimited string of default camera passwords
-is_without_initial_user	| int      		| Indicates whether you want to NOT create an initial user with the new account. Defaults to 0, meaning an initial user (with is_account_superuser=1) will be created using the info from “contact_first_name/contact_last_name/contact_email” arguments of this new account. If this is set to 1, NO initial user will be created.
+default_camera_passwords| string      	| Comma-delimited string of default camera passwords.
+is_without_initial_user	| int      		| Indicates whether you want to NOT create an initial user with the new account. Defaults to 0, meaning an initial user (with is_account_superuser=1). will be created using the info from “contact_first_name/contact_last_name/contact_email” arguments of this new account. If this is set to 1, NO initial user will be created.
 is_initial_user_not_admin| int      	| Indicates whether you want do NOT want the initial user to be an admin.
 
 ### Error Status Codes
@@ -305,7 +304,7 @@ name  					| string  		| Name of Account
 contact_first_name		| string      	| First name of primary contact for account
 contact_last_name		| string      	| Last name of primary contact for account
 contact_email			| string      	| Email of primary contact for account
-contact_street			| array[string] | Array of strings representing 1 or more parts of a street address of primary contact for account
+contact_street			| array[string] | Array of strings containing street addresses of the primary contact for account [address line 1, address line 2, ...]
 contact_city			| string      	| City of primary contact for account.
 contact_state			| string      	| State/province of primary contact for account.
 contact_postal_code		| string      	| Zip/postal code of primary contact for account.
@@ -317,12 +316,11 @@ allowable_ip_address_ranges | array[string] | Each entry in the list specifies o
 session_duration		| int      		| Session duration in minutes. Session duration of 0 means 'stay logged in forever'
 holiday					| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD
 work_days				| array[string] | String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.
-work_hours				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time. The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
-alert_mode 				| array[string] | List of possible alert modes as defined for this account.
-active_alert_mode 		| string      	| Must be blank or one of the values defined in alert_mode list.
-default_colo			| string      	| Name of the colo in which this account data for this account will be stored by default.
+work_hours				| array[string] | Two entries. Each entry containing a time expressed in local time. The first entry in the list is the work day start time. The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
+alert_mode 				| array[string] | List of possible alert modes as defined for this account. Accepts an array of any number of strings of varying length. This controls what values are able to be chosen for the 'active_alert_mode field'.
+active_alert_mode 		| string      	| A string chosen from values in the account 'alert_mode' array. Must be blank or one of the values defined in the alert_mode list. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account 'active_alert_mode' is also set to that same Alert Mode string defined for that motion alert.
 default_camera_passwords| string      	| Comma-delimited string of default camera passwords
-camera_shares 			| array[array[string]] | Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses. First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the 'm' action. Example: [['m', '12345678', ['test@testing.com','test2@testing.com]]]
+camera_shares 			| array[array[string]] | Array of arrays, with each sub array representing a camera to be shared to 1 or more recipients. First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,Account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His Account', joe2@dd.com,That Account']].
 is_revoke_admins		| int      		| Indicates whether you want to revoke all Admin permissions for the users in the account.
 is_custom_brand			| int      		| Indicates whether branding is enabled for the account
 brand_logo_small		| string      	| Base64 encoded image for the branded small logo
