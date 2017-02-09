@@ -140,29 +140,29 @@ Parameter  | Data Type     | Description | Editable | Required
 ------------ | ----------- | -------- | --------  | ---------
 id 						| string 		| Unique identifier for the Account |false | GET, POST, DELETE
 name 					| string 		| Name of the account | true | PUT
-owner_account_id 		| string 		| Id of parent account | false | 
+owner_account_id 		| string 		| Id of parent account | false |
 contact_first_name 		| string 		| First name of primary contact for account | true | PUT
 contact_last_name  		| string 		| Last name of primary contact for account | true | PUT
-contact_email 			| string 		| Email of primary contact for account | true | 
-contact_street 			| array[string] | Array of strings representing 1 or more parts of a street address of primary contact for account | true | 
-contact_city 			| string 		| City of primary contact for account | true | 
-contact_state 			| string 		| State/province of primary contact for account | true | 
-contact_postal_code 	| string 		| Zip/postal code of primary contact for account | true | 
-contact_country 		| string 		| Country of primary contact for account | true | 
-timezone 				| string 		| ['US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Pacific' or 'US/Eastern' or 'US/Mountain' or 'US/Hawaii' or 'UTC']: Timezone of the account. Defaults to US/Pacific. | true | 
-utc_offset 				| int 			| Signed integer offset in seconds of the timezone from UTC | false | 
+contact_email 			| string 		| Email of primary contact for account | true |
+contact_street 			| array[string] | Array of strings representing 1 or more parts of a street address of primary contact for account | true |
+contact_city 			| string 		| City of primary contact for account | true |
+contact_state 			| string 		| State/province of primary contact for account | true |
+contact_postal_code 	| string 		| Zip/postal code of primary contact for account | true |
+contact_country 		| string 		| Country of primary contact for account | true |
+timezone 				| string 		| ['US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Pacific' or 'US/Eastern' or 'US/Mountain' or 'US/Hawaii' or 'UTC']: Timezone of the account. Defaults to US/Pacific. | true |
+utc_offset 				| int 			| Signed integer offset in seconds of the timezone from UTC | false |
 access_restriction 		| array[string] | ['enable_mobile' or 'enable_ip_restrictions']: Each entry in the list contains a restriction. Possible values: 'enable_mobile' = If present this account can has access to mobile clients. 'enable_ip_restrictions' = if present, and if allowable_ip_address_ranges has been specified, limits logins to the address ranges specified. | false |
 allowable_ip_address_range | array[string] | Each entry in the list specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 i s implied. | false |
 session_duration 		| int 			| session duration in minutes. Session duration of 0 means 'stay logged in forever' | true|
-holiday 				| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD | true | 
-work_days 				| string 		| String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.| true | 
-work_hours 				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time . The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.| true | 
-alert_mode 				| array[string] | List of possible alert modes as defined for this account.| true | 
-active_alert_mode 		| string 		| Must be blank or one of the values defined in alert_mode list.| true | 
-default_colo  			| string 		| Name of the colo in which this account data for this account will be stored by default.| falae | 
-default_camera_passwords| string 		| Comma-delimited string of default camera passwords | true | 
-camera_shares 			| array[array[string]]) | Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses. First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the 'm' action. Example: [['m', '12345678', ['test@testing.com','test2@testing.com]]] | true | 
-is_master 				| int 			| ['0' or '1']: Indicates whether the account is a Master account (1) or not (0) | false | 
+holiday 				| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD | true |
+work_days 				| string 		| String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.| true |
+work_hours 				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time. The second entry in the list is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.| true |
+alert_mode 				| array[string] | List of possible alert modes as defined for this account.| true |
+active_alert_mode 		| string 		| Must be blank or one of the values defined in alert_mode list.| true |
+default_colo  			| string 		| Name of the colo in which this account data for this account will be stored by default.| falae |
+default_camera_passwords| string 		| Comma-delimited string of default camera passwords | true |
+camera_shares 			| array[array[string]]) | Array of arrays, with each sub array representing a camera to be shared to 1 or more email addresses. First element of sub array is action, with 'm' for add/update, and 'd' for delete. Second element of sub array is camera ID. Third element of sub array is an array of email addresses, but only applies to the 'm' action. Example: [['m', '12345678', ['test@testing.com','test2@testing.com]]] | true |
+is_master 				| int 			| ['0' or '1']: Indicates whether the account is a Master account (1) or not (0) | false |
 is_active 				| int 			| ['0' or '1']: Indicates whether the account is Active (1) or not (0)   | false |
 is_inactive 			| int 			| ['0' or '1']: Indicates whether the account is inactive (1) or not (0) | true |
 is_suspended 			| int 			| ['0' or '1']: Indicates whether the account is Suspended (1) or not (0) | true |
@@ -213,7 +213,7 @@ Parameter 	| Data Type   | Description | Is Required
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -245,7 +245,7 @@ Creates a new Account
 Parameter 				| Data Type   	| Description 	| Is Required
 --------- 				| ----------- 	| ----------- 	| -----------
 **name**  				| string  		| Name of Account	| true
-owner_account_id  		| string      	| ID of parent account. If omitted, parent is set to the account of the creating user. | 
+owner_account_id  		| string      	| ID of parent account. If omitted, parent is set to the account of the creating user. |
 **contact_first_name**	| string      	| First name of primary contact for account | true
 **contact_last_name**	| string      	| Last name of primary contact for account | true
 **contact_email**		| string      	| Email of primary contact for account | true
@@ -261,13 +261,19 @@ allowable_ip_address_ranges | array[string] | Each entry in the list specifies o
 session_duration		| int      		| Session duration in minutes. Session duration of 0 means 'stay logged in forever'
 holiday					| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD
 work_days				| array[string] | String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.
-work_hours				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time . The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
+work_hours				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time. The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
 alert_mode 				| array[string] | List of possible alert modes as defined for this account.
 active_alert_mode 		| string      	| Must be blank or one of the values defined in alert_mode list.
 default_colo			| string      	| Name of the colo in which this account data for this account will be stored by default.
 default_camera_passwords| string      	| Comma-delimited string of default camera passwords
 is_without_initial_user	| int      		| Indicates whether you want to NOT create an initial user with the new account. Defaults to 0, meaning an initial user (with is_account_superuser=1) will be created using the info from “contact_first_name/contact_last_name/contact_email” arguments of this new account. If this is set to 1, NO initial user will be created.
 is_initial_user_not_admin| int      	| Indicates whether you want do NOT want the initial user to be an admin.
+
+### Error Status Codes
+
+HTTP Status Code    | Data Type   
+------------------- | -----------
+409	| Another account with the supplied contact email address already exists
 
 <!--===================================================================-->
 ## Update Account
@@ -311,7 +317,7 @@ allowable_ip_address_ranges | array[string] | Each entry in the list specifies o
 session_duration		| int      		| Session duration in minutes. Session duration of 0 means 'stay logged in forever'
 holiday					| array[string] | List of dates that during which holidays are observed. Format for dates is YYYYMMDD
 work_days				| array[string] | String of length 7. Each position in the string corresponds to a day of the week. Monday is position 0, Tuesday is position 1, etc... Each character in the string can have a value of 1 or 0. 1 means that this day is a work day.
-work_hours				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time . The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
+work_hours				| array[string] | Two entries. Each entry contains a time expressed in local time. The first entry in the list is the work day start time. The second entry in the ist is the stop time. Times are represented using a 24 hour clock and are formatted as HHMM. For example, 8AM would be 0800 and 5PM would be 1700.
 alert_mode 				| array[string] | List of possible alert modes as defined for this account.
 active_alert_mode 		| string      	| Must be blank or one of the values defined in alert_mode list.
 default_colo			| string      	| Name of the colo in which this account data for this account will be stored by default.
@@ -350,7 +356,7 @@ Parameter     | Data Type   | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200	| Delete succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -410,7 +416,7 @@ Array Index		| Attribute   			| Data Type  	| Description
 2 				| camera_online_count	| int 			| Number of cameras currently online in the account
 3				| camera_count 			| int 			| Number of cameras currently in the account
 4 				| user_count 			| int 			| Number of users currently in the account
-5 				| is_suspended 			| int 			| Indicates the account is Suspended (1) or not (0) 
+5 				| is_suspended 			| int 			| Indicates the account is Suspended (1) or not (0)
 6 				| is_inactive 			| int 			| Indicates the account is Inactive (1) or not (0)
 7 				| is_active 			| int 			| Indicates the account is Active (1) or not (0)
 8 				| product_edition 		| string 		| Product edition in use by the account
@@ -429,7 +435,7 @@ Array Index		| Attribute   			| Data Type  	| Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie

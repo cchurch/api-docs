@@ -4,7 +4,7 @@
 ## Overview
 This section is for creating new accounts and the steps to recover account. If you are creating sub-accounts tied to your current account refer to [Account](#account)
 
-## Create Account 
+## Create Account
 
 > Request
 
@@ -32,14 +32,14 @@ is_api_acces_needed | boolean | Grant api access to this new account
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 406	| Realm is invalid due to not being a root realm
 409	| Email address has already been registered for the specified realm
 202	| Account has been created and a confirmation email has been sent to the provided email address
 
 <!--===================================================================-->
-## Validate Account 
+## Validate Account
 
 > Request
 
@@ -75,7 +75,7 @@ user_id 	| string 		| Unique identifier for validated user
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Information supplied could not be verified
 402	| Account is suspended
@@ -93,7 +93,7 @@ HTTP Status Code    | Data Type
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/forgot_password --data "email=[EMAIL]"
 ```
 
-Password recovery is a multi-step process. Step one requests a reset email be sent to the email address of a registered user. Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience). Step three uses allows the user to change the password. The results of step three is that a user session is created for the user.
+Password recovery is a multi-step process. Step one requests a reset email be sent to the email address of a registered user. Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience). Step three allows the user to change the password. The result of step three is that a user session is created for the user.
 
 ### HTTP Request
 
@@ -107,7 +107,7 @@ email   	| string      | Email Address 	| POST
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Information supplied could not be verified
 402	| Account is suspended
@@ -140,7 +140,7 @@ token   	| string      | Password reset token provided in email | POST
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Token not valid or not found
 402	| Account is suspended
@@ -187,7 +187,7 @@ user_id 	| string 		| Unique identifier for validated user
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Token not valid or not found
 402	| Account is suspended
@@ -219,7 +219,7 @@ realm  			| string      | realm (defaults to current user's realm)
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 404	| Account with this email address and realm could not be found
 402	| Account is suspended
@@ -251,7 +251,7 @@ realm  			| string      | realm (defaults to current user's realm)
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 404	| User with this email address and realm could not be found
 402	| Account is suspended
@@ -267,7 +267,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email --data "password=[EMAIL]&current_password=[CURRENT_PASSWORD]"
+curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/change_password --data "password=[PASSWORD]&current_password=[CURRENT_PASSWORD]"
 ```
 
 > Response Json
@@ -287,14 +287,14 @@ This allows a user to change their password directly while authenticated, and al
 
 Parameter  		| Data Type   | Description   	| Required For
 ---------  		| ----------- | -----------   	| -----------
-id   			| string      | ID of the user having their password changed. Optional. Defaults to the ID of the authenticated user. If empty or equal to authenticated user, then "current_password" becomes required. | 
+id   			| string      | ID of the user having their password changed. Optional. Defaults to the ID of the authenticated user. If empty or equal to authenticated user, then "current_password" becomes required. |
 password   	| string      | New password | POST
-current_password| string      | Current password of the user. Optional. If "id" argument is empty, or is equal to the authenticated user's id, then this is required. | 
+current_password| string      | Current password of the user. Optional. If "id" argument is empty, or is equal to the authenticated user's id, then this is required. |
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
 404	| User with the "id" provided cannot be found
@@ -323,7 +323,7 @@ account_id   	| string      | ID of the account to login to. Optional. Defaults 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
 404	| Account with the "account_id" provided cannot be found
@@ -347,8 +347,8 @@ This is done through the standard SAML (Security Assertion Markup Language) and 
   - The **brand_saml_namedid_path** is the xml xpath to the node that contains the email address of the user being logged in.
 
 Once the identity provider's account has been registered for SSO, then the identity provider can validate their users and then make a single sign on request with the users email address and the return link.
-This 64 bit encrypted message will be extracted from teh header to be decoded and verified using the saml public key.
-Then using the saml named id path, the user's email will be extracted and an auth_key will be provide for that user.
+This 64 bit encrypted message will be extracted from the header to be decoded and verified using the saml public key.
+Then using the saml named id path, the user's email will be extracted and an auth_key will be provided for that user.
 
 ### HTTP Request
 
@@ -382,5 +382,5 @@ Log out user and invalidate HTTP session cookie
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 204 | User has been logged out
