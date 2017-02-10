@@ -261,7 +261,7 @@ Parameter                 | Data Type     | Description   | Is Required
 ---------                 | -----------   | -----------   | -----------
 **id**                    | string        | Bridge Id     | true
 name                      | string        | Bridge Name
-timezone                  | strings       | If unspecified, this will default to the camera’s Bridge timezone
+timezone                  | string        | Timezone of the bridge. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
 tags                      | array[string] | Array of strings, which each string representing a "tag"
 settings                  | json          | Misc Settings
 camera_parameters_add     | json          | JSON object of camera parameters/settings to add/update
