@@ -2,7 +2,7 @@
 
 <!--===================================================================-->
 ## Overview
-This section is for creating new accounts and the steps to recover account. If you are creating sub-accounts tied to your current account refer to [Account](#account)
+This section is for creating new accounts and the steps to recover an account. If you are creating sub-accounts tied to your current account refer to [Account](#account)
 
 ## Create Account
 
@@ -12,27 +12,27 @@ This section is for creating new accounts and the steps to recover account. If y
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/create_account --data "email=[EMAIL]&password=[PASSWORD]"
 ```
 
-This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link the user must click to activate the account. Account cannot be used until it is activated.
+This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account id and activation token) the user must click to activate the account. Account cannot be used until it is activated.
 
 ### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/aaa/create_account`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-email       	| string      | Email Address 	| POST
-password    	| string      | Password 		| POST
-name   			| string      | Account name
-realm  			| string      | realm (defaults to current user's realm)
-first_name 		| string      | User first name
-last_name  		| string      | User last name
-timezone   		| string      | Timezone name
-is_api_acces_needed | boolean | Grant api access to this new account
+Parameter  		       | Data Type   | Description   	| Required For
+---------  		       | ---------   | -----------   	| ------------
+email       	       | string      | Email Address 	| POST
+password    	       | string      | Password 		  | POST
+name   			         | string      | Account name
+realm  			         | string      | realm (defaults to current user's realm)
+first_name 		       | string      | User first name
+last_name  		       | string      | User last name
+timezone   		       | string      | Timezone name
+is_api_access_needed | boolean     | Grant API access to this new account
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400	| Unexpected or non-identifiable arguments are supplied
 406	| Realm is invalid due to not being a root realm
 409	| Email address has already been registered for the specified realm
@@ -61,21 +61,21 @@ This is used to verify the email address supplied when the account is created. W
 
 `POST https://login.eagleeyenetworks.com/g/aaa/validate_account`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-id   		| string      | Account Id 		| POST
-token   	| string      | Account validation token | POST
+Parameter  	| Data Type   | Description   	         | Required For
+---------   | ---------   | -----------   	         | ------------
+id   		    | string      | Account Id 		           | POST
+token   	  | string      | Account validation token | POST
 
 ### HTTP Json Attributes
 
-Parameter 	| Data Type     | Description
----------  	| -----------   | -----------
-user_id 	| string 		| Unique identifier for validated user
+Parameter 	| Data Type   | Description
+---------  	| ---------   | -----------
+user_id 	  | string 		  | Unique identifier for validated user
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Information supplied could not be verified
 402	| Account is suspended
@@ -93,7 +93,7 @@ HTTP Status Code    | Data Type
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/forgot_password --data "email=[EMAIL]"
 ```
 
-Password recovery is a multi-step process. Step one requests a reset email be sent to the email address of a registered user. Step two validates that the reset token is valid (This step is optional but is provided to allow for a friendlier user experience). Step three allows the user to change the password. The result of step three is that a user session is created for the user.
+Password recovery is a multi-step process. Step one requests a reset email be sent to the email address of a registered user. Step two verifies whether the reset token is valid (This step is optional but is provided to allow for a friendlier user experience). Step three allows the user to change the password. The result of step three is that a user session is created for the user.
 
 ### HTTP Request
 
@@ -101,13 +101,13 @@ Password recovery is a multi-step process. Step one requests a reset email be se
 `POST https://login.eagleeyenetworks.com/g/aaa/forgot_password`
 
 Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-email   	| string      | Email Address 	| POST
+---------  		| ---------   | -----------   	| ------------
+email   	    | string      | Email Address 	| POST
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Information supplied could not be verified
 402	| Account is suspended
@@ -133,14 +133,14 @@ This is step two of the password recover/reset process. It verifies that the sup
 
 `POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_token`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-token   	| string      | Password reset token provided in email | POST
+Parameter  		| Data Type   | Description   	                       | Required For
+---------  		| ---------   | -----------   	                       | ------------
+token   	    | string      | Password reset token provided in email | POST
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Token not valid or not found
 402	| Account is suspended
@@ -172,22 +172,22 @@ This is step three of the password recover/reset process. It both verifies that 
 
 `POST https://login.eagleeyenetworks.com/g/aaa/reset_password`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-token   	| string      | Password reset token provided in email | POST
-password   		| string      | New password | POST
-accepted_terms_of_service_urls   		| string      | New terms of service acceptance url
+Parameter  		                 | Data Type   | Description   	                        | Required For
+---------  		                 | ---------   | -----------                          	| ------------
+token   	                     | string      | Password reset token provided in email | POST
+password   		                 | string      | New password                           | POST
+accepted_terms_of_service_urls | string      | New terms of service acceptance url
 
 ### HTTP Json Attributes
 
 Parameter 	| Data Type     | Description
----------  	| -----------   | -----------
-user_id 	| string 		| Unique identifier for validated user
+---------  	| ---------     | -----------
+user_id 	  | string 		    | Unique identifier for validated user
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400 | Unexpected or non-identifiable arguments are supplied
 406	| Token not valid or not found
 402	| Account is suspended
@@ -211,15 +211,15 @@ This is used by users who have registered for an account, but never confirmed th
 
 `POST https://login.eagleeyenetworks.com/g/aaa/resend_registration_email`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-email   	| string      | Email address of the account contact for a pending account | POST
-realm  			| string      | realm (defaults to current user's realm)
+Parameter  		| Data Type   | Description   	                                           | Required For
+---------  		| ---------   | -----------   	                                           | ------------
+email   	    | string      | Email address of the account contact for a pending account | POST
+realm  			  | string      | realm (defaults to current user's realm)
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400 | Unexpected or non-identifiable arguments are supplied
 404	| Account with this email address and realm could not be found
 402	| Account is suspended
@@ -243,15 +243,15 @@ This is used by users who have had a user account created for them, but they nev
 
 `POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-email   	| string      | Email address of the new user | POST
-realm  			| string      | realm (defaults to current user's realm)
+Parameter  		| Data Type   | Description   	              | Required For
+---------  		| ---------   | -----------   	              | ------------
+email   	    | string      | Email address of the new user | POST
+realm  			  | string      | realm (defaults to current user's realm)
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 400 | Unexpected or non-identifiable arguments are supplied
 404	| User with this email address and realm could not be found
 402	| Account is suspended
@@ -285,16 +285,16 @@ This allows a user to change their password directly while authenticated, and al
 
 `POST https://login.eagleeyenetworks.com/g/aaa/change_password`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-id   			| string      | ID of the user having their password changed. Optional. Defaults to the ID of the authenticated user. If empty or equal to authenticated user, then "current_password" becomes required. |
-password   	| string      | New password | POST
-current_password| string      | Current password of the user. Optional. If "id" argument is empty, or is equal to the authenticated user's id, then this is required. |
+Parameter  		   | Data Type   | Description   	| Required For
+---------  		   | ---------   | -----------   	| ------------
+id   			       | string      | ID of the user having their password changed. Optional. Defaults to the ID of the authenticated user. If empty or equal to authenticated user, then "current_password" becomes required
+password   	     | string      | New password   | POST
+current_password | string      | Current password of the user. Optional. If "id" argument is empty, or is equal to the authenticated user's id, then this is required
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
 404	| User with the "id" provided cannot be found
@@ -316,14 +316,14 @@ This allows a user to "log in" to another account that the user has access to (s
 
 `POST https://login.eagleeyenetworks.com/g/aaa/switch_account`
 
-Parameter  		| Data Type   | Description   	| Required For
----------  		| ----------- | -----------   	| -----------
-account_id   	| string      | ID of the account to login to. Optional. Defaults to the account ID that the user belongs to. | POST
+Parameter  		| Data Type   | Description   	                                                                             | Required For
+---------  		| ---------   | -----------   	                                                                             | ------------
+account_id   	| string      | ID of the account to login to. Optional. Defaults to the account ID that the user belongs to | POST
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
 404	| Account with the "account_id" provided cannot be found
@@ -358,7 +358,7 @@ Then using the saml named id path, the user's email will be extracted and an aut
 ### Error Status Codes
 
 HTTP Status Code    | Data Type
-------------------- | -----------
+----------------    | ---------
 401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
 404	| Account with the "account_id" provided cannot be found
@@ -382,5 +382,5 @@ Log out user and invalidate HTTP session cookie
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | -----------
+----------------    | ---------
 204 | User has been logged out
