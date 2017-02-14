@@ -20,10 +20,10 @@ This is used to create a new account and the super user for the account. As a pa
 
 Parameter  		       | Data Type   | Description   	| Required For
 ---------  		       | ---------   | -----------   	| ------------
-email       	       | string      | Email Address 	| POST
+email       	       | string      | Email address 	| POST
 password    	       | string      | Password 		  | POST
 name   			         | string      | Account name
-realm  			         | string      | realm (defaults to current user's realm)
+realm  			         | string      | Realm (defaults to current user's realm)
 first_name 		       | string      | User first name
 last_name  		       | string      | User last name
 timezone   		       | string      | Timezone name
@@ -102,7 +102,7 @@ Password recovery is a multi-step process. Step one requests a reset email be se
 
 Parameter  		| Data Type   | Description   	| Required For
 ---------  		| ---------   | -----------   	| ------------
-email   	    | string      | Email Address 	| POST
+email   	    | string      | Email address 	| POST
 
 ### Error Status Codes
 
