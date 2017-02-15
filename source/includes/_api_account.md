@@ -151,7 +151,7 @@ contact_postal_code 	                | string 		           | Zip/postal code of 
 contact_country 		                  | string 		           | Country of primary contact for account                                                           | true     |
 contact_phone                         | string               | Phone number of primary contact for account                                                      | true     |
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account                                               | true     |
-timezone 				                      | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'                                                                                                                  | true     |
+timezone 				                      | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'                                                                                                     | true     |
 status					                      | array[string]        | Account status. This can only be edited by superusers and account superusers of the parent/owner account. Values: 'active', 'inactive', 'pending_validation', 'suspended'. 'active' mean account is in a normal working state. 'Inactive' means logins are not allowed. 'Suspended' means the account is effectively no longer operational ('pending_validation' is the default state after first creation, before the user has validated the account)                                  | true     |
 utc_offset 				                    | int 			           | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                                           | false    |
 access_restriction 		                | array[string]        | Array of strings containing access restrictions. Possible values: 'enable_mobile' = If present this account has access to mobile clients. 'enable_ip_restrictions' = if present, and if 'allowable_ip_address_range' has been specified, limits logins to the address ranges specified    | false    |
@@ -164,11 +164,11 @@ alert_mode 				                    | array[string]        | Array of strings con
 active_alert_mode 		                | string               | A string chosen from values in the account 'alert_mode' array. Must be blank or one of the values defined in the alert_mode array. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account 'active_alert_mode' is also set to that same alert mode string defined for that motion alert                                                                                                                            | true     |
 default_camera_passwords              | string               | Comma-delimited string of default camera passwords                                               | true     |
 camera_shares 			                  | array[array[string]] | Array of arrays, with each sub array representing a camera to be shared to 1 or more recipients. First element of sub array is action, with 'm' for add/update. Second element of sub array is camera id. Third element of sub array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His account', joe2@dd.com,That account']]                          | true     |
-is_revoke_admins		                  | int      		         | Indicates whether to revoke all admin permissions for the users in the account (1) or not (0). This field doesn't save anything on the account itself. It will revoke admin privileges of any admins in the account                                                                             | true     |
+is_revoke_admins		                  | int      		         | Indicates whether to revoke all admin permissions for the users in the account (1) or not (0). This field doesn't save anything on the account itself. It will revoke admin privileges of any admins in the account                                                                    | true     |
 is_master 				                    | int 			           | Indicates whether the account is a master account (1) or not (0)                                 | false    |
-is_active 				                    | int 			           | Indicates whether the account is Active (1) or not (0)                                           | false    |
-is_inactive 			                    | int 			           | Indicates whether the account is Inactive (1) or not (0)                                         | true     |
-is_suspended 			                    | int 		             | Indicates whether the account is Suspended (1) or not (0)                                        | true     |
+is_active 				                    | int 			           | Indicates whether the account is active (1) or not (0)                                           | false    |
+is_inactive 			                    | int 			           | Indicates whether the account is inactive (1) or not (0)                                         | true     |
+is_suspended 			                    | int 		             | Indicates whether the account is suspended (1) or not (0)                                        | true     |
 product_edition 		                  | string 		           | Product edition the account is using                                                             | false    |
 camera_quantity 		                  | int 			           | Total number of cameras the account is allowed to use                                            | false    |
 is_custom_brand_allowed               | int 			           | Indicates whether the account is allowed to have branding (1) or not (0)                         | true     |
@@ -180,20 +180,20 @@ brand_corp_url 			                  | string 		           | Corporate website ur
 brand_name 				                    | string 		           | Branded company name                                                                             | true     |
 brand_saml_publickey_cert             | string               | Public certificate which Eagle Eye Networks will use to decrypt the SAML for SSO                 | true     |
 brand_saml_nameid_path                | string               | The path within the SAML xml to find the users email address                                     | true     |
-is_without_initial_user               | string               | Indicates whether to create the new account without an initial user (1) or not (0). Defaults to 0, meaning an initial user with 'is_account_superuser=1' will be created using the arguments 'contact_first_name/contact_last_name/contact_email' specified upon account creation               | true     |
-customer_id                           | string               | Arbitrary id assigned to a sub account by a master account                                       | true     |
-is_master_video_disabled_allowed      | int                  | Indicates whether a sub account can block video access to reseller (1) or not (0)                | true     |
+is_without_initial_user               | string               | Indicates whether to create the new account without an initial user (1) or not (0). Defaults to 0, meaning an initial user with 'is_account_superuser=1' will be created using the arguments 'contact_first_name/contact_last_name/contact_email' specified upon account creation          | true     |
+customer_id                           | string               | Arbitrary id assigned to a sub-account by a master account                                       | true     |
+is_master_video_disabled_allowed      | int                  | Indicates whether a sub-account can block video access to reseller (1) or not (0)                | true     |
 is_master_video_disabled              | int                  | Indicates whether video access is blocked to reseller (1) or not (0)                             | true     |
 is_contract_recording                 | int                  | Indicates whether the account is of type contract_recording. Controls whether contract recording features are enabled for the users in this account on the front-end GUI (1) or not (0)                                                                                                       | true     |
-is_advanced_disabled                  | int                  | Indicates whether the reseller has disabled advanced functionality (1) or not (0) If this is set for a sub account, the users in the sub account cannot change any settings related to bandwidth, billing (retention and resolution) and certain account settings.  Master users switched in still can modify these things if their permissions allow it                                                                                                                                   | true     |
-is_billing_disabled                   | int                  | Indicates whether the reseller has disabled editing settings in a sub account that affect billing (1) or not (0). This controls whether users can change camera resolution/retention, add/delete cameras, etc                                                                                   | true     |
+is_advanced_disabled                  | int                  | Indicates whether the reseller has disabled advanced functionality (1) or not (0) If this is set for a sub-account, the users in the sub-account cannot change any settings related to bandwidth, billing (retention and resolution) and certain account settings.  Master users switched in still can modify these things if their permissions allow it                                                                                                                                   | true     |
+is_billing_disabled                   | int                  | Indicates whether the reseller has disabled editing settings in a sub-account that affect billing (1) or not (0). This controls whether users can change camera resolution/retention, add/delete cameras, etc                                                                          | true     |
 is_add_delete_disabled                | int                  | Indicates whether the reseller has disabled adding or deleting devices (1) or not (0)            | true     |
-is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing                                                                                                                                             | true     |
+is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing                                                                                                                                      | true     |
 first_responders                      | array[array[string]] | Array of strings [['responder email', 'responder first name', 'responder last name', 'responder organization', 'responder account']]. Accounts can identify a list of email accounts that will serve as emergency responders.  Emergency responders get access to the identified cameras when an emergency is triggered by setting 'responder_active'                                                                                                                                   | true     |
 responder_active                      | ???                  | Indicates whether the list of responder cameras can be seen by the list defined under 'first_responders'. Until this flag is set, responders cannot see the video                                                                                                                            | true     |
 responder_cameras                     | array[string]        | Array of camera esns that are shared to first responders                                         | true     |
 inactive_session_timeout              | int                  | Maximum time period in seconds without activity before web session expires                       | true     |
-login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked. Allowed range: 3-99                                                                                                                                                            | true     |
+login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked                   | true     |
 is_rtsp_cameras_enabled               | int                  | Indicates whether the account can have cameras attached over RTSP (instead of ONVIF) (1) or not (0)                                                                                                                                                             | true     |
 brand_support_phone                   | string               | Branded support phone number                                                                     | true     |
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to                                     | true     |
@@ -218,7 +218,7 @@ Return an Account object by id
 
 Parameter 	| Data Type   | Description | Is Required
 --------- 	| ---------   | ----------- | -----------
-**id**  	  | string      | Account Id 	| true
+**id**  	  | string      | Account id 	| true
 
 ### Error Status Codes
 
@@ -342,22 +342,22 @@ brand_corp_url			                  | string      	       | Corporate website url
 brand_name				                    | string      	       | Branded company name
 brand_saml_publickey_cert             | string               | Public certificate which Eagle Eye Networks will use to decrypt the SAML for SSO
 brand_saml_nameid_path                | string               | The path within the SAML xml to find the users email address
-is_master_video_disabled_allowed      | int                  | Indicates whether a sub account can block video access to reseller (1) or not (0)
+is_master_video_disabled_allowed      | int                  | Indicates whether a sub-account can block video access to reseller (1) or not (0)
 is_master_video_disabled              | int                  | Indicates whether video access is blocked to reseller (1) or not (0)
 is_contract_recording                 | int                  | Indicates whether the account is of type contract_recording. Controls whether contract recording features are enabled for the users in this account on the front-end GUI (1) or not (0)
-is_advanced_disabled                  | int                  | Indicates whether the reseller has disabled advanced functionality (1) or not (0). If this is set for a sub account, the users in the sub account cannot change any settings related to bandwidth, billing (retention and resolution) and certain account settings.  Master users switched in still can modify these things if their permissions allow it
-is_billing_disabled                   | int                  | Indicates whether the reseller has disabled editing settings in a sub account that affect billing (1) or not (0). This controls whether users can change camera resolution/retention, add/delete cameras, etc
+is_advanced_disabled                  | int                  | Indicates whether the reseller has disabled advanced functionality (1) or not (0). If this is set for a sub-account, the users in the sub-account cannot change any settings related to bandwidth, billing (retention and resolution) and certain account settings.  Master users switched in still can modify these things if their permissions allow it
+is_billing_disabled                   | int                  | Indicates whether the reseller has disabled editing settings in a sub-account that affect billing (1) or not (0). This controls whether users can change camera resolution/retention, add/delete cameras, etc
 is_add_delete_disabled                | int                  | Indicates whether the reseller has disabled adding or deleting devices (1) or not (0)
 is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing
 first_responders                      | array[array[string]] | Array of strings [['responder email', 'responder first name', 'responder last name', 'responder organization', 'responder account']]. Accounts can identify a list of email accounts that will serve as emergency responders.  Emergency responders get access to the identified cameras when an emergency is triggered by setting 'responder_active'
 responder_active                      | ???                  | Indicates whether the list of responder cameras can be seen by the list defined under 'first_responders'. Until this flag is set, responders cannot see the video
 responder_cameras                     | array[string]        | Array of camera esns that are shared to first responders
 inactive_session_timeout              | int                  | Maximum time period in seconds without activity before web session expires
-login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked. Allowed range: 3-99
+login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked
 is_rtsp_cameras_enabled               | int                  | Indicates whether the account can have cameras attached over RTSP (instead of ONVIF) (1) or not (0)
 brand_support_phone                   | string               | Branded support phone number
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to
-customer_id                           | string               | Arbitrary id assigned to a sub account by a master account
+customer_id                           | string               | Arbitrary id assigned to a sub-account by a master account
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)
 contact_utc_offset                    | int                  | This field is deprecated and not used
 
@@ -379,7 +379,7 @@ Delete an Account
 
 Parameter     | Data Type   | Description
 ---------     | ----------- | -----------
-**id**        | string      | Account Id
+**id**        | string      | Account id
 
 ### Error Status Codes
 
@@ -444,16 +444,16 @@ Array Index		| Attribute   			     | Data Type | Description
 2 				    | camera_online_count	   | int 			 | Number of cameras currently online in the account
 3				      | camera_count 			     | int 			 | Number of cameras currently in the account
 4 				    | user_count 			       | int 		   | Number of users currently in the account
-5 				    | is_suspended 			     | int 			 | Indicates whether the account is Suspended (1) or not (0)
-6 				    | is_inactive 			     | int 			 | Indicates whether the account is Inactive (1) or not (0)
-7 				    | is_active 			       | int 			 | Indicates whether the account is Active (1) or not (0)
+5 				    | is_suspended 			     | int 			 | Indicates whether the account is suspended (1) or not (0)
+6 				    | is_inactive 			     | int 			 | Indicates whether the account is inactive (1) or not (0)
+7 				    | is_active 			       | int 			 | Indicates whether the account is active (1) or not (0)
 8 				    | product_edition 		   | string 	 | Product edition the account is using
 9             | bridge_online_count    | int       | Number of online bridges owned by the account
 10            | bridge_active_count    | int       | Number of active bridges owned by the account
 11            | bridge_count           | int       | Number of bridges owned by the account
 12            | camera_off_count       | int       | Number of account cameras that are currently offline
 13            | camera_available_count | int       | Number of available cameras in the account
-14            | is_account_active      | int       | Indicates the account is Active (1) or not (0)
+14            | is_account_active      | int       | Indicates the account is active (1) or not (0)
 15            | last_login             | string    | EEN timestamp of the last login by this account
 16            | average_retention_days | int       | The average number of retention days for the account
 17            | customer_id            | string    | The customer id assigned to this account
