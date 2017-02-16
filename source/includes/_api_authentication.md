@@ -42,8 +42,8 @@ curl -v --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --d
   "token": "MiDUwMQqwP1JsfKqbqT1DQ8hJFHEOZfROEUtBvnuqv0ICxvcOybkS1n9/awjrJ9YKijb60GqdUDPP8TW4o8Ei8iI8OXC/dj74KC2cLMxJ2vs/hmYPfbW8OpCwf0k683a2LfIbjcC3Uy/SmDpOsxVdPMTXQEGJHXD3ItmAvoQ5MOoRKfHBNOu7OJBWQjPUjeP0fkHSrx8JgAHSqT5SwRM0mLysFmiFHF0h7/5Apt81dDhZwLBDwwSrl+kTqgn+wnw6rJ432liESdK+yp3Qefk1wAtytoTJkkBE2srqsHJdW4ryVYKk9SKA62Cz7pO3VUaD8Yxx9Ff2Os9ez6TdfBmqg==",
   "two_factor_authentication_code":
   {
-    "sms": "+xxxxxxxx779",
-    "email": "xxxxxxxxxxx.01@gmail.com"
+    "sms": "*** *** 779",
+    "email": "***********@gmail.com"
   }
 }
 ```
@@ -54,7 +54,7 @@ Login is a 2 step process when using simple authentication and a 3 step process 
 Authenticate, then Authorize with the token returned by Authenticate.  
 
 *TFA scheme:*  
-Authenticate, Send TFA Code to the user, Authorize with the token received from step 1 and the TFA code received from step 2
+Authenticate, Instruct the system to send TFA Code to the user, Authorize with the token received from step 1 and the TFA code received from step 2
 
 ### HTTP Request
 
@@ -81,14 +81,16 @@ The validity of token is:
 
 *NOTE 2:*  
 For TFA scheme, the system uses the parameter `sms_phone` of the user's model (see **User Model** section).
-That parameter MUST be specified at the user's creation time (see **Create User** API Call)*
+If SMS-based authentication is to be used, that parameter MUST be specified at the user's creation time (see **Create User** API Call)*
 If user's parameter `sms_phone` has not been set, the value of the **sms** key will be `No sms phone found.`
 
+*NOTE 3:*  
+The TFA-related user's data (i.e. SMS Phone or e-mail), once set at the time of user's account creation can only be modified by that user alone. Any such modification will also be TFA authenticated. Account Super User may not change such data for security reasons.
 
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
+HTTP Status Code    | Description
 ---------           | -----------
 400 | Some argument(s) are missing or invalid
 401 | Supplied credentials are not valid
@@ -141,7 +143,7 @@ The validity of TFA code sent to the user is 15 minutes.
 
 ### Response Status Codes
 
-HTTP Status Code    | Data Type   
+HTTP Status Code    | Description
 ---------           | -----------
 400 | Some argument(s) are missing or invalid
 412 | Unable to send TFA code with the TFA authentication type selected
@@ -241,6 +243,7 @@ curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --da
 
 Authorize is the final step of the Login process, by using the token from the first step (Authenticate) and - if TFA scheme is used - the TFA code delivered to the user by e-mail or SMS.
 A Successful Authorize call returns an authorized user object, and sets the 'auth_key' cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the 'A' parameter.
+When TFA scheme is used, this call will also set `tfa_key` cookie. See **Authorized devices** section for more detail on this cookie.
 
 The host url for API calls can originally be done against "https://login.eagleeyenetworks.com", but after authorization is returned the API should then use the **branded subdomain** as returned from authorization.
 As such the branded host url will become "https://[active_brand_subdomain].eagleeyenetworks.com" where the **active_brand_subdomain** field is returned in the authorization response.
@@ -258,7 +261,7 @@ Caching the subdomain is safe to do as long as the client software validates aga
 Parameter   | Data Type		
 ---------	| -----------   
 **token**   | string      	
-**two_factor_authentication_code**   | string, 4 decimal digits
+**two_factor_authentication_code**   | string, 4 decimal digits <br/>Used only for TFA scheme. Not used when authorizing with the simple scheme
 
 *NOTE 1:*  
 More than 3 failed attempts to Authorize with TFA code will lock the user's account. It then can only be unlocked by Eagle Eye's technical support staff.  
@@ -275,7 +278,7 @@ When successful, this API call returns JSON data structure corresponding to User
 
 **When using simple authentication scheme**
 
-HTTP Status Code    | Data Type   
+HTTP Status Code    | Description
 ---------           | -----------
 400 | Some argument(s) are missing or invalid
 401 | Invalid Token supplied
@@ -283,10 +286,99 @@ HTTP Status Code    | Data Type
 
 **When using TFA authentication scheme**
 
-HTTP Status Code    | Data Type   
+HTTP Status Code    | Description
 ---------           | -----------
 400 | Some argument(s) are missing or invalid
 401 | Invalid Token supplied, or missing TFA code, or attempting to authorize with expired TFA code
 406 | Invalid TFA supplied or Invalid TFA and invalid Token supplied
 429 | This user's account has been locked due to more than 3 failed attempts to Authorize
 200 | User has been authorized for access to the realm
+
+## Forced vs. Optional TFA scheme
+
+Depending whether the Account to which the user belongs enforces TFA or not, the user may be able to select simple authentication for their future log-ins rather than TFA.  
+In order to find out whether the account enforces TFA, examine the `is_two_factor_authentication_forced` flag in the Account record returned by **Get Account** API Call.
+This flag can be set or cleared by the Account Super User with the **Update Account** API call.  
+If the `is_two_factor_authentication_forced` is set to 0 the user may switch to simple authentication
+scheme. That is achieved by clearing `is_two_factor_authentication_enabled` flag in the User record.
+This can only be achieved by the user themselves (not e.g. by Account Super User)
+Update of any TFA-related field in the User record is performed through a dedicated TFA update endpoint `/g/aaa/two_factor_authenticate/update`. See next section.
+
+## TFA Update
+
+Data present in the User record that affects the TFA scheme is security-sensitive and therefore may only be altered using a dedicated endpoint, whose operation is itself TFA protected.
+This data includes three fields in the User model:
+
+Field |  Description | Remarks
+------|--------------|---------
+**sms_phone** | Phone number to which text messages (SMS) containing TFA code will be delivered | May only be changed when using SMS for TFA code delivery <br/> Code will be delivered to the new phone number
+**email** | E-mail address to which messages containing TFA code will be delivered | May only be changed when using e-mail for TFA code delivery <br/> Code will be delivered to the new e-mail address
+**is_two_factor_authentication_enabled** | 1 - user will be required to authenticate with TFA <br/> 0 - user will authenticate with a simple scheme | May be updated with either SMS or e-mail delivery of TFA code
+
+The fields described above may only be changed one at a time.
+
+TFA Update is a two-step process:
+
+### 1.Request Update
+
+This step initiates the TFA data update process.
+
+
+#### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/update`
+
+Parameter   	| Data Type   |  Description
+---------   	| -----------
+**two_factor_authentication_type** 	| `'sms'` or `'email'`   |    Which method to use for TFA code delivery to verify this update request
+**password** 	| string | The user's password
+**update_json** | JSON structure containing the name of the updated field and its new value. <br/>Updated can only be one field at a time | Example: <br/>`{` <br/>&nbsp;&nbsp;`'sms_phone':'+123456789'`<br/>`}`
+
+#### HTTP Response
+
+This API call returns no data.
+
+HTTP Status Code    | Description
+---------           | -----------
+400 | Some argument(s) are missing or invalid. E.g. update of `sms_phone` is requested with `two_factor_authentication_type` set to `email` or vice versa
+401 | Invalid user password supplied
+415 | Invalid TFA code delivery method supplied in `two_factor_authentication_type`
+200 | Success, proceed to verification step
+
+### 2.Verify update request with TFA
+
+#### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/verify`
+
+Parameter   	| Data Type   |  Description
+---------   	| -----------
+**two_factor_authentication_code** 	| string, 4 decimal digits   |    The 4-digit code received via sms or e-mail
+
+#### HTTP Response
+
+This API call returns no data.
+
+HTTP Status Code    | Description
+---------           | -----------
+400 | Some argument(s) are missing or invalid.
+406 | Invalid TFA code supplied
+200 | Success
+
+
+## Authorized devices
+
+In order to make the log-in process as convenient as possible for the user,
+the system will allow for use of the simple authentication scheme on devices
+used previously by that user for a successful TFA-based log in.  
+Upon a successful TFA-based log in, the **Authorize** API call sets a cookie `tfa_key` in the browser.
+Subsequent execution of **Authenicate** API Call with the correct username and password will start
+of a simple authentication scheme, which can be told by absence of `two_factor_authentication_code` field in
+the response of **Authenicate**. In such case one can skip the **Send TFA Code** API call and proceed immediately
+to execute **Authorize** API Call, as is the process for a non-TFA-enabled user login.
+
+*NOTE 1:*  
+The same `tfa_key` value may be used for multiple users, who have successfully authorized in the past from the particular device.
+
+*NOTE 2:*  
+The list of authorized devices for any user is stored in the field `user_authenticated_clients` in the User record. See **User Model** section for details.
