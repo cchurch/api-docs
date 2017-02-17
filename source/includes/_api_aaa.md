@@ -77,11 +77,11 @@ user_id 	  | string 		  | Unique identifier for validated user
 HTTP Status Code    | Description
 ----------------    | -----------
 400 | Unexpected or non-identifiable arguments are supplied
-406	| Information supplied could not be verified
 402	| Account is suspended
-460	| Account is inactive
+406	| Information supplied could not be verified
 409	| Account has already been activated
 412	| User is disabled
+460	| Account is inactive
 200	| User has been authorized for access to the realm
 
 <!--===================================================================-->
@@ -112,11 +112,11 @@ email   	    | string      | Email address 	| POST
 HTTP Status Code    | Description
 ----------------    | -----------
 400 | Unexpected or non-identifiable arguments are supplied
-406	| Information supplied could not be verified
 402	| Account is suspended
+406	| Information supplied could not be verified
+412	| User is disabled
 460	| Account is inactive
 461	| Account is pending
-412	| User is disabled
 462	| User is pending
 202	| An reset email has been sent to the supplied email address. This status will be provided even if the email address was not found. This prevents attacks to discover user accounts
 
@@ -144,11 +144,11 @@ token   	    | string      | Password reset token provided in email | POST
 HTTP Status Code    | Description
 ----------------    | -----------
 400 | Unexpected or non-identifiable arguments are supplied
-406	| Token not valid or not found
 402	| Account is suspended
+406	| Token not valid or not found
+412	| User is disabled
 460	| Account is inactive
 461	| Account is pending
-412	| User is disabled
 202	| Token is valid
 
 <!--===================================================================-->
@@ -191,11 +191,11 @@ user_id 	  | string 		    | Unique identifier for validated user
 HTTP Status Code    | Description
 ----------------    | -----------
 400 | Unexpected or non-identifiable arguments are supplied
-406	| Token not valid or not found
 402	| Account is suspended
+406	| Token not valid or not found
+412	| User is disabled
 460	| Account is inactive
 461	| Account is pending
-412	| User is disabled
 200	| User has been authorized for access to the realm
 
 <!--===================================================================-->
@@ -223,11 +223,11 @@ realm  			  | string      | Realm (defaults to current user's realm)
 HTTP Status Code    | Description
 ----------------    | -----------
 400 | Unexpected or non-identifiable arguments are supplied
-404	| Account with this email address and realm could not be found
 402	| Account is suspended
-460	| Account is inactive
+404	| Account with this email address and realm could not be found
 409	| Account is already active (not pending)
 412	| User is disabled
+460	| Account is inactive
 202	| Account was located and verified to be in the pending state. A registration email has been recreated and sent to the provided email address
 
 <!--===================================================================-->
@@ -255,12 +255,12 @@ realm  			  | string      | Realm (defaults to current user's realm)
 HTTP Status Code    | Description
 ----------------    | -----------
 400 | Unexpected or non-identifiable arguments are supplied
-404	| User with this email address and realm could not be found
 402	| Account is suspended
+404	| User with this email address and realm could not be found
+409	| User is already active (not pending)
+412	| User is disabled
 460	| Account is inactive
 461	| Account is pending
-412	| User is disabled
-409	| User is already active (not pending)
 202	| User was located and verified to be in the pending state. A verification email has been recreated and sent to the provided email address
 
 <!--===================================================================-->
@@ -299,8 +299,8 @@ current_password | string      | Current password of the user. Optional. If 'id'
 
 HTTP Status Code    | Description
 ----------------    | -----------
-401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
+401 | Unauthorized due to invalid session cookie
 404	| User with the 'id' provided cannot be found
 406	| The 'current_password' provided does not match the password of the authenticated user
 200	| User password was changed successfully
@@ -328,8 +328,8 @@ account_id   	| string      | Id of the account to login to. Optional. Defaults 
 
 HTTP Status Code    | Description
 ----------------    | -----------
-401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
+401 | Unauthorized due to invalid session cookie
 404	| Account with the 'account_id' provided cannot be found
 200	| Account context switch successful
 
@@ -362,8 +362,8 @@ Then using the saml named id path, the user's email will be extracted and an aut
 
 HTTP Status Code    | Description
 ----------------    | -----------
-401 | Unauthorized due to invalid session cookie
 400	| Unexpected or non-identifiable arguments are supplied
+401 | Unauthorized due to invalid session cookie
 404	| Account with the 'account_id' provided cannot be found
 200	| Account context switch successful
 
@@ -386,4 +386,5 @@ Log out user and invalidate HTTP session cookie
 
 HTTP Status Code    | Description
 ----------------    | -----------
+400	| Unexpected or non-identifiable arguments are supplied
 204 | User has been logged out
