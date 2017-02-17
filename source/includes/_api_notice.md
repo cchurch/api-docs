@@ -254,7 +254,7 @@ curl -X DELETE https://28888.eagleeyenetworks.com/g/user/terms?id=cafe81f5 --coo
 
 Parameter  		| Data Type   | Description      	| Is Required
 ---------  		| ----------- | -----------      	| -----------
-id   		    | string      | Account Id 		    | false
+id   		    | string      | Account id 		    | false
 title           | string      | Title of the terms  | false
 
 ### HTTP List Attributes
@@ -305,7 +305,7 @@ curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --coo
 
 Parameter  		| Data Type   | Description   	| Is Required
 ---------  		| ----------- | -----------   	| -----------
-**id**   		| string      | Account Id 		| false
+**id**   		| string      | Account id 		| false
 
 ### HTTP List Attributes
 Parameter 	           | Data Type     | Description
@@ -331,4 +331,3 @@ HTTP Status Code    | Data Type
 409	| Account has already been activated
 412	| User is disabled
 200	| User has been authorized for access to the realm
-
