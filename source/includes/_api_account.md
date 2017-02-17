@@ -362,6 +362,15 @@ customer_id                           | string               | Arbitrary id assi
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)
 contact_utc_offset                    | int                  | This field is deprecated and not used
 
+### Error Status Codes
+
+HTTP Status Code    | Description
+----------------    | -----------
+200	| Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Account not found with the supplied ID
 
 <!--===================================================================-->
 ## Delete Account
