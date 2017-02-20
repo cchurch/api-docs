@@ -47,7 +47,7 @@ HTTP Status Code    | Description
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/validate_account --data "id=[ID]&token=[TOKEN]"
 ```
 
-> Response Json
+> Json Response
 
 ```json
 {
@@ -160,7 +160,7 @@ HTTP Status Code    | Description
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/reset_password --data "token=[TOKEN]&password=[PASSWORD]"
 ```
 
-> Response Json
+> Json Response
 
 ```json
 {
@@ -272,7 +272,7 @@ HTTP Status Code    | Description
 curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/change_password --data "password=[PASSWORD]&current_password=[CURRENT_PASSWORD]"
 ```
 
-> Response Json
+> Json Response
 
 ```json
 {

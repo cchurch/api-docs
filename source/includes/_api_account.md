@@ -148,7 +148,7 @@ contact_street 			                  | array[string]        | Array of strings co
 contact_city 			                    | string 		           | City of primary contact for account                                                              | true     |
 contact_state 			                  | string 		           | State/province of primary contact for account                                                    | true     |
 contact_postal_code 	                | string 		           | Zip/postal code of primary contact for account                                                   | true     |
-contact_country 		                  | string 		           | Country of primary contact for account                                                           | true     |
+contact_country 		                  | string 		           | Country code of primary contact for account                                                      | true     |
 contact_phone                         | string               | Phone number of primary contact for account                                                      | true     |
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account                                               | true     |
 timezone 				                      | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'                                                                                                     | true     |
@@ -264,7 +264,7 @@ contact_street			                  | array[string] | Array of strings containing
 contact_city			                    | string      	| City of primary contact for account
 contact_state			                    | string      	| State/province of primary contact for account
 contact_postal_code		                | string      	| Zip/postal code of primary contact for account
-contact_country			                  | string      	| Country of primary contact for account
+contact_country			                  | string      	| Country code of primary contact for account
 timezone				                      | string        | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
 status					                      | array[string] | Account status. This can only be edited by superusers and account superusers of the parent/owner account. 'realm_root' can only be set by superusers
 access_restriction		                | array[string] | Array of strings containing access restrictions. Possible values: 'enable_mobile' = If present this account has access to mobile clients. 'enable_ip_restrictions' = if present, and if 'allowable_ip_address_range' has been specified, limits logins to the address ranges specified
@@ -319,7 +319,7 @@ contact_street			                  | array[string]        | Array of strings con
 contact_city			                    | string      	       | City of primary contact for account
 contact_state			                    | string      	       | State/province of primary contact for account
 contact_postal_code		                | string      	       | Zip/postal code of primary contact for account
-contact_country			                  | string      	       | Country of primary contact for account
+contact_country			                  | string      	       | Country code of primary contact for account
 contact_phone                         | string               | Phone number of primary contact for account
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account
 timezone				                      | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
