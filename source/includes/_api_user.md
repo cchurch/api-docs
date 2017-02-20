@@ -80,51 +80,51 @@ If a user isn't requesting their own user record, these apis requires SuperUser 
 
 ### User Attributes
 
-Parameter               | Data Type     | Description
----------               | ---------     | -----------
-id                      | string        | Unique identifier for Authorized User
-first_name              | string        | First name of Authorized User
-last_name               | string        | Last name of Authorized User
-email                   | string        | Email of Authorized User (email must only contain ASCII characters)
-owner_account_id        | string        | Unique identifier of user's Account
-active_account_id       | string        | Unique identifier of user's active Account
-uid                     | string        | An identifier of the user
-is_superuser            | int           | Is the user a Super User
-is_account_superuser    | int           | Is the user an Account Super User
-is_staff                | int           | Is the user a Staff User
-is_active               | int           | Is the user Active
-is_pending              | int           | Is the user a Pending user
-is_master               | int           | Is the user in a Master Account
-is_user_admin           | int           | Is the user a User Admin
-is_layout_admin         | int           | Is the user a Layout Admin
-is_live_video           | int           | Is the user authorized to access Live Video
-is_device_admin         | int           | Is the user a Device Admin
-is_export_video         | int           | Is the user authorized to Export Video
-is_recorded_video       | int           | Is the user authorized to view Recorded Video
-street                  | array[string] | Array of strings containing street addresses [address line 1, address line 2]
-city                    | string        | City
-state                   | string        | State
-country                 | string        | Country
-postal_code             | string        | Postal Code
-phone                   | string        | Phone number
-mobile_phone            | string        | Mobile phone number
-utc_offset              | int           | Timezone offset from UTC in seconds (signed integer)
-timezone                | string        | Timezone
-last_login              | string        | Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN
-alternate_email         | string        | Alternate email address
-sms_phone               | string        | SMS phone number
-is_sms_include_picture  | int           | Include picture in sms notifications
-json                    | [UserJson](#userjson-attributes) | Misc settings for the user as a JSON string
-camera_access           | array[string] | List of devices (IDs) the user has access to
-layouts                 | array[string] | List of layouts (IDs) the user has access to
-is_notify_enable        | int           | Is notifications enabled for the User
-notify_period           | array[string] | List of notification time periods, in the form: D-HHMM-HHMM
-notify_rule             | array[string] | List of notification rules, in the form: id-type-delay (e.g. one-email-0)
-is_branded              | int           | Is the user associated with an account that currently has branding enabled
-active_brand_subdomain  | string        | If the user is associated with an account that has brandinge enabled, this will have that brand's subdomain if one exists
-account_map_lines       | ???           |
-access_period           | ???           |
-is_terms_noncompliant   | int           | True if user has not accepted terms of service
+Parameter               | Data Type            | Description
+---------               | ---------            | -----------
+id                      | string               | Unique identifier for user
+first_name              | string               | First name of user
+last_name               | string               | Last name of user
+email                   | string               | Email address of user (email must only contain ASCII characters)
+owner_account_id        | string               | Unique identifier of the account that the user belongs to
+active_account_id       | string               | Unique identifier of user's active account. When switching into a sub account the 'active_account_id' of that user in their session becomes the unique identifier of the sub account they switched into.
+uid                     | string               | An identifier of the user. **This field is for internal use only**
+is_superuser            | int                  | Indicates whether the user is a super user (1) or not (0). **This field is for internal use only**
+is_account_superuser    | int                  | Indicates whether the user is an account super user (1) or not (0)
+is_staff                | int                  | Indicates whether the user is a staff user (1) or not (0). **This field is for internal use only**
+is_active               | int                  | Indicates whether the user is active (1) or not (0)
+is_pending              | int                  | Indicates whether the user is pending (1) or not (0)
+is_master               | int                  | Indicates whether the user is in a master account (1) or not (0)
+is_user_admin           | int                  | **Deprecated.** This is for backwards compatibility
+is_layout_admin         | int                  | Indicates whether the user is a layout administrator (1) or not (0)
+is_live_video           | int                  | Indicates whether the user is authorized to access live video (1) or not (0)
+is_device_admin         | int                  | **Deprecated.** This is for backwards compatibility
+is_export_video         | int                  | Indicates whether the user is authorized to export video (1) or not (0)
+is_recorded_video       | int                  | Indicates whether the user is authorized to view recorded video (1) or not (0)
+street                  | array[string]        | Array of strings containing street addresses [address line 1, address line 2]
+city                    | string               | City
+state                   | string               | State/province
+country                 | string               | Two letter country code
+postal_code             | string               | Zip/postal code
+phone                   | string               | Phone number
+mobile_phone            | string               | Mobile phone number
+utc_offset              | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field
+timezone                | string               | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
+last_login              | string               | Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN
+alternate_email         | string               | Alternate email address
+sms_phone               | string               | Phone number to be used for SMS messaging
+is_sms_include_picture  | int                  | Indicates whether user want to use MMS messaging to include a picture with alert messages sent to the sms_phone number (1) or not (0)
+json                    | string               | Misc settings for the user as a JSON string. [UserJson](#userjson-attributes)
+camera_access           | array[array[string]] | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device id, and the second field is a string of 1 or more characters indicating permissions for the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only super users or account super users can edit this field.
+layouts                 | array[string]        | List of layouts unique identifiers the user has access to
+is_notify_enable        | int                  | Indicates whether notifications are enabled for the user (1) or not (0)
+notify_period           | array[string]        | Contains the time periods during which the user will receive alert notifications. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications. All times are expressed in local time and use a 24 hour clock formatted as HHMM
+notify_rule             | array[string]        | List of notification rules, in the form: id-type-delay (e.g. one-email-0)
+is_branded              | int                  | Indicates whether the user is associated with an account that currently has branding enabled (1) or not (0)
+active_brand_subdomain  | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists
+account_map_lines       | json                 |
+access_period           | array[string]        |  Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM
+is_terms_noncompliant   | int                  | Indicates whether the terms of service has not been accepted by the user (1) or has been accepted by the user (0)
 
 ### UserJson Attributes
 
