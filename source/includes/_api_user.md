@@ -3,7 +3,7 @@
 <!--===================================================================-->
 ## Overview
 
-The user service allows managing users but only with necessary permissions.
+The user service allows managing users but only with the necessary permissions.
 
 
 <!--===================================================================-->
@@ -84,7 +84,7 @@ The user service allows managing users but only with necessary permissions.
 
 Parameter                            | Data Type            | Description
 ---------                            | ---------            | -----------
-id                                   | string               | Unique identifier for user
+id                                   | string               | Unique identifier of the user
 first_name                           | string               | First name of the user
 last_name                            | string               | Last name of the user
 email                                | string               | Email address of the user (email must only contain ASCII characters)
@@ -107,16 +107,16 @@ is_edit_cameras                      | int                  | Indicates whether 
 is_edit_all_users                    | int                  | Indicates whether the user is authorized to manage users who are not administrator users in master account (1) or not (0)
 is_edit_account                      | int                  | Indicates whether the user is authorized to edit account settings (1) or not (0)
 is_system_notifications_disabled     | int                  | It reflects whether the account the user belongs to has system notifications disabled (1) or not (0). If true, then the user will not be able to receive any system alert notifications for the cameras in their account
-is_edit_ptz_stations                 | int                  | Indicates whether the user is authorized to edit ptz stations (1) or not (0)
+is_edit_ptz_stations                 | int                  | Indicates whether the user is authorized to edit PTZ stations (1) or not (0)
 is_view_preview_video                | int                  | Indicates whether the user is authorized to view preview images from cameras (1) or not (0)
 is_edit_camera_on_off                | int                  | Indicates whether the user is authorized to turn cameras on and off (1) or not (0)
 is_edit_camera_less_billing          | int                  | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)
 is_edit_all_and_add                  | int                  | Indicates whether the user is authorized to add/edit/delete bridges and cameras (1) or not (0)
 is_edit_sharing                      | int                  | Indicates whether the user is authorized to view and edit 'Sharing' & 'Responders' tabs under account settings (1) or not (0)
-is_mobile_branded                    | int                  | **Used by mobile devices**
+is_mobile_branded                    | int                  | Used by mobile devices
 is_edit_admin_users                  | int                  | Indicates whether the user is authorized to manage all users in sub account (1) or not (0)
 is_view_contract                     | int                  | Indicates whether the user is authorized to view contracts and replay them (1) or not (0)
-is_ptz_live                          | int                  | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of ptz cameras (1) or not (0)
+is_ptz_live                          | int                  | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)
 is_view_audit_trail                  | int                  | Indicates whether the user is authorized to view the audit trail feature (1) or not (0)
 is_edit_users                        | int                  | Indicates whether the user is authorized to manage users who are not administrator users is sub account (1) or not (1)
 is_edit_motion_areas                 | int                  | Indicates whether the user is authorized to view and edit 'Motion' tab under camera settings (1) or not (0)
@@ -140,8 +140,8 @@ last_login                           | string               | Last time the user
 alternate_email                      | string               | Alternate email address
 sms_phone                            | string               | Phone number to be used for SMS messaging
 is_sms_include_picture               | int                  | Indicates whether user want to use MMS messaging to include a picture with alert messages sent to the sms_phone number (1) or not (0)
-json                                 | string               | Misc settings for the user as a JSON string. [UserJson](#userjson-attributes)
-camera_access                        | array[array[string]] | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device id, and the second field is a string of 1 or more characters indicating permissions for the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share.
+json                                 | string               | Misc settings of the user as a JSON string. [UserJson](#userjson-attributes)
+camera_access                        | array[array[string]] | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device unique identifier, and the second field is a string of 1 or more characters indicating permissions of the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share.
 layouts                              | array[string]        | List of layouts unique identifiers the user has access to
 is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)
 notify_period                        | array[string]        | Contains the time periods during which the user will receive alert notifications. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications. All times are expressed in local time and use a 24 hour clock formatted as HHMM
@@ -154,20 +154,22 @@ is_terms_noncompliant                | int                  | Indicates whether 
 
 ### UserJson Attributes
 
-Parameter   | Data Type     | Description
----------   | -----------   | -----------
-een         | [UserJsonEen](#userjsoneen-attributes)   | EEN Object
+Parameter   | Data Type | Description
+---------   | --------- | -----------
+een         | json      | EEN Object. [UserJsonEen](#userjsoneen-attributes)
 
 ### UserJsonEen Attributes
 
 Parameter               | Data Type     | Description
 ---------               | -----------   | -----------
-show_AMPM               | boolean       | Show times with AM/PM
-milliseconds_display    | boolean       | Show time with milliseconds
-layout_rotation_seconds | int           | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur.
-motion_boxes            | boolean       | Determines if motion boxes should be shown
-notify_levels           | array[int]    |
-
+show_AMPM               | boolean       | Indicates whether times should be shown with AM/PM (True) or not (False)
+milliseconds_display    | boolean       | Indicates whether times should be shown with milliseconds (True) or not (False)
+layout_rotation_seconds | int           | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
+motion_boxes            | boolean       | Indicates whether motion boxes should be shown (True) or not (False)
+notify_levels           | array[int]    | 
+permissions             | json          | **Deprecated.** This is for backwards compatibility
+employee_id             | string        | It is an identifier that user with permissions can set for other users
+layouts                 | json          | JSON formatted data keyed by account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered in the way the user wants to see them in their graphical user interface
 
 <!--===================================================================-->
 
@@ -180,26 +182,138 @@ There are few types of users:
 - regular user
 
 ##### Account super user
-Account super user has all permissions. This user can manage all users in their account and in sub account.
+The account super user has all permissions. This user can manage all users in their account and sub account. The fact that the user is administrator is indicated by flag: 'is_account_superuser'.
 
 
 ##### Regular user
-
+After being created the regular user has several default permissions : 'is_live_video', 'is_recorded_video', 'is_export_video'.
 
 #### List of permissions
-Required Parameter   | Description
-------------------   | -----------
-is_superuser         | **Internal use only**
-is_staff             | **Internal use only**
-is_account_superuser | Highest permission possible for a user. All permissions are enabled, including viewing permissions
+Required Parameter          | Description
+------------------          | -----------
+is_superuser                | **Internal use only**
+is_staff                    | **Internal use only**
+is_account_superuser        | Highest permission possible for a user. All permissions are enabled, including viewing permissions
+is_edit_account             | View and edit all account settings. (Control, Days, Security, Camera, Alerts, Notifications, Privacy, Sharing, and Responders)
+is_edit_camera_on_off       | Ability to turn cameras on and off. If this is the only camera permission granted all others are hidden
+is_edit_cameras             | Allows editing all camera settings, but does not allow adding or deleting cameras. View previews is enabled automatically with this permission
+is_edit_motion_areas        | Motion tab visible and editable under camera settings. View previews and view recorded video is enabled automatically with this permission
+is_edit_ptz_stations        | PTZ tab visible and editable under camera settings. Set PTZ mode and add/edit/delete stations. View previews is enabled automatically with this permission
+is_edit_sharing             | View and edit 'Sharing' & 'Responders' tabs under Account Settings (This setting is not needed if 'is_edit_account' is enabled)
+is_edit_users               | Management of non-administrator users in a sub-account. Ability to add, delete, and modify users. Ability to grant access to cameras and layouts
+is_export_video             | Download preview and full resolution video. View previews is enabled automatically with this permission
+is_edit_all_and_add         | This refers to devices only: ability to add/edit/delete bridges and cameras. View previews is enabled automatically with this permission
+is_edit_camera_less_billing | Edit all camera settings except retention and full video resolution. No ability to add/delete cameras or bridges. View Previews is enabled automatically with this permission
+is_layout_admin             | Edit any layouts. (Any user can create/edit/delete their own layouts. User layouts are always visible to admin users)
+is_live_video               | View full resolution video live from cameras. View previews is enabled automatically with this permission
+is_ptz_live                 | Control pan, tilt, zoom, and recall stations while viewing preview or live video of PTZ cameras. View previews is enabled automatically with this permission
+is_recorded_video           | View history browser and historic video from cameras. View previews is enabled automatically with this permission
+is_view_preview_video       | View preview images from cameras
+is_edit_admin_users         | Management of all users in a sub-account. Ability to add, delete, and modify all users including administrators. (Only available to Master Users)
+is_edit_all_users           | Management of master users who are not administrator users. Ability to add, delete, and modify master users. Ability to grant access to sub accounts. No user permissions are granted in sub-accounts. (Only available to Master Users)
+is_device_admin             | **Deprecated**
+is_user_admin               | **Deprecated**
 
 
+#### User Permission Matrix
+The table below shows what user management actions a user can execute depending on which account they belong to and which permission flags they have set.
 
+
+<table style="font-size:16px;">
+  <tr style="background-color:white;">
+    <td rowspan="3" colspan="3" ></td>
+    <th colspan="4" style="text-align:center;">Who I am</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th colspan="2" style="text-align:center;">In Master Account</td>
+    <th colspan="2" style="text-align:center;">In Child Account</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">Account Super User (ASU)</td>
+    <th style="text-align:center;">Regular User (RU)</td>
+    <th style="text-align:center;">Account Super User (ASU)</td>
+    <th style="text-align:center;">Regular User (RU)</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;" rowspan="12">What I can do</td>
+    <th style="text-align:center;" rowspan="3">In own account</td>
+    <th style="text-align:center;">To ASU</td>
+    <td>Get, Create, Update, Delete</td>
+    <td>nothing</td>
+    <td>Get, Create, Update, Delete</td>
+    <td>nothing</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">To RU</td>
+    <td>Get, Create, Update, Delete</td>
+    <td>Get, Create, Update, Delete when is_edit_all_users == True</td>
+    <td>Get, Create, Update, Delete</td>
+    <td>Get, Create, Update, Delete when is_edit_users == True</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">Get list of users</td>
+    <td>yes</td>
+    <td>no</td>
+    <td>yes</td>
+    <td>no</td>
+  </tr style="background-color:white;">
+  <tr>
+    <th style="text-align:center;" rowspan="3">In parent account</td>
+    <th style="text-align:center;">To ASU</td>
+    <td colspan="2" rowspan="3" style="background-color:#e6e6e6;text-align:center;">Master Accounts have no parents</td>
+    <td>nothing</td>
+    <td>nothing</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">To RU</td>
+    <td>nothing</td>
+    <td>nothing</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">Get list of users</td>
+    <td >no</td>
+    <td>no</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;" rowspan="3">In child account</td>
+    <th style="text-align:center;">To ASU</td>
+    <td>Get, Create, Update, Delete</td>
+    <td>Get, Create, Update, Delete when is_edit_admin_users == True</td>
+    <td rowspan="3" colspan="2" style="background-color:#e6e6e6;text-align:center;">Child accounts have no children</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">To RU</td>
+    <td>Get, Create, Update, Delete</td>
+    <td>Get, Create, Update, Delete when is_edit_users==True or is_edit_admin_users==True</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">Get list of users</td>
+    <td>yes</td>
+    <td>yes when is_edit_admin_users == True</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;" rowspan="3">In sibling account</td>
+    <th style="text-align:center;">To ASU</td>
+    <td rowspan="3" colspan="2" style="background-color:#e6e6e6;text-align:center;">Master Accounts have no siblings</td>
+    <td>nothing</td>
+    <td>nothing</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">To RU</td>
+    <td>nothing</td>
+    <td>nothing</td>
+  </tr>
+  <tr style="background-color:white;">
+    <th style="text-align:center;">Get list of users</td>
+    <td>no</td>
+    <td>no</td>
+  </tr>
+</table>
+
+<!-- TODO - Add permission matrix for devices -->
 
 <!--===================================================================-->
 ## Get User
-
-If a user isn't requesting their own user record, these apis requires permissions. If no id is passed in the request, then it will attempt to get the data for the user that is authenticated and making the call.
 
 > Request
 
@@ -210,16 +324,28 @@ or
 
 curl --cookie "auth_key=[AUTH_KEY]" -G https://login.eagleeyenetworks.com/g/user -d id=[USER_ID]
 ```
+Returns a user object by unique identifier. If no unique identifier is passed in the request, then it will attempt to get the data of the user that is authenticated and making the call.
 
-Returns user object by ID. Not passing an ID will return the current authorized user.
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/user`
 
-Parameter | Data Type   | Description | Is Required
---------- | ----------- | ----------- | -----------
-id        | string      | User Id     | false
+Parameter | Data Type   | Description                   | Is Required
+--------- | ----------- | -----------                   | -----------
+id        | string      | Unique identifier of the user | false
+
+
+### Error Status Codes
+
+HTTP Status Code    | Description
+----------------    | -----------
+200 	              | Request succeeded
+400 	              | Unexpected or non-identifiable arguments are supplied
+401 	              | Unauthorized due to invalid session cookie
+403 	              | Forbidden due to the user missing the necessary privileges
+404 	              | No user matching the unique identifier was found
+
 
 <!--===================================================================-->
 ## Create User
@@ -238,7 +364,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H
 }
 ```
 
-Creates a new User
+Creates a new user. After being created the user is in the pending state ('is_pending':1, 'is_active':0). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept a terms of service). After this operation the user will be active ('is_pending':0, 'is_active':1).
 
 ### HTTP Request
 
@@ -246,15 +372,24 @@ Creates a new User
 
 Parameter         | Data Type   | Description   
 ---------         | ----------- | -----------   
-**first_name**    | string      | First Name    
-**last_name**     | string      | Last Name     
-**email**         | string      | Email Address
+**first_name**    | string      | First name of the user   
+**last_name**     | string      | Last Name of the user
+**email**         | string      | Email Address of the user
 **sms_phone**     | string      | Optional\* <br/>Phone number to be used for SMS messaging
 
 
 \* When TFA authentication scheme is used, and authorization code delivery via SMS at first user's log in is required, the user's SMS phone number must be specified at this time.
 
 
+### Error Status Codes
+
+HTTP Status Code    | Description
+----------------    | -----------
+200 	              | Request succeeded
+400 	              | Unexpected or non-identifiable arguments are supplied
+401 	              | Unauthorized due to invalid session cookie
+403 	              | Forbidden due to the user missing the necessary privileges
+409                 | Email address is currently already in use
 
 <!--
 Parameter         | Data Type   | Description   | Is Required
@@ -294,7 +429,7 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-id              | string      | Unique identifier for the user
+id              | string      | Unique identifier of the user
 
 <!--===================================================================-->
 ## Update User
@@ -319,9 +454,9 @@ Updates a user
 
 `POST https://login.eagleeyenetworks.com/g/user`
 
-Parameter                   | Data Type     | Description                     | Is Required
----------                   | -----------   | -----------                     | -----------
-**id**                      | string        | Unique identifier for user      | true
+Parameter                   | Data Type     | Description                         | Is Required
+---------                   | -----------   | -----------                         | -----------
+**id**                      | string        | Unique identifier of the user       | true
 first_name                  | string        | First name of the user    
 last_name                   | string        | Last name of the user
 email                       | string        | Email address of the user (email must only contain ASCII characters)
@@ -347,17 +482,17 @@ is_recorded_video           | int           | Indicates whether the user is auth
 is_edit_cameras             | int           | Indicates whether the user is authorized to edit cameras (1) or not (0)
 is_edit_all_users           | int           | Indicates whether the user is authorized to manage users who are not administrator users in master account (1) or not (0)
 is_edit_account             | int           | Indicates whether the user is authorized to edit account settings (1) or not (0)
-is_edit_ptz_stations        | int           | Indicates whether the user is authorized to edit ptz stations (1) or not (0)
+is_edit_ptz_stations        | int           | Indicates whether the user is authorized to edit PTZ stations (1) or not (0)
 is_view_preview_video       | int           | Indicates whether the user is authorized to view preview images from cameras (1) or not (0)
 is_edit_camera_on_off       | int           | Indicates whether the user is authorized to turn cameras on and off (1) or not (0)
 is_edit_camera_less_billing | int           | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)
 is_edit_all_and_add         | int           | Indicates whether the user is authorized to add/edit/delete bridges and cameras (1) or not (0)
 is_edit_sharing             | int           | Indicates whether the user is authorized to view and edit 'Sharing' & 'Responders' tabs under account settings (1) or not (0)
-is_ptz_live                 | int           | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of ptz cameras (1) or not (0)
+is_ptz_live                 | int           | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)
 is_edit_users               | int           | Indicates whether the user is authorized to manage users who are not administrator users is sub account (1) or not (1)
 is_edit_admin_users         | int           | Indicates whether the user is authorized to manage all users in sub account (1) or not (0)
 is_edit_motion_areas        | int           | Indicates whether the user is authorized to view and edit 'Motion' tab under camera settings (1) or not (0)
-camera_access               | array         | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device id, and the second field is a string of 1 or more characters indicating permissions for the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account_superusers can edit this field
+camera_access               | array         | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device unique identifier, and the second field is a string of 1 or more characters indicating permissions of the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account_superusers can edit this field
 sms_phone                   | string        | Phone number to be used for SMS messaging
 is_sms_include_picture      | int           | Indicates whether user want to use MMS messaging to include a picture with alert messages sent to the sms_phone number (1) or not (0)
 alternate_email             | string        | Alternate email address
@@ -373,7 +508,17 @@ is_view_contract            | int            | Indicates whether the user is aut
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-id              | string      | Unique identifier for the user
+id              | string      | Unique identifier of the user
+
+### Error Status Codes
+
+HTTP Status Code    | Description
+----------------    | -----------
+200 	              | Request succeeded
+400 	              | Unexpected or non-identifiable arguments are supplied
+401 	              | Unauthorized due to invalid session cookie
+403 	              | Forbidden due to the user missing the necessary privileges
+404 	              | No user matching the unique identifier was found
 
 <!--===================================================================-->
 ## Delete User
@@ -392,7 +537,18 @@ Deletes a user
 
 Parameter     | Data Type   | Description
 ---------     | ----------- | -----------
-**id**        | string      | User Id
+**id**        | string      | Unique identifier of the user
+
+
+### Error Status Codes
+
+HTTP Status Code    | Description
+----------------    | -----------
+200 	              | Request succeeded
+400 	              | Unexpected or non-identifiable arguments are supplied
+401 	              | Unauthorized due to invalid session cookie
+403 	              | Forbidden due to the user missing the necessary privileges
+404 	              | No user matching the unique identifier was found
 
 <!--===================================================================-->
 ## Get List of Users
@@ -443,7 +599,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 ]
 ```
 
-Returns array of arrays, with each sub-array representing a user available to the current user. Please note that the ListUser model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
+Returns array of arrays, with each sub-array representing a user available to the current user. Please note that the model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
 
 ### HTTP Request
 
@@ -453,9 +609,17 @@ Returns array of arrays, with each sub-array representing a user available to th
 
 Array Index     | Attribute   | Data Type       | Description
 ---------       | ----------- | -----------     | -----------
-0               | id          | string          | Unique identifier for the user
+0               | id          | string          | Unique identifier of the user
 1               | first_name  | string          | First Name of the user
 2               | last_name   | string          | Last Name of the user
 3               | email       | string          | Email address of the user
 4               | permissions | array[string]   | List of permissions the user has
 5               | last_login  | string          | Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN
+
+### Error Status Codes
+
+HTTP Status Code    | Description
+----------------    | -----------
+200 	              | Request succeeded
+401 	              | Unauthorized due to invalid session cookie
+403 	              | Forbidden due to the user missing the necessary privileges
