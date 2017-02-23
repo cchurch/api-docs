@@ -14,8 +14,8 @@ The user service allows managing users but only with the necessary permissions.
 ```json
 {
     "id": "ca0e1cf2",
-    "first_name": null,
-    "last_name": "",
+    "first_name": "Firstname",
+    "last_name": "Lastname",
     "email": "john.doe@fakeemail.com",
     "owner_account_id": "00004206",
     "active_account_id": "00004206",
@@ -25,25 +25,49 @@ The user service allows managing users but only with the necessary permissions.
     "is_staff": 0,
     "is_active": 1,
     "is_pending": 0,
-    "is_master": 0,
+    "is_master": 1,
     "is_user_admin": 1,
     "is_layout_admin": 1,
     "is_live_video": 1,
     "is_device_admin": 1,
     "is_export_video": 1,
     "is_recorded_video": 1,
-    "street": [],
-    "city": null,
-    "state": null,
+    "is_edit_cameras": 1,
+    "is_edit_all_users": 1,
+    "is_edit_account": 1,
+    "is_system_notifications_disabled": 0,
+    "is_edit_ptz_stations": 1,
+    "is_view_preview_video": 1,
+    "is_edit_camera_on_off": 1,
+    "is_edit_camera_less_billing": 1,
+    "is_edit_all_and_add": 1,
+    "is_edit_sharing": 1,
+    "is_mobile_branded": 0,
+    "is_edit_admin_users": 1,
+    "is_view_contract": 1,
+    "is_ptz_live": 1,
+    "is_view_audit_trail": 1,
+    "is_edit_users": 1,
+    "is_edit_motion_areas": 1,
+    "is_two_factor_authentication_enabled": 0,
+    "user_authenticated_clients": null,
+    "account_utc_offset": -21600,
+    "account_work_days": "1111100",
+    "account_work_hours": ["0800", "1730"],
+    "language": "en-us",
+    "inactive_session_timeout": 15,
+    "street": ["address line 1", "address line 2"],
+    "city": "New York",
+    "state": "Alaska",
     "country": "US",
-    "postal_code": null,
-    "phone": null,
-    "mobile_phone": null,
-    "utc_offset": -25200,
+    "postal_code": "9980-999",
+    "phone": "111111111",
+    "mobile_phone": "000000000",
+    "utc_offset": -21600,
     "timezone": "US/Pacific",
     "last_login": "20141006173752.672",
-    "alternate_email": null,
-    "sms_phone": null,
+    "alternate_email": "alternate.email@fakeemail.com",
+    "sms_phone": "222111222",
     "is_sms_include_picture": 0,
     "json": "{}",
     "camera_access": [
@@ -75,7 +99,15 @@ The user service allows managing users but only with the necessary permissions.
     "is_branded": 1,
     "active_brand_subdomain": "login",
     "account_map_lines": null,
-    "access_period": [],
+    "access_period": [
+        "0-0000-2359",
+        "1-0000-2359",
+        "2-0000-2359",
+        "3-0000-2359",
+        "4-0000-2359",
+        "5-0000-2359",
+        "6-0000-2359"
+    ],
     "is_terms_noncompliant": 1
 }
 ```
@@ -84,13 +116,13 @@ The user service allows managing users but only with the necessary permissions.
 
 Parameter                            | Data Type            | Description
 ---------                            | ---------            | -----------
-id                                   | string               | Unique identifier of the user
-first_name                           | string               | First name of the user
-last_name                            | string               | Last name of the user
-email                                | string               | Email address of the user (email must only contain ASCII characters)
-owner_account_id                     | string               | Unique identifier of the account that the user belongs to
-active_account_id                    | string               | Unique identifier of the user's active account. When switching into a sub account the 'active_account_id' of that user in their session becomes the unique identifier of the sub account they switched into
-uid                                  | string               | An identifier of the user. **This field is for internal use only**
+id                                   | string               | The unique identifier of the user
+first_name                           | string               | The first name of the user
+last_name                            | string               | The last name of the user
+email                                | string               | The email address of the user (email must only contain ASCII characters)
+owner_account_id                     | string               | The unique identifier of the account that the user belongs to
+active_account_id                    | string               | The unique identifier of the user's active account. When switching into a sub account the 'active_account_id' of that user in their session becomes the unique identifier of the sub account they switched into
+uid                                  | string               | The identifier of the user. **This field is for internal use only**
 is_superuser                         | int                  | Indicates whether the user is a super user (1) or not (0). **This field is for internal use only**
 is_account_superuser                 | int                  | Indicates whether the user is an account super user (1) or not (0)
 is_staff                             | int                  | Indicates whether the user is a staff user (1) or not (0). **This field is for internal use only**
@@ -141,7 +173,7 @@ alternate_email                      | string               | Alternate email ad
 sms_phone                            | string               | Phone number to be used for SMS messaging
 is_sms_include_picture               | int                  | Indicates whether user want to use MMS messaging to include a picture with alert messages sent to the sms_phone number (1) or not (0)
 json                                 | string               | Misc settings of the user as a JSON string. [UserJson](#userjson-attributes)
-camera_access                        | array[array[string]] | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device unique identifier, and the second field is a string of 1 or more characters indicating permissions of the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share.
+camera_access                        | array[array[string]] | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is the device unique identifier, and the second field is a string of 1 or more characters indicating permissions of the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share.
 layouts                              | array[string]        | List of layouts unique identifiers the user has access to
 is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)
 notify_period                        | array[string]        | Contains the time periods during which the user will receive alert notifications. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications. All times are expressed in local time and use a 24 hour clock formatted as HHMM
@@ -166,10 +198,10 @@ show_AMPM               | boolean       | Indicates whether times should be show
 milliseconds_display    | boolean       | Indicates whether times should be shown with milliseconds (True) or not (False)
 layout_rotation_seconds | int           | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
 motion_boxes            | boolean       | Indicates whether motion boxes should be shown (True) or not (False)
-notify_levels           | array[int]    | 
+notify_levels           | array[int]    | These integers indicate what types of alert notifications emails the user wants to receive (1="High", 2="Low", 3="System"). When creating motion alerts for a camera, the user can choose "High" or "Low", so if a motion alert is set to "High", if the user has chosen to receive "High" alert notifications then they will receive them for that motion alert. "System" are camera status changes (online/offline/off/internet offline, etc.). So when a camera changes status, any user that has chosen to receive "System" alert notifications will get notified of the camera status changes in their account.
 permissions             | json          | **Deprecated.** This is for backwards compatibility
 employee_id             | string        | It is an identifier that user with permissions can set for other users
-layouts                 | json          | JSON formatted data keyed by account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered in the way the user wants to see them in their graphical user interface
+layouts                 | json          | JSON formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered in the way the user wants to see them in their graphical user interface
 
 <!--===================================================================-->
 
@@ -324,16 +356,16 @@ or
 
 curl --cookie "auth_key=[AUTH_KEY]" -G https://login.eagleeyenetworks.com/g/user -d id=[USER_ID]
 ```
-Returns a user object by unique identifier. If no unique identifier is passed in the request, then it will attempt to get the data of the user that is authenticated and making the call.
+Returns the user object by the unique identifier. If no unique identifier is passed in the request, then it will attempt to get the data of the user that is authenticated and making the call.
 
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/user`
 
-Parameter | Data Type   | Description                   | Is Required
---------- | ----------- | -----------                   | -----------
-id        | string      | Unique identifier of the user | false
+Parameter | Data Type   | Description                       | Is Required
+--------- | ----------- | -----------                       | -----------
+id        | string      | The unique identifier of the user | false
 
 
 ### Error Status Codes
@@ -372,14 +404,19 @@ Creates a new user. After being created the user is in the pending state ('is_pe
 
 Parameter         | Data Type   | Description   
 ---------         | ----------- | -----------   
-**first_name**    | string      | First name of the user   
-**last_name**     | string      | Last Name of the user
-**email**         | string      | Email Address of the user
+**first_name**    | string      | The first name of the user   
+**last_name**     | string      | The last name of the user
+**email**         | string      | The email address of the user
 **sms_phone**     | string      | Optional\* <br/>Phone number to be used for SMS messaging
 
 
 \* When TFA authentication scheme is used, and authorization code delivery via SMS at first user's log in is required, the user's SMS phone number must be specified at this time.
 
+### Response Json Attributes
+
+Parameter       | Data Type   | Description
+---------       | ----------- | -----------
+id              | string      | The unique identifier of the user
 
 ### Error Status Codes
 
@@ -389,7 +426,7 @@ HTTP Status Code    | Description
 400 	              | Unexpected or non-identifiable arguments are supplied
 401 	              | Unauthorized due to invalid session cookie
 403 	              | Forbidden due to the user missing the necessary privileges
-409                 | Email address is currently already in use
+409                 | The email address is currently already in use
 
 <!--
 Parameter         | Data Type   | Description   | Is Required
@@ -424,13 +461,6 @@ notify_rule           | array   | Contains alert notification rules Each rule co
 -->
 
 
-
-### Response Json Attributes
-
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier of the user
-
 <!--===================================================================-->
 ## Update User
 
@@ -454,16 +484,16 @@ Updates a user
 
 `POST https://login.eagleeyenetworks.com/g/user`
 
-Parameter                   | Data Type     | Description                         | Is Required
----------                   | -----------   | -----------                         | -----------
-**id**                      | string        | Unique identifier of the user       | true
-first_name                  | string        | First name of the user    
-last_name                   | string        | Last name of the user
-email                       | string        | Email address of the user (email must only contain ASCII characters)
+Parameter                   | Data Type     | Description                             | Is Required
+---------                   | -----------   | -----------                             | -----------
+**id**                      | string        | The unique identifier of the user       | true
+first_name                  | string        | The first name of the user    
+last_name                   | string        | The last name of the user
+email                       | string        | The email address of the user (email must only contain ASCII characters)
 phone                       | string        | Phone number
 mobile_phone                | string        | Mobile phone number
-uid                         | string        | An identifier of the user. Only superusers can set this. **This field is for internal use only**
-owner_account_id            | string        | Unique identifier of the account that the user belongs to. Defaults to account of the user creating it. Must be an account the user has access to. For superusers, it can be any account, for account superusers, it can be theirs or a child account
+uid                         | string        | The identifier of the user. Only superusers can set this. **This field is for internal use only**
+owner_account_id            | string        | The unique identifier of the account that the user belongs to. Defaults to account of the user creating it. Must be an account the user has access to. For superusers, it can be any account, for account superusers, it can be theirs or a child account
 street                      | array[string] | Array of strings containing street addresses [address line 1, address line 2]
 city                        | string        | City
 state                       | string        | State/province
@@ -492,7 +522,7 @@ is_ptz_live                 | int           | Indicates whether the user is auth
 is_edit_users               | int           | Indicates whether the user is authorized to manage users who are not administrator users is sub account (1) or not (1)
 is_edit_admin_users         | int           | Indicates whether the user is authorized to manage all users in sub account (1) or not (0)
 is_edit_motion_areas        | int           | Indicates whether the user is authorized to view and edit 'Motion' tab under camera settings (1) or not (0)
-camera_access               | array         | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is a device unique identifier, and the second field is a string of 1 or more characters indicating permissions of the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account_superusers can edit this field
+camera_access               | array         | Array of arrays, one per device for which the user has permissions. Each sub array contains two elements. The first field is the device unique identifier, and the second field is a string of 1 or more characters indicating permissions of the user, for example: [‘cafedead’,’RWS’] = user can view, change, delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account_superusers can edit this field
 sms_phone                   | string        | Phone number to be used for SMS messaging
 is_sms_include_picture      | int           | Indicates whether user want to use MMS messaging to include a picture with alert messages sent to the sms_phone number (1) or not (0)
 alternate_email             | string        | Alternate email address
@@ -508,7 +538,7 @@ is_view_contract            | int            | Indicates whether the user is aut
 
 Parameter       | Data Type   | Description
 ---------       | ----------- | -----------
-id              | string      | Unique identifier of the user
+id              | string      | The unique identifier of the user
 
 ### Error Status Codes
 
@@ -537,7 +567,7 @@ Deletes a user
 
 Parameter     | Data Type   | Description
 ---------     | ----------- | -----------
-**id**        | string      | Unique identifier of the user
+**id**        | string      | The unique identifier of the user
 
 
 ### Error Status Codes
@@ -609,10 +639,10 @@ Returns array of arrays, with each sub-array representing a user available to th
 
 Array Index     | Attribute   | Data Type       | Description
 ---------       | ----------- | -----------     | -----------
-0               | id          | string          | Unique identifier of the user
-1               | first_name  | string          | First Name of the user
-2               | last_name   | string          | Last Name of the user
-3               | email       | string          | Email address of the user
+0               | id          | string          | The unique identifier of the user
+1               | first_name  | string          | The first name of the user
+2               | last_name   | string          | The last name of the user
+3               | email       | string          | The email address of the user
 4               | permissions | array[string]   | List of permissions the user has
 5               | last_login  | string          | Last time the user logged in, in EEN timestamp format: YYYYMMDDHHMMSS.NNN
 
