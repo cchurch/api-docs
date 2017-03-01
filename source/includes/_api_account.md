@@ -198,7 +198,7 @@ is_rtsp_cameras_enabled               | int                  | Indicates whether
 brand_support_phone                   | string               | Branded support phone number                                                         | true     |
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to                         | true     |
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)                                                                                                                                             | true     |
-contact_utc_offset                    | int                  | This field is deprecated and not used                                                | true     |
+contact_utc_offset                    | int                  | **Deprecated.** This field is no longer being used                                   | true     |
 
 
 <!--===================================================================-->
@@ -360,7 +360,7 @@ brand_support_phone                   | string               | Branded support p
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to
 customer_id                           | string               | Arbitrary id assigned to a sub-account by a master account
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)
-contact_utc_offset                    | int                  | This field is deprecated and not used
+contact_utc_offset                    | int                  | **Deprecated.** This field is no longer being used
 
 ### Error Status Codes
 
