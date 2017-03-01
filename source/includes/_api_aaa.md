@@ -118,7 +118,7 @@ HTTP Status Code    | Description
 460	| Account is inactive
 461	| Account is pending
 462	| User is pending
-202	| An reset email has been sent to the supplied email address. This status will be provided even if the email address was not found. This prevents attacks to discover user accounts
+202	| A reset email has been sent to the supplied email address. This status will be provided even if the email address was not found. This prevents attacks to discover user accounts
 
 <!--===================================================================-->
 ## Check Password Reset Token
