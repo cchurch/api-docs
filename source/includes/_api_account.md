@@ -2,11 +2,13 @@
 
 <!--===================================================================-->
 ## Overview
+<!--===================================================================-->
 
 The account service allows managing accounts by superusers and account superusers
 
 <!--===================================================================-->
 ## Account Model
+<!--===================================================================-->
 
 > Account Model
 
@@ -133,7 +135,7 @@ The account service allows managing accounts by superusers and account superuser
     "brand_subdomain": "c9000"
 }
 ```
-<!--Need to update the recording and search sections-->
+
 ### Account Attributes
 
 Parameter                             | Data Type            | Description                                                                          | Editable | Required
@@ -144,7 +146,7 @@ owner_account_id 		                  | string 		           | Id of the parent ac
 contact_first_name 		                | string 		           | First name of primary contact for account                                            | true     | PUT
 contact_last_name  		                | string 		           | Last name of primary contact for account                                             | true     | PUT
 contact_email 			                  | string 		           | Email of primary contact for account                                                 | true     |
-contact_street 			                  | array[string]        | Array of strings containing street addresses of the primary contact for account [address line 1, address line 2]                                                                                                                                                  | true     |
+contact_street 			                  | array[string]        | Array of strings containing street addresses of the primary contact for account ['address line 1', 'address line 2']                                                                                                                                                 | true     |
 contact_city 			                    | string 		           | City of primary contact for account                                                  | true     |
 contact_state 			                  | string 		           | State/province of primary contact for account                                        | true     |
 contact_postal_code 	                | string 		           | Zip/postal code of primary contact for account                                       | true     |
@@ -163,7 +165,7 @@ work_hours 				                    | array[string]        | Two entries. Each en
 alert_mode 				                    | array[string]        | Array of strings containing possible alert modes as defined for this account. Accepts an array of any number of strings of varying length. This controls what values are able to be chosen for the 'active_alert_mode field'                                        | true     |
 active_alert_mode 		                | string               | A string chosen from values in the account 'alert_mode' array. Must be blank or one of the values defined in the alert_mode array. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account 'active_alert_mode' is also set to that same alert mode string defined for that motion alert                                                                               | true     |
 default_camera_passwords              | string               | Comma-delimited string of default camera passwords                                   | true     |
-camera_shares 			                  | array[array[string]] | Array of arrays, with each sub array representing a camera to be shared to 1 or more recipients. First element of sub array is action, with 'm' for add/update. Second element of sub array is camera id. Third element of sub array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His account', joe2@dd.com,That account']]                                                                                                                                          | true     |
+camera_shares 			                  | array[array[string]] | Array of arrays, with each sub-array representing a camera to be shared to 1 or more recipients. First element of sub-array is action, with 'm' for add/update. Second element of sub-array is camera id. Third element of sub-array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His account', joe2@dd.com,That account']]                                                                                                                                          | true     |
 is_revoke_admins		                  | int      		         | Indicates whether to revoke all admin permissions for the users in the account (1) or not (0). This field doesn't save anything on the account itself. It will revoke admin privileges of any admins in the account                                                   | true     |
 is_master 				                    | int 			           | Indicates whether the account is a master account (1) or not (0)                     | false    |
 is_active 				                    | int 			           | Indicates whether the account is active (1) or not (0)                               | false    |
@@ -200,9 +202,9 @@ default_cluster                       | string               | Indicates the dat
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)                                                                                                                                             | true     |
 contact_utc_offset                    | int                  | **Deprecated.** This field is no longer being used                                   | true     |
 
-
 <!--===================================================================-->
 ## Get Account
+<!--===================================================================-->
 
 > Request
 
@@ -232,6 +234,7 @@ HTTP Status Code    | Description
 
 <!--===================================================================-->
 ## Create Account
+<!--===================================================================-->
 
 > Request
 
@@ -260,7 +263,7 @@ owner_account_id  		                | string      	| Id of the parent account. D
 **contact_first_name**	              | string      	| First name of primary contact for account                                                              | true
 **contact_last_name**	                | string        | Last name of primary contact for account                                                               | true
 **contact_email**		                  | string        | Email of primary contact for account                                                                   | true
-contact_street			                  | array[string] | Array of strings containing street addresses of the primary contact for account [address line 1, address line 2]
+contact_street			                  | array[string] | Array of strings containing street addresses of the primary contact for account ['address line 1', 'address line 2']
 contact_city			                    | string      	| City of primary contact for account
 contact_state			                    | string      	| State/province of primary contact for account
 contact_postal_code		                | string      	| Zip/postal code of primary contact for account
@@ -287,6 +290,7 @@ HTTP Status Code    | Description
 
 <!--===================================================================-->
 ## Update Account
+<!--===================================================================-->
 
 > Request
 
@@ -315,7 +319,7 @@ name  					                      | string  		         | Name of the account
 contact_first_name		                | string      	       | First name of primary contact for account
 contact_last_name		                  | string      	       | Last name of primary contact for account
 contact_email			                    | string      	       | Email of primary contact for account
-contact_street			                  | array[string]        | Array of strings containing street addresses of the primary contact for account [address line 1, address line 2]
+contact_street			                  | array[string]        | Array of strings containing street addresses of the primary contact for account ['address line 1', 'address line 2']
 contact_city			                    | string      	       | City of primary contact for account
 contact_state			                    | string      	       | State/province of primary contact for account
 contact_postal_code		                | string      	       | Zip/postal code of primary contact for account
@@ -333,7 +337,7 @@ work_hours				                    | array[string]        | Two entries. Each ent
 alert_mode 				                    | array[string]        | Array of strings containing possible alert modes as defined for this account. Accepts an array of any number of strings of varying length. This controls what values are able to be chosen for the 'active_alert_mode field'
 active_alert_mode 		                | string      	       | A string chosen from values in the account 'alert_mode' array. Must be blank or one of the values defined in the alert_mode array. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account 'active_alert_mode' is also set to that same alert mode string defined for that motion alert
 default_camera_passwords              | string      	       | Comma-delimited string of default camera passwords
-camera_shares 			                  | array[array[string]] | Array of arrays, with each sub array representing a camera to be shared to 1 or more recipients. First element of sub array is action, with 'm' for add/update. Second element of sub array is camera id. Third element of sub array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His account', joe2@dd.com,That account']]
+camera_shares 			                  | array[array[string]] | Array of arrays, with each sub-array representing a camera to be shared to 1 or more recipients. First element of sub-array is action, with 'm' for add/update. Second element of sub-array is camera id. Third element of sub-array is a string containing 1 or multiple recipients. Each recipient is a string value of 'email,account', but only applies to the 'm' action. Example: [['m', '12345678', 'joe@em.com,His account', joe2@dd.com,That account']]
 is_revoke_admins		                  | int      		         | Indicates whether to revoke all admin permissions for the users in the account (1) or not (0). This field doesn't save anything on the account itself. It will revoke admin privileges of any admins in the account
 is_custom_brand			                  | int      		         | Indicates whether the account has branding enabled (1) or not (0)
 brand_logo_small		                  | string      	       | Base64 encoded image for the branded small logo (PNG, 160x52, transparent background)
@@ -374,6 +378,7 @@ HTTP Status Code    | Description
 
 <!--===================================================================-->
 ## Delete Account
+<!--===================================================================-->
 
 > Request
 
@@ -403,6 +408,7 @@ HTTP Status Code    | Description
 
 <!--===================================================================-->
 ## Get List of Accounts
+<!--===================================================================-->
 
 > Request
 
@@ -467,8 +473,6 @@ Array Index		| Attribute   			     | Data Type | Description
 15            | last_login             | string    | EEN timestamp of the last login by this account
 16            | average_retention_days | int       | The average number of retention days for the account
 17            | customer_id            | string    | The customer id assigned to this account
-
-<!---TODO Update Account Array Attributes-->
 
 ### Error Status Codes
 
