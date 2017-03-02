@@ -200,6 +200,7 @@ is_rtsp_cameras_enabled               | int                  | Indicates whether
 brand_support_phone                   | string               | Branded support phone number                                                         | true     |
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to                         | true     |
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)                                                                                                                                             | true     |
+map_lines                             | string               | This is used by the front end to overlay lines over a map of the cameras for the account                                                                                                                                             | true     |
 contact_utc_offset                    | int                  | **Deprecated.** This field is no longer being used                                   | true     |
 
 <!--===================================================================-->
@@ -218,14 +219,14 @@ Return an Account object by id
 
 `GET https://login.eagleeyenetworks.com/g/account`
 
-Parameter 	| Data Type   | Description | Is Required
---------- 	| ---------   | ----------- | -----------
-**id**  	  | string      | Account id 	| true
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**  	| string    | Account id 	| true
 
 ### Error Status Codes
 
-HTTP Status Code    | Description
-----------------    | -----------
+HTTP Status Code | Description
+---------------- | -----------
 200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -284,8 +285,8 @@ is_initial_user_not_admin             | int      	    | Indicates whether the in
 
 ### Error Status Codes
 
-HTTP Status Code    | Description   
-----------------    | -----------
+HTTP Status Code | Description   
+---------------- | -----------
 409	| Another account with the supplied contact email address already exists
 
 <!--===================================================================-->
@@ -364,12 +365,13 @@ brand_support_phone                   | string               | Branded support p
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to
 customer_id                           | string               | Arbitrary id assigned to a sub-account by a master account
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)
+map_lines                             | string               | This is used by the front end to overlay lines over a map of the cameras for the account
 contact_utc_offset                    | int                  | **Deprecated.** This field is no longer being used
 
 ### Error Status Codes
 
-HTTP Status Code    | Description
-----------------    | -----------
+HTTP Status Code | Description
+---------------- | -----------
 200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -392,14 +394,14 @@ Delete an Account
 
 `DELETE https://login.eagleeyenetworks.com/g/account`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Account id
+Parameter | Data Type | Description
+--------- | --------- | -----------
+**id**    | string    | Account id
 
 ### Error Status Codes
 
-HTTP Status Code    | Description  
-----------------    | -----------
+HTTP Status Code | Description  
+---------------- | -----------
 200	| Delete succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -453,31 +455,31 @@ Return an array of arrays, with each sub-array representing an account available
 
 ### Account Array Attributes
 
-Array Index		| Attribute   			     | Data Type | Description
------------ 	| ---------              | --------- | -----------
-0             | id          			     | string    | Unique identifier for the account
-1 				    | name 					         | string 	 | Name of the account
-2 				    | camera_online_count	   | int 			 | Number of cameras currently online in the account
-3				      | camera_count 			     | int 			 | Number of cameras currently in the account
-4 				    | user_count 			       | int 		   | Number of users currently in the account
-5 				    | is_suspended 			     | int 			 | Indicates whether the account is suspended (1) or not (0)
-6 				    | is_inactive 			     | int 			 | Indicates whether the account is inactive (1) or not (0)
-7 				    | is_active 			       | int 			 | Indicates whether the account is active (1) or not (0)
-8 				    | product_edition 		   | string 	 | Product edition the account is using
-9             | bridge_online_count    | int       | Number of online bridges owned by the account
-10            | bridge_active_count    | int       | Number of active bridges owned by the account
-11            | bridge_count           | int       | Number of bridges owned by the account
-12            | camera_off_count       | int       | Number of account cameras that are currently offline
-13            | camera_available_count | int       | Number of available cameras in the account
-14            | is_account_active      | int       | Indicates the account is active (1) or not (0)
-15            | last_login             | string    | EEN timestamp of the last login by this account
-16            | average_retention_days | int       | The average number of retention days for the account
-17            | customer_id            | string    | The customer id assigned to this account
+Array Index | Attribute   			     | Data Type | Description
+----------- | ---------              | --------- | -----------
+0           | id          			     | string    | Unique identifier for the account
+1 				  | name 					         | string 	 | Name of the account
+2 				  | camera_online_count	   | int 			 | Number of cameras currently online in the account
+3				    | camera_count 			     | int 			 | Number of cameras currently in the account
+4 				  | user_count 			       | int 		   | Number of users currently in the account
+5 				  | is_suspended 			     | int 			 | Indicates whether the account is suspended (1) or not (0)
+6 				  | is_inactive 			     | int 			 | Indicates whether the account is inactive (1) or not (0)
+7 				  | is_active 			       | int 			 | Indicates whether the account is active (1) or not (0)
+8 				  | product_edition 		   | string 	 | Product edition the account is using
+9           | bridge_online_count    | int       | Number of online bridges owned by the account
+10          | bridge_active_count    | int       | Number of active bridges owned by the account
+11          | bridge_count           | int       | Number of bridges owned by the account
+12          | camera_off_count       | int       | Number of account cameras that are currently offline
+13          | camera_available_count | int       | Number of available cameras in the account
+14          | is_account_active      | int       | Indicates the account is active (1) or not (0)
+15          | last_login             | string    | EEN timestamp of the last login by this account
+16          | average_retention_days | int       | The average number of retention days for the account
+17          | customer_id            | string    | The customer id assigned to this account
 
 ### Error Status Codes
 
-HTTP Status Code    | Description   
-----------------    | -----------
+HTTP Status Code | Description   
+---------------- | -----------
 200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
