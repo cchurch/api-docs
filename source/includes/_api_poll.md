@@ -181,24 +181,24 @@ Response headers: set_cookie: ee-poll-ses=xxxxxx
 
 `POST https://login.eagleeyenetworks.com/poll`
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-cameras 		| [PostPollCameras](#postpollcameras-attributes) | Cameras
+Parameter       | Data Type | Description
+---------       | --------- | -----------
+cameras 		    | [PostPollCameras](#postpollcameras-attributes) | Cameras
 
 ### PostPollCameras Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-<camera_id> 	| [PostPollCamera](#postpollcamera-attributes) | camera_id holding the data structure for the camera
+Parameter       | Data Type | Description
+---------       | --------- | -----------
+<camera_id> 	  | [PostPollCamera](#postpollcamera-attributes) | camera_id holding the data structure for the camera
 
   - Note This json attribute contains as many PostPollCamera json objects as the user desires. The key for each PostPollCamera is the camera_id.
 
 ### PostPollCamera Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-resource 		| array[string, enum] | enum: pre, thumb, status, event
-event 			| array[string, enum] | enum: [event objects](#event-objects)
+Parameter       | Data Type | Description
+---------       | --------- | -----------
+resource 		    | array[string, enum] | enum: pre, thumb, status, event
+event 			    | array[string, enum] | enum: [event objects](#event-objects)
 
 > Json Response
 
