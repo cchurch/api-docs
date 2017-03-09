@@ -21,7 +21,7 @@ Used to query the bandwidth usage for a particular camera device.
 `GET https://login.eagleeyenetworks.com/g/metric/camerabandwidth`
 
 Parameter       | Data Type   	| Description  	| Is Required
----------       | ----------- 	| -----------  	| ----------- 
+---------       | ----------- 	| -----------  	| -----------
 **id**   		| string      	| Bridge Id 	| true
 start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago.
 end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
@@ -90,9 +90,9 @@ metric          | string, enum  | String delimited list used to filter which met
 
 Parameter       | Data Type                     | Description   
 ---------       | -----------                   | -----------  
-core            | array[[CameraCore](#cameracore-json-array-elements)]     | Array of core metrics
-packets         | array[[CameraPackets](#camerapackets-json-array-elements)]  | Array of packet metrics
-motion          | array[[CameraMotion](#cameramotion-json-array-elements)] | Array of motion metrics
+core            | array[[CameraCore](#cameracore-json-array-elements)]       | Array of core metrics
+packets         | array[[CameraPackets](#camerapackets-json-array-elements)] | Array of packet metrics
+motion          | array[[CameraMotion](#cameramotion-json-array-elements)]   | Array of motion metrics
 
 ### CameraCore Json Array Elements
 
@@ -123,7 +123,7 @@ Index       | Data Type     | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -146,7 +146,7 @@ Used to query the bandwidth usage for a particular bridge device.
 `GET https://login.eagleeyenetworks.com/g/metric/bridgebandwidth`
 
 Parameter       | Data Type   	| Description  	| Is Required
----------       | ----------- 	| -----------  	| ----------- 
+---------       | ----------- 	| -----------  	| -----------
 **id**   		| string      	| Bridge Id 	| true
 start_timestamp | string      	| Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago.
 end_timestamp  	| string   		| End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now.
@@ -231,7 +231,7 @@ Parameter       | Data Type         | Description
 ---------       | -----------       | -----------  
 core            | array[[BridgeCore](#bridgecore-json-array-elements)]       | Array of core metrics
 bandwith        | array[[BridgeBandwidth](#bridgecore-json-array-elements)]  | Array of bandwidth metrics
-storage         | array[BridgeStorage](#bridgestorage-json-array-elements)]    | Array of storage metrics
+storage         | array[[BridgeStorage](#bridgestorage-json-array-elements)] | Array of storage metrics
 
 ### BridgeCore Json Array Elements
 
@@ -262,7 +262,7 @@ Index       | Data Type     | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
