@@ -205,8 +205,8 @@ employee_id             | string     | Identifier which a user with the necessar
 layouts                 | json       | JSON formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
 
 <!--===================================================================-->
-
 ## Permissions
+<!--===================================================================-->
 
 There are several user types:  
 
@@ -222,6 +222,7 @@ The account superuser has a full set of permissions. This user can manage all us
 After being created the regular user has several default permissions : 'is_live_video', 'is_recorded_video', 'is_export_video'
 
 ### List of permissions
+
 Required Parameter          | Description
 ------------------          | -----------
 is_superuser                | **Internal use only**
@@ -249,6 +250,7 @@ is_user_admin               | **Deprecated.** This is for backwards compatibilit
 
 
 ### User Permission Matrix
+
 The table below shows which user management actions a user can execute depending on the account they belong to and which permission flags they have enabled
 
 <table style="margin-top:30px;">
@@ -370,11 +372,11 @@ id        | string    | Unique identifier of the user | false
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 404 | No user matching the unique identifier was found
+200 | Request succeeded
 
 <!--===================================================================-->
 ## Create User
@@ -419,11 +421,11 @@ id        | string    | Unique identifier of the user
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 409 | The email address is currently already in use
+200 | Request succeeded
 
 <!--===================================================================-->
 ## Update User
@@ -509,11 +511,11 @@ id        | string    | Unique identifier of the user
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 404 | No user matching the unique identifier was found
+200 | Request succeeded
 
 <!--===================================================================-->
 ## Delete User
@@ -539,11 +541,11 @@ Parameter | Data Type | Description
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 404 | No user matching the unique identifier was found
+200 | Request succeeded
 
 <!--===================================================================-->
 ## Get List of Users
@@ -616,6 +618,6 @@ Array Index | Attribute   | Data Type     | Description
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
+200 | Request succeeded
