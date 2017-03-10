@@ -227,11 +227,11 @@ Parameter | Data Type | Description | Is Required
 
 HTTP Status Code | Description
 ---------------- | -----------
-200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
 404	| Account not found with the supplied ID
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Create Account
@@ -372,11 +372,11 @@ contact_utc_offset                    | int                  | **Deprecated.** T
 
 HTTP Status Code | Description
 ---------------- | -----------
-200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
 404	| Account not found with the supplied ID
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Delete Account
@@ -402,11 +402,11 @@ Parameter | Data Type | Description
 
 HTTP Status Code | Description  
 ---------------- | -----------
-200	| Delete succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
 404	| Account not found with the supplied ID
+200	| Delete succeeded
 
 <!--===================================================================-->
 ## Get List of Accounts
@@ -480,7 +480,7 @@ Array Index | Attribute   			     | Data Type | Description
 
 HTTP Status Code | Description   
 ---------------- | -----------
-200	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
