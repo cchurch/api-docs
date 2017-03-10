@@ -488,5 +488,6 @@ A successful handshake can be established even with an incorrect data set in the
 Status Code | Description
 ----------- | -----------
 200	| OK
+400 | Invalid Resource
 401	| Access Denied
 412 | Auth Lost
