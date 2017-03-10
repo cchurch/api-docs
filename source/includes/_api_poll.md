@@ -468,8 +468,8 @@ The server reply completes the handshake. A successful server reply is followed 
 
 Status Code | Description
 ----------- | -----------
-101	| Switching Protocols
 400	| Header is not understood or has an incorrect value
+101	| Switching Protocols
 
 ### Data Exchange
 
@@ -487,7 +487,7 @@ A successful handshake can be established even with an incorrect data set in the
 
 Status Code | Description
 ----------- | -----------
-200	| OK
 400 | Invalid Resource
 401	| Access Denied
 412 | Auth Lost
+200	| OK
