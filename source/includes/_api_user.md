@@ -208,19 +208,20 @@ layouts                 | json       | JSON formatted data keyed by the account 
 
 ## Permissions
 
-There are several user types:
-- superuser **(internal use only)**
-- staff **(internal use only)**
-- account superuser
-- regular user
+There are several user types:  
 
-##### Account superuser
+  - superuser **(internal use only)**
+  - staff **(internal use only)**
+  - account superuser
+  - regular user
+
+**Account superuser**  
 The account superuser has a full set of permissions. This user can manage all users in their account and sub-account. The fact that the user is administrator is indicated by flag: 'is_account_superuser'
 
-##### Regular user
+**Regular user**  
 After being created the regular user has several default permissions : 'is_live_video', 'is_recorded_video', 'is_export_video'
 
-#### List of permissions
+### List of permissions
 Required Parameter          | Description
 ------------------          | -----------
 is_superuser                | **Internal use only**
@@ -247,98 +248,97 @@ is_device_admin             | **Deprecated.** This is for backwards compatibilit
 is_user_admin               | **Deprecated.** This is for backwards compatibility
 
 
-#### User Permission Matrix
+### User Permission Matrix
 The table below shows which user management actions a user can execute depending on the account they belong to and which permission flags they have enabled
 
-
-<table style="font-size:16px;">
-  <tr style="background-color:white;">
-    <td rowspan="3" colspan="3" ></td>
-    <th colspan="4" style="text-align:center;">Who I am</td>
-  </tr>
-  <tr style="background-color:white;">
-    <th colspan="2" style="text-align:center;">In Master Account</td>
-    <th colspan="2" style="text-align:center;">In Child Account</td>
-  </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">Account Superuser (ASU)</td>
-    <th style="text-align:center;">Regular User (RU)</td>
-    <th style="text-align:center;">Account Superuser (ASU)</td>
-    <th style="text-align:center;">Regular User (RU)</td>
-  </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;" rowspan="12">What I can do</td>
-    <th style="text-align:center;" rowspan="3">In own account</td>
-    <th style="text-align:center;">To ASU</td>
-    <td>Get, Create, Update, Delete</td>
-    <td>nothing</td>
-    <td>Get, Create, Update, Delete</td>
-    <td>nothing</td>
-  </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">To RU</td>
-    <td>Get, Create, Update, Delete</td>
-    <td>Get, Create, Update, Delete when is_edit_all_users == True</td>
-    <td>Get, Create, Update, Delete</td>
-    <td>Get, Create, Update, Delete when is_edit_users == True</td>
-  </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">Get list of users</td>
-    <td>yes</td>
-    <td>no</td>
-    <td>yes</td>
-    <td>no</td>
-  </tr style="background-color:white;">
+<table style="margin-top:30px;">
   <tr>
-    <th style="text-align:center;" rowspan="3">In parent account</td>
-    <th style="text-align:center;">To ASU</td>
-    <td colspan="2" rowspan="3" style="background-color:#e6e6e6;text-align:center;">Master Accounts have no parents</td>
-    <td>nothing</td>
-    <td>nothing</td>
+    <td style="background-color:#EAF2F6;" rowspan="3" colspan="3" ></td>
+    <th colspan="4" style="text-align:center; border:solid 1px;background-color:#F3F7FA;">Who I am</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">To RU</td>
-    <td>nothing</td>
-    <td>nothing</td>
+  <tr>
+    <th colspan="2" style="text-align:center;border:solid 1px;background-color:#F3F7FA;">In Master Account</td>
+    <th colspan="2" style="text-align:center;border:solid 1px;background-color:#F3F7FA;">In Child Account</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">Get list of users</td>
-    <td >no</td>
-    <td>no</td>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Account Superuser (ASU)</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Regular User (RU)</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Account Superuser (ASU)</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Regular User (RU)</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;" rowspan="3">In child account</td>
-    <th style="text-align:center;">To ASU</td>
-    <td>Get, Create, Update, Delete</td>
-    <td>Get, Create, Update, Delete when is_edit_admin_users == True</td>
-    <td rowspan="3" colspan="2" style="background-color:#e6e6e6;text-align:center;">Child accounts have no children</td>
+  <tr>
+    <th style="vertical-align:middle; border:solid 1px;background-color:#F3F7FA;" rowspan="12">What I can do</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;" rowspan="3">In own account</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To ASU</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">To RU</td>
-    <td>Get, Create, Update, Delete</td>
-    <td>Get, Create, Update, Delete when is_edit_users==True or is_edit_admin_users==True</td>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To RU</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete when is_edit_all_users == True</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete when is_edit_users == True</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">Get list of users</td>
-    <td>yes</td>
-    <td>yes when is_edit_admin_users == True</td>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Get list of users</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">yes</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">yes</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;" rowspan="3">In sibling account</td>
-    <th style="text-align:center;">To ASU</td>
-    <td rowspan="3" colspan="2" style="background-color:#e6e6e6;text-align:center;">Master Accounts have no siblings</td>
-    <td>nothing</td>
-    <td>nothing</td>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;" rowspan="3">In parent account</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To ASU</td>
+    <td colspan="2" rowspan="3" style="background-color:#EAF2F6;text-align:center;border:solid 1px;vertical-align:middle;">Master Accounts have no parents</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">To RU</td>
-    <td>nothing</td>
-    <td>nothing</td>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To RU</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
   </tr>
-  <tr style="background-color:white;">
-    <th style="text-align:center;">Get list of users</td>
-    <td>no</td>
-    <td>no</td>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Get list of users</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
+  </tr>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;" rowspan="3">In child account</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To ASU</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete when is_edit_admin_users == True</td>
+    <td rowspan="3" colspan="2" style="background-color:#EAF2F6;text-align:center;border:solid 1px;vertical-align:middle;">Child accounts have no children</td>
+  </tr>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To RU</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">Get, Create, Update, Delete when is_edit_users==True or is_edit_admin_users==True</td>
+  </tr>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Get list of users</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">yes</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">yes when is_edit_admin_users == True</td>
+  </tr>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;" rowspan="3">In sibling account</td>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To ASU</td>
+    <td rowspan="3" colspan="2" style="background-color:#EAF2F6;text-align:center;border:solid 1px;vertical-align:middle;">Master Accounts have no siblings</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+  </tr>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">To RU</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">nothing</td>
+  </tr>
+  <tr>
+    <th style="text-align:center;border:solid 1px;background-color:#F3F7FA;vertical-align:middle;">Get list of users</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
+    <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
   </tr>
 </table>
 
