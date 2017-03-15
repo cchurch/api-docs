@@ -15,7 +15,7 @@ Given the macro nature and the number of devices and operations that may occur, 
 ```shell
 ```
 
-Used to turn on recording for 1 camera, all cameras, or all cameras in a specific layout. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 1 (on), and 'video_capture_mode' is set to 'always'.
+Used to turn on recording for 1 camera, all cameras, or all cameras in a specific layout. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 1 (on) and 'video_capture_mode' is set to 'always'.
 
 ### HTTP Request
 
@@ -30,7 +30,7 @@ recording_key   | string      | A key used to tag this recording. Can be used to
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 202 | Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -44,7 +44,7 @@ HTTP Status Code    | Data Type
 ```shell
 ```
 
-Used to turn off recording for 1 camera, all cameras, or all cameras in a specific layout. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 0 (off), and 'video_capture_mode' is set back to 'event' (the default).
+Used to turn off recording for 1 camera, all cameras, or all cameras in a specific layout. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 0 (off) and 'video_capture_mode' is set back to 'event' (the default).
 
 ### HTTP Request
 
@@ -58,7 +58,7 @@ layout_id    	| string      | ID of the layout whose cameras will have recording
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 202	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -73,7 +73,7 @@ HTTP Status Code    | Data Type
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/allon
 ```
 
-Used to turn on all cameras in the caller user’s account. Caller must be an account_superuser.
+Used to turn on all cameras in the caller user’s account. Caller must be an account superuser
 
 ### HTTP Request
 
@@ -82,7 +82,7 @@ Used to turn on all cameras in the caller user’s account. Caller must be an ac
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 202	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
@@ -97,7 +97,7 @@ HTTP Status Code    | Data Type
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/alloff
 ```
 
-Used to turn off all cameras in the caller user’s account. Caller must be an account_superuser.
+Used to turn off all cameras in the caller user’s account. Caller must be an account superuser
 
 ### HTTP Request
 
@@ -106,7 +106,7 @@ Used to turn off all cameras in the caller user’s account. Caller must be an a
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 202	| Request succeeded
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
