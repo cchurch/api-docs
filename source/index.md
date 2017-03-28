@@ -9,7 +9,6 @@ toc_footers:
 
 includes:
   - introduction
-  - api_annotation
   - api_types
   - api_authentication
   - api_aaa
@@ -26,6 +25,7 @@ includes:
   - api_metric
   - api_pngspan
   - api_recording
+  - api_annotation 
   - api_search
   - errors
   - faq
