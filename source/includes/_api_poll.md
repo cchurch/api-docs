@@ -29,7 +29,7 @@ Each object consists of an id element and a list of resource types to be monitor
 Each resource type has a specific object format in response:
 
 Type        | Response          | Notes
-----        | --------          | -----    
+----        | --------          | -----
 video       | [startts, endts]  | List of start, end Timestamps for video segment. Updates at start and per key frame received until end.
 thumb       | thumbts           | Timestamp of latest thumbnail image
 pre         | prets             | Timestamp of latest preview image
@@ -79,7 +79,7 @@ IF "Invalid" (bit 16)==1 THEN no status change (use whatever status bits were se
 ## Event Objects
 
 Four CC   | Description
---------- | -----------      
+-------   | -----------
 VRES      | Video start event
 VREE      | Video end event
 VRKF      | Video key frame event
