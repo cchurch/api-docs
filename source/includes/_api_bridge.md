@@ -2,9 +2,89 @@
 
 <!--===================================================================-->
 ## Overview
-The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the Cameras to be compatible with the EEVB and record the Assets. The Bridge is setup and controlled via a cloud based user inteface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address.
+The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the Cameras to be compatible with the EEVB and record the Assets. The Bridge is setup and controlled via a cloud based user interface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address.
 
 <!--===================================================================-->
+## Bridge Model
+> Json Response
+
+```json
+
+```
+### Device Attributes
+
+Parameter                     | Data Type     | Description
+---------                     | ---------     | -----------
+id                            | string        | A unique identifier of a bridge. It is automatically generated and assigned while adding a device
+guid                          | string        | A globally unique identifier (GUID). A GUID is an immutable device identifier.It is assigned to a device during the production process
+name                          | string        | A user-defined device name
+timezone                      | string        | Indicates a timezone of place where a device is installed. Defaults to the account timezone. Possible values: ‘US/Alaska’ or ‘US/Arizona’ or‘US/Central’ or ‘US/Eastern’ or ‘US/Hawaii’ or ‘America/Anchorage’ or ‘UTC’
+utcOffset                     | int           | A signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field
+tags                          | array[string] | An array of strings, which each string representing a tag
+permissions                   | string        | A string of zero or more characters. Each character defines a permission that the current user has
+bridges                       | null          | **Only applies to Cameras**
+[settings](#settings)         | json          | Basic settings (location, etc.)
+[camera_info](#camera_info)   | json          | Basic informations related to a bridge
+camera_info_status_code       | int           | Indicates whether it was possible to obtain informations about the device (200) or not (404)
+camera_parameters             | json          | Bridge parameters
+camera_parameters_status_code | int           | Indicates whether it was possible to obtain parameters of the device (200) or not (404)
+camera_settings               | string        | **Deprecated.** This is for backwards compatibility
+camera_settings_status_code   | int           | **Deprecated.** This is for backwards compatibility
+
+### settings
+
+Parameter                  | Data Type     | Description
+---------                  | ---------     | -----------
+retention_days             | int           |
+analog_inputs_ignored      | array[string] | An array of numbers of analog inputs which the user wants to ignore.
+event_data_start_timestamp | string        |
+retention_days             | int           |
+local_display_layout_ids   | array[string] | An array of available layouts on a local display
+bridge                     | null          | **Only applies to Cameras**     
+local_retention_days       | int           |
+site_name                  | string        | A user-defined bridge location name
+floor                      | int           | The floor of the building given that it is a multi-storey
+longitude                  | float         | Longitude of the bridge location
+latitude                   | float         | Latitude of the bridge location
+street_address             | string        | A street address of the bridge location
+
+### camera_info
+
+Parameter                 | Data Type | Description
+---------                 | --------- | -----------
+camera_property_model     | string    |
+model                     |	string    |
+camera_property_version   |	string    |
+version                   |	string    |
+camera_property_make      |	string    |
+make                      |	string    |
+camera_abs_newest         |	string    |
+camera_newest             |	string    |
+camera_abs_oldest         |	string    |
+camera_oldest             |	string    |
+uuid                      |	string    | The same thing as the GUID from the [device attributes section](#device_attributes)
+ipaddr                    |	string    | IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *
+esn                       |	string    | The same thing as the id from the [device attributes section](#device_attributes)
+class                     |	string    | Determines the type of a device ("bridge" or "camera")
+service                   |	string    |
+status                    |	string    | A [status bitmask](#status-bitmask) of a bridge
+camera_state_version      |	int       |
+no_video                  |	int       |
+tagmap_status_state       |	int       |
+camera_retention_asset    |	int       |
+camera_retention_etag     |	int       |
+run_mode                  |	string    |
+register_id               |	int       |         
+camera_now                |	string    |
+ssn                       |	string    | A serial number of a bridge
+proxy                     |	string    |
+now                       |	string    |            
+camera_property_analog    |	boolean   |
+status_hex              	| string    | A [status bitmask](#status-bitmask) of a bridge as a hexadecimal value
+camera_retention_interval |	int       |
+camera_valid_ts           |	string    |
+
+
 ## Get Bridge
 
 > Request
@@ -13,184 +93,29 @@ The Bridge is a product of Eagle Eye that sits at the customer location and talk
 curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
 ```
 
-> Json Response
-
-```json
-{
-    "bridges": null,
-    "camera_info_status_code": 404,
-    "name": "Main",
-    "settings": {
-        "bridge": null,
-        "is_logically_deleted": false
-    },
-    "camera_settings_status_code": 200,
-    "camera_info": null,
-    "utcOffset": -25200,
-    "camera_parameters_status_code": 200,
-    "id": "100d88a8",
-    "timezone": "US/Pacific",
-    "guid": "bceb04ec-8b24-4aee-a09a-8479d856e81c",
-    "camera_parameters": {
-        "active_settings": {
-            "max_disk_usage": {
-                "max": 0.97999999999999998,
-                "min": 0.050000000000000003,
-                "d": 0.80000000000000004,
-                "v": 0.80000000000000004
-            },
-            "display_layouts": {
-                "d": {},
-                "v": {}
-            },
-            "local_display_enable": {
-                "max": 1,
-                "min": 0,
-                "d": 0,
-                "v": 0
-            },
-            "bandwidth_background": {
-                "max": 10000000000.0,
-                "min": -1000.0,
-                "d": 100000.0,
-                "v": 100000.0
-            },
-            "bandwidth_recover": {
-                "max": 10000000000.0,
-                "min": 100000.0,
-                "d": 5000000.0,
-                "v": 5000000.0
-            },
-            "stream_stats_present_only": {
-                "max": 1,
-                "min": 0,
-                "d": 1,
-                "v": 1
-            },
-            "retention_days": {
-                "max": 10000,
-                "min": 1,
-                "d": 14,
-                "v": 14
-            },
-            "bridge_retention_days": {
-                "max": 100000,
-                "min": 0,
-                "d": 0,
-                "v": 0
-            },
-            "stream_stats": {
-                "d": "none",
-                "v": "none"
-            },
-            "upnp_enable": {
-                "max": 1,
-                "min": -1,
-                "d": 0,
-                "v": 0
-            },
-            "bandwidth_demand": {
-                "max": 10000000000.0,
-                "min": 100000.0,
-                "d": 10000000.0,
-                "v": 10000000.0
-            },
-            "bandwidth_upload": {
-                "max": 10000000000.0,
-                "min": 100000.0,
-                "d": 1000000.0,
-                "v": 1000000.0
-            },
-            "retention_priority": {
-                "max": 10000,
-                "min": 1,
-                "d": 100,
-                "v": 100
-            },
-            "display_default_enabled": {
-                "max": 1,
-                "min": 0,
-                "d": 1,
-                "v": 1
-            }
-        },
-        "active_filters": [
-            "schedule_bandwidth_background",
-            "user_user"
-        ],
-        "user_settings": {
-            "versions": {},
-            "settings": {
-                "upnp_enable": "0",
-                "bandwidth_background": 50000
-            },
-            "schedules": {
-                "bandwidth_background": {
-                    "priority": 1,
-                    "start": {
-                        "seconds": 0,
-                        "hours": 8,
-                        "months": "*",
-                        "minutes": 0,
-                        "wdays": [
-                            1,
-                            2,
-                            3,
-                            4,
-                            5,
-                            6,
-                            7
-                        ]
-                    },
-                    "end": {
-                        "seconds": 0,
-                        "hours": 17,
-                        "months": "*",
-                        "minutes": 30,
-                        "wdays": [
-                            1,
-                            2,
-                            3,
-                            4,
-                            5,
-                            6,
-                            7
-                        ]
-                    },
-                    "when": "work",
-                    "settings": {
-                        "bandwidth_background": "100000"
-                    }
-                }
-            }
-        }
-    },
-    "tags": [],
-    "permissions": "swr"
-  }
-```
-
 Returns bridge object by id.
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description | Is Required
----------     | ----------- | ----------- | -----------
-**id**        | string      | Bridge Id   | true
+Parameter | Data Type | Description                                                                                       | Is Required
+--------- | --------- | -----------                                                                                       | -----------
+**id**    | string    | A unique identifier of a bridge. It is automatically generated and assigned while adding a device | true
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+HTTP Status Code | Description  
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | No device matching the ConnectID or GUID was found
+
 
 <!--===================================================================-->
-## Add Bridge to EEVB
+## Add Bridge To Account
 
 > Request
 
@@ -206,35 +131,35 @@ curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H
 }
 ```
 
-Adds a bridge to the Eagle Eye Video Bank
+Adds a bridge to the account
 
 ### HTTP Request
 
 `PUT https://login.eagleeyenetworks.com/g/device`
 
-Parameter | Data Type     | Description
---------- | -----------   | -----------
-name      | string        | Bridge Name
-connectID | string        | Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.
+Parameter     | Data Type   | Description                                       | Is Required
+---------     | ----------- | -----------                                       | -----------
+**name**      | string      | A user-defined device name                        | true
+**connectID** | string      | A code delivered with a bridge and assigned to it | true
 
 ### Response Json Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | A unique identifier of a bridge
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No device matching the ConnectID or GUID was found
-409 | ConnectID or GUID is currently already in use by an account
-410 | Communication cannot be made to attach the camera to the bridge
-415 | Device associated with the given GUID is unsupported
+HTTP Status Code | Description   
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | No device matching the ConnectID or GUID was found
+409              | ConnectID or GUID is currently already in use by an account
+410              | Communication cannot be made to attach the camera to the bridge
+415              | Device associated with the given GUID is unsupported
 
 <!--===================================================================-->
 ## Update Bridge
@@ -257,32 +182,32 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -
 
 `POST https://login.eagleeyenetworks.com/g/device`
 
-Parameter                 | Data Type     | Description   | Is Required
----------                 | -----------   | -----------   | -----------
-**id**                    | string        | Bridge Id     | true
-name                      | string        | Bridge Name
-timezone                  | string        | Timezone of the bridge. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
-tags                      | array[string] | Array of strings, which each string representing a "tag"
-settings                  | json          | Misc Settings
-camera_parameters_add     | json          | JSON object of camera parameters/settings to add/update
-camera_parameters_delete  | json          | JSON object of camera parameters/settings to delete
+Parameter                | Data Type     | Description                     | Is Required
+---------                | -----------   | -----------                     | -----------
+**id**                   | string        | A unique identifier of a bridge | true
+name                     | string        | A user-defined device name
+timezone                 | string        | Indicates a timezone of place where a device is installed. Defaults to the account timezone. Possible values: ‘US/Alaska’ or ‘US/Arizona’ or‘US/Central’ or ‘US/Eastern’ or ‘US/Hawaii’ or ‘America/Anchorage’ or ‘UTC’
+tags                     | array[string] | An array of strings, which each string representing a tag
+[settings](#settings)    | json          | Basic settings (location, etc.)
+camera_parameters_add    | json          | JSON object of camera parameters/settings to add/update
+camera_parameters_delete | json          | JSON object of camera parameters/settings to delete
 
 ### Response Json Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | A unique identifier of a bridge
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera to add/delete camera settings, contact support
+HTTP Status Code | Description   
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | Device matching the ID was not found
+463              | Unable to communicate with the camera to add/delete camera settings, contact support
 
 <!--===================================================================-->
 ## Delete Bridge
@@ -297,20 +222,20 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 `DELETE https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Bridge Id
+Parameter | Data Type | Description
+--------- | --------- | -----------
+**id**    | string    | A unique identifier of a bridge
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera or bridge, contact support
+HTTP Status Code | Description  
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | Device matching the ID was not found
+463              | Unable to communicate with the camera or bridge, contact support
 
 <!--===================================================================-->
 ## Get List of Bridges
@@ -445,41 +370,47 @@ Returns array of arrays, with each sub-array representing a device available to 
 
 Parameter | Data Type   | Description           
 --------- | ----------- | -----------           
-e         | string      | Bridge Id             
-n         | string      | Bridge Name           
-t         | string      | Device Type           
+e         | string      | A unique identifier of a bridge             
+n         | string      | A name of a bridge           
+t         | string      | Device Type          
 s         | string      | Device Service Status
 
 ### Response: Bridge Model
 
-Array Index | Attribute       | Data Type  
----------   | -----------     | -----------
-0           | account_id      | string
-1           | id              | string
-2           | name            | string
-3           | type            | string
-4           | bridges         | json
-5           | service_status  | string
-6           | permissions     | string
-7           | tags            | array[string]
-8           | guid            | string
-9           | serial_number   | string
-10          | [device_status](#status-bitmask)   | int
-11          | timezone        | string
-12          | timezone_utc_offset | int
-13          | is_unsupported  | int
-14          | ip_address      | string
-15          | is_shared       | int
-16          | owner_account_name | string
-17          | is_upnp         | boolean
-18          | video_input     | string
-19          | video_status    | string
+Array Index | Attribute           | Data Type     | Description
+----------- | ---------           | ---------     | -----------
+0           | account_id          | string        |
+1           | id                  | string        |
+2           | name                | string        |
+3           | type                | string        |
+4           | bridges             | json          |
+5           | service_status      | string        |
+6           | permissions         | string        |
+7           | tags                | array[string] |
+8           | guid                | string        |
+9           | serial_number       | string        |
+10          | device_status       | int           | [device_status](#status-bitmask)
+11          | timezone            | string        |
+12          | timezone_utc_offset | int           |
+13          | is_unsupported      | int           |
+14          | ip_address          | string        |
+15          | is_shared           | int           |
+16          | owner_account_name  | string        |
+17          | is_upnp             | boolean       |
+18          | video_input         | string        |
+19          | video_status        | string        |
+20          | ??                  |               |
+21          | ??                  |               |
+22          | ??                  |               |
+23          | ??                  |               |
+24          | ??                  |               |
+25          | ??                  |               |
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+HTTP Status Code | Description  
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
