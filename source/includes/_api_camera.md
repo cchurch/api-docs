@@ -962,109 +962,91 @@ ROME
 }
 ```
 
-### Device Attributes
+### Camera Attributes
 
-Parameter                     | Data Type         | Description
----------                     | ---------------   | -----------
-id                            | string            | Unique identifier for the Device
-name                          | string            | Name of the device
-utcOffset                     | int               | Signed UTC offset in seconds of the timezone from UTC, where this device is installed.
-timezone                      | string            | Supported timezones: If this is a bridge, defaults to the Account timezone. If this is a camera, defaults to the camers’s Bridge timezone. Otherwise defaults to US/Pacific. <br><br>enum: US/Alaska, US/Arizona, US/Central, US/Pacific, US/Eastern, US/Mountain, US/Hawaii, UTC
-guid                          | string            | guid or other physical identifier of device
-permissions                   | string            | String of one or more characters. Each character defines a permission. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an admin for this camera. 'S' - user can share this camera in a group share. Note: All cameras in a group must have the ‘S’ permission or the group cannot be shared
-tags                          | array[string]     | Array of strings, which each string representing a "tag"
-bridges                       | [DeviceBridges](#devicebridges-attributes)     | Bridges this device is seen by
-settings                      | [DeviceSettings](#devicesettings-attributes)    | Misc settings
-camera_parameters             | object            | JSON object of camera parameters/settings (see Overview for details). If camera parameters cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_parameters_status_code will be 404.
-camera_parameters_status_code | int               | 200 if camera_parameters were retrieved. 404 if camera_parameters were unable to be retrieved.
-camera_info                   | [DeviceCameraInfo](#devicecamerainfo-attributes)  | Camera related info, which only applies to devices that are cameras
-camera_info_status_code       | int               | 200 if camera_info was retrieved. 404 if camera_info was unable to be retrieved.
+Parameter                          | Data Type     | Description
+---------                          | ---------     | -----------
+id                                 | string        | A unique identifier of a camera. It is automatically generated and assigned while adding a device
+guid                               | string        | A globally unique identifier (GUID). A GUID is an immutable device identifier. It is assigned to a device during the production process
+name                               | string        | A user-defined device name
+timezone                           | string        | Indicates a timezone of place where a device is installed. Defaults to the camera’s bridge timezone. Possible values: ‘US/Alaska’ or ‘US/Arizona’ or‘US/Central’ or ‘US/Eastern’ or ‘US/Hawaii’ or ‘America/Anchorage’ or ‘UTC’
+utcOffset                          | int           | A signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field
+tags                               | array[string] | An array of strings, which each string representing a tag. Tags are used to create groupings of cameras
+permissions                        | string        | A string of zero or more characters. Each character defines a permission that the current user has
+bridges                            | json          | Bridges this device is seen by. Keys of this json are identifiers of bridges as strings. Values determine status of camera. There are two available statuses:<br />"ATTD" - camera is attached to a bridge<br /> "IGND" - camera is unattached from all bridges and is available to be attached to a bridge
+[settings](#settings-camera)       | json          | Basic settings (location, motion regions etc.)
+[camera_info](#camera_info-camera) | json          | Basic informations related to a camera. If camera info cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_info_status_code will be 404
+camera_info_status_code            | int           | Indicates whether it was possible to retrieve informations about the device (200) or not (404)
+camera_parameters                  | json          | Camera parameters. If camera parameters cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_parameters_status_code will be 404
+camera_parameters_status_code      | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)
+camera_settings                    | string        | **Deprecated.** This is for backwards compatibility
+camera_settings_status_code        | int           | **Deprecated.** This is for backwards compatibility
 
-### DeviceSettings Attributes
+### settings - camera
 
-Parameter           | Data Type                         | Description
----------           | ---------------                   | -----------
-username            | string                            | Username to login to camera. Only applies to Cameras.
-password            | string                            | Password to login to camera. Only applies to Cameras.
-bridge              | string                            | Device ID of bridge to attach camera to. Only applies to Cameras. Required for PUT for Cameras.
-guid                | string                            | GUID of physical device. Only applies to Cameras. Required for PUT for Cameras.
-roi_names           | [DeviceSettingsRoiNames](#devicesettingsroinames-attributes) | ROI names keyed by ROI ID. Only applies to Cameras.
-alert_notifications | [DeviceSettingsAlertNotifications](#devicesettingsalertnotifications-attributes) | Arrays of User IDs keyed by ROI ID. Only applies to Cameras.
-alert_modes         | [DeviceSettingsAlertModes](#devicesettingsalertmodes-attributes) | Arrays of Alert modes keyed by ROI ID. Only applies to Cameras.
-alert_levels        | [DeviceSettingsAlertLevels](#devicesettingsalertlevels-attributes) | Arrays of Alert levels keyed by ROI ID. Only applies to Cameras.
-notes               | string                            | Notes
-latitude            | float                             | Latitude of the cameras location.
-longitude           | float                             | Longitude of the cameras location.
-street_address      | string                            | Street Address of the cameras location.
-azimuth             | float                             | Direction that the center of the camera faces. Values from 0.0-360.0 North=0.0.
-range               | int                               | Effective distance the camera can 'see' in feet.
-floor               | int                               | The floor of the building given that it is multiple stories.
-share_email         | string                            | Comma delimited list of emails to share this device with
-local_retention_days| json                              | JSON object of total retention days         e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
-cloud_retention_days| json                              | JSON object of retention days in the cloud  e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
-bridge_retention_days| json                             | JSON object of retention days on the bridge e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
-* Note local_retention_days and cloud_retention_days are meaningless in **CMVR** mode
+Parameter                  | Data Type | Description
+---------                  | --------- | -----------
+username                   | string    | Username to login to camera. Only applies to Cameras.
+password                   | string    | Password to login to camera. Only applies to Cameras.
+bridge                     | string    | A unique identifier of a bridge that a camera is attached to
+notes                      | string    | Notes is an area for the installer or owner to record items about this camera. Sometimes used when the configuration of the camera is complex or other items
+local_retention_days       | json      | JSON object of total retention days e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
+retention_days             | int       |
+event_data_start_timestamp | string    |
+cloud_retention_days       | json      | JSON object of retention days in the cloud e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
+share_email                | string    | Comma delimited list of emails to share this device with
+latitude                   | float     | Latitude of a camera location
+longitude                  | float     | Longitude of a camera location.
+street_address             | string    | A street address of a camera location
+azimuth                    | float     | Direction that the center of the camera faces. Values from 0.0-360.0 North=0.0
+range                      | int       | Effective distance the camera can 'see' in feet
+floor                      | int       | The floor of the building given that it is a multi-storey
+site_name                  | string    | A user-defined camera location name
+roi_names                  | json      | ROI names keyed by ROI ID. Only applies to Cameras.
+alert_notifications        | json      | Arrays of User IDs keyed by ROI ID. Only applies to Cameras.
+alert_modes                | json      | Arrays of Alert modes keyed by ROI ID. Only applies to Cameras.
+alert_levels               | json      | Arrays of Alert levels keyed by ROI ID. Only applies to Cameras.
+alert_throttle_types       | json      |
+alert_throttle_seconds     | json      |
+alert_throttle_hour_limits | json      |
+ptz_stations               | json      |
+ptz_tours                  | json      |
+ptz_user_to_idle           | int       |
+ptz_active_tours           | json      |
+guid                       | string    | A globally unique identifier (GUID). A GUID is an immutable device identifier. It is assigned to a device during the production process
+bridge_retention_days      | json      | JSON object of retention days on the bridge e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
 
-### DeviceCameraInfo Attributes
 
-Parameter           | Data Type         | Description
----------           | ---------------   | -----------
-bridge              | string            | GUID of bridge the camera is attached to
-camera_retention    | int               | Retention period in milliseconds
-camera_newest       | string            | Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_oldest       | string            | Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_info_version | int               | Camera info version
-connect             | string            | Camera connect status
-camera_min_time     | string            | Minimum timestamp available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-uuid                | string            | UUID string
-service             | string            | Service status
-make                | string            | Make of the device
-ipaddr              | string            | IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *
-ts                  | string            | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-version             | string            | Firmware version
-[status](#status-bitmask) | string            | Status bitmask
-mac                 | string            | MAC address
-proxy               | string            | Proxy
-bridgeid            | string            | Device of bridge this device is attached to
-now                 | string            | Current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-class               | string            | Camera, or Bridge, etc.
-camera_now          | string            | Camera's current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_newest   | string            | Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_oldest   | string            | Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-model               | string            | Device model
-esn                 | string            | ESN id
-admin_user          | string            | Web Username
-admin_password      | string            | Web Password
+### camera_info - camera
 
-### DeviceSettingsRoiNames Attributes
-
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | string            | Object with keys being ROI IDs, and values being the name.
-
-### DeviceSettingsAlertNotifications Attributes
-
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | array[string]     | Object with keys being ROI IDs, and values being the array of User IDs
-
-### DeviceSettingsAlertModes Attributes
-
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | array[string]     | Object with keys being ROI IDs, and values being the array of alert modes
-
-### DeviceSettingsAlertLevels Attributes
-
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | array[string]     | Object with keys being ROI IDs, and values being the array of alert levels
-
-### DeviceBridges Attributes
-
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-device_id   | string            | Object with keys being Bridge Device IDs, and values being the service status of the camera on that bridge
+Parameter                 | Data Type | Description
+---------                 | --------- | -----------
+bridge                    | string    | GUID of bridge the camera is attached to
+camera_retention          | int       | Retention period in milliseconds
+camera_newest             | string    | Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_oldest             | string    | Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_info_version       | int       | Camera info version
+connect                   | string    | Camera connect status
+camera_min_time           | string    | Minimum timestamp available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+uuid                      | string    | UUID string
+service                   | string    | Service status
+make                      | string    | Make of the device
+ipaddr                    | string    | IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *
+ts                        | string    | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+version                   | string    | Firmware version
+[status](#status-bitmask) | string    | Status bitmask
+mac                       | string    | MAC address
+proxy                     | string    | Proxy
+bridgeid                  | string    | Device of bridge this device is attached to
+now                       | string    | Current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+class                     | string    | Camera, or Bridge, etc.
+camera_now                | string    | Camera's current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_newest         | string    | Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_oldest         | string    | Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+model                     | string    | Device model
+esn                       | string    | ESN id
+admin_user                | string    | Web Username
+admin_password            | string    | Web Password
 
 <!--===================================================================-->
 ## Get Camera
@@ -1082,16 +1064,16 @@ Returns camera object by id
 `GET https://login.eagleeyenetworks.com/g/device`
 
 Parameter     | Data Type   | Description
----------     | ----------- | ----------- 
+---------     | ----------- | -----------
 **id**        | string      | Camera Id
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
+401 | Unauthorized due to an invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 
 <!--===================================================================-->
@@ -1131,10 +1113,10 @@ Parameter       | Data Type   | Description
 id              | string      | Unique identifier for the device
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
+401 | Unauthorized due to an invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 404 | No device matching the ConnectID or GUID was found
 409 | ConnectID or GUID is currently already in use by an account
@@ -1181,10 +1163,10 @@ id              | string      | Unique identifier for the device
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
+401 | Unauthorized due to an invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 404 | Device matching the ID was not found
 463 | Unable to communicate with the camera to add/delete camera settings, contact support
@@ -1209,10 +1191,10 @@ Parameter     | Data Type   | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
+401 | Unauthorized due to an invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
 404 | Device matching the ID was not found
 463 | Unable to communicate with the camera or bridge, contact support
@@ -1316,7 +1298,7 @@ Returns array of arrays, with each sub-array representing a device available to 
 
 `GET https://login.eagleeyenetworks.com/g/device/list`
 
-Parameter | Data Type   | Description 
+Parameter | Data Type   | Description
 --------- | ----------- | -----------           
 e         | string      | Camera Id             
 n         | string      | Camera Name           
@@ -1325,7 +1307,7 @@ s         | string      | Device Service Status
 
 ### Response: Camera Model
 
-Array Index | Attribute           | Data Type             | Description 
+Array Index | Attribute           | Data Type             | Description
 ---------   | -----------         | -----------           | -----------           
 0           | account_id          | string                | Unique identifier for the Device's Account
 1           | id                  | string                | Unique identifier for the Device
@@ -1351,8 +1333,8 @@ Array Index | Attribute           | Data Type             | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
+401 | Unauthorized due to an invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
