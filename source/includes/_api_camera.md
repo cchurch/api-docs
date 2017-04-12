@@ -999,7 +999,7 @@ latitude                   | float     | Latitude of a camera location
 longitude                  | float     | Longitude of a camera location.
 street_address             | string    | A street address of a camera location
 azimuth                    | float     | Direction that the center of the camera faces. Values from 0.0-360.0 North=0.0
-range                      | int       | Effective distance the camera can 'see' in feet
+range                      | float     | Effective distance the camera can 'see' in feet
 floor                      | int       | The floor of the building given that it is a multi-storey
 site_name                  | string    | A user-defined camera location name
 roi_names                  | json      | ROI names keyed by ROI ID. Only applies to Cameras.
@@ -1063,18 +1063,19 @@ Returns camera object by id
 
 `GET https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Camera Id
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+**id**        | string    | A unique identifier of a camera
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to an invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+HTTP Status Code | Data Type   
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | No device matching the ConnectID or GUID was found
 
 <!--===================================================================-->
 ## Add Camera to Bridge
@@ -1099,29 +1100,37 @@ Adds an Unattached Camera to the Bridge
 
 `PUT https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type     | Description | Is Required
----------     | -----------   | ----------- | -----------
-**name**      | string        | Camera Name | true
-**settings**  | [DeviceSettings](#devicesettings-attributes)          | Misc Settings | true
-timezone      | string        | If unspecified, this will default to the camera’s Bridge timezone
-tags          | array[string] | Array of strings, which each string representing a "tag"
+Parameter                 | Data Type   | Description                                                       | Is Required
+---------                 | ----------- | -----------                                                       | -----------
+**name**                  | string      | A user-defined device name                                        | true
+[**settings**](#settings) | json        | There are required two fields from basic settings to add a camera | true
+
+### settings
+
+Parameter  | Data Type   | Description                                                                                                                                         | Is Required
+---------  | ----------- | -----------                                                                                                                                         | -----------
+**bridge** | string      | A unique identifier of a bridge to attach camera to                                                                                                 | true
+**guid**   | string      | A globally unique identifier of a camera (GUID). A GUID is an immutable device identifier. It is assigned to a device during the production process | true
+
+
+
 
 ### Response Json Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+Parameter | Data Type  | Description
+--------- | ---------- | -----------
+id        | string     | A unique identifier of a camera
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to an invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No device matching the ConnectID or GUID was found
-409 | ConnectID or GUID is currently already in use by an account
-410 | Communication cannot be made to attach the camera to the bridge
-415 | Device associated with the given GUID is unsupported
+HTTP Status Code | Data Type   
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | No device matching the ConnectID or GUID was found
+409              | ConnectID or GUID is currently already in use by an account
+410              | Communication cannot be made to attach the camera to the bridge
+415              | Device associated with the given GUID is unsupported
 
 <!--===================================================================-->
 ## Update Camera
@@ -1144,32 +1153,32 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -
 
 `POST https://login.eagleeyenetworks.com/g/device`
 
-Parameter                 | Data Type     | Description   | Is Required
----------                 | -----------   | -----------   | -----------
-**id**                    | string        | Camera Id     | true
-name                      | string        | Camera Name
-timezone                  | strings       | If unspecified, this will default to the camera’s Bridge timezone
-tags                      | array[string] | Array of strings, which each string representing a "tag"
-settings                  | json          | Misc Settings
+Parameter                 | Data Type     | Description                     | Is Required
+---------                 | -----------   | -----------                     | -----------
+**id**                    | string        | A unique identifier of a camera | true
+name                      | string        | A new name of a camera
+timezone                  | strings       | Indicates a timezone of place where a device is installed. Possible values: ‘US/Alaska’ or ‘US/Arizona’ or‘US/Central’ or ‘US/Eastern’ or ‘US/Hawaii’ or ‘America/Anchorage’ or ‘UTC’
+tags                      | array[string] | An array of strings, which each string representing a tag. Tags are used to create groupings of cameras
+settings                  | json          | Basic settings (location, motion regions etc.)
 camera_parameters_add     | json          | JSON object of camera parameters/settings to add/update
 camera_parameters_delete  | json          | JSON object of camera parameters/settings to delete
 
 ### Response Json Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+Parameter | Data Type   | Description
+--------- | ----------- | -----------
+id        | string      | A unique identifier of a camera
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to an invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera to add/delete camera settings, contact support
+HTTP Status Code | Data Type   
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | Device matching the ID was not found
+463              | Unable to communicate with the camera to add/delete camera settings, contact support
 
 <!--===================================================================-->
 ## Delete Camera
@@ -1184,20 +1193,20 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 `DELETE https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Camera Id
+Parameter | Data Type   | Description
+--------- | ----------- | -----------
+**id**    | string      | A unique identifier of a camera
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to an invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera or bridge, contact support
+HTTP Status Code | Data Type   
+---------------- | -----------
+200              | Request succeeded
+400              | Unexpected or non-identifiable arguments are supplied
+401              | Unauthorized due to an invalid session cookie
+403              | Forbidden due to the user missing the necessary privileges
+404              | Device matching the ID was not found
+463              | Unable to communicate with the camera or bridge, contact support
 
 <!--===================================================================-->
 ## Get List of Cameras
