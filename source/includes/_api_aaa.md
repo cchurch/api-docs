@@ -10,6 +10,7 @@ This section is for creating new accounts and the steps to recover an account. I
 ## Create Account
 <!--===================================================================-->
 
+
 > Request
 
 ```shell

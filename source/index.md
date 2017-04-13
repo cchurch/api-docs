@@ -25,7 +25,6 @@ includes:
   - api_metric
   - api_pngspan
   - api_recording
-  - api_annotation 
   - api_search
   - errors
   - faq
