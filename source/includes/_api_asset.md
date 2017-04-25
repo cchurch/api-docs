@@ -96,6 +96,7 @@ Headers: cache control headers to allow asset caching if no now relative:
 content-type: image/jpeg
   * location: /asset/asset/image.jpeg?t=20120917213405.700;q=low;c=thumb (identifies actual asset time of image in response).
 
+
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/asset/asset/image.jpeg`
@@ -297,7 +298,7 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];options=coalesce;A=[AUTH_KEY]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
 ```
 
 > Json Response
@@ -320,8 +321,13 @@ Parameter           | Data Type     | Description   | Is Required
 **id**              | string        | Camera Id     | true
 **start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 end_timestamp       | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+<<<<<<< HEAD
 count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time.
 options             | string, enum  | Additional modifier options. 'coalesce' = coalesces spans together. <br><br>enum: coalesce
+=======
+count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the e argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time.
+o                   | string, enum  | Additional modifier options. 'coalesce' = coalesces spans together. <br><br>enum: coalesce
+>>>>>>> trineo
 
 ### Error Status Codes
 
