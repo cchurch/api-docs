@@ -183,7 +183,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_times
 
 ```json
 {
-      "event:": "[EVENT]"
+    "event:": "[EVENT]"
 }
 ```
 
