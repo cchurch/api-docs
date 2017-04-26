@@ -130,10 +130,10 @@ is_staff                             | int                  | Indicates whether 
 is_active                            | int                  | Indicates whether the user is active (1) or not (0)
 is_pending                           | int                  | Indicates whether the user is pending (1) or not (0)
 is_master                            | int                  | Indicates whether the user is in a master account (1) or not (0)
-is_user_admin                        | int                  | **Deprecated.** This is for backwards compatibility
+is_user_admin                        | int                  | This is for backwards compatibility **(DEPRECATED)**
 is_layout_admin                      | int                  | Indicates whether the user is a layout administrator (1) or not (0)
 is_live_video                        | int                  | Indicates whether the user is authorized to access live video (1) or not (0)
-is_device_admin                      | int                  | **Deprecated.** This is for backwards compatibility
+is_device_admin                      | int                  | This is for backwards compatibility **(DEPRECATED)**
 is_export_video                      | int                  | Indicates whether the user is authorized to export video (1) or not (0)
 is_recorded_video                    | int                  | Indicates whether the user is authorized to view recorded video (1) or not (0)
 is_edit_cameras                      | int                  | Indicates whether the user is authorized to edit cameras (1) or not (0)
@@ -200,7 +200,7 @@ milliseconds_display    | boolean    | Indicates whether times should be shown w
 layout_rotation_seconds | int        | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
 motion_boxes            | boolean    | Indicates whether motion boxes should be shown (True) or not (False)
 notify_levels           | array[int] | Array of integers. Indicates what types of alert notification emails will be sent <br><br>Notify level: 1='High', 2='Low', 3='System' <br><br>When creating motion alerts for a camera 'High' or 'Low' can be chosen. If a motion alert is set to 'High' and if the user has chosen to receive 'High' alert notifications, then they will receive them for that motion alert. 'System' are camera status changes (online/offline/off/internet offline, etc.). When a camera changes status, any user who has chosen to receive 'System' alert notifications will get notified of the camera status changes in their account
-permissions             | json       | **Deprecated.** This is for backwards compatibility
+permissions             | json       | This is for backwards compatibility **(DEPRECATED)**
 employee_id             | string     | Identifier which a user with the necessary permissions can set for other users
 layouts                 | json       | JSON formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
 
@@ -245,8 +245,8 @@ is_recorded_video           | View history browser and archived video from camer
 is_view_preview_video       | Enables the preview of images from cameras
 is_edit_admin_users         | Enables the management of all users in a sub-account (add/delete/modify all users including administrators. Only available to Master Users)
 is_edit_all_users           | Enables the management of master users who are not administrators (add/delete/modify master account users) <br><br>Ability to grant access to sub-accounts. No user permissions are granted in sub-accounts. Only available to master account users
-is_device_admin             | **Deprecated.** This is for backwards compatibility
-is_user_admin               | **Deprecated.** This is for backwards compatibility
+is_device_admin             | This is for backwards compatibility **(DEPRECATED)**
+is_user_admin               | This is for backwards compatibility **(DEPRECATED)**
 
 
 ### User Permission Matrix
@@ -471,8 +471,8 @@ is_staff                    | int           | Indicates whether the user is a st
 is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this. **This field is for internal use only**
 is_account_superuser        | int           | Indicates whether the user is an account superuser (1) or not (0). Only superusers and account superusers can set this
 is_layout_admin             | int           | Indicates whether the user is a layout administrator (1) or not (0)
-is_device_admin             | int           | **Deprecated.** This is for backwards compatibility
-is_user_admin               | int           | **Deprecated.** This is for backwards compatibility
+is_device_admin             | int           | This is for backwards compatibility **(DEPRECATED)**
+is_user_admin               | int           | This is for backwards compatibility **(DEPRECATED)**
 is_live_video               | int           | Indicates whether the user is authorized to access live video (1) or not (0)
 is_export_video             | int           | Indicates whether the user is authorized to export video (1) or not (0)
 is_recorded_video           | int           | Indicates whether the user is authorized to view recorded video (1) or not (0)
