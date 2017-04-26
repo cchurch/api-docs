@@ -24,19 +24,21 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 <aside class="success">This service will continually be extended</aside>
 
-Poll is a stateful request for updates any time a matching event occurs within the service. The initial poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a JSON formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for.
+Poll is a stateful request for updates any time a matching event occurs within the service. The initial poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a JSON formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
 
-Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a JSON formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction.
+Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a JSON formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
+
+### Response Resource Types
 
 Each resource type has a specific object format in response:
 
-Type                      | Response         | Notes
-----                      | --------         | -----
+Type                      | Response         | Description
+----                      | --------         | -----------
 pre                       | prets            | Timestamp of latest preview image
 thumb                     | thumbts          | Timestamp of latest thumbnail image
 video                     | [startts, endts] | List of start and end timestamps for a video segment. Updates at start and per key frame received until end
 [status](#status-bitmask) | bitmask          | A numerical bitmask defining the status. Bit position defines status
-[event](#event-objects)   | object           | Events are a key value pair, where the key is the four CC of the event and event structure is the actual meta data for that specific event
+[event](#event-objects)   | object           | Events are a key value pair, where the key is the Four CC of the event and event structure is the actual meta data for that specific event
 
 ## Status Bitmask
 
@@ -102,9 +104,9 @@ IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits wer
                 }
             }
         },
-        "<camera_id>": {...},
-        "<camera_id>": {...},
-        "<camera_id>": {...}
+        "<object_id>": {...},
+        "<object_id>": {...},
+        "<object_id>": {...}
     }
 }
 ```
@@ -212,9 +214,128 @@ SSTE      | ???                                                              | c
 ITFU      | ???                                                              | cameraid, ip, flags, valid, mpack
 PTZS      | ???                                                              | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
 
+### Event Parameters
+
+Parameter          | Description
+---------          | -----------
+aborted            |
+active_write_us    |
+alertid            |
+alertmotionid      |
+alertroiid         |
+booted             |
+bw10               |
+bw60               |
+bw300              |
+bytes              |
+bytes_rcvd         |
+bytes_sent         |
+bytesfreed         |
+bytessent          |
+bytesshaped        |
+bytesstored        |
+bytesstreamed      |
+cameraid           |
+change             |
+command            |
+ctype              |
+day                |
+daysondisk         |
+delta_expected     |
+delta_rcvd         |
+dest_ip            |
+dest_port          |
+deviceid           |
+duration           |
+endtime            |
+errcode            |
+event              |
+eventid            |
+file_offset        |
+flags              |
+format             |
+frame_delay        |
+frame_size         |
+interval           |
+ip                 |
+kbytesavail        |
+kbytesondisk       |
+kbytessize         |
+key_offset         |
+layoutid           |
+millisecs          |
+motion             |
+mpack              |
+new_accountid      |
+ns                 |
+op                 |
+pan_status         |
+paused_write_us    |
+previewid          |
+reason             |
+registerid         |
+resource_type      |
+roiid              |
+seconds            |
+seq                |
+sequence           |
+settings           |
+source_accountid   |
+source_userid      |
+src_ip             |
+src_port           |
+starttime          |
+status             |
+stream_format      |
+stream_type        |
+streamformat       |
+streamid           |
+streamtype         |
+stype              |
+target_deviceid    |
+target_userid      |
+total_expected     |
+total_rcvd         |
+triggerid          |
+userid             |
+uuid               |
+valid              |
+values             |
+videoid            |
+videosize          |
+x                  |
+y                  |
+z                  |
+zoom_status        |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--===================================================================-->
 ## Initialize Poll
 <!--===================================================================-->
+
+> Request
+
+```shell
+curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' https://c001.eagleeyenetworks.com/poll -d '{"cameras":{"111st658":{"resource":["event","status"],"event":["VREE","PRFR","CPRG"]}}}'
+```
 
 > Request Json
 
@@ -243,37 +364,46 @@ PTZS      | ???                                                              | c
             	"MRBX"
             ]
         },
-        "<camera_id>": {...},
-        "<camera_id>": {...},
-        "<camera_id>": {...}
+        "<object_id>": {...},
+        "<object_id>": {...},
+        "<object_id>": {...}
     }
 }
 ```
-<aside class="notice">Subscribe to the poll service, which is required for GET /poll. Response headers: set_cookie: ee-poll-ses=xxxxxx</aside>
+<aside class="notice">Subscribe to the poll service, which is required for GET /poll. Response: token=xxxxx / Response headers: set_cookie: ee-poll-ses/poll_id=xxxxx</aside>
 
+Response includes 2 session cookies and a returned token (which are identical). Only one of the session cookies has to be provided to the GET /poll request
 
 ### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/poll`
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras 		| [PostPollCameras](#postpollcameras-attributes) | Cameras
+<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by id (camera, bridge or account ESN)</aside>
 
-### PostPollCameras Attributes
+Due to the progressing expansion of the event polling mechanic, the parameter 'cameras' has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-<camera_id> | [PostPollCamera](#postpollcamera-attributes) | camera_id holding the data structure for the camera
+cameras 		| json      | Json attribute keyed with the [object_id](#object-structure) (can contain multiple Json objects, even of different types)
 
-  - Note This json attribute contains as many PostPollCamera json objects as the user desires. The key for each PostPollCamera is the camera_id.
-
-### PostPollCamera Attributes
+### Object Structure
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-resource 		| array[string, enum] | enum: pre, thumb, status, event
-event 			| array[string, enum] | enum: [event objects](#event-objects)
+[object_id] | json      | Json attribute keyed with 'resource' and/or 'event'
+
+The Json object allows to narrow down the polling scope by specifying which type of entity to poll for. The types include:
+
+Parameter   | Data Type | Description | Is Required
+---------   | --------- | ----------- | -----------
+**resource**  | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
+event       | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (If resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
+
+<!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
+
+<aside class="warning">The event parameter is required to have the event resource present when polling over HTTP (instead of WebSocket)</aside>
+
+### HTTP Response
 
 > Json Response
 
@@ -286,45 +416,41 @@ event 			| array[string, enum] | enum: [event objects](#event-objects)
         "10097d15": {
             "status": 1441847
         },
-        "<camera_id>": {...},
-        "<camera_id>": {...},
-        "<camera_id>": {...}
+        "<object_id>": {...},
+        "<object_id>": {...},
+        "<object_id>": {...}
     },
     "token": "ooe0eoEAMNsF"
 }
 ```
-### Response Json Attributes
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras     | [PostPollResponseCameras](#postpollresponsecameras-json-attributes) | Objects keyed by camera id
+cameras 		| json      | Json attribute keyed with the [object_id](#response-object-structure) (can contain multiple Json objects, even of different types)
 token 			| string 		| Token to be used for subsequent GET /poll requests
 
-### PostPollResponseCameras Json Attributes
+### Response Object Structure
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-<camera_id> | [PostPollResponseCamera](#postpollresponsecamera-json-attributes) | PostPollResponse keyed on camera_id
+[object_id] | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
-### PostPollResponseCamera Json Attributes
+The amount of keys depends on the sent request inquiry (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-status      | string 		| A bitmask flag defining the state of a bridge or a camera. [More Info](#status-bitmask)
-event 			| [PostPollResponseCameraEvents](#postpollresponsecameraevents-json-attributes) |  Object of events keyed by event id
+If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
-### PostPollResponseCameraEvents Json Attributes
+The returned values are in accordance with the [returned resource types](#response-resource-types)
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-<event_id> 	| [PostPollResponseCameraEvent](#postpollresponsecameraevent-json-attributes) | PostPollResponseCameraEvent keyed on event_id
+<aside class="warning">The status parameter takes precedence (if multiple) and all others will become suppressed when polling over HTTP POST /poll</aside>
 
-### PostPollResponseCameraEvent Json Attributes
+### Error Status Codes
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-timestamp 	| string 		| Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-cameraid 		| string 		| Internal unique identifier
+HTTP Status Code | Data Type   
+---------------- | ---------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200 | Request succeeded
 
 <!--===================================================================-->
 ## Polling
@@ -334,12 +460,15 @@ cameraid 		| string 		| Internal unique identifier
 
 ### HTTP Request
 
-> Request TODO
+> Request
 
 ```shell
+curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c001.eagleeyenetworks.com/poll
 ```
 
 `GET https://login.eagleeyenetworks.com/poll`
+
+### HTTP Response
 
 > Json Response
 
@@ -398,37 +527,23 @@ cameraid 		| string 		| Internal unique identifier
 }
 ```
 
-### Response Json Attributes
-
 Parameter   | Data Type | Description
----------   | ---------	| -----------
-cameras     | [GetPollResponseCameras](#getpollresponsecameras-json-attributes) | Objects keyed by camera id
+---------   | --------- | -----------
+cameras 		| json      | Json attribute keyed with the object_id (can contain multiple Json objects, even of different types)
 
-### GetPollResponseCameras Json Attributes
+### Response Object Structure
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-<camera_id> | [GetPollResponseCamera](#getpollresponsecamera-json-attributes) | GetPollResponseCamera keyed on camera_id
+[object_id] | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
-### GetPollResponseCamera Json Attributes
+The amount of keys depends on the sent POST request (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
 
-Parameter   | Data Type | Description
----------   | ---------	| -----------
-pre         | string 		| Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-event 			| [GetPollResponseCameraEvents](#getpollresponsecameraevents-json-attributes) |  Object of events keyed by event id
+If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
-### GetPollResponseCameraEvents Json Attributes
+The returned values are in accordance with the [returned resource types](#response-resource-types)
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-<event_id> 	| [GetPollResponseCameraEvent](#getpollresponsecameraevent-json-attributes) | GetPollResponseCameraEvent keyed on event_id
-
-### GetPollResponseCameraEvent Json Attributes
-
-Parameter   | Data Type | Description
----------   | --------- | -----------
-timestamp   | string 		| Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-cameraid 		| string 		| Internal unique identifier
+<aside class="warning">The status parameter will be omitted (if multiple), all others will be returned when polling over HTTP GET /poll</aside>
 
 ### Error Status Codes
 
@@ -470,9 +585,9 @@ HTTP Status Code | Data Type
             	"MRBX"
             ]
         },
-        "<camera_id>": {...},
-        "<camera_id>": {...},
-        "<camera_id>": {...}
+        "<object_id>": {...},
+        "<object_id>": {...},
+        "<object_id>": {...}
     }
 }
 ```
@@ -518,7 +633,7 @@ The WebSocket protocol has two parts:
         <td style="text-align:center;">server</td>
         <td style="text-align:center;">API version</td>
         <td style="text-align:center;">resource</td>
-        <td style="text-align:center;">account ID</td>
+        <td style="text-align:center;">account id</td>
         <td style="text-align:center;">'Events' suffix</td>
     </tr>
 </table>
