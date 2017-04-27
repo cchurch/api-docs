@@ -62,9 +62,10 @@ HTTP Status Code | Data Type
 ## Recording On
 <!--===================================================================-->
 
-> Request TODO
+> Request
 
 ```shell
+curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/recordnow
 ```
 
 Used to turn on recording for all cameras, cameras in a specific layout, or a single camera. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 1 (on) and 'video_capture_mode' is set to 'always'
@@ -76,7 +77,7 @@ Used to turn on recording for all cameras, cameras in a specific layout, or a si
 Parameter     | Data Type | Description
 ---------     | --------- | -----------
 device_id     | string    | Id of the camera to record. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used
-layout_id     | string    | Id of the layout whose cameras will be set to record. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
+layout_id     | string    | Id of the layout for which cameras will be set to record. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
 recording_key | string    | A key used to tag this recording. Can be used to retrieve this recording info later using the GET 'recording' service
 
 ### Error Status Codes
@@ -92,9 +93,10 @@ HTTP Status Code | Data Type
 ## Recording Off
 <!--===================================================================-->
 
-> Request TODO
+> Request
 
 ```shell
+curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/recordoff
 ```
 
 Used to turn off recording for all cameras, cameras in a specific layout, or a single camera. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 0 (off) and 'video_capture_mode' is set back to 'event' (the default)
@@ -106,7 +108,7 @@ Used to turn off recording for all cameras, cameras in a specific layout, or a s
 Parameter | Data Type | Description
 --------- | --------- | -----------
 device_id | string    | Id of the camera to turn off recording for. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used
-layout_id | string    | Id of the layout whose cameras will have recording turned off. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
+layout_id | string    | Id of the layout for which cameras will have recording turned off. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
 
 ### Error Status Codes
 
