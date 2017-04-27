@@ -30,13 +30,13 @@ The image request model provides an efficient mechanism for accessing image sequ
 ### Retrieve List of Images
 
 There are a couple different ways to get a list of images. There first is to get all preview images between April 1st and April 2nd:
-`https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;`
+`https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20180401000000.000;e=20180402000000.000;a=all;`
 
 The second way is to get 500 images before April 1st:
-`https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;`
+`https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20180401000000.000;count=-500;a=all;`
 
 The third way is to get the next 500 images after April 1st:
-`https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;`
+`https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20180401000000.000;count=500;a=all;`
 
 ### Retrieve Video
 
@@ -270,35 +270,35 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=
 [    
     {
         "t":"PRFR",
-        "s":"20141001000000.045"
+        "s":"20181001000000.045"
     },
     {
         "t":"PRFR",
-        "s":"20141001000001.045"
+        "s":"20181001000001.045"
     },
     {
         "t":"PRFR",
-        "s":"20141001000002.064"
+        "s":"20181001000002.064"
     },
     {
         "t":"PRFR",
-        "s":"20141001000003.064"
+        "s":"20181001000003.064"
     },
     {
         "t":"PRFR",
-        "s":"20141001000004.064"
+        "s":"20181001000004.064"
     },
     {
         "t":"PRFR",
-        "s":"20141001000005.063"
+        "s":"20181001000005.063"
     },
     {
         "t":"PRFR",
-        "s":"20141001000006.063"
+        "s":"20181001000006.063"
     },
     {
         "t":"PRFR",
-        "s":"20141001000007.096"
+        "s":"20181001000007.096"
     }
 ]
 ```
@@ -341,43 +341,43 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=
 ```json
 [
     {
-        "s":"20141001000016.768",
-        "e":"20141001000100.758",
+        "s":"20181001000016.768",
+        "e":"20181001000100.758",
         "id":4177006339
     },
     {
-        "s":"20141001000220.825",
-        "e":"20141001000242.774",
+        "s":"20181001000220.825",
+        "e":"20181001000242.774",
         "id":4177006850
     },
     {
-        "s":"20141001000256.811",
-        "e":"20141001000320.869",
+        "s":"20181001000256.811",
+        "e":"20181001000320.869",
         "id":4177006866
     },
     {
-        "s":"20141001000354.761",
-        "e":"20141001000422.812",
+        "s":"20181001000354.761",
+        "e":"20181001000422.812",
         "id":4177006912
     },
     {
-        "s":"20141001000526.821",
-        "e":"20141001000632.829",
+        "s":"20181001000526.821",
+        "e":"20181001000632.829",
         "id":4177007014
     },
     {
-        "s":"20141001000746.836",
-        "e":"20141001000834.757",
+        "s":"20181001000746.836",
+        "e":"20181001000834.757",
         "id":4177007035
     },
     {
-        "s":"20141001000904.749",
-        "e":"20141001000932.767",
+        "s":"20181001000904.749",
+        "e":"20181001000932.767",
         "id":4177007047
     },
     {
-        "s":"20141001000934.766",
-        "e":"20141001001002.777",
+        "s":"20181001000934.766",
+        "e":"20181001001002.777",
         "id":4177007072
     }
 ]
