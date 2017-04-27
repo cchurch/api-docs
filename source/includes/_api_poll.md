@@ -96,7 +96,7 @@ IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits wer
                     "status": 31,
                     "format": 1,
                     "frame_delay": 1000,
-                    "timestamp": "20170425100000.000",
+                    "timestamp": "20180425100000.000",
                     "cameraid": "10087ff5",
                     "flags": 0,
                     "duration": 3600000,
@@ -397,7 +397,7 @@ The Json object allows to narrow down the polling scope by specifying which type
 Parameter   | Data Type | Description | Is Required
 ---------   | --------- | ----------- | -----------
 **resource**  | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
-event       | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (If resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
+event       | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
 
 <!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
 
@@ -476,10 +476,10 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
 {
     "cameras": {
         "100e1e23": {
-            "pre": "20141121165011.233",
+            "pre": "20181121165011.233",
             "event": {
                 "MRBX": {
-                    "timestamp": "20141121165011.499",
+                    "timestamp": "20181121165011.499",
                     "cameraid": "100c299e",
                     "boxes": [
                         {
@@ -491,13 +491,13 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
                     ]
                 },
                 "PRFU": {
-                    "timestamp": "20141121165011.233",
+                    "timestamp": "20181121165011.233",
                     "cameraid": "100c299e",
                     "file_offset": 26311872,
                     "frame_size": 7838
                 },
                 "PRFR": {
-                    "timestamp": "20141121165011.233",
+                    "timestamp": "20181121165011.233",
                     "cameraid": "100c299e",
                     "previewid": 1416585600,
                     "file_offset": 26311872,
@@ -506,16 +506,16 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
             }
         },
         "10097d15": {
-            "pre": "20141121165011.281",
+            "pre": "20181121165011.281",
             "event": {
                 "PRFU": {
-                    "timestamp": "20141121165011.281",
+                    "timestamp": "20181121165011.281",
                     "cameraid": "1002a2a4",
                     "file_offset": 6126297,
                     "frame_size": 4014
                 },
                 "PRFR": {
-                    "timestamp": "20141121165011.281",
+                    "timestamp": "20181121165011.281",
                     "cameraid": "1002a2a4",
                     "previewid": 1416585600,
                     "file_offset": 6126297,
