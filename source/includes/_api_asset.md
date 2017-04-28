@@ -10,7 +10,7 @@ Assets are identified by a tuple of timestamp, cameraid, quality, and format.
   * Timestamp: Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specifined in GMT time. In most contexts, special tokens can also be used to specify relative times - “now” is the current time, a value starting with + or - is an offset from the current time.
   * CameraID: Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit id associated with a specific camera. Note CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage.
   * Quality: (low,med,high) **Future Feature:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. For video, low quality is targeted at around 100kbps, medium quality is under 500kbps, and high quality is around 1mbps. Additional quality levels will be supported in time.
-  * Format: Images are always returned as JPEG images. Video can currently returned as either FLV format (playback in browsers via Flash), MP4 (download and export format), and m3u/mpegts (HttpStreaming for iOS and newer android devices).
+  * Format: Images are always returned as JPEG images. Video can currently returned as either FLV format (playback in browsers via Flash), MP4 (download and export format), m3u/mpegts (HttpStreaming for iOS and newer android devices) and WebM.
 
 ### Request Image
 
@@ -32,10 +32,10 @@ The image request model provides an efficient mechanism for accessing image sequ
 There are a couple different ways to get a list of images. There first is to get all preview images between April 1st and April 2nd:
 `https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;e=20140402000000.000;a=all;`
 
-The second way is to get 500 images before April 1st: 
+The second way is to get 500 images before April 1st:
 `https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=-500;a=all;`
 
-The third way is to get the next 500 images after April 1st: 
+The third way is to get the next 500 images after April 1st:
 `https://login.eagleeyenetworks.com/asset/list/image.jpeg?c=100676b2;t=20140401000000.000;count=500;a=all;`
 
 ### Retrieve Video
@@ -60,7 +60,7 @@ The video system is based on h264 video and AAC audio. These streams are encapsu
   * mp4: MPEG4 files have very broad playback compatibility - all major video player are compatible. However, mp4 is NOT a streamable format, so it is only used for download functionality and will return an error if the video is live.
   * m3u8: Use the M3U8 play list format. Use this for mobile devices as it uses the HTTP layer to stream MPEG TS files with instructions in the M3U8 playlist file. Continue polling for this playlist until the playlist indicates it is complete.
 
-Note: If you choose to stream any video format on the web other than FLV (Our native format as mentioned above), you may initially get a 502 response. This means that the video is currently being transcoded within our system and therefore couldn't be found. Assuming the data actually exists (check against the video list call), the video will eventually be ready for you to fetch in the desired format, but, for the time being, you will have to wait and refetch until the requested video is ready. 
+Note: If you choose to stream any video format on the web other than FLV (Our native format as mentioned above), you may initially get a 502 response. This means that the video is currently being transcoded within our system and therefore couldn't be found. Assuming the data actually exists (check against the video list call), the video will eventually be ready for you to fetch in the desired format, but, for the time being, you will have to wait and refetch until the requested video is ready.
 
 ### Video Quality
 
@@ -86,15 +86,16 @@ All Assets have an EEN timestamp attached. Timestamps are always in UTC and main
 curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
 ```
 
-Get an image jpeg based on the specified timestamp. This will return binary image data in JPEG format. 
+Get an image jpeg based on the specified timestamp. This will return binary image data in JPEG format.
 
 Headers: cache control headers to allow asset caching if no now relative:
 
-  * x-ee-timestamp: type-timestamp specifies asset type and timestamp of the provided image. Type is one of 'video', 'preview', 'thumb', 'event'. 
-  * x-ee-prev: [type-timestamp | unknown ] of previous image matching the class filter OR 'unknown' if the previous image was complex to figure out. 
-  * x-ee-next: [type-timestamp | unknown ] as with x-ee-prev, but specifying the following image. 
-content-type: image/jpeg 
-  * location: /asset/asset/image.jpeg?t=20120917213405.700;q=low;c=thumb (identifies actual asset time of image in response).Returns user object by ID. Not passing an ID will return the current authorized user.
+  * x-ee-timestamp: type-timestamp specifies asset type and timestamp of the provided image. Type is one of 'video', 'preview', 'thumb', 'event'.
+  * x-ee-prev: [type-timestamp | unknown ] of previous image matching the class filter OR 'unknown' if the previous image was complex to figure out.
+  * x-ee-next: [type-timestamp | unknown ] as with x-ee-prev, but specifying the following image.
+content-type: image/jpeg
+  * location: /asset/asset/image.jpeg?t=20120917213405.700;q=low;c=thumb (identifies actual asset time of image in response).
+
 
 ### HTTP Request
 
@@ -105,7 +106,10 @@ content-type: image/jpeg
 <br> Get the first image before the specified timestamp
 
 `GET https://login.eagleeyenetworks.com/asset/after/image.jpeg`
-<br> Get the first image after the specified timestamp
+<br> Get the first image after the specified timestamp. Used with timetamp=now will return 404(error status code) - Image was not found.
+
+`GET https://login.eagleeyenetworks.com/asset/next/image.jpeg`
+<br> Get the first image after the specified timestamp. Used with timetamp=now will wait until the new image comes into existence and returns it.
 
 Parameter         | Data Type     | Description   | Is Required
 ---------         | -----------   | -----------   | -----------
@@ -117,7 +121,7 @@ quality           | string, enum  | **Future Feature:** Quality of image <br><br
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
@@ -132,7 +136,7 @@ HTTP Status Code    | Data Type
 
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_ID];start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];A=[AUTH_KEY]"
-``` 
+```
 
 Returns a video stream in the requested format. Formats include
 
@@ -155,7 +159,7 @@ quality                   | string, enum  | **Future Feature:** Indicates reques
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
@@ -178,7 +182,9 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_times
 > Webhook JSON POST Response
 
 ```json
-{ "event:": "[EVENT]" }
+{
+      "event:": "[EVENT]"
+}
 ```
 
 This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
@@ -203,7 +209,7 @@ ASSET_CLOUD_EVENT_ABORT            | General error occurred.
 
 ### HTTP Status Codes
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 201 | Request has been created and webhook will be triggered upon completion or error.
 
 <!--===================================================================-->
@@ -218,7 +224,9 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_times
 > Webhook JSON POST Response
 
 ```json
-{ "event:": "[EVENT]" }
+{
+    "event:": "[EVENT]"
+}
 ```
 
 This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to aquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with JSON formatted data.
@@ -244,7 +252,7 @@ ASSET_CLOUD_EVENT_ABORT            | General error occurred.
 
 ### HTTP Status Codes
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 201 | Request has been created and webhook will be triggered upon completion or error.
 
 <!--===================================================================-->
@@ -259,7 +267,40 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=
 > Json Response
 
 ```json
-[{"t":"PRFR","s":"20141001000000.045"},{"t":"PRFR","s":"20141001000001.045"},{"t":"PRFR","s":"20141001000002.064"},{"t":"PRFR","s":"20141001000003.064"},{"t":"PRFR","s":"20141001000004.064"},{"t":"PRFR","s":"20141001000005.063"},{"t":"PRFR","s":"20141001000006.063"},{"t":"PRFR","s":"20141001000007.096"}]
+[    
+    {
+        "t":"PRFR",
+        "s":"20141001000000.045"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000001.045"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000002.064"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000003.064"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000004.064"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000005.063"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000006.063"
+    },
+    {
+        "t":"PRFR",
+        "s":"20141001000007.096"
+    }
+]
 ```
 
 This returns a list of objects, where each object contains the timestamp and type of an image jpeg. When formatting the request, either the 'end_timestamp' or 'count' parameter is required.
@@ -274,12 +315,12 @@ Parameter           | Data Type     | Description   | Is Required
 **start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**     | string, enum  | Asset class of the image <br><br>enum: all, pre, thumb | true
 end_timestamp       | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the e argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time.
+count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time.
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
@@ -292,16 +333,57 @@ HTTP Status Code    | Data Type
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];options=coalesce;A=[AUTH_KEY]"
+curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
 ```
 
 > Json Response
 
 ```json
-[{"s":"20141001000016.768","e":"20141001000100.758"},{"s":"20141001000220.825","e":"20141001000242.774"},{"s":"20141001000256.811","e":"20141001000320.869"},{"s":"20141001000354.761","e":"20141001000422.812"},{"s":"20141001000526.821","e":"20141001000632.829"},{"s":"20141001000746.836","e":"20141001000834.757"},{"s":"20141001000904.749","e":"20141001000932.767"},{"s":"20141001000934.766","e":"20141001001002.777"}]
+[
+    {
+        "s":"20141001000016.768",
+        "e":"20141001000100.758",
+        "id":4177006339
+    },
+    {
+        "s":"20141001000220.825",
+        "e":"20141001000242.774",
+        "id":4177006850
+    },
+    {
+        "s":"20141001000256.811",
+        "e":"20141001000320.869",
+        "id":4177006866
+    },
+    {
+        "s":"20141001000354.761",
+        "e":"20141001000422.812",
+        "id":4177006912
+    },
+    {
+        "s":"20141001000526.821",
+        "e":"20141001000632.829",
+        "id":4177007014
+    },
+    {
+        "s":"20141001000746.836",
+        "e":"20141001000834.757",
+        "id":4177007035
+    },
+    {
+        "s":"20141001000904.749",
+        "e":"20141001000932.767",
+        "id":4177007047
+    },
+    {
+        "s":"20141001000934.766",
+        "e":"20141001001002.777",
+        "id":4177007072
+    }
+]
 ```
 
-This returns a list of objects, where each object contains the start and end timestamp of a single video clip. When formatting the request, either the 'end_timestamp' or 'count' parameter is required.
+This returns a list of objects, where each object contains the id, start and end timestamp of a single video clip. When formatting the request, either the 'end_timestamp' or 'count' parameter is required.
 
 ### HTTP Request
 
@@ -312,16 +394,15 @@ Parameter           | Data Type     | Description   | Is Required
 **id**              | string        | Camera Id     | true
 **start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 end_timestamp       | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the e argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time.
-options             | string, enum  | Additional modifier options. 'coalesce' = coalesces spans together. <br><br>enum: coalesce
+count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time.
+o                   | string, enum  | Additional modifier options. 'coalesce' = coalesces spans together. <br><br>enum: coalesce
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
-
