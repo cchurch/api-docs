@@ -123,10 +123,10 @@ last_name                            | string               | Last name of the u
 email                                | string               | Email address of the user (must contain only ASCII characters)
 owner_account_id                     | string               | Unique identifier of the account that the user belongs to
 active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the 'active_account_id' of that user in their session becomes the unique identifier of the sub-account that was switched into
-uid                                  | string               | Identifier of the user. **This field is for internal use only**
-is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this. **This field is for internal use only**
+uid                                  | string               | Identifier of the user (**Internal use only**)
+is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)
 is_account_superuser                 | int                  | Indicates whether the user is an account superuser (1) or not (0)
-is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0). **This field is for internal use only**
+is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0) (**Internal use only**)
 is_active                            | int                  | Indicates whether the user is active (1) or not (0)
 is_pending                           | int                  | Indicates whether the user is pending (1) or not (0)
 is_master                            | int                  | Indicates whether the user is in a master account (1) or not (0)
@@ -210,8 +210,8 @@ layouts                 | json       | JSON formatted data keyed by the account 
 
 There are several user types:  
 
-  - superuser **(internal use only)**
-  - staff **(internal use only)**
+  - superuser (**Internal use only**)
+  - staff (**Internal use only**)
   - account superuser
   - regular user
 
@@ -225,8 +225,8 @@ After being created the regular user has several default permissions : 'is_live_
 
 Required Parameter          | Description
 ------------------          | -----------
-is_superuser                | **Internal use only**
-is_staff                    | **Internal use only**
+is_superuser                | (**Internal use only**)
+is_staff                    | (**Internal use only**)
 is_account_superuser        | Highest permission level possible for a user. All permissions are enabled (including the view permission)
 is_edit_account             | View and edit all account settings (including categories: Control, Days, Security, Camera, Alerts, Notifications, Privacy, Sharing, and Responders)
 is_edit_camera_on_off       | Ability to turn cameras on and off. If this is the only camera permission granted all others are hidden
@@ -459,7 +459,7 @@ last_name                   | string        | Last name of the user
 email                       | string        | Email address of the user (email must only contain ASCII characters)
 phone                       | string        | Phone number
 mobile_phone                | string        | Mobile phone number
-uid                         | string        | Identifier of the user. Only superusers can set this. **This field is for internal use only**
+uid                         | string        | Identifier of the user. Only superusers can set this (**Internal use only**)
 owner_account_id            | string        | Unique identifier of the account that the user belongs to. Defaults to account of the user creating it (must be an account the user has access to) <br><br>For superusers: any account <br>For account superusers: their account or a child account
 street                      | array[string] | Array of strings containing street addresses ['address line 1', 'address line 2']
 city                        | string        | City
@@ -467,8 +467,8 @@ state                       | string        | State/province
 country                     | string        | Two letter country code
 postal_code                 | string        | Zip/postal code
 json                        | string        | JSON formatted data representing various user settings. [UserJson](#userjson-attributes)
-is_staff                    | int           | Indicates whether the user is a staff member (1) or not (0). Only superusers can set this. **This field is for internal use only**
-is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this. **This field is for internal use only**
+is_staff                    | int           | Indicates whether the user is a staff member (1) or not (0). Only superusers can set this (**Internal use only**)
+is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)
 is_account_superuser        | int           | Indicates whether the user is an account superuser (1) or not (0). Only superusers and account superusers can set this
 is_layout_admin             | int           | Indicates whether the user is a layout administrator (1) or not (0)
 is_device_admin             | int           | This is for backwards compatibility **(DEPRECATED)**
