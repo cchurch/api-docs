@@ -88,7 +88,7 @@ metrics         | string, enum | String delimited list used to filter which metr
 }
 ```
 
-### Response Json Attributes
+### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
@@ -228,7 +228,7 @@ group_by 		    | string, enum | Hour or Day, indicating how the results should b
 }
 ```
 
-### Response Json Attributes
+### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------

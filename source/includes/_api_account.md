@@ -225,7 +225,7 @@ Return an Account object by id
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**  	| string    | Account id 	| true
+**id**  	| string    | Unique identifier of the account | true
 
 ### Error Status Codes
 
@@ -245,14 +245,6 @@ HTTP Status Code | Description
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"name": "[NAME]", "contact_first_name": "[CONTACT_FIRST_NAME]", "contact_last_name": "[CONTACT_LAST_NAME]", "contact_email": "[CONTACT_EMAIL]"}'
-```
-
-> Json Response
-
-```json
-{
-    "id": "1234abcd"
-}
 ```
 
 Create a new Account
@@ -287,6 +279,20 @@ default_camera_passwords              | string      	| Comma-delimited string of
 is_without_initial_user	              | int      		  | Indicates whether to create the new account without an initial user (1) or not (0). Defaults to 0, meaning an initial user with 'is_account_superuser=1' will be created using the arguments 'contact_first_name/contact_last_name/contact_email' specified upon account creation
 is_initial_user_not_admin             | int      	    | Indicates whether the initial user is an admin (0) or not (1)
 
+> Json Response
+
+```json
+{
+    "id": "1234abcd"
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id  			| string  	| Unique identifier of the account
+
 ### Error Status Codes
 
 HTTP Status Code | Description   
@@ -301,14 +307,6 @@ HTTP Status Code | Description
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"id": "[ACCOUNT_ID]", "contact_first_name": "[CONTACT_FIRST_NAME]"}'
-```
-
-> Json Response
-
-```json
-{
-    "id": "1234abcd"
-}
 ```
 
 Update an Account
@@ -376,6 +374,20 @@ contact_utc_offset                    | int                  | This field is no 
 
 <aside class="notice">The status flag can only be set for sub-accounts from the master account</aside>
 
+> Json Response
+
+```json
+{
+    "id": "1234abcd"
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id  			| string  	| Unique identifier of the account
+
 ### Error Status Codes
 
 HTTP Status Code | Description
@@ -426,6 +438,12 @@ HTTP Status Code | Description
 curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/account/list
 ```
 
+Return an array of arrays, with each sub-array representing an account available to the user. Please note that the account list model definition below has property keys, but that's only for reference purposes since it's actually just a standard array
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/account/list`
+
 > Json Response
 
 ```json
@@ -455,13 +473,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 ]
 ```
 
-Return an array of arrays, with each sub-array representing an account available to the user. Please note that the account list model definition below has property keys, but that's only for reference purposes since it's actually just a standard array
-
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/g/account/list`
-
-### Account Array Attributes
+### HTTP Response (Account Array Attributes)
 
 Array Index | Attribute   			     | Data Type | Description
 ----------- | ---------              | --------- | -----------
