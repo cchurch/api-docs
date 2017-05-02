@@ -215,14 +215,6 @@ HTTP Status Code | Data Type
 curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
 ```
 
-> Webhook Json POST Response
-
-```json
-{
-    "event:": "[EVENT]"
-}
-```
-
 This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
 
 ### HTTP Request
@@ -235,12 +227,20 @@ Parameter           | Data Type     | Description   | Is Required
 **start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
 
-### HTTP Response (Json EVENT Values)
+> Webhook Json POST Response
+
+```json
+{
+    "event:": "[EVENT]"
+}
+```
+
+### HTTP Response (Json Event Values)
 
 Value                              | Description
 -----                              | -----------
 ASSET_CLOUD_EVENT_UPLOADED         | The image has been successfully uploaded into the cloud
-ASSET_CLOUD_EVENT_DEMAND_FAILED    | The image failed aquiring a connection to the bridge
+ASSET_CLOUD_EVENT_DEMAND_FAILED    | The image failed acquiring a connection to the bridge
 ASSET_CLOUD_EVENT_NOTHING_UPLOAD   | Nothing was uploaded since the image was already in the cloud
 ASSET_CLOUD_EVENT_INVALID_RANGE    | An invalid range (timestamp) was requested
 ASSET_CLOUD_EVENT_ABORT            | General error occurred
@@ -261,14 +261,6 @@ HTTP Status Code | Data Type
 curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
 ```
 
-> Webhook Json POST Response
-
-```json
-{
-    "event:": "[EVENT]"
-}
-```
-
 This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to acquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
 
 ### HTTP Request
@@ -282,12 +274,20 @@ Parameter           | Data Type     | Description   | Is Required
 **end_timestamp**   | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
 
-### HTTP Response (Json EVENT Values)
+> Webhook Json POST Response
+
+```json
+{
+    "event:": "[EVENT]"
+}
+```
+
+### HTTP Response (Json Event Values)
 
 Value                              | Description
 -----                              | -----------
 ASSET_CLOUD_EVENT_UPLOADED         | The video has been successfully uploaded into the cloud
-ASSET_CLOUD_EVENT_DEMAND_FAILED    | The video failed aquiring a connection to the bridge
+ASSET_CLOUD_EVENT_DEMAND_FAILED    | The video failed acquiring a connection to the bridge
 ASSET_CLOUD_EVENT_NOTHING_UPLOAD   | Nothing was uploaded since the video was already in the cloud
 ASSET_CLOUD_EVENT_INVALID_RANGE    | An invalid range (timestamp) was requested
 ASSET_CLOUD_EVENT_ABORT            | General error occurred
