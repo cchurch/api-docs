@@ -9,7 +9,7 @@ Asset services provide access to media assets - previews and video in appropriat
 <aside class="notice">Assets are identified by a tuple of timestamp, cameraid, quality and format</aside>
 
   - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - 'now' is the current time (a value starting with + or - is an offset from the current time)
-  - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit id associated with a specific camera. Note CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage
+  - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit id associated with a specific camera (CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
   - **Quality*****(Future Feature)*****:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. Additional quality levels will be supported in time
     - **low:** around 100 KB/s
     - **med:** under 500 KB/s
@@ -18,18 +18,18 @@ Asset services provide access to media assets - previews and video in appropriat
 
 ### Retrieve Image
 
-The image request model provides an efficient mechanism for accessing image sequences for several usage models. Image requests can be done directly using the next/after/prev virtual model. This returns images before or after specified timestamps. Alternatively, the timestamp and event information can be fetched through the 'list' interface (to get events for history) and [Poll](#poll) interface to track new images as they become available in real-time. The following description provides typical usage models for various events:
+The image request model provides an efficient mechanism for accessing image sequences for several usage models. Image requests can be done directly using the next/after/prev virtual model. This returns images before or after specified timestamps. Alternatively, the timestamp and event information can be fetched through the [List](#get-list-of-images) interface (to get events for history) and [Poll](#poll) interface to track new images as they become available in real-time. The following description provides typical usage models for various events:
 
-  - Low bandwidth video playback: The preview stream is a sequential set of JPEG images. If played back in order, low resolution video is accomplished
-    - The simplest implementation is to fetch 'next' with a timestamp of 'now' (i.e. /asset/next/image.jpeg?t=now;c=12345678;a=pre) - waiting for the subsequent image after the current time. Each time an image is returned, a new request should be made. If the downstream bandwidth is very low, the image fetch will automatically slow down (because delivery of image A happens after image B has been received, so the next call will fetch image C, skipping display of image B entirely). This approach works well for tracking a single image stream. As a tip, the first request should be done as a 'prev' request to make sure an image is displayed, before the sequential next requests. The downside of this model is it requires a dedicated socket for each image stream being played. Many browsers have a limited pool of open sockets
+  - **Low bandwidth video playback:** The preview stream is a sequential set of JPEG images. If played back in order, low resolution video is accomplished
+    - The simplest implementation is to fetch 'next' with a timestamp of 'now' (i.e. /asset/next/image.jpeg?t=now;c=12345678;a=pre) - waiting for the subsequent image after the current time. Each time an image is returned, a new request should be made. If the downstream bandwidth is very low, the image fetch will automatically slow down (because delivery of image A happens after image B has been received, so the next call will fetch image C, skipping display of image B entirely). This approach works well for tracking a single image stream (Tip: the first request should be done as a 'prev' request to make sure an image is displayed, before the sequential next requests). The downside of this model is it requires a dedicated socket for each image stream being played. Many browsers have a limited pool of open sockets
     - A more efficient mechanism for tracking multiple image streams is to use the [Poll](#poll) interface. It will provide the timestamp of the next image available for a set of camera, which can then be fetched via the /asset/asset call. Since the poll request supports multiple cameras in a single request, it requires only a single socket for any number of cameras. The client application should implement a 'fair' algorithm across the returned timestamps to address low bandwidth situations (that is, make sure every image stream gets updated before you fetch a new image for the same stream). This algorithm will provide smooth frame rate degradation across any number of cameras, whether the performance bottleneck is client CPU or bandwidth. The best model for this is:
-      - receive update notifications for all cameras being tracked via a single sequential poll session
-      - for each camera, keep track of the latest image notification, replacing the last one even if it has not been fetched yet
-      - with a limited pool of 'requests', do a fair rotation between all cameras, fetching only the most recent image for each, and skipping the fetch if the image is already loading
-  - Random access image discovery. The preview and thumb image streams can provide a visual navigation tool for accessing recorded video. The typical implementation requires a map from a timestamp to the 'best' image for that timestamp. To implement this approach, the client should use the 'after' and 'prev' requests with the timestamp of the user playhead. Both calls provide header data for x-ee-timestamp, x-ee-next, and x-ee-prev which identify the current and subsequent images in both directions when it can be easily determined. The usage paradigm for this should be:
+      - Receive update notifications for all cameras being tracked via a single sequential poll session
+      - For each camera, keep track of the latest image notification, replacing the last one even if it has not been fetched yet
+      - With a limited pool of 'requests', do a fair rotation between all cameras, fetching only the most recent image for each, and skipping the fetch if the image is already loading
+  - **Random access image discovery:** The preview and thumb image streams can provide a visual navigation tool for accessing recorded video. The typical implementation requires a map from a timestamp to the 'best' image for that timestamp. To implement this approach, the client should use the 'after' and 'prev' requests with the timestamp of the user playhead. Both calls provide header data for x-ee-timestamp, x-ee-next, and x-ee-prev which identify the current and subsequent images in both directions when it can be easily determined. The usage paradigm for this should be:
     - On navigation event (large jump), determine the timestamp of the user playhead and do an '/asset/prev' call to get the appropriate image. Store the x-ee-timestamp, x-ee-next and x-ee-prev values for the image
-    - As the user moves the playhead, if the time change is within the next/prev halfway bounds, no new request is required. when the use moves outside of the time range, do an image fetch with the new timestamp
-  - Thumbnail navigation. The system provides a 'thumbnail' image for each event which is intended to provide a small representation of the event. The easiest mechanism to get a thumbnail for an event is to do an /asset/after/image.jpeg?a=thumb... image request with the starting timestamp of the event
+    - As the user moves the playhead, if the time change is within the next/prev halfway bounds, no new request is required. When the user moves outside of the time range, do an image fetch with the new timestamp
+  - **Thumbnail navigation:** The system provides a 'thumbnail' image for each event which is intended to provide a small representation of the event. The easiest mechanism to get a thumbnail for an event is to do an /asset/after/image.jpeg?a=thumb... image request with the starting timestamp of the event
 
 ### Image Formats
 
@@ -52,9 +52,9 @@ Get the next 500 images after April 1st<br>
 
 Video is accessed via the 'play' command. Video is captured in segments, and is limited to 5 minutes per segment in storage. The video command will seamlessly rewrite headers within the video format to join segments as necessary to deliver the requested data span. However, we highly encourage developers to fetch only 5 minutes at a time to ensure that users aren't filling storage on their bridge needlessly
 
-If the end time of the segment is in the future, the video will follow the data stream as it arrives, delivering live video streaming with minimal latency. MP4 format cannot be live streamed. Note: if the camera is not streaming video, the video will stop (and start again) as video is captured, which is typically not what is desired
+If the end time of the segment is in the future, the video will follow the data stream as it arrives, delivering live video streaming with minimal latency (if the camera is not streaming video, the video will stop (and start again) as video is captured, which is typically not what is desired). MP4 format cannot be live streamed
 
-The key word 'stream_<streamid>' can be used for the starting timestamp. This forces the camera to capture video and stream it to the cloud live. The stream id should be globally unique(ish) string - combination of a timestamp and userid works well. It is only critical for M3U requests, where it assure continuity between the M3U poll transactions
+The keyword 'stream_<streamid>' can be used for the starting timestamp. This forces the camera to capture video and stream it to the cloud live. The stream id should be globally unique(ish) string - combination of a timestamp and userid works well. It is only critical for M3U requests, where it assures continuity between the M3U poll transactions
 
 The start timestamp must match the starting timestamp of a video if the video already exists. Subsegments of a video span can be specified by using the 'to' (time offset) argument. For example, assume a 5 minute video has been recorded from 12:30 to 12:35. The query "?t=20181120123000.000;e=20181120123400.000;to=180000;..." will play one minute of video (timestamped at 12:33), 3 minutes into the video starting at 12:30, clipping off the last minute of the recorded segment
 
@@ -62,13 +62,13 @@ The start timestamp must match the starting timestamp of a video if the video al
 
 ### Video Formats
 
-The video system is based on h264 video and AAC audio. These streams are encapsulated in different formats for compatibility with different playback modes
+The video system is based on H264 video and AAC audio. These streams are encapsulated in different formats for compatibility with different playback modes
 
   - **FLV:** Native format for the system. Playable in any Flash player, VLC as well as other players
-  - **M3U:** (Live HTTP Streaming) M3U files are index files into a MPEGTS data stream. The system will generate ts urls on an approximately 2 second basis depending on the key frame rate of the underlying video <br> ***Note:*** *Due to the polling nature of M3U for live streams, you can only use now relative requests for streaming (where the streamid is used to maintain transaction state). Hence "/asset/play/video.m3u?t=stream_34567890332244567;e=+300000;c=12345678" will create a five minute stream, but "/asset/play/video.m3u?t=-50000;e=+300000" will not*
-  - **TS:** MPEG Transport Stream format video and audio. Intended for playback via HTTP streaming in concert with M3U transactions, per the HTTP Live Streaming functionality of iOS and android. You can list multiple streams for a single video (typically for different resolutions/bandwidth).
-  - **MP4:** MPEG4 files have very broad playback compatibility - all major video player are compatible. However, MP4 is NOT a streamable format, so it is only used for download functionality and will return an error if the video is live
-  - **M3U8:** Use the M3U8 play list format. Use this for mobile devices as it uses the HTTP layer to stream MPEG TS files with instructions in the M3U8 playlist file. Continue polling for this playlist until the playlist indicates it is complete
+  - **M3U:** (Live HTTP Streaming) M3U files are index files into a MPEGTS data stream. The system will generate ts urls on an approximately 2 second basis depending on the key frame rate of the underlying video <br> ***Note:*** *Due to the polling nature of M3U for live streams, you can only use 'now'-relative requests for streaming (where the streamid is used to maintain transaction state). Hence "/asset/play/video.m3u?t=stream_34567890332244567;e=+300000;c=12345678" will create a five minute stream, but "/asset/play/video.m3u?t=-50000;e=+300000" will not*
+  - **TS:** MPEG Transport Stream format video and audio. Intended for playback via HTTP streaming in concert with M3U transactions, per the HTTP Live Streaming functionality of iOS and android. You can list multiple streams for a single video (typically for different resolutions/bandwidth)
+  - **MP4:** MPEG4 files have a very broad playback compatibility (in line with all the major video players), however *MP4 is NOT a streamable format*, so it is only used for download functionality and will return an error if the video is live
+  - **M3U8:** M3U8 play list format. Applicable for mobile devices as it uses the HTTP layer to stream MPEGTS files with instructions in the M3U8 playlist file. Continue polling for this playlist until the playlist indicates it is complete
 
   <aside class="warning">While streaming any video format on the web other than FLV (system native format), you may initially get a 502 response</aside>
 
@@ -76,7 +76,7 @@ The video system is based on h264 video and AAC audio. These streams are encapsu
 
 ### Video Quality
 
-The H264 codec has the concept of profiles and levels to convey whether a playback devices is compatible with a specific video stream
+The H264 codec has the concept of profiles and levels to convey whether a playback device is compatible with a specific video stream
 
   - **low:** maximum profile of *baseline (640x480 max)*
   - **med:** maximum profile of *main*
@@ -102,7 +102,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_
 
 <aside class="notice">Get a JPEG image based on the specified timestamp. This will return binary image data in JPEG format</aside>
 
-Cache control headers to allow asset caching if not now-relative:
+Cache control headers to allow asset caching if not 'now'-relative:
 
 Header            | Data Type      | Description
 ------            | -----------    | -----------
@@ -110,7 +110,7 @@ x-ee-timestamp    | type-timestamp | Specifies asset type and timestamp of the p
 x-ee-prev         | type-timestamp <br>*(or 'unknown')* | Specifies asset type of the previous image matching the class filter or 'unknown' if the previous image was too complex to figure out
 x-ee-next         | type-timestamp <br>*(or 'unknown')* | Specifies asset type of the following image matching the class filter or 'unknown' if the following image was too complex to figure out
 content-type      | image/jpeg     | Specifies the content type
-location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb | Identifies actual asset time of image in response
+location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb | Identifies actual asset time of the image in response
 
 ### HTTP Request
 
@@ -120,18 +120,18 @@ location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb |
 `GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg`
 <br> Get the first image before the specified timestamp
 
-`GET https://login.eagleeyenetworks.com/asset/after/image.jpeg`
-<br> Get the first image after the specified timestamp. Used with 'timetamp=now' will return 404(error status code) - Image was not found
-
 `GET https://login.eagleeyenetworks.com/asset/next/image.jpeg`
-<br> Get the first image after the specified timestamp. Used with 'timetamp=now' will wait until the new image comes into existence and returns it
+<br> Get the first image after the specified timestamp. Used with 'timetamp=now' will wait until the new image comes into existence and return it
+
+`GET https://login.eagleeyenetworks.com/asset/after/image.jpeg`
+<br> Get the first image after the specified timestamp. Used with 'timetamp=now' will return 404 - Image was not found
 
 Parameter         | Data Type    | Description   | Is Required
 ---------         | -----------  | -----------   | -----------
 **id**            | string       | Camera id     | true
-**timestamp**     | string       | Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**timestamp**     | string       | timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
-quality           | string, enum | ***(Future Feature)*** Quality of image <br><br>enum: low, med, high
+quality           | string, enum | ***(Future Feature)*** Quality of the image <br><br>enum: low, med, high
 
 ### HTTP Response
 
@@ -166,6 +166,8 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_I
 
   - **FLV** *(The recommended format for web streaming)*
   - **MP4**
+  - **TS**
+  - **M3U**
   - **M3U8**
   - **WEBM**
 
@@ -176,8 +178,8 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_I
 Parameter           | Data Type    | Description    | Is Required
 ---------           | ---------    | -----------    | -----------
 **id**              | string       | Camera id      | true
-**start_timestamp** | string       | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**end_timestamp**   | string       | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 quality             | string, enum | ***(Future Feature)*** Indicates the requested resolution if multiple are available <br><br>enum: low, med, high
 
 ### HTTP Response
@@ -221,7 +223,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_times
 }
 ```
 
-This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json formatted data
+This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
 
 ### HTTP Request
 
@@ -230,10 +232,10 @@ This API call will ensure the image is in the cloud. If the image is not in the 
 Parameter           | Data Type     | Description   | Is Required
 ---------           | -----------   | -----------   | -----------
 **id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
 
-### Json EVENT Values
+### HTTP Response (Json EVENT Values)
 
 Value                              | Description
 -----                              | -----------
@@ -267,7 +269,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_times
 }
 ```
 
-This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to acquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json formatted data
+This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to acquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
 
 ### HTTP Request
 
@@ -276,11 +278,11 @@ This API call will ensure the video is in the cloud. If the video is not in the 
 Parameter           | Data Type     | Description   | Is Required
 ---------           | -----------   | -----------   | -----------
 **id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**end_timestamp**   | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**   | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
 
-### Json EVENT Values
+### HTTP Response (Json EVENT Values)
 
 Value                              | Description
 -----                              | -----------
@@ -305,6 +307,22 @@ HTTP Status Code | Data Type
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
 ```
+
+Get a list of objects, where each object contains the timestamp and type of a JPEG image
+
+<aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/asset/list/image`
+
+Parameter           | Data Type     | Description   | Is Required
+---------           | -----------   | -----------   | -----------
+**id**              | string        | Camera id     | true
+**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**asset_class**     | string, enum  | Asset class of the image <br><br>enum: all, pre, thumb | true
+end_timestamp       | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
 
 > Json Response
 
@@ -345,21 +363,12 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=
 ]
 ```
 
-Get a list of objects, where each object contains the timestamp and type of a JPEG image
+### HTTP Response (Json Attributes)
 
-<aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
-
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/asset/list/image`
-
-Parameter           | Data Type     | Description   | Is Required
----------           | -----------   | -----------   | -----------
-**id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**asset_class**     | string, enum  | Asset class of the image <br><br>enum: all, pre, thumb | true
-end_timestamp       | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
+Parameter | Data Type     | Description
+--------- | -----------   | -----------
+t         | string        | Type of the requested event denoted by the object's [Four CC](#event-objects)
+s         | string        | Timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
 
 ### Error Status Codes
 
@@ -380,6 +389,24 @@ HTTP Status Code | Data Type
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
 ```
+
+Get a list of objects, where each object contains the id, start and end timestamp of a single video clip
+
+<aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
+
+If the option 'o=coalesce' has been added, the videos with overlapping start and end timestamps with the previous or next video will be merged into one single video (one single object)
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/asset/list/video`
+
+Parameter           | Data Type     | Description   | Is Required
+---------           | -----------   | -----------   | -----------
+**id**              | string        | Camera id     | true
+**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+end_timestamp       | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+count               | int           | Used instead of or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Supports negative values, which return N entries before sorted in reverse order (i.e. '-5' will return 5 events prior to the specified time)
+o                   | string, enum  | Additional modifier options <br><br>enum: coalesce *(coalesces spans together if the start or end timestamp of either object overlaps with another, otherwise returns the same output)*
 
 > Json Response
 
@@ -428,23 +455,13 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=
 ]
 ```
 
-Get a list of objects, where each object contains the id, start and end timestamp of a single video clip
+### HTTP Response (Json Attributes)
 
-<aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
-
-If the option 'o=coalesce' has been added, the videos with overlapping start and end timestamps with the previous or next video will be merged into one single video (one single object)
-
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/asset/list/video`
-
-Parameter           | Data Type     | Description   | Is Required
----------           | -----------   | -----------   | -----------
-**id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-end_timestamp       | string        | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
-o                   | string, enum  | Additional modifier options <br><br>enum: coalesce *(coalesces spans together if the start or end timestamp of either object overlaps with another, otherwise returns the same output)*
+Parameter | Data Type     | Description
+--------- | -----------   | -----------
+s         | string        | Start timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
+e         | string        | End timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
+id        | int           | Unique identifier of the video
 
 ### Error Status Codes
 
