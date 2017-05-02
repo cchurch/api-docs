@@ -105,7 +105,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_
 Cache control headers to allow asset caching if not 'now'-relative:
 
 Header            | Data Type      | Description
-------            | -----------    | -----------
+------            | ---------      | -----------
 x-ee-timestamp    | type-timestamp | Specifies asset type and timestamp of the provided image <br><br>Type: video, preview, thumb, event
 x-ee-prev         | type-timestamp <br>*(or 'unknown')* | Specifies asset type of the previous image matching the class filter or 'unknown' if the previous image was too complex to figure out
 x-ee-next         | type-timestamp <br>*(or 'unknown')* | Specifies asset type of the following image matching the class filter or 'unknown' if the following image was too complex to figure out
@@ -127,7 +127,7 @@ location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb |
 <br> Get the first image after the specified timestamp. Used with 'timetamp=now' will return 404 - Image was not found
 
 Parameter         | Data Type    | Description   | Is Required
----------         | -----------  | -----------   | -----------
+---------         | ---------    | -----------   | -----------
 **id**            | string       | Camera id     | true
 **timestamp**     | string       | timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
@@ -144,8 +144,8 @@ The returned response is binary image data in the JPEG format
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -193,8 +193,8 @@ The returned response is binary video data in the requested file format
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -221,11 +221,11 @@ This API call will ensure the image is in the cloud. If the image is not in the 
 
 `GET https://login.eagleeyenetworks.com/asset/cloud/image.jpg`
 
-Parameter           | Data Type     | Description   | Is Required
----------           | -----------   | -----------   | -----------
-**id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
+Parameter           | Data Type | Description   | Is Required
+---------           | --------- | -----------   | -----------
+**id**              | string    | Camera id     | true
+**start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
 
 > Webhook Json POST Response
 
@@ -247,8 +247,8 @@ ASSET_CLOUD_EVENT_ABORT            | General error occurred
 
 ### Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 201 | Request has been created and webhook will be triggered upon completion or error
 
 <!--===================================================================-->
@@ -267,12 +267,12 @@ This API call will ensure the video is in the cloud. If the video is not in the 
 
 `GET https://login.eagleeyenetworks.com/asset/cloud/video.flv`
 
-Parameter           | Data Type     | Description   | Is Required
----------           | -----------   | -----------   | -----------
-**id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**end_timestamp**   | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**webhook_url**     | string        | The webhook url (must be urlencoded) to trigger | true
+Parameter           | Data Type | Description   | Is Required
+---------           | --------- | -----------   | -----------
+**id**              | string    | Camera id     | true
+**start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**   | string    | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
 
 > Webhook Json POST Response
 
@@ -294,8 +294,8 @@ ASSET_CLOUD_EVENT_ABORT            | General error occurred
 
 ### Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 201 | Request has been created and webhook will be triggered upon completion or error
 
 <!--===================================================================-->
@@ -316,13 +316,13 @@ Get a list of objects, where each object contains the timestamp and type of a JP
 
 `GET https://login.eagleeyenetworks.com/asset/list/image`
 
-Parameter           | Data Type     | Description   | Is Required
----------           | -----------   | -----------   | -----------
-**id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**asset_class**     | string, enum  | Asset class of the image <br><br>enum: all, pre, thumb | true
-end_timestamp       | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-count               | int           | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
+Parameter           | Data Type    | Description   | Is Required
+---------           | ---------    | -----------   | -----------
+**id**              | string       | Camera id     | true
+**start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**asset_class**     | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
+end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+count               | int          | Used instead or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
 
 > Json Response
 
@@ -365,15 +365,15 @@ count               | int           | Used instead or with an 'end_timestamp' ar
 
 ### HTTP Response (Json Attributes)
 
-Parameter | Data Type     | Description
---------- | -----------   | -----------
-t         | string        | Type of the requested event denoted by the object's [Four CC](#event-objects)
-s         | string        | Timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
+Parameter | Data Type | Description
+--------- | --------- | -----------
+t         | string    | Type of the requested event denoted by the object's [Four CC](#event-objects)
+s         | string    | Timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -400,13 +400,13 @@ If the option 'o=coalesce' has been added, the videos with overlapping start and
 
 `GET https://login.eagleeyenetworks.com/asset/list/video`
 
-Parameter           | Data Type     | Description   | Is Required
----------           | -----------   | -----------   | -----------
-**id**              | string        | Camera id     | true
-**start_timestamp** | string        | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-end_timestamp       | string        | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
-count               | int           | Used instead of or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Supports negative values, which return N entries before sorted in reverse order (i.e. '-5' will return 5 events prior to the specified time)
-o                   | string, enum  | Additional modifier options <br><br>enum: coalesce *(coalesces spans together if the start or end timestamp of either object overlaps with another, otherwise returns the same output)*
+Parameter           | Data Type    | Description   | Is Required
+---------           | ---------    | -----------   | -----------
+**id**              | string       | Camera id     | true
+**start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
+count               | int          | Used instead of or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Supports negative values, which return N entries before sorted in reverse order (i.e. '-5' will return 5 events prior to the specified time)
+o                   | string, enum | Additional modifier options <br><br>enum: coalesce *(coalesces spans together if the start or end timestamp of either object overlaps with another, otherwise returns the same output)*
 
 > Json Response
 
@@ -457,16 +457,16 @@ o                   | string, enum  | Additional modifier options <br><br>enum: 
 
 ### HTTP Response (Json Attributes)
 
-Parameter | Data Type     | Description
---------- | -----------   | -----------
-s         | string        | Start timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
-e         | string        | End timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
-id        | int           | Unique identifier of the video
+Parameter | Data Type | Description
+--------- | --------- | -----------
+s         | string    | Start timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
+e         | string    | End timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
+id        | int       | Unique identifier of the video
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 301 | Asset has been moved to a different archiver
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
