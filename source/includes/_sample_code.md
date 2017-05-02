@@ -2,6 +2,8 @@
 
 <!--===================================================================-->
 ## Making API Calls With Curl
+<!--===================================================================-->
+
 In this section, we will walk you through the process of making API requests using the ‘curl’ command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android, and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server, using a wide range of supported protocols, including HTTP/HTTPS, which is what we are interested in. Curl can be installed by going to this site. http://curl.haxx.se/.
 
 With curl installed, the next step is to log in and have a valid session, so that we can freely use any of the APIs. Logging in, is a two step process consisting of authentication and authorization. The authentication API takes in 2 parameters. Our curl common will look like this. The [USERNAME] and [PASSWORD] need to be valid for the API request to return successfully.
@@ -38,8 +40,9 @@ The ‘auth_key’ cookie will need to be set for any other Eagle Eye API that r
 
 <!--===================================================================-->
 ## Constructing Layouts
+<!--===================================================================-->
 
-> Get /layout/list
+> GET /layout/list
 
 ```json
 [
@@ -75,16 +78,16 @@ When a user logs onto the Eagle Eye system, they are greeted with a grid of came
 Upon being logged in, we make a request to the GET /layout/list API. This returns an array of Layout objects. Do note that this is not the same model as what is returned by the GET /layout API request. The one returned by the /layout/list API is an abridged version with only the most important attributes. The response of the request will look like this.
 
 `
-Get /layout/list
+GET /layout/list
 `
 
-We take the layout id attribute for each layout of interest and pass it to the Get /layout API request. This will contain the information we need to construct the layout.
+We take the layout id attribute for each layout of interest and pass it to the GET /layout API request. This will contain the information we need to construct the layout.
 
 `
-Get /layout
+GET /layout
 `
 
-> Get /layout
+> GET /layout
 
 ```json
 {
@@ -153,6 +156,8 @@ The ease of constructing layouts is highly dependent on the robustness of the 3r
 
 <!--===================================================================-->
 ## Playing Live Video
+<!--===================================================================-->
+
 Video playback functionality can be accessed through the ‘/asset/play/video.{video_format}’ API. We will show you how to use this API to play live video, though the same API can also be used to play historic video.
 
 Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on this site to generate the URL string. http://writecodeonline.com/javascript/.
@@ -175,7 +180,7 @@ htmlFlashVideoPlayerUrl = "https://login.eagleeyenetworks.com/strobe/embed.html?
 document.write(htmlFlashVideoPlayerUrl);
 `
 
-Notice that we have 2 variables; ‘eagleEyeLiveVideoApiUrl’ and ‘htmlFlashVideoPlayerUrl’. The ‘htmlFlashVideoPlayerUrl’ variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking, and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application.
+Note that we have 2 variables; ‘eagleEyeLiveVideoApiUrl’ and ‘htmlFlashVideoPlayerUrl’. The ‘htmlFlashVideoPlayerUrl’ variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking, and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application.
 
 `
 https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[AUTH_KEY]&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5
@@ -183,8 +188,9 @@ https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%
 
 <!--===================================================================-->
 ## Long Polling
+<!--===================================================================-->
 
-> Json Request for Post /poll
+> Json Request for POST /poll
 
 ```json
 {
@@ -258,10 +264,9 @@ Once the POST /poll request has been made successfully, a token is returned to t
 
 The GET /poll request should be called frequently so that new data can arrive as soon as possible. The response may be empty or it may look something like this.
 
-> Response for Get /poll
+> Response for GET /poll
 
 ```json
-
 {
     "cameras": {
         "10003254": {
@@ -294,5 +299,3 @@ The GET /poll request should be called frequently so that new data can arrive as
 Only attributes with updated information will be returned in the response payload. For the mobile apps, we monitor the ‘pre’ attribute for new timestamps, and when a new timestamp does come in, we make the appropriate API call to retrieve the camera image.
 
 The power of this API lies in the ability of being able to control what events and resource types to listen to. This allows updates to the camera to be known in real time.
-
-

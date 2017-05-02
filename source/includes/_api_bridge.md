@@ -2,18 +2,15 @@
 
 <!--===================================================================-->
 ## Overview
+<!--===================================================================-->
+
 The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the Cameras to be compatible with the EEVB and record the Assets. The Bridge is setup and controlled via a cloud based user inteface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address.
 
 <!--===================================================================-->
-## Get Bridge
+## Bridge Model
+<!--===================================================================-->
 
-> Request
-
-```shell
-curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
-```
-
-> Json Response
+> Bridge Model
 
 ```json
 {
@@ -170,20 +167,39 @@ curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_
   }
 ```
 
+### Device Attributes
+
+Parameter                     | Data Type         | Description
+---------                     | ---------------   | -----------
+id                            | string            | Unique identifier for the device
+name                          | string            | Name of the device
+
+<!--TODO: Add the full bridge model device attributes table-->
+
+<!--===================================================================-->
+## Get Bridge
+<!--===================================================================-->
+
+> Request
+
+```shell
+curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
+```
+
 Returns bridge object by id.
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description | Is Required
----------     | ----------- | ----------- | -----------
-**id**        | string      | Bridge Id   | true
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**    | string    | Bridge id   | true
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
+HTTP Status Code | Data Type
+---------------- | ---------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -191,19 +207,12 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Add Bridge to EEVB
+<!--===================================================================-->
 
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectID":[CONNECT_ID]}'
-```
-
-> Json Response
-
-```json
-{
-  "id": "100c339a"
-}
 ```
 
 Adds a bridge to the Eagle Eye Video Bank
@@ -212,21 +221,29 @@ Adds a bridge to the Eagle Eye Video Bank
 
 `PUT https://login.eagleeyenetworks.com/g/device`
 
-Parameter | Data Type     | Description
---------- | -----------   | -----------
-name      | string        | Bridge Name
-connectID | string        | Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.
+Parameter | Data Type | Description
+--------- | --------- | -----------
+name      | string    | Bridge Name
+connectID | string    | Connect ID is needed to add and activate bridge to account. All non-alphanumeric characters will be stripped.
+
+> Json Response
+
+```json
+{
+    "id": "100c339a"
+}
+```
 
 ### Response Json Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier for the device
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
+HTTP Status Code | Description
+---------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -238,6 +255,7 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Update Bridge
+<!--===================================================================-->
 
 > Request
 
@@ -249,7 +267,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -
 
 ```json
 {
-  "id": "100c339a"
+    "id": "100c339a"
 }
 ```
 
@@ -257,26 +275,26 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -
 
 `POST https://login.eagleeyenetworks.com/g/device`
 
-Parameter                 | Data Type     | Description   | Is Required
----------                 | -----------   | -----------   | -----------
-**id**                    | string        | Bridge Id     | true
-name                      | string        | Bridge Name
-timezone                  | string        | Timezone of the bridge. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
-tags                      | array[string] | Array of strings, which each string representing a "tag"
-settings                  | json          | Misc Settings
-camera_parameters_add     | json          | JSON object of camera parameters/settings to add/update
-camera_parameters_delete  | json          | JSON object of camera parameters/settings to delete
+Parameter                | Data Type     | Description | Is Required
+---------                | ---------     | ----------- | -----------
+**id**                   | string        | Bridge id   | true
+name                     | string        | Bridge Name
+timezone                 | string        | Timezone of the bridge. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
+tags                     | array[string] | Array of strings, which each string representing a "tag"
+settings                 | json          | Misc Settings
+camera_parameters_add    | json          | JSON object of camera parameters/settings to add/update
+camera_parameters_delete | json          | JSON object of camera parameters/settings to delete
 
 ### Response Json Attributes
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier for the device
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
+HTTP Status Code | Description
+---------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -286,6 +304,7 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Delete Bridge
+<!--===================================================================-->
 
 > Request
 
@@ -297,14 +316,14 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 `DELETE https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Bridge Id
+Parameter | Data Type | Description
+--------- | --------- | -----------
+**id**    | string    | Bridge id
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
+HTTP Status Code | Description   
+---------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -314,12 +333,26 @@ HTTP Status Code    | Data Type
 
 <!--===================================================================-->
 ## Get List of Bridges
+<!--===================================================================-->
 
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/device/list
 ```
+
+Returns array of arrays, with each sub-array representing a device available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached. Please note that the ListDevice model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/device/list`
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+e         | string    | Bridge id             
+n         | string    | Bridge Name           
+t         | string    | Device Type           
+s         | string    | Device Service Status
 
 > Json Response
 
@@ -437,23 +470,10 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 ]
 ```
 
-Returns array of arrays, with each sub-array representing a device available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached. Please note that the ListDevice model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
+### HTTP Response (Bridge Array Attributes)
 
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/g/device/list`
-
-Parameter | Data Type   | Description           
---------- | ----------- | -----------           
-e         | string      | Bridge Id             
-n         | string      | Bridge Name           
-t         | string      | Device Type           
-s         | string      | Device Service Status
-
-### Response: Bridge Model
-
-Array Index | Attribute       | Data Type  
----------   | -----------     | -----------
+Array Index | Attribute       | Data Type
+----------- | ---------       | ---------
 0           | account_id      | string
 1           | id              | string
 2           | name            | string
@@ -477,8 +497,8 @@ Array Index | Attribute       | Data Type
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
+HTTP Status Code | Description   
+---------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
