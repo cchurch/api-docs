@@ -133,25 +133,26 @@ Parameter         | Data Type    | Description   | Is Required
 **asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
 quality           | string, enum | ***(Future Feature)*** Quality of the image <br><br>enum: low, med, high
 
-### HTTP Response
-
 > Response
 
 ```shell
 JPEG<file_content>
 ```
-The returned response is binary image data in the JPEG format
+
+### HTTP Response
+
+The returned response is binary image data in JPEG format
 
 ### Error Status Codes
 
 HTTP Status Code | Description
 ---------------- | -----------
-301 | Asset has been moved to a different archiver
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Image was not found
-200 | Request succeeded
+301	| Asset has been moved to a different archiver
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Image was not found
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Get Video
@@ -182,28 +183,29 @@ Parameter           | Data Type    | Description    | Is Required
 **end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 quality             | string, enum | ***(Future Feature)*** Indicates the requested resolution if multiple are available <br><br>enum: low, med, high
 
-### HTTP Response
-
 > Response
 
 ```shell
 FLV<file_content>
 ```
+
+### HTTP Response
+
 The returned response is binary video data in the requested file format
 
 ### Error Status Codes
 
 HTTP Status Code | Description
 ---------------- | -----------
-301 | Asset has been moved to a different archiver
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Camera not provisioned
-404 | Camera get error
-410 | Video is out of retention
-503 | Camera tag maps not loaded
-200 | Request succeeded
+301	| Asset has been moved to a different archiver
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Camera not provisioned
+404	| Camera get error
+410	| Video is out of retention
+503	| Camera tag maps not loaded
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Prefetch Image
@@ -327,7 +329,7 @@ count               | int          | Used instead or with an 'end_timestamp' arg
 > Json Response
 
 ```json
-[    
+[
     {
         "t":"PRFR",
         "s":"20181001000000.045"
@@ -374,11 +376,11 @@ s         | string    | Timestamp of the image in EEN format: YYYYMMDDHHMMSS.NNN
 
 HTTP Status Code | Description
 ---------------- | -----------
-301 | Asset has been moved to a different archiver
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-200 | Request succeeded
+301	| Asset has been moved to a different archiver
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Get List of Videos
@@ -467,8 +469,8 @@ id        | int       | Unique identifier of the video
 
 HTTP Status Code | Description
 ---------------- | -----------
-301 | Asset has been moved to a different archiver
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-200 | Request succeeded
+301	| Asset has been moved to a different archiver
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded

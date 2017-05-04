@@ -149,7 +149,7 @@ is_admin_required  | bool            | If admins have to accept                 
 is_user_required   | bool            | If users have to accept                      | false         | not updating             |
 timestamp          | string          | Date the terms goes into affect              | false         | now                      |
 
-### HTTP JSON Attributes
+### HTTP Json Attributes
 Parameter 	           | Data Type     | Description
 ---------  	           | -----------   | -----------
 title                  | string        | Title of the notice
@@ -207,7 +207,7 @@ is_user_required   | bool            | If users have to accept                  
 timestamp          | string          | Date the term of service goes into affect    | false         | now                      |
 
 
-### HTTP JSON Attributes
+### HTTP Json Attributes
 Parameter 	           | Data Type     | Description
 ---------  	           | -----------   | -----------
 title                  | string        | Title of the notice

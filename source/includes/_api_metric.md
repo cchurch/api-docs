@@ -24,11 +24,11 @@ Used to query the bandwidth usage for a particular camera device
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**   		    | string       | Camera id 	 | true
+**id**          | string       | Camera id   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp  	| string   		 | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
-group_by 		    | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
-motion_interval | int      		 | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
+end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
+group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
+motion_interval | int          | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
 metrics         | string, enum | String delimited list used to filter which metrics gets returned. Setting this parameter to 'core,motion' will return data only for core and motion <br><br>enum: core, packets, motion
 
 > Json Response
@@ -124,8 +124,8 @@ Index     | Data Type | Description
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
@@ -150,10 +150,10 @@ Used to query the bandwidth usage for a particular bridge device
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**   		    | string       | Bridge id 	 | true
+**id**          | string       | Bridge id   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp  	| string   		 | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
-group_by 		    | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
+end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
+group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
 
 > Json Response
 
@@ -232,9 +232,9 @@ group_by 		    | string, enum | Hour or Day, indicating how the results should b
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-core      | array[[BridgeCore](#bridgecore-json-array-elements)]       | Array of core metrics
-bandwith  | array[[BridgeBandwidth](#bridgebandwidth-json-array-elements)]  | Array of bandwidth metrics
-storage   | array[[BridgeStorage](#bridgestorage-json-array-elements)] | Array of storage metrics
+core      | array[[BridgeCore](#bridgecore-json-array-elements)]           | Array of core metrics
+bandwith  | array[[BridgeBandwidth](#bridgebandwidth-json-array-elements)] | Array of bandwidth metrics
+storage   | array[[BridgeStorage](#bridgestorage-json-array-elements)]     | Array of storage metrics
 
 ### BridgeCore Json Array Elements
 
@@ -264,8 +264,8 @@ Index     | Data Type | Description
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
