@@ -67,7 +67,7 @@ token     | string      | Account validation token | POST
 
 ```json
 {
-  "user_id": "ca103fea"
+    "user_id": "ca103fea"
 }
 ```
 
@@ -184,7 +184,7 @@ accepted_terms_of_service_urls | string    | New terms of service acceptance url
 
 ```json
 {
-  "user_id": "ca0e1cf2"
+    "user_id": "ca0e1cf2"
 }
 ```
 
@@ -302,7 +302,7 @@ current_password | string    | Current password of the user. Optional. If 'id' a
 
 ```json
 {
-  "id": "ca02c000"
+    "id": "ca02c000"
 }
 ```
 
