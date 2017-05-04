@@ -198,12 +198,12 @@ Parameter | Data Type | Description | Is Required
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+HTTP Status Code | Description
+---------------- | -----------
+200	| Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
 
 <!--===================================================================-->
 ## Add Bridge to EEVB
@@ -244,14 +244,14 @@ id        | string    | Unique identifier for the device
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No device matching the ConnectID or GUID was found
-409 | ConnectID or GUID is currently already in use by an account
-410 | Communication cannot be made to attach the camera to the bridge
-415 | Device associated with the given GUID is unsupported
+200	| Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| No device matching the ConnectID or GUID was found
+409	| ConnectID or GUID is currently already in use by an account
+410	| Communication cannot be made to attach the camera to the bridge
+415	| Device associated with the given GUID is unsupported
 
 <!--===================================================================-->
 ## Update Bridge
@@ -282,8 +282,8 @@ name                     | string        | Bridge Name
 timezone                 | string        | Timezone of the bridge. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
 tags                     | array[string] | Array of strings, which each string representing a "tag"
 settings                 | json          | Misc Settings
-camera_parameters_add    | json          | JSON object of camera parameters/settings to add/update
-camera_parameters_delete | json          | JSON object of camera parameters/settings to delete
+camera_parameters_add    | json          | Json object of camera parameters/settings to add/update
+camera_parameters_delete | json          | Json object of camera parameters/settings to delete
 
 ### Response Json Attributes
 
@@ -295,12 +295,12 @@ id        | string    | Unique identifier for the device
 
 HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera to add/delete camera settings, contact support
+200	| Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Device matching the ID was not found
+463	| Unable to communicate with the camera to add/delete camera settings, contact support
 
 <!--===================================================================-->
 ## Delete Bridge
@@ -322,14 +322,14 @@ Parameter | Data Type | Description
 
 ### Error Status Codes
 
-HTTP Status Code | Description   
+HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera or bridge, contact support
+200	| Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Device matching the ID was not found
+463	| Unable to communicate with the camera or bridge, contact support
 
 <!--===================================================================-->
 ## Get List of Bridges
@@ -349,10 +349,10 @@ Returns array of arrays, with each sub-array representing a device available to 
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-e         | string    | Bridge id             
-n         | string    | Bridge Name           
-t         | string    | Device Type           
-s         | string    | Device Service Status
+e         | string    | Bridge id
+n         | string    | Bridge name
+t         | string    | Device type
+s         | string    | Device service status
 
 > Json Response
 
@@ -472,34 +472,34 @@ s         | string    | Device Service Status
 
 ### HTTP Response (Bridge Array Attributes)
 
-Array Index | Attribute       | Data Type
------------ | ---------       | ---------
-0           | account_id      | string
-1           | id              | string
-2           | name            | string
-3           | type            | string
-4           | bridges         | json
-5           | service_status  | string
-6           | permissions     | string
-7           | tags            | array[string]
-8           | guid            | string
-9           | serial_number   | string
-10          | [device_status](#status-bitmask)   | int
-11          | timezone        | string
+Array Index | Attribute           | Data Type
+----------- | ---------           | ---------
+0           | account_id          | string
+1           | id                  | string
+2           | name                | string
+3           | type                | string
+4           | bridges             | json
+5           | service_status      | string
+6           | permissions         | string
+7           | tags                | array[string]
+8           | guid                | string
+9           | serial_number       | string
+10          | [device_status](#status-bitmask) | int
+11          | timezone            | string
 12          | timezone_utc_offset | int
-13          | is_unsupported  | int
-14          | ip_address      | string
-15          | is_shared       | int
-16          | owner_account_name | string
-17          | is_upnp         | boolean
-18          | video_input     | string
-19          | video_status    | string
+13          | is_unsupported      | int
+14          | ip_address          | string
+15          | is_shared           | int
+16          | owner_account_name  | string
+17          | is_upnp             | boolean
+18          | video_input         | string
+19          | video_status        | string
 
 ### Error Status Codes
 
-HTTP Status Code | Description   
+HTTP Status Code | Description
 ---------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
