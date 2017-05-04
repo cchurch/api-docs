@@ -24,9 +24,9 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 <aside class="success">This service will continually be extended</aside>
 
-Poll is a stateful request for updates any time a matching event occurs within the service. The initial poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a JSON formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
+Poll is a stateful request for updates any time a matching event occurs within the service. The initial poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
 
-Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a JSON formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
+Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
 ### Response Resource Types
 
@@ -78,7 +78,7 @@ IF "Camera On" (**bit 17**)==0 THEN "Off" (orange forbidden icon)
 
 <aside class="notice">Recording status uses the following logic:</aside>
 
-IF "Recording" (**bit 19**) THEN Recording (green circle icon)  
+IF "Recording" (**bit 19**) THEN Recording (green circle icon)
 IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits were set previously)
 
 ## Event Objects
@@ -216,97 +216,97 @@ PTZS      | ???                                                              | c
 
 ### Event Parameters
 
-Parameter          | Description
----------          | -----------
-aborted            |
-active_write_us    |
-alertid            |
-alertmotionid      |
-alertroiid         |
-booted             |
-bw10               |
-bw60               |
-bw300              |
-bytes              |
-bytes_rcvd         |
-bytes_sent         |
-bytesfreed         |
-bytessent          |
-bytesshaped        |
-bytesstored        |
-bytesstreamed      |
-cameraid           |
-change             |
-command            |
-ctype              |
-day                |
-daysondisk         |
-delta_expected     |
-delta_rcvd         |
-dest_ip            |
-dest_port          |
-deviceid           |
-duration           |
-endtime            |
-errcode            |
-event              |
-eventid            |
-file_offset        |
-flags              |
-format             |
-frame_delay        |
-frame_size         |
-interval           |
-ip                 |
-kbytesavail        |
-kbytesondisk       |
-kbytessize         |
-key_offset         |
-layoutid           |
-millisecs          |
-motion             |
-mpack              |
-new_accountid      |
-ns                 |
-op                 |
-pan_status         |
-paused_write_us    |
-previewid          |
-reason             |
-registerid         |
-resource_type      |
-roiid              |
-seconds            |
-seq                |
-sequence           |
-settings           |
-source_accountid   |
-source_userid      |
-src_ip             |
-src_port           |
-starttime          |
-status             |
-stream_format      |
-stream_type        |
-streamformat       |
-streamid           |
-streamtype         |
-stype              |
-target_deviceid    |
-target_userid      |
-total_expected     |
-total_rcvd         |
-triggerid          |
-userid             |
-uuid               |
-valid              |
-values             |
-videoid            |
-videosize          |
-x                  |
-y                  |
-z                  |
-zoom_status        |
+Parameter        | Description
+---------        | -----------
+aborted          |
+active_write_us  |
+alertid          |
+alertmotionid    |
+alertroiid       |
+booted           |
+bw10             |
+bw60             |
+bw300            |
+bytes            |
+bytes_rcvd       |
+bytes_sent       |
+bytesfreed       |
+bytessent        |
+bytesshaped      |
+bytesstored      |
+bytesstreamed    |
+cameraid         |
+change           |
+command          |
+ctype            |
+day              |
+daysondisk       |
+delta_expected   |
+delta_rcvd       |
+dest_ip          |
+dest_port        |
+deviceid         |
+duration         |
+endtime          |
+errcode          |
+event            |
+eventid          |
+file_offset      |
+flags            |
+format           |
+frame_delay      |
+frame_size       |
+interval         |
+ip               |
+kbytesavail      |
+kbytesondisk     |
+kbytessize       |
+key_offset       |
+layoutid         |
+millisecs        |
+motion           |
+mpack            |
+new_accountid    |
+ns               |
+op               |
+pan_status       |
+paused_write_us  |
+previewid        |
+reason           |
+registerid       |
+resource_type    |
+roiid            |
+seconds          |
+seq              |
+sequence         |
+settings         |
+source_accountid |
+source_userid    |
+src_ip           |
+src_port         |
+starttime        |
+status           |
+stream_format    |
+stream_type      |
+streamformat     |
+streamid         |
+streamtype       |
+stype            |
+target_deviceid  |
+target_userid    |
+total_expected   |
+total_rcvd       |
+triggerid        |
+userid           |
+uuid             |
+valid            |
+values           |
+videoid          |
+videosize        |
+x                |
+y                |
+z                |
+zoom_status      |
 
 
 
@@ -350,7 +350,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
                 "event"
             ],
             "event": [
-            	"MRBX"
+              "MRBX"
             ]
         },
         "10097d15": {
@@ -361,7 +361,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
                 "event"
             ],
             "event": [
-            	"MRBX"
+              "MRBX"
             ]
         },
         "<object_id>": {...},
@@ -384,7 +384,7 @@ Due to the progressing expansion of the event polling mechanic, the parameter 'c
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras 		| json      | Json attribute keyed with the [object_id](#object-structure) (can contain multiple Json objects, even of different types)
+cameras     | json      | Json attribute keyed with the [object_id](#object-structure) (can contain multiple Json objects, even of different types)
 
 ### Object Structure
 
@@ -394,10 +394,10 @@ Parameter   | Data Type | Description
 
 The Json object allows to narrow down the polling scope by specifying which type of entity to poll for. The types include:
 
-Parameter   | Data Type | Description | Is Required
----------   | --------- | ----------- | -----------
-**resource**  | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
-event       | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
+Parameter    | Data Type     | Description | Is Required
+---------    | ---------     | ----------- | -----------
+**resource** | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
+event        | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
 
 <!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
 
@@ -426,8 +426,8 @@ event       | array[string] | Array of one or more string containing the event [
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras 		| json      | Json attribute keyed with the [object_id](#response-object-structure) (can contain multiple Json objects, even of different types)
-token 			| string 		| Token to be used for subsequent GET /poll requests
+cameras     | json      | Json attribute keyed with the [object_id](#response-object-structure) (can contain multiple Json objects, even of different types)
+token       | string    | Token to be used for subsequent GET /poll requests
 
 ### Response Object Structure
 
@@ -445,12 +445,12 @@ The returned values are in accordance with the [returned resource types](#respon
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type   
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-200 | Request succeeded
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Polling
@@ -529,7 +529,7 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras 		| json      | Json attribute keyed with the object_id (can contain multiple Json objects, even of different types)
+cameras     | json      | Json attribute keyed with the object_id (can contain multiple Json objects, even of different types)
 
 ### Response Object Structure
 
@@ -547,12 +547,12 @@ The returned values are in accordance with the [returned resource types](#respon
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type   
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-200 | Request succeeded
+200	| Request succeeded
 
 <!--===================================================================-->
 ## WebSocket Polling
@@ -571,7 +571,7 @@ HTTP Status Code | Data Type
                 "event"
             ],
             "event": [
-            	"MRBX"
+              "MRBX"
             ]
         },
         "10097d15": {
@@ -582,7 +582,7 @@ HTTP Status Code | Data Type
                 "event"
             ],
             "event": [
-            	"MRBX"
+              "MRBX"
             ]
         },
         "<object_id>": {...},
@@ -659,8 +659,8 @@ The server reply completes the handshake. A successful server reply is followed 
 
 ### Error Status Codes
 
-Status Code | Description
------------ | -----------
+HTTP Status Code | Description
+---------------- | -----------
 400	| Header is not understood or has an incorrect value
 101	| Switching protocols
 
@@ -682,7 +682,7 @@ WebSocket polling will additionally return 'message' response error codes for ea
 
 Status Code | Description
 ----------- | -----------
-400 | Invalid resource
+400	| Invalid resource
 401	| Access denied
-412 | Auth lost
+412	| Auth lost
 200	| OK
