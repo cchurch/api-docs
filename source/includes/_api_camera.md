@@ -1082,13 +1082,13 @@ Returns camera object by id
 `GET https://login.eagleeyenetworks.com/g/device`
 
 Parameter     | Data Type   | Description
----------     | ----------- | ----------- 
+---------     | ----------- | -----------
 **id**        | string      | Camera Id
 
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -1131,7 +1131,7 @@ Parameter       | Data Type   | Description
 id              | string      | Unique identifier for the device
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -1181,7 +1181,7 @@ id              | string      | Unique identifier for the device
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -1209,7 +1209,7 @@ Parameter     | Data Type   | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
@@ -1316,7 +1316,7 @@ Returns array of arrays, with each sub-array representing a device available to 
 
 `GET https://login.eagleeyenetworks.com/g/device/list`
 
-Parameter | Data Type   | Description 
+Parameter | Data Type   | Description
 --------- | ----------- | -----------           
 e         | string      | Camera Id             
 n         | string      | Camera Name           
@@ -1325,7 +1325,7 @@ s         | string      | Device Service Status
 
 ### Response: Camera Model
 
-Array Index | Attribute           | Data Type             | Description 
+Array Index | Attribute           | Data Type             | Description
 ---------   | -----------         | -----------           | -----------           
 0           | account_id          | string                | Unique identifier for the Device's Account
 1           | id                  | string                | Unique identifier for the Device
@@ -1337,7 +1337,7 @@ Array Index | Attribute           | Data Type             | Description
 7           | tags                | array[string]         | Tags
 8           | guid                | string                | GUID
 9           | serial_number       | string                | Serial number
-10          | [device_status](#status-bitmask) | int                   | Device status bit mask
+10          | [device_status](#status-bitmask) | int                   | Device status bitmask
 11          | timezone            | string                | Timezone
 12          | timezone_utc_offset | int                   | Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC.
 13          | is_unsupported      | int                   | Indicates the camera is NOT supported (1) or IS supported (0)
@@ -1351,7 +1351,7 @@ Array Index | Attribute           | Data Type             | Description
 ### Error Status Codes
 
 HTTP Status Code    | Data Type   
-------------------- | ----------- 
+------------------- | -----------
 200 | Request succeeded
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
