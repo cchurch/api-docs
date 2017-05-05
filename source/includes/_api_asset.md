@@ -65,10 +65,7 @@ The start timestamp must match the starting timestamp of a video if the video al
 The video system is based on H264 video and AAC audio. These streams are encapsulated in different formats for compatibility with different playback modes
 
   - **FLV:** Native format for the system. Playable in any Flash player, VLC as well as other players
-  - **M3U:** (Live HTTP Streaming) M3U files are index files into a MPEGTS data stream. The system will generate ts urls on an approximately 2 second basis depending on the key frame rate of the underlying video <br> ***Note:*** *Due to the polling nature of M3U for live streams, you can only use 'now'-relative requests for streaming (where the streamid is used to maintain transaction state). Hence "/asset/play/video.m3u?t=stream_34567890332244567;e=+300000;c=12345678" will create a five minute stream, but "/asset/play/video.m3u?t=-50000;e=+300000" will not*
-  - **TS:** MPEG Transport Stream format video and audio. Intended for playback via HTTP streaming in concert with M3U transactions, per the HTTP Live Streaming functionality of iOS and android. You can list multiple streams for a single video (typically for different resolutions/bandwidth)
   - **MP4:** MPEG4 files have a very broad playback compatibility (in line with all the major video players), however *MP4 is NOT a streamable format*, so it is only used for download functionality and will return an error if the video is live
-  - **M3U8:** M3U8 play list format. Applicable for mobile devices as it uses the HTTP layer to stream MPEGTS files with instructions in the M3U8 playlist file. Continue polling for this playlist until the playlist indicates it is complete
 
   <aside class="warning">While streaming any video format on the web other than FLV (system native format), you may initially get a 502 response</aside>
 
@@ -167,10 +164,6 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_I
 
   - **FLV** *(The recommended format for web streaming)*
   - **MP4**
-  - **TS**
-  - **M3U**
-  - **M3U8**
-  - **WEBM**
 
 ### HTTP Request
 
