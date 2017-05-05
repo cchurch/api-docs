@@ -123,17 +123,17 @@ last_name                            | string               | Last name of the u
 email                                | string               | Email address of the user (must contain only ASCII characters)
 owner_account_id                     | string               | Unique identifier of the account that the user belongs to
 active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the 'active_account_id' of that user in their session becomes the unique identifier of the sub-account that was switched into
-uid                                  | string               | Identifier of the user. **This field is for internal use only**
-is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this. **This field is for internal use only**
+uid                                  | string               | Identifier of the user (**Internal use only**)
+is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)
 is_account_superuser                 | int                  | Indicates whether the user is an account superuser (1) or not (0)
-is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0). **This field is for internal use only**
+is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0) (**Internal use only**)
 is_active                            | int                  | Indicates whether the user is active (1) or not (0)
 is_pending                           | int                  | Indicates whether the user is pending (1) or not (0)
 is_master                            | int                  | Indicates whether the user is in a master account (1) or not (0)
-is_user_admin                        | int                  | **Deprecated.** This is for backwards compatibility
+is_user_admin                        | int                  | This is for backwards compatibility **(DEPRECATED)**
 is_layout_admin                      | int                  | Indicates whether the user is a layout administrator (1) or not (0)
 is_live_video                        | int                  | Indicates whether the user is authorized to access live video (1) or not (0)
-is_device_admin                      | int                  | **Deprecated.** This is for backwards compatibility
+is_device_admin                      | int                  | This is for backwards compatibility **(DEPRECATED)**
 is_export_video                      | int                  | Indicates whether the user is authorized to export video (1) or not (0)
 is_recorded_video                    | int                  | Indicates whether the user is authorized to view recorded video (1) or not (0)
 is_edit_cameras                      | int                  | Indicates whether the user is authorized to edit cameras (1) or not (0)
@@ -173,7 +173,7 @@ last_login                           | string               | EEN timestamp of t
 alternate_email                      | string               | Alternate email address
 sms_phone                            | string               | Phone number to be used for SMS notifications
 is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)
-json                                 | string               | Misc settings of the user as a JSON string. [UserJson](#userjson-attributes)
+json                                 | string               | Misc settings of the user as a Json string. [UserJson](#userjson-attributes)
 camera_access                        | array[array[string]] | Array of arrays, defined on a per device basis. Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: [‘cafedead’,’RWS’] = user can view, change and delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device <br><br>Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account superusers can edit this field
 layouts                              | array[string]        | List of layout unique identifiers the user has access to
 is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)
@@ -189,9 +189,9 @@ is_terms_noncompliant                | int                  | Indicates whether 
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-een         | json      | EEN Object. [UserJsonEen](#userjsoneen-attributes)
+een         | string    | EEN Object. [UserJsonEEN](#userjsoneen-attributes)
 
-### UserJsonEen Attributes
+### UserJsonEEN Attributes
 
 Parameter               | Data Type  | Description
 ---------               | ---------  | -----------
@@ -200,33 +200,35 @@ milliseconds_display    | boolean    | Indicates whether times should be shown w
 layout_rotation_seconds | int        | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
 motion_boxes            | boolean    | Indicates whether motion boxes should be shown (True) or not (False)
 notify_levels           | array[int] | Array of integers. Indicates what types of alert notification emails will be sent <br><br>Notify level: 1='High', 2='Low', 3='System' <br><br>When creating motion alerts for a camera 'High' or 'Low' can be chosen. If a motion alert is set to 'High' and if the user has chosen to receive 'High' alert notifications, then they will receive them for that motion alert. 'System' are camera status changes (online/offline/off/internet offline, etc.). When a camera changes status, any user who has chosen to receive 'System' alert notifications will get notified of the camera status changes in their account
-permissions             | json       | **Deprecated.** This is for backwards compatibility
+permissions             | json       | This is for backwards compatibility **(DEPRECATED)**
 employee_id             | string     | Identifier which a user with the necessary permissions can set for other users
-layouts                 | json       | JSON formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
+layouts                 | json       | Json-formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
 
 <!--===================================================================-->
 ## Permissions
 <!--===================================================================-->
 
-There are several user types:  
+There are several user types:
 
-  - superuser **(internal use only)**
-  - staff **(internal use only)**
+  - superuser (**Internal use only**)
+  - staff (**Internal use only**)
   - account superuser
   - regular user
 
-**Account superuser**  
+**Account superuser**
+
 The account superuser has a full set of permissions. This user can manage all users in their account and sub-account. The fact that the user is administrator is indicated by flag: 'is_account_superuser'
 
-**Regular user**  
+**Regular user**
+
 After being created the regular user has several default permissions : 'is_live_video', 'is_recorded_video', 'is_export_video'
 
 ### List of permissions
 
 Required Parameter          | Description
 ------------------          | -----------
-is_superuser                | **Internal use only**
-is_staff                    | **Internal use only**
+is_superuser                | (**Internal use only**)
+is_staff                    | (**Internal use only**)
 is_account_superuser        | Highest permission level possible for a user. All permissions are enabled (including the view permission)
 is_edit_account             | View and edit all account settings (including categories: Control, Days, Security, Camera, Alerts, Notifications, Privacy, Sharing, and Responders)
 is_edit_camera_on_off       | Ability to turn cameras on and off. If this is the only camera permission granted all others are hidden
@@ -245,8 +247,8 @@ is_recorded_video           | View history browser and archived video from camer
 is_view_preview_video       | Enables the preview of images from cameras
 is_edit_admin_users         | Enables the management of all users in a sub-account (add/delete/modify all users including administrators. Only available to Master Users)
 is_edit_all_users           | Enables the management of master users who are not administrators (add/delete/modify master account users) <br><br>Ability to grant access to sub-accounts. No user permissions are granted in sub-accounts. Only available to master account users
-is_device_admin             | **Deprecated.** This is for backwards compatibility
-is_user_admin               | **Deprecated.** This is for backwards compatibility
+is_device_admin             | This is for backwards compatibility **(DEPRECATED)**
+is_user_admin               | This is for backwards compatibility **(DEPRECATED)**
 
 
 ### User Permission Matrix
@@ -372,11 +374,11 @@ id        | string    | Unique identifier of the user | false
 
 HTTP Status Code | Description
 ---------------- | -----------
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No user matching the unique identifier was found
-200 | Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| No user matching the unique identifier was found
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Create User
@@ -402,9 +404,9 @@ Creates a new user. After being created the user is in the pending state ('is_pe
 
 `PUT https://login.eagleeyenetworks.com/g/user`
 
-Parameter      | Data Type | Description   
----------      | --------- | -----------   
-**first_name** | string    | The first name of the user   
+Parameter      | Data Type | Description
+---------      | --------- | -----------
+**first_name** | string    | The first name of the user
 **last_name**  | string    | The last name of the user
 **email**      | string    | The email address of the user
 **sms_phone**  | string    | Optional\* <br/>Phone number to be used for SMS notifications
@@ -421,11 +423,11 @@ id        | string    | Unique identifier of the user
 
 HTTP Status Code | Description
 ---------------- | -----------
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-409 | The email address is currently already in use
-200 | Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+409	| The email address is currently already in use
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Update User
@@ -454,25 +456,25 @@ Updates a user
 Parameter                   | Data Type     | Description                             | Is Required
 ---------                   | ---------     | -----------                             | -----------
 **id**                      | string        | Unique identifier of the user           | true
-first_name                  | string        | First name of the user    
+first_name                  | string        | First name of the user
 last_name                   | string        | Last name of the user
 email                       | string        | Email address of the user (email must only contain ASCII characters)
 phone                       | string        | Phone number
 mobile_phone                | string        | Mobile phone number
-uid                         | string        | Identifier of the user. Only superusers can set this. **This field is for internal use only**
+uid                         | string        | Identifier of the user. Only superusers can set this (**Internal use only**)
 owner_account_id            | string        | Unique identifier of the account that the user belongs to. Defaults to account of the user creating it (must be an account the user has access to) <br><br>For superusers: any account <br>For account superusers: their account or a child account
 street                      | array[string] | Array of strings containing street addresses ['address line 1', 'address line 2']
 city                        | string        | City
 state                       | string        | State/province
 country                     | string        | Two letter country code
 postal_code                 | string        | Zip/postal code
-json                        | string        | JSON formatted data representing various user settings. [UserJson](#userjson-attributes)
-is_staff                    | int           | Indicates whether the user is a staff member (1) or not (0). Only superusers can set this. **This field is for internal use only**
-is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this. **This field is for internal use only**
+json                        | string        | Json-formatted data representing various user settings. [UserJson](#userjson-attributes)
+is_staff                    | int           | Indicates whether the user is a staff member (1) or not (0). Only superusers can set this (**Internal use only**)
+is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)
 is_account_superuser        | int           | Indicates whether the user is an account superuser (1) or not (0). Only superusers and account superusers can set this
 is_layout_admin             | int           | Indicates whether the user is a layout administrator (1) or not (0)
-is_device_admin             | int           | **Deprecated.** This is for backwards compatibility
-is_user_admin               | int           | **Deprecated.** This is for backwards compatibility
+is_device_admin             | int           | This is for backwards compatibility **(DEPRECATED)**
+is_user_admin               | int           | This is for backwards compatibility **(DEPRECATED)**
 is_live_video               | int           | Indicates whether the user is authorized to access live video (1) or not (0)
 is_export_video             | int           | Indicates whether the user is authorized to export video (1) or not (0)
 is_recorded_video           | int           | Indicates whether the user is authorized to view recorded video (1) or not (0)
@@ -511,11 +513,11 @@ id        | string    | Unique identifier of the user
 
 HTTP Status Code | Description
 ---------------- | -----------
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No user matching the unique identifier was found
-200 | Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| No user matching the unique identifier was found
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Delete User
@@ -541,11 +543,11 @@ Parameter | Data Type | Description
 
 HTTP Status Code | Description
 ---------------- | -----------
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No user matching the unique identifier was found
-200 | Request succeeded
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| No user matching the unique identifier was found
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Get List of Users
@@ -618,6 +620,6 @@ Array Index | Attribute   | Data Type     | Description
 
 HTTP Status Code | Description
 ---------------- | -----------
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-200 | Request succeeded
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded

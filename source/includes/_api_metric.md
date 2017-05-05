@@ -24,11 +24,11 @@ Used to query the bandwidth usage for a particular camera device
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**   		    | string       | Camera id 	 | true
+**id**          | string       | Camera id   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp  	| string   		 | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
-group_by 		    | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
-motion_interval | int      		 | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
+end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
+group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
+motion_interval | int          | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
 metrics         | string, enum | String delimited list used to filter which metrics gets returned. Setting this parameter to 'core,motion' will return data only for core and motion <br><br>enum: core, packets, motion
 
 > Json Response
@@ -37,7 +37,7 @@ metrics         | string, enum | String delimited list used to filter which metr
 {
     "core": [
         [
-            "20141002190000.000",
+            "20181002190000.000",
             0.0,
             0.0,
             215910545.0,
@@ -46,7 +46,7 @@ metrics         | string, enum | String delimited list used to filter which metr
             52716510.0
         ],
         [
-            "20141002200000.000",
+            "20181002200000.000",
             0.0,
             0.0,
             252051927.0,
@@ -58,7 +58,7 @@ metrics         | string, enum | String delimited list used to filter which metr
         [...],
         [...],
         [
-            "20141009190000.000",
+            "20181009190000.000",
             0.0,
             0.0,
             41425890.0,
@@ -69,18 +69,18 @@ metrics         | string, enum | String delimited list used to filter which metr
     ],
     "packets": [
         [
-            "20141002190000.000",
+            "20181002190000.000",
             0.00183
         ],
         [
-            "20141002200000.000",
+            "20181002200000.000",
             0.0018439999999999999
         ],
         [...],
         [...],
         [...],
         [
-            "20141009190000.000",
+            "20181009190000.000",
             0.0
         ]
     ],
@@ -88,7 +88,7 @@ metrics         | string, enum | String delimited list used to filter which metr
 }
 ```
 
-### Response Json Attributes
+### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
@@ -124,8 +124,8 @@ Index     | Data Type | Description
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
@@ -150,10 +150,10 @@ Used to query the bandwidth usage for a particular bridge device
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**   		    | string       | Bridge id 	 | true
+**id**          | string       | Bridge id   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp  	| string   		 | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
-group_by 		    | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
+end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
+group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
 
 > Json Response
 
@@ -161,7 +161,7 @@ group_by 		    | string, enum | Hour or Day, indicating how the results should b
 {
     "core": [
         [
-            "20141002170000.000",
+            "20181002170000.000",
             711610368.0,
             673860608.0,
             21533380.0,
@@ -170,7 +170,7 @@ group_by 		    | string, enum | Hour or Day, indicating how the results should b
             9903.0
         ],
         [
-            "20141002180000.000",
+            "20181002180000.000",
             711610368.0,
             673802922.66666698,
             139693604.0,
@@ -182,7 +182,7 @@ group_by 		    | string, enum | Hour or Day, indicating how the results should b
         [...],
         [...],
         [
-            "20141009170000.000",
+            "20181009170000.000",
             711610368.0,
             674052608.0,
             20663486.0,
@@ -193,48 +193,48 @@ group_by 		    | string, enum | Hour or Day, indicating how the results should b
     ],
     "bandwidth": [
         [
-            "20141002180000.000",
+            "20181002180000.000",
             253117.37089200001
         ],
         [
-            "20141002220000.000",
+            "20181002220000.000",
             240255.52353499999
         ],
         [...],
         [...],
         [...],
         [
-            "20141009150000.000",
+            "20181009150000.000",
             232692.09302299999
         ]
     ],
     "storage": [
         [
-            "20141002170000.000",
+            "20181002170000.000",
             21523477
         ],
         [
-            "20141002180000.000",
+            "20181002180000.000",
             69247498
         ],
         [...],
         [...],
         [...],
         [
-            "20141009170000.000",
+            "20181009170000.000",
             1279678
         ]
     ]
 }
 ```
 
-### Response Json Attributes
+### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-core      | array[[BridgeCore](#bridgecore-json-array-elements)]       | Array of core metrics
-bandwith  | array[[BridgeBandwidth](#bridgebandwidth-json-array-elements)]  | Array of bandwidth metrics
-storage   | array[[BridgeStorage](#bridgestorage-json-array-elements)] | Array of storage metrics
+core      | array[[BridgeCore](#bridgecore-json-array-elements)]           | Array of core metrics
+bandwith  | array[[BridgeBandwidth](#bridgebandwidth-json-array-elements)] | Array of bandwidth metrics
+storage   | array[[BridgeStorage](#bridgestorage-json-array-elements)]     | Array of storage metrics
 
 ### BridgeCore Json Array Elements
 
@@ -264,8 +264,8 @@ Index     | Data Type | Description
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400 | Unexpected or non-identifiable arguments are supplied
 401 | Unauthorized due to invalid session cookie
 403 | Forbidden due to the user missing the necessary privileges
