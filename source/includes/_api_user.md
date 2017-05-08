@@ -66,7 +66,7 @@ The user service allows managing users to a degree outlined by the permission le
     "mobile_phone": "000000000",
     "utc_offset": -21600,
     "timezone": "US/Pacific",
-    "last_login": "20141006173752.672",
+    "last_login": "20181006173752.672",
     "alternate_email": "alternate.email@fakeemail.com",
     "sms_phone": "222111222",
     "is_sms_include_picture": 0,
@@ -187,9 +187,9 @@ is_terms_noncompliant                | int                  | Indicates whether 
 
 ### UserJson Attributes
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-een         | string    | EEN Object. [UserJsonEEN](#userjsoneen-attributes)
+Parameter | Data Type | Description
+--------- | --------- | -----------
+een       | string    | EEN Object ([UserJsonEEN](#userjsoneen-attributes))
 
 ### UserJsonEEN Attributes
 
@@ -217,7 +217,9 @@ There are several user types:
 
 **Account superuser**
 
-The account superuser has a full set of permissions. This user can manage all users in their account and sub-account. The fact that the user is administrator is indicated by flag: 'is_account_superuser'
+The account superuser has a full set of permissions. This user can manage all users in their account and sub-account
+
+<aside class="notice">An indicator of the administrator status is the flag 'is_account_superuser'</aside>
 
 **Regular user**
 
@@ -360,14 +362,16 @@ or
 curl --cookie "auth_key=[AUTH_KEY]" -G https://login.eagleeyenetworks.com/g/user -d id=[USER_ID]
 ```
 
-Returns the user object by the unique identifier. If no unique identifier is passed in the request, then it will attempt to get the data of the user that is authenticated and making the call
+Returns a User object by id
+
+<aside class="notice">If no unique identifier is passed in the request, then the response will return data of the current user</aside>
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/user`
 
-Parameter | Data Type | Description                   | Is Required
---------- | --------- | -----------                   | -----------
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
 id        | string    | Unique identifier of the user | false
 
 ### Error Status Codes
@@ -390,6 +394,21 @@ HTTP Status Code | Description
 curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}'
 ```
 
+Creates a new user. After being created the user is in the pending state ('is_pending':1, 'is_active':0). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active ('is_pending':0, 'is_active':1)
+
+### HTTP Request
+
+`PUT https://login.eagleeyenetworks.com/g/user`
+
+Parameter      | Data Type | Description | Is Required
+---------      | --------- | ----------- | -----------
+**first_name** | string    | The first name of the user | true
+**last_name**  | string    | The last name of the user | true
+**email**      | string    | The email address of the user | true
+sms_phone      | string    | Phone number to be used for SMS notifications
+
+<aside class="notice">When TFA authentication is used and authorization code delivery via SMS is set, the user's 'sms_phone' number must be defined</aside>
+
 > Json Response
 
 ```json
@@ -398,22 +417,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H
 }
 ```
 
-Creates a new user. After being created the user is in the pending state ('is_pending':1, 'is_active':0). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept a terms of service). After this operation the user will be active ('is_pending':0, 'is_active':1)
-
-### HTTP Request
-
-`PUT https://login.eagleeyenetworks.com/g/user`
-
-Parameter      | Data Type | Description
----------      | --------- | -----------
-**first_name** | string    | The first name of the user
-**last_name**  | string    | The last name of the user
-**email**      | string    | The email address of the user
-**sms_phone**  | string    | Optional\* <br/>Phone number to be used for SMS notifications
-
-\* When TFA authentication scheme is used, and authorization code delivery via SMS at first user's log in is required, the user's SMS phone number must be specified at this time
-
-### Response Json Attributes
+### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
@@ -439,14 +443,6 @@ HTTP Status Code | Description
 curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"id": "[USER_ID]", "first_name": "[FIRST_NAME]"}'
 ```
 
-> Json Response
-
-```json
-{
-    "id": "ca0ffa8c"
-}
-```
-
 Updates a user
 
 ### HTTP Request
@@ -462,7 +458,6 @@ email                       | string        | Email address of the user (email m
 phone                       | string        | Phone number
 mobile_phone                | string        | Mobile phone number
 uid                         | string        | Identifier of the user. Only superusers can set this (**Internal use only**)
-owner_account_id            | string        | Unique identifier of the account that the user belongs to. Defaults to account of the user creating it (must be an account the user has access to) <br><br>For superusers: any account <br>For account superusers: their account or a child account
 street                      | array[string] | Array of strings containing street addresses ['address line 1', 'address line 2']
 city                        | string        | City
 state                       | string        | State/province
@@ -503,7 +498,15 @@ notify_rule                 | array         | Alert notification rules. Each rul
 language                    | string        | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages
 is_view_contract            | int           | Indicates whether the user is authorized to view contracts and replay them (1) or not (0)
 
-### Response Json Attributes
+> Json Response
+
+```json
+{
+    "id": "ca0ffa8c"
+}
+```
+
+### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
@@ -535,9 +538,9 @@ Deletes a user
 
 `DELETE https://login.eagleeyenetworks.com/g/user`
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-**id**    | string    | Unique identifier of the user
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**    | string    | Unique identifier of the user | true
 
 ### Error Status Codes
 
@@ -559,6 +562,12 @@ HTTP Status Code | Description
 curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/user/list
 ```
 
+Returns array of arrays with each sub-array representing a user available to the current user
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/user/list`
+
 > Json Response
 
 ```json
@@ -578,7 +587,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
             "user_admin",
             "active"
         ],
-        "20140929154619.000"
+        "20180929154619.000"
     ],
     [
         "ca00783b",
@@ -591,7 +600,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
             "live_video",
             "active"
         ],
-        "20140716205645.000"
+        "20180716205645.000"
     ],
     [...],
     [...],
@@ -599,13 +608,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 ]
 ```
 
-Returns array of arrays, with each sub-array representing a user available to the current user. Please note that the model definition below has property keys, but that's only for reference purposes since it's actually just a standard array
-
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/g/user/list`
-
-### User Array Attributes
+### HTTP Response (Array Attributes)
 
 Array Index | Attribute   | Data Type     | Description
 ---------   | ----------- | ---------     | -----------
@@ -615,6 +618,8 @@ Array Index | Attribute   | Data Type     | Description
 3           | email       | string        | Email address of the user
 4           | permissions | array[string] | List of permissions of the user
 5           | last_login  | string        | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN
+
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
 ### Error Status Codes
 
