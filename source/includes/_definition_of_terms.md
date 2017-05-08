@@ -117,7 +117,7 @@ Shared Assets are Assets that a User has indicated should be shared to the publi
 <br>Every Camera has associated with it a retention policy. The retention policy indicates how much and how long the Assets (the video) from the Camera should be retained. The Account has a Default Retention Policy which is used for all Cameras in that account. This Policy can be overridden on a per Camera basis.
 
 **Timestamps**
-<br>All Assets have attached a Timestamp. The Timestamp records when the Asset happened. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.mmm. Timestamps are represented numerically as milliseconds from the epoch (Jan 1 1970... same as time(), gettimeofday etc. on Linux, timestamps in Javascript etc.).
+<br>All Assets have attached a Timestamp. The Timestamp records when the Asset happened. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.xxx. Timestamps are represented numerically as milliseconds from the epoch (Jan 1 1970... same as time(), gettimeofday etc. on Linux, timestamps in Javascript etc.).
 
 **EE Director**
 <br>The Director is the URL first contacted when a camera is connecting with the EEVBS. The Director performs verification of access, provides account information, and lists of Cameras in an Account. Given a Camera ID it provides the URL of the appropriate EE Archiver(s) that have the Assets of the requested Camera so the application in question can get them for display. http://d.eagleeyenetworks.com. Cameras also contact the EE Director to determine where they should send their Assets.
