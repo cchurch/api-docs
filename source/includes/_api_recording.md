@@ -26,9 +26,9 @@ Returns recording object by recording_key
 
 `GET https://login.eagleeyenetworks.com/g/recording`
 
-Parameter         | Data Type | Description
----------         | --------- | -----------
-**recording_key** | string    | Recording key
+Parameter         | Data Type | Description | Is Required
+---------         | --------- | ----------- | -----------
+**recording_key** | string    | Recording key | true
 
 ### Error Status Codes
 
