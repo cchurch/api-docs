@@ -4,7 +4,9 @@
 ## Overview
 <!--===================================================================-->
 
-This service allows for search across various types of data. Currently only supports recordings and annotations, but support for other types of data is coming soon
+This service allows for search across various types of data
+
+<aside class="success">Currently only supports recordings and annotations, but support for other types of data is coming soon</aside>
 
 <!--===================================================================-->
 ## Search Recordings
@@ -34,7 +36,7 @@ Parameter | Data Type | Description | Is Required
 
 Parameter                   | Data Type     | Description
 ---------                   | ---------     | -----------
-_key                        | string        | Unique identifier (within the user's account) of the recording
+\_key                       | string        | Unique identifier (within the user's account) of the recording
 current_recording_timestamp | string        | Timestamp of when the current recording (if any) was started
 recording_%s_start          | RecordingInfo | Object of info about the recording start event, where '%s' is the timestamp it started. Could be N number of these
 recording_%s_stop           | RecordingInfo | Object of info about the recording stop event, where '%s' is the timestamp it started. Must have a matching 'recording_%s_start' event. Could be N number of these
