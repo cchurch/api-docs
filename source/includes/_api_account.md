@@ -200,7 +200,7 @@ is_rtsp_cameras_enabled               | int                  | Indicates whether
 brand_support_phone                   | string               | Branded support phone number                                                         | true     |
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to                         | true     |
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)                                                                                                                                             | true     |
-map_lines                             | string               | This is used by the front end to overlay lines over a map of the cameras for the account                                                                                                                                             | true     |
+map_lines                             | json                 | This is used by the front end to overlay lines over a map of the cameras for the account                                                                                                                                             | true     |
 contact_utc_offset                    | int                  | This field is no longer being used **(DEPRECATED)**                                  | true     |
 
 <aside class="notice">Camera-related flags can only be modified or set from within the account housing the cameras and only for valid cameras</aside>
@@ -217,7 +217,7 @@ contact_utc_offset                    | int                  | This field is no 
 curl -G https://login.eagleeyenetworks.com/g/account -d "id=[ID]&A=[AUTH_KEY]"
 ```
 
-Return an Account object by id
+Returns an Account object by id
 
 ### HTTP Request
 
@@ -473,7 +473,7 @@ Return an array of arrays, with each sub-array representing an account available
 ]
 ```
 
-### HTTP Response (Account Array Attributes)
+### HTTP Response (Array Attributes)
 
 Array Index | Attribute              | Data Type | Description
 ----------- | ---------              | --------- | -----------
