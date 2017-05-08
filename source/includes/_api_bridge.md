@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the Cameras to be compatible with the EEVB and record the Assets. The Bridge is setup and controlled via a cloud based user inteface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address.
+The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the Cameras to be compatible with the EEVB and record the Assets. The Bridge is setup and controlled via a cloud based user interface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address.
 
 <!--===================================================================-->
 ## Bridge Model
@@ -169,10 +169,10 @@ The Bridge is a product of Eagle Eye that sits at the customer location and talk
 
 ### Device Attributes
 
-Parameter                     | Data Type         | Description
----------                     | ---------------   | -----------
-id                            | string            | Unique identifier for the device
-name                          | string            | Name of the device
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier for the device
+name      | string    | Name of the device
 
 <!--TODO: Add the full bridge model device attributes table-->
 

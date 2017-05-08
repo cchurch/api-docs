@@ -144,11 +144,10 @@ Now that we have the order of the panes, the size of each pane, and the size of 
 
 At the time of this writing, Android does not have a robust library for packing the panes so the algorithm to do so was written from scratch. The goal was to mimic the Packery library as best as possible. The Android algorithm works as such:
 
-
- 1. Remove the next image from the ‘panes’ array and place it in the ‘panes_for_analysis’ list.
- 2. Analyze the panes in ‘panes_for_analysis’. If there is a fully packed block, remove those panes and add them to the layout
- 3. If the ‘panes’ array is not empty, GOTO 1, else GOTO 4
- 4. Add the remaining panes from ‘panes_for_analysis’ to the layout.
+  1. Remove the next image from the ‘panes’ array and place it in the ‘panes_for_analysis’ list.
+  2. Analyze the panes in ‘panes_for_analysis’. If there is a fully packed block, remove those panes and add them to the layout
+  3. If the ‘panes’ array is not empty, GOTO 1, else GOTO 4
+  4. Add the remaining panes from ‘panes_for_analysis’ to the layout.
 
 This is the algorithm at a high level, though the specifics can get a little more complex, such as determining whether a fully packed block exists. The state of a fully packed block is also dependent on the number of columns for the grid.
 
@@ -172,7 +171,7 @@ eagleEyeLiveVideoApiUrl = "https://login.eagleeyenetworks.com/asset/play/video.f
     "&A=[AUTH_KEY]";
 `
 
-`     
+`
 htmlFlashVideoPlayerUrl = "https://login.eagleeyenetworks.com/strobe/embed.html?src="+encodeURIComponent(eagleEyeLiveVideoApiUrl)+"&autoPlay=true&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5";
 `
 
@@ -273,7 +272,7 @@ The GET /poll request should be called frequently so that new data can arrive as
             "event": {
                 "PRFR": {
                     "cameraid": "10003254",
-                    "timestamp": "20140528224954.312",
+                    "timestamp": "20180528224954.312",
                     "file_offset": 17804500,
                     "frame_size": 6152,
                     "previewid": 1401314400
@@ -284,13 +283,13 @@ The GET /poll request should be called frequently so that new data can arrive as
             "event": {
                 "PRFR": {
                     "cameraid": "100a9541",
-                    "timestamp": "20140528224955.507",
+                    "timestamp": "20180528224955.507",
                     "file_offset": 12004385,
                     "frame_size": 3706,
                     "previewid": 1401314400
                 }
             },
-            "pre": "20140528224955.507"
+            "pre": "20180528224955.507"
         }
     }
 }

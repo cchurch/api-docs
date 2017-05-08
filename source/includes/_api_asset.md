@@ -14,7 +14,7 @@ Asset services provide access to media assets - previews and video in appropriat
     - **low:** around 100 KB/s
     - **med:** under 500 KB/s
     - **high:** around 1 MB/s
-  - **Format:** Images are always returned as **JPEG** images. Video can currently be returned as either **FLV** format (playback in browsers via Flash), **MP4** (download and export format), **M3U/MPEGTS** (HTTP Streaming for iOS and newer android devices) or **WEBM**
+  - **Format:** Images are always returned as **JPEG** images. Video can currently be returned as either **FLV** format (playback in browsers via Flash) or **MP4** (download and export format)
 
 ### Retrieve Image
 
@@ -54,7 +54,7 @@ Video is accessed via the 'play' command. Video is captured in segments, and is 
 
 If the end time of the segment is in the future, the video will follow the data stream as it arrives, delivering live video streaming with minimal latency (if the camera is not streaming video, the video will stop (and start again) as video is captured, which is typically not what is desired). MP4 format cannot be live streamed
 
-The keyword 'stream_<streamid>' can be used for the starting timestamp. This forces the camera to capture video and stream it to the cloud live. The stream id should be globally unique(ish) string - combination of a timestamp and userid works well. It is only critical for M3U requests, where it assures continuity between the M3U poll transactions
+The keyword 'stream_<streamid>' can be used for the starting timestamp. This forces the camera to capture video and stream it to the cloud live. The stream id should be globally unique(ish) string - combination of a timestamp and user id works well
 
 The start timestamp must match the starting timestamp of a video if the video already exists. Subsegments of a video span can be specified by using the 'to' (time offset) argument. For example, assume a 5 minute video has been recorded from 12:30 to 12:35. The query "?t=20181120123000.000;e=20181120123400.000;to=180000;..." will play one minute of video (timestamped at 12:33), 3 minutes into the video starting at 12:30, clipping off the last minute of the recorded segment
 

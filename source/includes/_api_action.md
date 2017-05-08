@@ -26,8 +26,8 @@ Used to turn on all cameras in the caller user’s account. Caller must be an ac
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
@@ -51,8 +51,8 @@ Used to turn off all cameras in the caller user’s account. Caller must be an a
 
 ### Error Status Codes
 
-HTTP Status Code | Data Type
----------------- | ---------
+HTTP Status Code | Description
+---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges

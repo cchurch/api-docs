@@ -77,6 +77,8 @@ atype         | string, enum | The type of annotation update to make. Defaults t
 
 ### HTTP Response (Json Attributes)
 
+
+
 ### Error Status Codes
 
 HTTP Status Code | Description

@@ -89,40 +89,41 @@ Rendered Layouts on Web and Mobile:
 
 ### Layout Attributes
 
-Property                | Data Type             | Description                                                                              | Editable | Required
---------                | ---------             | -----------                                                                              | -------- |---------
-id                      | string                | Unique identifier for the layout                                                         | false    | GET, POST, PUT, DELETE
-name                    | string                | Name of the layout                                                                       | true     | PUT
-types                   | array[string]         | Specifies target(s) for layout. Multiple values are allowed.                             | true     | PUT
-permissions             | string                | String of zero or more characters. Each character defines a permission. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout                                     | false    |
-current_recording_key   | string                | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service.                                                                                                                  | false    |
-shares                  | array[array[string]]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. Two special user id exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘cafedead’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.                                                                                                                    | false    |
-configuration           | [LayoutConfiguration](#layoutconfiguration-attributes) | Json object that defines the layout configuration       | true     |
+Property              | Data Type            | Description                                                                              | Editable | Required
+--------              | ---------            | -----------                                                                              | -------- |---------
+id                    | string               | Unique identifier for the layout                                                         | false    | GET, POST, PUT, DELETE
+name                  | string               | Name of the layout                                                                       | true     | PUT
+types                 | array[string]        | Specifies target(s) for layout. Multiple values are allowed.                             | true     | PUT
+permissions           | string               | String of zero or more characters. Each character defines a permission. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout                                   | false    |
+current_recording_key | string               | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service.                                                                                                                | false    |
+shares                | array[array[string]] | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. Two special user id exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘cafedead’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.                                                                                                                  | false    |
+configuration         | [LayoutConfiguration](#layoutconfiguration-attributes) | Json object that defines the layout configuration       | true     |
+
 ### LayoutConfiguration Attributes
 
-Parameter               | Data Type             | Description
----------               | ---------             | -----------
-panes                   | array[[LayoutConfigurationPane](#layoutconfigurationpane-attributes)]  | Array of panes
-settings                | [LayoutConfigurationSettings](#layoutconfigurationsettings-attributes) | Settings object
+Parameter             | Data Type            | Description
+---------             | ---------            | -----------
+panes                 | array[[LayoutConfigurationPane](#layoutconfigurationpane-attributes)]  | Array of panes
+settings              | [LayoutConfigurationSettings](#layoutconfigurationsettings-attributes) | Settings object
 
 ### LayoutConfigurationPane Attributes
 
-Parameter               | Data Type             | Description
----------               | ---------             | -----------
-name                    | string                | Layout pane name
-type                    | string                | ‘preview’ - shows live preview images form cameras. ‘carousel’- rotates between preview images, ids of cameras needs to be include in the cameras array along with an integer in the delay array. The delay is an integer value of milliseconds as too how long the Camera will be displayed before switching to the next Camera. A “carousel” with only one camera is the same as preview. ‘click’ - respond to click for other cameras in layout. ‘motion’ - respond to motion for other cameras in layout. ‘map’ - a static map with camera icons located on it. ‘url’ - displays the contents of the url in the pane as a frame.
-pane_id                 | int                   | Id given to pane when created from the Layout Manager
-size                    | int                   | ['1' or '2' or '3']: Size to display image: 1 = small, 2 = medium, 3 = large
-cameras                 | array[string]         | Array of camera ids. For ‘carousel’, cycle through the camera ids with the delay setting in the corresponding ‘delay’ property
+Parameter             | Data Type            | Description
+---------             | ---------            | -----------
+name                  | string               | Layout pane name
+type                  | string               | ‘preview’ - shows live preview images form cameras. ‘carousel’- rotates between preview images, ids of cameras needs to be include in the cameras array along with an integer in the delay array. The delay is an integer value of milliseconds as too how long the Camera will be displayed before switching to the next Camera. A “carousel” with only one camera is the same as preview. ‘click’ - respond to click for other cameras in layout. ‘motion’ - respond to motion for other cameras in layout. ‘map’ - a static map with camera icons located on it. ‘url’ - displays the contents of the url in the pane as a frame.
+pane_id               | int                  | Id given to pane when created from the Layout Manager
+size                  | int                  | ['1' or '2' or '3']: Size to display image: 1 = small, 2 = medium, 3 = large
+cameras               | array[string]        | Array of camera ids. For ‘carousel’, cycle through the camera ids with the delay setting in the corresponding ‘delay’ property
 
 ### LayoutConfigurationSettings Attributes
 
-Parameter               | Data Type             | Description
----------               | ---------             | -----------
-camera_border           | boolean               | Show camera pane borders
-camera_name             | boolean               | Show camera name
-camera_aspect_ratio     | float                 | ['0.5625' or '0.75']: Aspect ratio of images. .5625 = 16x9, .75 = 4x3
-camera_row_limit        | int                   | ['3' or '4' or '5']: Max number of cameras to show per row
+Parameter             | Data Type            | Description
+---------             | ---------            | -----------
+camera_border         | boolean              | Show camera pane borders
+camera_name           | boolean              | Show camera name
+camera_aspect_ratio   | float                | ['0.5625' or '0.75']: Aspect ratio of images. .5625 = 16x9, .75 = 4x3
+camera_row_limit      | int                  | ['3' or '4' or '5']: Max number of cameras to show per row
 
 <!--===================================================================-->
 ## Get Layout
@@ -140,9 +141,9 @@ Returns layout object by Id
 
 `GET https://login.eagleeyenetworks.com/g/layout`
 
-Parameter     | Data Type | Description | Is Required
----------     | --------- | ----------- | -----------
-**id**        | string    | Layout id   | true
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**    | string    | Layout id   | true
 
 ### Error Status Codes
 
@@ -163,14 +164,6 @@ HTTP Status Code | Description
 curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/layout -d '{"name": "[NAME]", "json":"{\"panes\":[ {} ] }", "types":[""]}'
 ```
 
-> Json Response
-
-```json
-{
-    "id": "80ca9ee0-4f28-11e4-81bf-523445989f37"
-}
-```
-
 Creates a new layout
 
 ### HTTP Request
@@ -183,6 +176,20 @@ Parameter     | Data Type     | Description | Is Required
 **types**     | array[string] | Specifies target(s) for layout. Multiple values are allowed. | true
 configuration | json          | Json object that defines the layout configuration
 shares        | array[array]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user id and the second field is the list of permissions for the user. Two special user ids exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['cafedead', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array.
+
+> Json Response
+
+```json
+{
+    "id": "80ca9ee0-4f28-11e4-81bf-523445989f37"
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier of the layout
 
 ### Error Status Codes
 
@@ -198,6 +205,7 @@ HTTP Status Code | Description
 <!--===================================================================-->
 
 ### HTTP Request
+
 `POST https://login/eagleeyenetworks.com/g/layout`
 
 Parameter     | Data Type     | Description | Is Required
@@ -207,6 +215,20 @@ Parameter     | Data Type     | Description | Is Required
 **types**     | array[string] | Specifies target(s) for layout. Multiple values are allowed. | true
 configuration | json          | Json object that defines the layout configuration
 shares        | array[array]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user id and the second field is the list of permissions for the user. Two special user ids exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['cafedead', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array.
+
+> Json Response
+
+```json
+{
+    "id": "80ca9ee0-4f28-11e4-81bf-523445989f37"
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier of the layout
 
 ### Error Status Codes
 
@@ -231,9 +253,9 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 `DELETE https://login.eagleeyenetworks.com/g/layout`
 
-Parameter     | Data Type | Description
----------     | --------- | -----------
-**id**        | string    | Layout id
+Parameter     | Data Type | Description | Is Required
+---------     | --------- | ----------- | -----------
+**id**        | string    | Layout id   | true
 
 ### Error Status Codes
 
@@ -254,6 +276,12 @@ HTTP Status Code | Description
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/layout/list
 ```
+
+Returns array of arrays, with each sub-array representing a layout available to the user. Please note that the layout list model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/layout/list`
 
 > Json Response
 
@@ -281,13 +309,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 ]
 ```
 
-Returns array of arrays, with each sub-array representing a layout available to the user. Please note that the layout list model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
-
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/g/layout/list`
-
-### Response: Layout Model
+### HTTP Response (Array Attributes)
 
 Array Index     | Attribute   | Data Type     | Description
 -----------     | ---------   | ---------     | -----------
