@@ -45,10 +45,10 @@ Authenticate, Instruct the system to send TFA Code to the user, Authorize with t
 
 `POST https://login.eagleeyenetworks.com/g/aaa/authenticate`
 
-Parameter    | Data Type
----------    | ---------
-**username** | string
-**password** | string
+Parameter    | Data Type | Is Required
+---------    | --------- | -----------
+**username** | string    | true
+**password** | string    | true
 
 > Json Response (simple authentication)
 
@@ -73,10 +73,10 @@ Parameter    | Data Type
 
 ### HTTP Response (Json Attributes)
 
-Returned parameters                | Data Type |  Description
--------------------                | --------- | ------------
-**token**                          | string    | Token to be used in Authorize
-**two_factor_authentication_code** | Json dictionary with two keys:<br/>**sms** - scrubbed user's SMS number,<br/>**email** - scrubbed user's e-mail address    | present in response only if TFA scheme is being used.
+Returned parameters            | Data Type |  Description
+-------------------            | --------- | ------------
+token                          | string    | Token to be used in Authorize
+two_factor_authentication_code | Json dictionary with two keys:<br/>**sms** - scrubbed user's SMS number,<br/>**email** - scrubbed user's e-mail address (present in response only if TFA scheme is being used). | Code required to complete the Two Factor Authentication
 
 *NOTE 1:*
 
@@ -87,8 +87,8 @@ The validity of token is:
 
 *NOTE 2:*
 
-For TFA scheme, the system uses the parameter `sms_phone` of the user's model (see **User Model** section).
-If SMS-based authentication is to be used, that parameter MUST be specified at the user's creation time (see **Create User** API Call)*
+For TFA scheme, the system uses the parameter `sms_phone` from the [User Model](#user-model).  
+If SMS-based authentication is to be used, that parameter MUST be specified at the user's creation time (see [Create User](#create-user)).
 If user's parameter `sms_phone` has not been set, the value of the **sms** key will be `No sms phone found.`
 
 *NOTE 3:*
@@ -134,10 +134,10 @@ Otherwise proceed to step 3: Authorize.
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate`
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-**token** | string    | Token received in step 1
-**two_factor_authentication_type** | string    | TFA authentication type. Must be 'sms'  or 'email'
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**token** | string    | Token received in step 1 | true
+**two_factor_authentication_type** | string    | TFA authentication type. Must be 'sms'  or 'email' | true
 
 ### HTTP Response
 
@@ -188,10 +188,10 @@ Caching the subdomain is safe to do as long as the client software validates aga
 
 `POST https://login.eagleeyenetworks.com/g/aaa/authorize`
 
-Parameter | Data Type
---------- | ---------
-**token** | string
-**two_factor_authentication_code**   | string, 4 decimal digits <br/>Used only for TFA scheme. Not used when authorizing with the simple scheme
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**token** | string    | Token received in step 1 | true
+two_factor_authentication_code | string    | 4 decimal digits <br/>Used only for TFA scheme. Not used when authorizing with the simple scheme
 
 *NOTE 1:*
 
@@ -298,8 +298,8 @@ HTTP Status Code | Description
 <!--===================================================================-->
 
 Depending whether the Account to which the user belongs enforces TFA or not, the user may be able to select simple authentication for their future log-ins rather than TFA.  
-In order to find out whether the account enforces TFA, examine the `is_two_factor_authentication_forced` flag in the Account record returned by **Get Account** API Call.
-This flag can be set or cleared by the Account Super User with the **Update Account** API call.  
+In order to find out whether the account enforces TFA, examine the `is_two_factor_authentication_forced` flag in the Account record returned by the [Get Account](#get-account) API Call.
+This flag can be set or cleared by the Account Super User with the [Update Account](#update-account) API call.  
 If the `is_two_factor_authentication_forced` is set to 0 the user may switch to simple authentication
 scheme. That is achieved by clearing `is_two_factor_authentication_enabled` flag in the User record.
 This can only be achieved by the user themselves (not e.g. by Account Super User)
@@ -312,11 +312,11 @@ Update of any TFA-related field in the User record is performed through a dedica
 Data present in the User record that affects the TFA scheme is security-sensitive and therefore may only be altered using a dedicated endpoint, whose operation is itself TFA protected.
 This data includes three fields in the User model:
 
-Field | Description | Remarks
------ | ----------- | -------
-**sms_phone** | Phone number to which text messages (SMS) containing TFA code will be delivered | May only be changed when using SMS for TFA code delivery <br/> Code will be delivered to the new phone number
-**email** | E-mail address to which messages containing TFA code will be delivered | May only be changed when using e-mail for TFA code delivery <br/> Code will be delivered to the new e-mail address
-**is_two_factor_authentication_enabled** | 1 - user will be required to authenticate with TFA <br/> 0 - user will authenticate with a simple scheme | May be updated with either SMS or e-mail delivery of TFA code
+Field | Description | Remarks | Is Required
+----- | ----------- | ------- | -----------
+**sms_phone** | Phone number to which text messages (SMS) containing TFA code will be delivered | Can only be changed when using SMS for TFA code delivery <br/> Code will be delivered to the new phone number | true
+**email** | E-mail address to which messages containing TFA code will be delivered | Can only be changed when using e-mail for TFA code delivery <br/> Code will be delivered to the new e-mail address | true
+**is_two_factor_authentication_enabled** | 1 - user will be required to authenticate with TFA <br/> 0 - user will authenticate with a simple scheme | Can be updated with either SMS or e-mail delivery of TFA code | true
 
 The fields described above may only be changed one at a time.
 
@@ -330,11 +330,11 @@ This step initiates the TFA data update process.
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/update`
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-**two_factor_authentication_type** | `'sms'` or `'email'` |    Which method to use for TFA code delivery to verify this update request
-**password** | string | The user's password
-**update_json** | Json structure containing the name of the updated field and its new value. <br/>Updated can only be one field at a time | Example: <br/>`{` <br/>&nbsp;&nbsp;`'sms_phone':'+123456789'`<br/>`}`
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**two_factor_authentication_type** | `'sms'` or `'email'` | Defines which method to use for TFA code delivery to verify this update request | true
+**password** | string | The user's password | true
+**update_json** | Json structure containing the name of the updated field and its new value. <br/>Only one field can be updated at a time | Example: <br/>`{` <br/>&nbsp;&nbsp;&nbsp;&nbsp;`'sms_phone':'+123456789'`<br/>`}` | true
 
 #### HTTP Response
 
@@ -353,9 +353,9 @@ HTTP Status Code | Description
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/verify`
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-**two_factor_authentication_code** | string    | The 4-digit code received via sms or e-mail
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**two_factor_authentication_code** | string    | The 4-digit code received via sms or e-mail | true
 
 #### HTTP Response
 
@@ -386,4 +386,4 @@ The same `tfa_key` value may be used for multiple users, who have successfully a
 
 *NOTE 2:*
 
-The list of authorized devices for any user is stored in the field `user_authenticated_clients` in the User record. See **User Model** section for details.
+The list of authorized devices for any user is stored in the field `user_authenticated_clients` in the User record. See [User Model](#user-model) for details.

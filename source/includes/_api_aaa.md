@@ -22,10 +22,10 @@ This is used to create a new account and the super user for the account. As a pa
 
 `POST https://login.eagleeyenetworks.com/g/aaa/create_account`
 
-Parameter            | Data Type | Description    | Required For
----------            | --------- | -----------    | ------------
-email                | string    | Email address  | POST
-password             | string    | Password       | POST
+Parameter            | Data Type | Description | Required For
+---------            | --------- | ----------- | ------------
+email                | string    | Email address | POST
+password             | string    | Password | POST
 name                 | string    | Account name
 realm                | string    | Realm (defaults to current user's realm)
 first_name           | string    | User first name
@@ -58,9 +58,9 @@ This is used to verify the email address supplied when the account is created. W
 
 `POST https://login.eagleeyenetworks.com/g/aaa/validate_account`
 
-Parameter | Data Type   | Description              | Required For
---------- | ---------   | -----------              | ------------
-id        | string      | Account id               | POST
+Parameter | Data Type   | Description | Required For
+--------- | ---------   | ----------- | ------------
+id        | string      | Account id  | POST
 token     | string      | Account validation token | POST
 
 > Json Response
@@ -109,8 +109,8 @@ Password recovery is a multi-step process:
 
 `POST https://login.eagleeyenetworks.com/g/aaa/forgot_password`
 
-Parameter | Data Type | Description   | Required For
---------- | --------- | -----------   | ------------
+Parameter | Data Type | Description | Required For
+--------- | --------- | ----------- | ------------
 email     | string    | Email address | POST
 
 ### Error Status Codes
@@ -142,8 +142,8 @@ This is step two of the password recover/reset process. It verifies that the sup
 
 `POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_token`
 
-Parameter | Data Type | Description                            | Required For
---------- | --------- | -----------                            | ------------
+Parameter | Data Type | Description | Required For
+--------- | --------- | ----------- | ------------
 token     | string    | Password reset token provided in email | POST
 
 ### Error Status Codes
@@ -174,10 +174,10 @@ This is step three of the password recover/reset process. It both verifies that 
 
 `POST https://login.eagleeyenetworks.com/g/aaa/reset_password`
 
-Parameter                      | Data Type | Description                            | Required For
----------                      | --------- | -----------                            | ------------
+Parameter                      | Data Type | Description | Required For
+---------                      | --------- | ----------- | ------------
 token                          | string    | Password reset token provided in email | POST
-password                       | string    | New password                           | POST
+password                       | string    | New password | POST
 accepted_terms_of_service_urls | string    | New terms of service acceptance url
 
 > Json Response
@@ -222,8 +222,8 @@ For users who have registered for an account, but never confirmed the registrati
 
 `POST https://login.eagleeyenetworks.com/g/aaa/resend_registration_email`
 
-Parameter | Data Type | Description                                                | Required For
---------- | --------- | -----------                                                | ------------
+Parameter | Data Type | Description | Required For
+--------- | --------- | ----------- | ------------
 email     | string    | Email address of the account contact for a pending account | POST
 realm     | string    | Realm (defaults to current user's realm)
 
@@ -255,8 +255,8 @@ For users who have had a user account created, but never confirmed their user ac
 
 `POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email`
 
-Parameter | Data Type | Description                   | Required For
---------- | --------- | -----------                   | ------------
+Parameter | Data Type | Description | Required For
+--------- | --------- | ----------- | ------------
 email     | string    | Email address of the new user | POST
 realm     | string    | Realm (defaults to current user's realm)
 
@@ -292,8 +292,8 @@ This allows a user to change their password directly while authenticated and als
 
 `POST https://login.eagleeyenetworks.com/g/aaa/change_password`
 
-Parameter        | Data Type | Description  | Required For
----------        | --------- | -----------  | ------------
+Parameter        | Data Type | Description | Required For
+---------        | --------- | ----------- | ------------
 id               | string    | Id of the user having their password changed. Optional. Defaults to the id of the authenticated user. If empty or equal to authenticated user, then 'current_password' becomes required
 password         | string    | New password | POST
 current_password | string    | Current password of the user. Optional. If 'id' argument is empty, or is equal to the authenticated user's id, then this is required
@@ -338,8 +338,8 @@ Allows a user to 'log in' to another account which the they have access to (see 
 
 `POST https://login.eagleeyenetworks.com/g/aaa/switch_account`
 
-Parameter  | Data Type | Description                                                                                  | Required For
----------  | --------- | -----------                                                                                  | ------------
+Parameter  | Data Type | Description | Required For
+---------  | --------- | ----------- | ------------
 account_id | string    | Id of the account to login to. Optional. Defaults to the account id that the user belongs to | POST
 
 ### Error Status Codes
