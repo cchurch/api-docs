@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The poll service provides a mechanism for an application to receive notifications of events or spans from Eagle Eye Networks. These entities are grouped by resource
+The Poll service provides a mechanism for an application to receive notifications of events or spans from Eagle Eye Networks. These entities are grouped by resource
 
 Resources:
 
@@ -24,7 +24,7 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 <aside class="success">This service will continually be extended</aside>
 
-Poll is a stateful request for updates any time a matching event occurs within the service. The initial poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
+Poll is a stateful request for updates any time a matching event occurs within the service. The initial Poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
 
 Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
@@ -81,9 +81,11 @@ IF "Camera On" (**bit 17**)==0 THEN "Off" (orange forbidden icon)
 IF "Recording" (**bit 19**) THEN Recording (green circle icon)
 IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits were set previously)
 
+<!--===================================================================-->
 ## Event Objects
+<!--===================================================================-->
 
-> Json Response
+> Event Objects
 
 ```json
 {
@@ -331,6 +333,10 @@ zoom_status      |
 ## Initialize Poll
 <!--===================================================================-->
 
+<aside class="notice">Subscribe to the poll service, which is required for GET /poll. Response: token=xxxxx / Response headers: set_cookie: ee-poll-ses/poll_id=xxxxx</aside>
+
+Response includes 2 session cookies and a returned token (which are identical). Only one of the session cookies has to be provided to the GET /poll request
+
 > Request
 
 ```shell
@@ -370,9 +376,6 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
     }
 }
 ```
-<aside class="notice">Subscribe to the poll service, which is required for GET /poll. Response: token=xxxxx / Response headers: set_cookie: ee-poll-ses/poll_id=xxxxx</aside>
-
-Response includes 2 session cookies and a returned token (which are identical). Only one of the session cookies has to be provided to the GET /poll request
 
 ### HTTP Request
 
@@ -384,13 +387,13 @@ Due to the progressing expansion of the event polling mechanic, the parameter 'c
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the [object_id](#object-structure) (can contain multiple Json objects, even of different types)
+cameras     | json      | Json attribute keyed with the [\<object_id\>](#object-structure) (can contain multiple Json objects, even of different types)
 
 ### Object Structure
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-[object_id] | json      | Json attribute keyed with 'resource' and/or 'event'
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<object_id\> | json      | Json attribute keyed with 'resource' and/or 'event'
 
 The Json object allows to narrow down the polling scope by specifying which type of entity to poll for. The types include:
 
@@ -402,8 +405,6 @@ event        | array[string] | Array of one or more string containing the event 
 <!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
 
 <aside class="warning">The event parameter is required to have the event resource present when polling over HTTP (instead of WebSocket)</aside>
-
-### HTTP Response
 
 > Json Response
 
@@ -424,16 +425,18 @@ event        | array[string] | Array of one or more string containing the event 
 }
 ```
 
+### HTTP Response (Json Attributes)
+
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the [object_id](#response-object-structure) (can contain multiple Json objects, even of different types)
+cameras     | json      | Json attribute keyed with the [\<object_id\>](#response-object-structure) (can contain multiple Json objects, even of different types)
 token       | string    | Token to be used for subsequent GET /poll requests
 
 ### Response Object Structure
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-[object_id] | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<object_id\> | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
 The amount of keys depends on the sent request inquiry (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
 
@@ -458,17 +461,15 @@ HTTP Status Code | Description
 
 <aside class="notice">Used to receive updates on real-time changes. This API call requires a valid 'ee-poll-ses' cookie from POST /poll</aside>
 
-### HTTP Request
-
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c001.eagleeyenetworks.com/poll
 ```
 
-`GET https://login.eagleeyenetworks.com/poll`
+### HTTP Request
 
-### HTTP Response
+`GET https://login.eagleeyenetworks.com/poll`
 
 > Json Response
 
@@ -527,15 +528,17 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
 }
 ```
 
+### HTTP Response (Json Attributes)
+
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the object_id (can contain multiple Json objects, even of different types)
+cameras     | json      | Json attribute keyed with the \<object_id\> (can contain multiple Json objects, even of different types)
 
 ### Response Object Structure
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-[object_id] | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<object_id\> | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
 The amount of keys depends on the sent POST request (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
 
@@ -557,6 +560,10 @@ HTTP Status Code | Description
 <!--===================================================================-->
 ## WebSocket Polling
 <!--===================================================================-->
+
+WebSockets provide a persistent connection between a client and server. This uplink enables a two-way data stream over which chunked data can be sent and received as messages. This protocol provides a full-duplex communications channel over a single TCP connection, allowing the client to receive event-driven responses without having to poll the server for a reply (effectively decreasing data traffic)
+
+<aside class="notice">The WebSocket similarity to the HTTP protocol is that its handshake is interpreted by HTTP servers as a HTTP 'upgrade request'</aside>
 
 > Request Json
 
@@ -591,10 +598,6 @@ HTTP Status Code | Description
     }
 }
 ```
-
-WebSockets provide a persistent connection between a client and server. This uplink enables a two-way data stream over which chunked data can be sent and received as messages. This protocol provides a full-duplex communications channel over a single TCP connection, allowing the client to receive event-driven responses without having to poll the server for a reply (effectively decreasing data traffic)
-
-<aside class="notice">The WebSocket similarity to the HTTP protocol is that its handshake is interpreted by HTTP servers as a HTTP 'upgrade request'</aside>
 
 ### Client Handshake Request
 

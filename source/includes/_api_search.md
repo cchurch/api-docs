@@ -4,20 +4,36 @@
 ## Overview
 <!--===================================================================-->
 
-This service allows for search across various types of data
+This service enables the Search across various types of data
 
 <aside class="success">Currently only supports recordings and annotations, but support for other types of data is coming soon</aside>
+
+<!--===================================================================-->
+## Search Model
+<!--===================================================================-->
+
+> Search Model TODO
+
+```json
+```
+
+### Search Attributes
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+
+
 
 <!--===================================================================-->
 ## Search Recordings
 <!--===================================================================-->
 
+Returns an array of recording objects that match a search value
+
 > Request TODO
 
 ```shell
 ```
-
-Returns array of recording objects that match a search value
 
 ### HTTP Request
 
@@ -65,12 +81,12 @@ HTTP Status Code | Description
 ## Search Annotations
 <!--===================================================================-->
 
+Returns array of annotation objects that match a search value
+
 > Request TODO
 
 ```shell
 ```
-
-Returns array of annotation objects that match a search value
 
 ### HTTP Request
 
@@ -92,6 +108,8 @@ end_timestamp       | string    | End timestamp to use to limit search results (
 Parameter | Data Type     | Description
 --------- | ---------     | -----------
 ???       | array[object] | ???
+
+
 
 ### Error Status Codes
 

@@ -10,13 +10,13 @@ This service defines metrics that can be queried from the system
 ## Camera Bandwidth
 <!--===================================================================-->
 
+Used to query the bandwidth usage for a particular camera device
+
 > Request
 
 ```shell
 curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[AUTH_KEY]&id=[CAMERA_ID]"
 ```
-
-Used to query the bandwidth usage for a particular camera device
 
 ### HTTP Request
 
@@ -136,13 +136,13 @@ HTTP Status Code | Description
 ## Bridge Bandwidth
 <!--===================================================================-->
 
+Used to query the bandwidth usage for a particular bridge device
+
 > Request
 
 ```shell
 curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
 ```
-
-Used to query the bandwidth usage for a particular bridge device
 
 ### HTTP Request
 

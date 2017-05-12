@@ -4,23 +4,34 @@
 ## Overview
 <!--===================================================================-->
 
-This service is used to retrieve and update recording information for recordings that were started/stopped using the 'action/recordnow' and 'action/recordoff' endpoints
+This service is used to retrieve and update Recording Information for Recordings that were started/stopped using the 'action/recordnow' and 'action/recordoff' endpoints
+
+<!--===================================================================-->
+## Recording Model
+<!--===================================================================-->
+
+> Recording Model TODO
+
+```json
+```
+
+### Recording Attributes
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+
+
 
 <!--===================================================================-->
 ## Get Recording Object
 <!--===================================================================-->
 
+Returns a Recording object by recording_key
+
 > Request TODO
 
 ```shell
 ```
-
-> Json Response TODO
-
-```json
-```
-
-Returns recording object by recording_key
 
 ### HTTP Request
 
@@ -43,17 +54,12 @@ HTTP Status Code | Description
 ## Update Recording Object
 <!--===================================================================-->
 
+Update a Recording
+
 > Request TODO
 
 ```shell
 ```
-
-> Json Response TODO
-
-```json
-```
-
-Update a Recording
 
 ### HTTP Request
 
@@ -63,6 +69,18 @@ Parameter         | Data Type | Description | Is Required
 ---------         | --------- | ----------- | -----------
 **recording_key** | string    | Unique identifier (within an account) of a recording | true
 meta              | object    | Meta data. This is meant to be a generic object that can store any data that is needed, so the properties are not predefined
+
+> Json Response TODO
+
+```json
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+
+
 
 ### Error Status Codes
 

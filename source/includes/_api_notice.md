@@ -1,11 +1,11 @@
 # Terms of Service
 
-The following API endpoints are to facilitate presenting and accepting the **Terms of Service**.
-Eagle Eye Networks has their own terms of services which will be presented through the [Get Terms of Service for User](#get-terms-of-service-for-user).
+The following API endpoints are to facilitate presenting and accepting the **Terms of Service**
+Eagle Eye Networks has their own Terms of Services which will be presented through the [Get Terms of Service for User](#get-terms-of-service-for-user)
 Additionally resellers can add their own **Terms of Service** through the [Get Terms of Service for Account](#create-terms-of-service-for-account), which
-will then also be presented with Eagle Eye Network's terms.
+will then also be presented with Eagle Eye Network's terms
 
-Resellers can assign their own terms at the master account level or give each sub account custom terms at the sub account level.
+Resellers can assign their own terms at the master account level or give each sub account custom terms at the sub account level
 
 The basic work process is as follows:
 
@@ -17,25 +17,19 @@ The basic work process is as follows:
 ## Get Terms of Service for User
 <!--===================================================================-->
 
+This is to push important Terms of Service such as "Terms and Conditions (2018)"
+The client software must call **GET** to see if the user needs to agree to any new Terms of Service
+If the user has a **is_compliant** of False then the client software should popup a message box containing the Terms of Service
+It is preferred to have this as a single combined message box
+
+If the user agrees to the terms then a **PUT** call should be placed containing array all of the notices
+A past due user is subject to suspension of services, and may not be allowed to login
+
 > Request
 
 ```shell
 curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --cookie "auth_key=[AUTH_KEY]"
 ```
-
-> Response List
-
-```list
-[['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service2', '2', 1, 0, '20180626191625', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20180626191625.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '1', 1, 1, '20180626191617', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20180626191617.txt', 'retired'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '2', 0, 1, '20180626191622', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20180626191622.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'EEN_Terms_of_Service', '1.2', 1, 1, '20180626191610', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt', 'active']]
-```
-
-This is to push important terms of service such as "Terms and Conditions (2018)".
-The client software must call **GET** to see if the user needs to agree to any new terms of service.
-If the user has a **is_compliant** of False then the client software should popup a message box containing the terms of service.
-It is preferred to have this as a single combined message box.
-
-If the user agrees to the terms then a **PUT** call should be placed containing array all of the notices.
-A past due user is subject to suspension of services, and may not be allowed to login.
 
 ### HTTP Request
 
@@ -45,15 +39,23 @@ Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
 id        | string    | User id     | false
 
-### HTTP List Attributes
+> Json Response
 
-Parameter    | Data Type | Description
----------    | --------- | -----------
-user_id      | string    | Unique identifier for validated user
-title        | string    | Title of the terms of service
-url          | string    | URL of a file with the text of the terms of service
-version      | string    | Version string for the title of the terms of service
-is_compliant | boolean   | If False then the user needs to accept the terms of service
+```json
+[['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service2', '2', 1, 0, '20180626191625', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20180626191625.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '1', 1, 1, '20180626191617', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20180626191617.txt', 'retired'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '2', 0, 1, '20180626191622', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20180626191622.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'EEN_Terms_of_Service', '1.2', 1, 1, '20180626191610', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt', 'active']]
+```
+
+### HTTP Response (Array Attributes)
+
+Array Index | Attribute     | Data Type | Description
+----------- | ---------     | --------- | -----------
+0           |  user_id      | string    | Unique identifier for validated user
+1           |  title        | string    | Title of the terms of service
+2           |  url          | string    | URL of a file with the text of the terms of service
+3           |  version      | string    | Version string for the title of the terms of service
+4           |  is_compliant | boolean   | If False then the user needs to accept the terms of service
+
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
 ### Error Status Codes
 
@@ -71,19 +73,13 @@ HTTP Status Code | Description
 ## Accept Terms of Service for User
 <!--===================================================================-->
 
-  This is called to record acceptance of the notice.
-  Account Super Users will not be able to accept for other people.
+This is called to record Acceptance of the notice
+Account Superusers will not be able to accept for other people
 
 > Request
 
 ```shell
 curl -X PUT https://28888.eagleeyenetworks.com/g/user/terms -d '{"id": "cafe81f5", "urls": ["https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20180626191625.txt", "https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt"]}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
-```
-
-> Response Json
-
-``` json
-{'id': 'cafe81f5'}
 ```
 
 ### HTTP Request
@@ -94,11 +90,19 @@ Parameter | Data Type     | Description | Is Required
 --------- | ---------     | ----------- | -----------
 **urls**  | array[string] | Array of urls that are accepted | true
 
-### HTTP Json
+> Json Response
 
-Parameter | Data Type | Description | Is Required
---------- | --------- | ----------- | -----------
-**id**    | string    | User id     | true
+```json
+{
+    "id": "cafe81f5"
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | User id
 
 ### Error Status Codes
 
@@ -117,26 +121,20 @@ HTTP Status Code | Description
 ## Create Terms of Service for Account
 <!--===================================================================-->
 
-Master Accounts (Resellers) may require their own terms of service.
-For that case, this API endpoint is to submit the text of the terms of service.
+Master Accounts (Resellers) may require their own Terms of Service
+This service allows to submit the text of customized Terms of Service
 
-New terms can be submitted with a PUT command, then a GET command can be done to see the state of the terms.
-**PUT** will retire **terms of service** of the same title and account.
-Notices can be stored in the sub account or the parent account of the user.
-Resellers are limited to 5 terms of service titles and each title will only have one active version.
+New terms can be submitted with a PUT command, then a GET command can be done to see the state of the terms
+**PUT** will retire **Terms of Service** of the same title and account
+Notices can be stored in the sub account or the parent account of the user
+Resellers are limited to 5 Terms of Service titles and each title will only have one active version
 
-  - Only master accounts can **PUT** an account's terms of service
+  - Only master accounts can **PUT** an account's Terms of Service
 
 > Request
 
 ```shell
 curl -X PUT https://28888.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 1, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "1", "id": "00009436"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
-```
-
-> Response Json
-
-``` json
-{'status': 'active', 'is_admin_required': 1, 'is_user_required': 1, 'title': 'Test_Terms_of_Service', 'url': 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20180626191617.txt', 'timestamp': '20180626191617', 'version': '1', 'user': 'cafebead', 'account_id': '00009074'}
 ```
 
 ### HTTP Request
@@ -153,7 +151,13 @@ is_admin_required | boolean   | Whether or not administrators have to accept | f
 is_user_required  | boolean   | Whether or not users have to accept          | false         | not updating             |
 timestamp         | string    | Date the terms go into affect                | false         | now                      |
 
-### HTTP Json Attributes
+> Json Response
+
+```json
+{'status': 'active', 'is_admin_required': 1, 'is_user_required': 1, 'title': 'Test_Terms_of_Service', 'url': 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20180626191617.txt', 'timestamp': '20180626191617', 'version': '1', 'user': 'cafebead', 'account_id': '00009074'}
+```
+
+### HTTP Response (Json Attributes)
 
 Parameter         | Data Type | Description
 ---------         | --------- | -----------
@@ -182,21 +186,15 @@ HTTP Status Code | Description
 ## Update Terms of Service for Account
 <!--===================================================================-->
 
-Updates an account terms of service as specified by Put Terms of Service for Account.
+Update an account's Terms of Service as specified by Put Terms of Service for Account
 Users are not required to accept terms of the same version again, so if users should be forced to accept again then PUT should be done
 
-  - Only master account can **Post** an account's terms of service
+  - Only master accounts can **POST** an account's Terms of Service
 
 > Request
 
 ```shell
 curl -X POST https://28888.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 0, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "2", "id": "00009436"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
-```
-
-> Response Json
-
-``` json
-{'status': 'active', 'is_admin_required': 0, 'is_user_required': 1, 'title': 'Test_Terms_of_Service', 'url': 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20180626191622.txt', 'timestamp': '20180626191622', 'version': '1', 'user': 'cafebead', 'account_id': '00009074'}
 ```
 
 ### HTTP Request
@@ -213,7 +211,13 @@ is_admin_required | boolean   | Whether or not administrators have to accept | f
 is_user_required  | boolean   | Whether or not users have to accept          | false       | not updating             |
 timestamp         | string    | Date the term of service goes into affect    | false       | now                      |
 
-### HTTP Json Attributes
+> Json Response
+
+```json
+{'status': 'active', 'is_admin_required': 0, 'is_user_required': 1, 'title': 'Test_Terms_of_Service', 'url': 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20180626191622.txt', 'timestamp': '20180626191622', 'version': '1', 'user': 'cafebead', 'account_id': '00009074'}
+```
+
+### HTTP Response (Json Attributes)
 
 Parameter         | Data Type | Description
 ---------         | --------- | -----------
@@ -242,20 +246,15 @@ HTTP Status Code | Description
 ## Delete Terms of Service for Account
 <!--===================================================================-->
 
-This will **retire** a term of service.
+Delete Terms of Service
 
-  - Only master accounts can **DELETE** an account's terms of service
+  - Only master accounts can **DELETE** an account's Terms of Service
 
 ```shell
 curl -X DELETE https://28888.eagleeyenetworks.com/g/user/terms?id=cafe81f5 --cookie "auth_key=[AUTH_KEY]"
 ```
 
-> Response Json
-
-``` json
-{ 'cafe81f5': { 'EEN_Terms_of_Service': { '1.2': '20180626193818.274'},
-                'Test_Terms_of_Service': { '2': '20180626193626.502'}}}
-```
+### HTTP Request
 
 `DELETE https://login.eagleeyenetworks.com/g/account/terms`
 
@@ -264,7 +263,14 @@ Parameter | Data Type | Description        | Is Required
 **id**    | string    | Account id         | true
 title     | string    | Title of the terms | false
 
-### HTTP List Attributes
+> Json Response
+
+```json
+{ 'cafe81f5': { 'EEN_Terms_of_Service': { '1.2': '20180626193818.274'},
+                'Test_Terms_of_Service': { '2': '20180626193626.502'}}}
+```
+
+### HTTP Response (Json Attributes)
 
 Parameter          | Data Type | Description
 ---------          | --------- | -----------
@@ -295,16 +301,12 @@ HTTP Status Code | Description
 ## Get Terms of Service for Account
 <!--===================================================================-->
 
+Returns the Terms of Service for an account
+
 > Request
 
 ```shell
 curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --cookie "auth_key=[AUTH_KEY]"
-```
-
-> Response List
-
-```list
-[['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service2', '2', 1, 0, '20180626191625', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20180626191625.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '1', 1, 1, '20180626191617', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20180626191617.txt', 'retired'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '2', 0, 1, '20180626191622', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20180626191622.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'EEN_Terms_of_Service', '1.2', 1, 1, '20180626191610', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt', 'active']]
 ```
 
 ### HTTP Request
@@ -315,19 +317,27 @@ Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
 **id**    | string    | Account id  | true
 
-### HTTP List Attributes
+> Json Response
 
-Parameter         | Data Type | Description
----------         | --------- | -----------
-account_id        | string    | Unique Id of the account that is requesting this notice
-account_name      | string    | Name of the account that is requesting this notice
-title             | string    | Title of the notice
-version           | int       | Version number for the notice title, a larger version number will retire other versions
-is_admin_required | boolean   | Whether or not administrators have to accept
-is_user_required  | boolean   | Whether or not users have to accept
-timestamp         | string    | Date of the term of service
-url               | string    | URL of the file containing the text for the notice
-status            | string    | Status of the term of service (active, retired)
+```json
+[['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service2', '2', 1, 0, '20180626191625', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service2~2~20180626191625.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '1', 1, 1, '20180626191617', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~1~20180626191617.txt', 'retired'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'Test_Terms_of_Service', '2', 0, 1, '20180626191622', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00009074/Test_Terms_of_Service~2~20180626191622.txt', 'active'], ['00009436', 'UNIT_TEST_SUB_ACCOUNT', 'EEN_Terms_of_Service', '1.2', 1, 1, '20180626191610', 'https://login.eagleeyenetworks.com/static_assets/terms_of_service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt', 'active']]
+```
+
+### HTTP Response (Array Attributes)
+
+Array Index | Attribute         | Data Type | Description
+----------- | ---------         | --------- | -----------
+0           | account_id        | string    | Unique Id of the account that is requesting this notice
+1           | account_name      | string    | Name of the account that is requesting this notice
+2           | title             | string    | Title of the notice
+3           | version           | int       | Version number for the notice title, a larger version number will retire other versions
+4           | is_admin_required | boolean   | Whether or not administrators have to accept
+5           | is_user_required  | boolean   | Whether or not users have to accept
+6           | timestamp         | string    | Date of the term of service
+7           | url               | string    | URL of the file containing the text for the notice
+8           | status            | string    | Status of the term of service (active, retired)
+
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
 ### Error Status Codes
 
