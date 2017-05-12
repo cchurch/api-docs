@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The user service allows managing users to a degree outlined by the permission level
+The User service allows managing Users to a degree outlined by the permission level
 
 <!--===================================================================-->
 ## User Model
@@ -168,20 +168,20 @@ postal_code                          | string               | Zip/postal code
 phone                                | string               | Phone number
 mobile_phone                         | string               | Mobile phone number
 utc_offset                           | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field
-timezone                             | string               | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
+timezone                             | string               | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'
 last_login                           | string               | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN
 alternate_email                      | string               | Alternate email address
 sms_phone                            | string               | Phone number to be used for SMS notifications
 is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)
-json                                 | string               | Misc settings of the user as a Json string. [UserJson](#userjson-attributes)
-camera_access                        | array[array[string]] | Array of arrays, defined on a per device basis. Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: [‘cafedead’,’RWS’] = user can view, change and delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device <br><br>Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account superusers can edit this field
+json                                 | string               | Misc settings of the user as a Json string ([UserJson](#userjson-attributes))
+camera_access                        | array[array[string]] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[‘1005f2ed’,’RWS’] = user can view, change and delete this device <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share
 layouts                              | array[string]        | List of layout unique identifiers the user has access to
 is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)
 notify_period                        | array[string]        | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM
 notify_rule                          | array[string]        | Alert notification rules. Each rule contains three fields separated by dashes in the form: Alert_Label-Notification_Method-Delay <br><br>Alert_Label: name defined by the user <br>Notification_Method: email, SMS, or GUI <br>Delay: amount of time in minutes between notifications
 is_branded                           | int                  | Indicates whether the user is associated with an account that currently has branding enabled (1) or not (0)
 active_brand_subdomain               | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists
-account_map_lines                    | json                 | This is used by the front end to overlay lines over a map of the cameras for the account
+account_map_lines                    | json                 | Automatically retrieved from the user's current account setting 'map_lines'
 access_period                        | array[string]        | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM
 is_terms_noncompliant                | int                  | Indicates whether the terms of service have been accepted by the user (0) or not (1)
 
@@ -199,7 +199,7 @@ show_AMPM               | boolean    | Indicates whether times should be shown w
 milliseconds_display    | boolean    | Indicates whether times should be shown with milliseconds (True) or not (False)
 layout_rotation_seconds | int        | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
 motion_boxes            | boolean    | Indicates whether motion boxes should be shown (True) or not (False)
-notify_levels           | array[int] | Array of integers. Indicates what types of alert notification emails will be sent <br><br>Notify level: 1='High', 2='Low', 3='System' <br><br>When creating motion alerts for a camera 'High' or 'Low' can be chosen. If a motion alert is set to 'High' and if the user has chosen to receive 'High' alert notifications, then they will receive them for that motion alert. 'System' are camera status changes (online/offline/off/internet offline, etc.). When a camera changes status, any user who has chosen to receive 'System' alert notifications will get notified of the camera status changes in their account
+notify_levels           | array[int] | Array of integers indicating what level of notification should be set for the user <br><br>Notify level: <br>1='Low' - low alert notification setting <br>2='High' - high alert notification setting <br>3='System' - not a user-defined notification setting (encompasses camera status changes: online / offline / off / internet offline / ...) <br><br>When creating motion alerts for a camera, 'High' or 'Low' can be assigned to the motion box trigger. When a camera changes status, any user who has chosen to receive 'System' alert notifications will get notified of the camera status changes in their account. When an event triggers a motion alert within a motion box set to 'High', all users with notify levels 'High' will be notified of the occurrence
 permissions             | json       | This is for backwards compatibility **(DEPRECATED)**
 employee_id             | string     | Identifier which a user with the necessary permissions can set for other users
 layouts                 | json       | Json-formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
@@ -352,6 +352,10 @@ The table below shows which user management actions a user can execute depending
 ## Get User
 <!--===================================================================-->
 
+Returns a User object by id
+
+<aside class="notice">If no unique identifier is passed in the request, then the response will return data of the current user</aside>
+
 > Request
 
 ```shell
@@ -361,10 +365,6 @@ or
 
 curl --cookie "auth_key=[AUTH_KEY]" -G https://login.eagleeyenetworks.com/g/user -d id=[USER_ID]
 ```
-
-Returns a User object by id
-
-<aside class="notice">If no unique identifier is passed in the request, then the response will return data of the current user</aside>
 
 ### HTTP Request
 
@@ -388,13 +388,13 @@ HTTP Status Code | Description
 ## Create User
 <!--===================================================================-->
 
+Create a new User. After being created the user is in the pending state ('is_pending':1, 'is_active':0). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active ('is_pending':0, 'is_active':1)
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}'
 ```
-
-Creates a new user. After being created the user is in the pending state ('is_pending':1, 'is_active':0). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active ('is_pending':0, 'is_active':1)
 
 ### HTTP Request
 
@@ -437,13 +437,13 @@ HTTP Status Code | Description
 ## Update User
 <!--===================================================================-->
 
+Update User information
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d '{"id": "[USER_ID]", "first_name": "[FIRST_NAME]"}'
 ```
-
-Updates a user
 
 ### HTTP Request
 
@@ -463,7 +463,7 @@ city                        | string        | City
 state                       | string        | State/province
 country                     | string        | Two letter country code
 postal_code                 | string        | Zip/postal code
-json                        | string        | Json-formatted data representing various user settings. [UserJson](#userjson-attributes)
+json                        | string        | Json-formatted data representing various user settings ([UserJson](#userjson-attributes))
 is_staff                    | int           | Indicates whether the user is a staff member (1) or not (0). Only superusers can set this (**Internal use only**)
 is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)
 is_account_superuser        | int           | Indicates whether the user is an account superuser (1) or not (0). Only superusers and account superusers can set this
@@ -486,17 +486,19 @@ is_ptz_live                 | int           | Indicates whether the user is auth
 is_edit_users               | int           | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)
 is_edit_admin_users         | int           | Indicates whether the user is authorized to manage all users in sub-account (1) or not (0)
 is_edit_motion_areas        | int           | Indicates whether the user is authorized to view and edit the 'Motion' tab under camera settings (1) or not (0)
-camera_access               | array         | Array of arrays, defined on a per device basis. Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: [‘cafedead’,’RWS’] = user can view, change and delete this device. [‘cafe0001’,’RW’] = user can view this layout and change this device <br><br>Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an administrator for this camera. 'S' - user can share this camera in a group share. Only superusers or account superusers can edit this field
+camera_access               | array         | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). The first field is the command 'M' - modify or 'D' - delete (clears all permissions, no arguments follow the camera id in the request), the second field is the device unique identifier and the third field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[‘M‘,‘1005f2ed’,’RWS’] = user can view, change and delete this device <br>[‘D‘,‘1005f2ed’] = clears user permissions for the device <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share
 sms_phone                   | string        | Phone number to be used for SMS notifications
 is_sms_include_picture      | int           | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)
 alternate_email             | string        | Alternate email address
-timezone                    | string        | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
+timezone                    | string        | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'
 access_period               | array         | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM
 notify_period               | array         | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM
 is_notify_enable            | int           | Indicates whether notifications are enabled for the user (1) or not (0)
 notify_rule                 | array         | Alert notification rules. Each rule contains three fields separated by dashes in the form: Alert_Label-Notification_Method-Delay <br><br>Alert_Label: name defined by the user <br>Notification_Method: email, SMS, or GUI <br>Delay: amount of time in minutes between notifications
 language                    | string        | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages
 is_view_contract            | int           | Indicates whether the user is authorized to view contracts and replay them (1) or not (0)
+
+<aside class="warning">If previously set, 'camera_access' can only be modified via command 'M' after clearing the permissions using command 'D'</aside>
 
 > Json Response
 
@@ -526,13 +528,13 @@ HTTP Status Code | Description
 ## Delete User
 <!--===================================================================-->
 
+Delete a User
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -G
 ```
-
-Deletes a user
 
 ### HTTP Request
 
@@ -556,13 +558,13 @@ HTTP Status Code | Description
 ## Get List of Users
 <!--===================================================================-->
 
+Returns array of arrays with each sub-array representing a user available to the current user
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/user/list
 ```
-
-Returns array of arrays with each sub-array representing a user available to the current user
 
 ### HTTP Request
 
@@ -616,7 +618,7 @@ Array Index | Attribute   | Data Type     | Description
 1           | first_name  | string        | First name of the user
 2           | last_name   | string        | Last name of the user
 3           | email       | string        | Email address of the user
-4           | permissions | array[string] | List of permissions of the user
+4           | permissions | array[string] | List of user permissions
 5           | last_login  | string        | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>

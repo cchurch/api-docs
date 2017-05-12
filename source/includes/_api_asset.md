@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-Asset services provide access to media assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify assets
+Asset services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify [Assets](#DOT-Asset)
 
 <aside class="notice">Assets are identified by a tuple of timestamp, cameraid, quality and format</aside>
 
@@ -67,10 +67,6 @@ The video system is based on H264 video and AAC audio. These streams are encapsu
   - **FLV:** Native format for the system. Playable in any Flash player, VLC as well as other players
   - **MP4:** MPEG4 files have a very broad playback compatibility (in line with all the major video players), however *MP4 is NOT a streamable format*, so it is only used for download functionality and will return an error if the video is live
 
-  <aside class="warning">While streaming any video format on the web other than FLV (system native format), you may initially get a 502 response</aside>
-
-  This means that the video is currently being transcoded within our system and therefore couldn't be found. Assuming the data actually exists (check against the video list call), the video will eventually be ready for you to fetch in the desired format, but for the time being, you will have to wait and refetch until the requested video is ready
-
 ### Video Quality
 
 The H264 codec has the concept of profiles and levels to convey whether a playback device is compatible with a specific video stream
@@ -78,6 +74,11 @@ The H264 codec has the concept of profiles and levels to convey whether a playba
   - **low:** maximum profile of *baseline (640x480 max)*
   - **med:** maximum profile of *main*
   - **high:** maximum profile of *high*
+
+<!-- Placed before "### Video Quality" after the last file format description
+    <aside class="warning">While streaming any video format on the web other than FLV (system native format), you may initially get a 502 response</aside>
+
+    This means that the video is currently being transcoded within our system and therefore couldn't be found. Assuming the data actually exists (check against the video list call), the video will eventually be ready for you to fetch in the desired format, but for the time being, you will have to wait and refetch until the requested video is ready -->
 
 <!--===================================================================-->
 ## EEN Timestamp
@@ -91,12 +92,6 @@ All assets have an EEN timestamp attached. Timestamps are always in UTC and main
 ## Get Image
 <!--===================================================================-->
 
-> Request
-
-```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
-```
-
 <aside class="notice">Get a JPEG image based on the specified timestamp. This will return binary image data in JPEG format</aside>
 
 Cache control headers to allow asset caching if not 'now'-relative:
@@ -108,6 +103,12 @@ x-ee-prev         | type-timestamp <br>*(or 'unknown')* | Specifies asset type o
 x-ee-next         | type-timestamp <br>*(or 'unknown')* | Specifies asset type of the following image matching the class filter or 'unknown' if the following image was too complex to figure out
 content-type      | image/jpeg     | Specifies the content type
 location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb | Identifies actual asset time of the image in response
+
+> Request
+
+```shell
+curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
+```
 
 ### HTTP Request
 
@@ -126,7 +127,7 @@ location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb |
 Parameter         | Data Type    | Description   | Is Required
 ---------         | ---------    | -----------   | -----------
 **id**            | string       | Camera id     | true
-**timestamp**     | string       | timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**timestamp**     | string       | Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
 quality           | string, enum | ***(Future Feature)*** Quality of the image <br><br>enum: low, med, high
 
@@ -155,15 +156,16 @@ HTTP Status Code | Description
 ## Get Video
 <!--===================================================================-->
 
+<aside class="notice">Get a video stream in the requested format based on the specified timestamps. Returns binary video data in the requested format:</aside>
+
+  - **FLV** *(The recommended format for web streaming)*
+  - **MP4**
+
 > Request
 
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_ID];start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];A=[AUTH_KEY]"
 ```
-<aside class="notice">Get a video stream in the requested format based on the specified timestamps. Returns binary video data in the requested format:</aside>
-
-  - **FLV** *(The recommended format for web streaming)*
-  - **MP4**
 
 ### HTTP Request
 
@@ -204,13 +206,13 @@ HTTP Status Code | Description
 ## Prefetch Image
 <!--===================================================================-->
 
+This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
+
 > Request
 
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
 ```
-
-This API call will ensure the image is in the cloud. If the image is not in the cloud it will do a background upload request to the bridge to aquire the image into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
 
 ### HTTP Request
 
@@ -250,13 +252,13 @@ HTTP Status Code | Description
 ## Prefetch Video
 <!--===================================================================-->
 
+This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to acquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
+
 > Request
 
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
 ```
-
-This API call will ensure the video is in the cloud. If the video is not in the cloud it will do a background upload request to the bridge to acquire the video into the cloud. A webhook provided with the call will be triggered when the upload is successful or an error has occurred. The webhook will be triggered as a POST with Json-formatted data
 
 ### HTTP Request
 
@@ -297,15 +299,15 @@ HTTP Status Code | Description
 ## Get List of Images
 <!--===================================================================-->
 
+Get a list of objects, where each object contains the timestamp and type of a JPEG image
+
+<aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
+
 > Request
 
 ```shell
 curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
 ```
-
-Get a list of objects, where each object contains the timestamp and type of a JPEG image
-
-<aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
 
 ### HTTP Request
 
@@ -379,17 +381,17 @@ HTTP Status Code | Description
 ## Get List of Videos
 <!--===================================================================-->
 
-> Request
-
-```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
-```
-
 Get a list of objects, where each object contains the id, start and end timestamp of a single video clip
 
 <aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
 
 If the option 'o=coalesce' has been added, the videos with overlapping start and end timestamps with the previous or next video will be merged into one single video (one single object)
+
+> Request
+
+```shell
+curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
+```
 
 ### HTTP Request
 

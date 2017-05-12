@@ -12,13 +12,13 @@ Given the macro nature and the number of devices and operations that may occur, 
 ## Turn All Cameras On
 <!--===================================================================-->
 
+Used to turn on all cameras in the caller user’s account. Caller must be an account superuser
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/allon
 ```
-
-Used to turn on all cameras in the caller user’s account. Caller must be an account superuser
 
 ### HTTP Request
 
@@ -37,13 +37,13 @@ HTTP Status Code | Description
 ## Turn All Cameras Off
 <!--===================================================================-->
 
+Used to turn off all cameras in the caller user’s account. Caller must be an account superuser
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/alloff
 ```
-
-Used to turn off all cameras in the caller user’s account. Caller must be an account superuser
 
 ### HTTP Request
 
@@ -62,13 +62,13 @@ HTTP Status Code | Description
 ## Recording On
 <!--===================================================================-->
 
+Used to turn on recording for all cameras, cameras in a specific layout, or a single camera. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 1 (on) and 'video_capture_mode' is set to 'always'
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/recordnow
 ```
-
-Used to turn on recording for all cameras, cameras in a specific layout, or a single camera. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 1 (on) and 'video_capture_mode' is set to 'always'
 
 ### HTTP Request
 
@@ -93,13 +93,13 @@ HTTP Status Code | Description
 ## Recording Off
 <!--===================================================================-->
 
+Used to turn off recording for all cameras, cameras in a specific layout, or a single camera. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 0 (off) and 'video_capture_mode' is set back to 'event' (the default)
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/recordoff
 ```
-
-Used to turn off recording for all cameras, cameras in a specific layout, or a single camera. The result of this to the affected cameras will be that all 'operating_hours' schedules are removed, 'camera_on' is set to 0 (off) and 'video_capture_mode' is set back to 'event' (the default)
 
 ### HTTP Request
 

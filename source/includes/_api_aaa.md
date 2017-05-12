@@ -4,19 +4,19 @@
 ## Overview
 <!--===================================================================-->
 
-This section is for creating new accounts and the steps to recover an account. If you are creating sub-accounts tied to your current account refer to [Account](#account)
+This service enables the creation of new independent accounts and provides the means to recover an account. If you are creating sub-accounts tied to your current account refer to [Account](#account)
 
 <!--===================================================================-->
 ## Create Account
 <!--===================================================================-->
+
+This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account id and activation token), which the user must click to activate the account. Account cannot be used until it is activated
 
 > Request
 
 ```shell
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/create_account --data "email=[EMAIL]&password=[PASSWORD]"
 ```
-
-This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account id and activation token), which the user must click to activate the account. Account cannot be used until it is activated
 
 ### HTTP Request
 
@@ -46,13 +46,13 @@ HTTP Status Code | Description
 ## Validate Account
 <!--===================================================================-->
 
+This is used to verify the email address supplied when the account is created. When successful, the account is set to active and a user session is created. User will not be required to login again
+
 > Request
 
 ```shell
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/validate_account --data "id=[ID]&token=[TOKEN]"
 ```
-
-This is used to verify the email address supplied when the account is created. When successful, the account is set to active and a user session is created. User will not be required to login again
 
 ### HTTP Request
 
@@ -93,17 +93,17 @@ HTTP Status Code | Description
 ## Forgot Password
 <!--===================================================================-->
 
-> Request
-
-```shell
-curl --request POST https://login.eagleeyenetworks.com/g/aaa/forgot_password --data "email=[EMAIL]"
-```
-
 Password recovery is a multi-step process:
 
   - Step one (Forgot Password) requests a reset email to be sent to the email address of a registered user
   - Step two verifies whether the reset token is valid (This step is optional but is provided to allow for a friendlier user experience)
   - Step three allows the user to change the password (This step directly verifies whether the supplied token is a valid reset token). The result of step three is that a user session is created for the user
+
+> Request
+
+```shell
+curl --request POST https://login.eagleeyenetworks.com/g/aaa/forgot_password --data "email=[EMAIL]"
+```
 
 ### HTTP Request
 
@@ -130,13 +130,13 @@ HTTP Status Code | Description
 ## Check Password Reset Token
 <!--===================================================================-->
 
+This is step two of the password recover/reset process. It verifies that the supplied token is a valid reset token
+
 > Request
 
 ```shell
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_token --data "token=[TOKEN]"
 ```
-
-This is step two of the password recover/reset process. It verifies that the supplied token is a valid reset token
 
 ### HTTP Request
 
@@ -162,13 +162,13 @@ HTTP Status Code | Description
 ## Reset Password
 <!--===================================================================-->
 
+This is step three of the password recover/reset process. It both verifies that the supplied token is a valid reset token and then, if valid resets the password associated with the token to the newly supplied password. Upon completion, a user login session is created
+
 > Request
 
 ```shell
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/reset_password --data "token=[TOKEN]&password=[PASSWORD]"
 ```
-
-This is step three of the password recover/reset process. It both verifies that the supplied token is a valid reset token and then, if valid resets the password associated with the token to the newly supplied password. Upon completion, a user login session is created
 
 ### HTTP Request
 
@@ -210,13 +210,13 @@ HTTP Status Code | Description
 ## Resend Registration Email
 <!--===================================================================-->
 
+For users who have registered for an account, but never confirmed the registration. This will allow the registration confirmation email to be re-sent
+
 > Request
 
 ```shell
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/resend_registration_email --data "email=[EMAIL]"
 ```
-
-For users who have registered for an account, but never confirmed the registration. This will allow the registration confirmation email to be re-sent
 
 ### HTTP Request
 
@@ -243,13 +243,13 @@ HTTP Status Code | Description
 ## Resend User Verification Email
 <!--===================================================================-->
 
+For users who have had a user account created, but never confirmed their user account. This will allow the user confirmation email to be re-sent
+
 > Request
 
 ```shell
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email --data "email=[EMAIL]"
 ```
-
-For users who have had a user account created, but never confirmed their user account. This will allow the user confirmation email to be re-sent
 
 ### HTTP Request
 
@@ -277,16 +277,16 @@ HTTP Status Code | Description
 ## Change Password
 <!--===================================================================-->
 
+This allows a user to change their password directly while authenticated and also allows super users to change the password of the users they manage:
+
+  - While changing the own password, the current password needs to be provided as well (user id should be omitted)
+  - While changing the password of one of the managed users, only the new password is required (aside from the managed user's id)
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/change_password --data "password=[PASSWORD]&current_password=[CURRENT_PASSWORD]"
 ```
-
-This allows a user to change their password directly while authenticated and also allows super users to change the password of the users they manage:
-
-  - While changing the own password, the current password needs to be provided as well (user id should be omitted)
-  - While changing the password of one of the managed users, only the new password is required (aside from the managed user's id)
 
 ### HTTP Request
 
@@ -326,13 +326,13 @@ HTTP Status Code | Description
 ## Switch Account
 <!--===================================================================-->
 
+Allows a user to 'log in' to another account which the they have access to (see 'account/list'). Most commonly this would be needed for a master account user accessing their sub-accounts. Only applicable to accounts from the [Account](#account) model
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/switch_account
 ```
-
-Allows a user to 'log in' to another account which the they have access to (see 'account/list'). Most commonly this would be needed for a master account user accessing their sub-accounts. Only applicable to accounts from the [Account](#account) model
 
 ### HTTP Request
 
@@ -355,12 +355,6 @@ HTTP Status Code | Description
 ## Single Sign On
 <!--===================================================================-->
 
-> Request
-
-```shell
-curl --request POST https://login.eagleeyenetworks.com/g/sso
-```
-
 SSO allows a reseller to maintain account management and act as an identity provider to have their system proxy the authorization requests to Eagle Eye Network servers after users have logged into the identity providers system
 
 This is done through the standard SAML (Security Assertion Markup Language) and as such the identity provider will setup their account with a **brand_saml_publickey_ret** and **brand_saml_namedid_path**.
@@ -372,6 +366,12 @@ This is done through the standard SAML (Security Assertion Markup Language) and 
 Once the identity provider's account has been registered for SSO, then the identity provider can validate their users and then make a single sign on request with the users email address and the return link.
 This 64 bit encrypted message will be extracted from the header to be decoded and verified using the saml public key.
 Then using the saml named id path, the user's email will be extracted and an auth_key will be provided for that user.
+
+> Request
+
+```shell
+curl --request POST https://login.eagleeyenetworks.com/g/sso
+```
 
 ### HTTP Request
 
@@ -390,13 +390,13 @@ HTTP Status Code | Description
 ## Logout
 <!--===================================================================-->
 
+Log out user and invalidate HTTP session cookie
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/aaa/logout
 ```
-
-Log out user and invalidate HTTP session cookie
 
 ### HTTP Request
 

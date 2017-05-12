@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The account service allows managing accounts by superusers and account superusers
+The account service allows managing Accounts by superusers and account superusers
 
 <!--===================================================================-->
 ## Account Model
@@ -153,7 +153,7 @@ contact_postal_code                   | string               | Zip/postal code o
 contact_country                       | string               | Country code of primary contact for account                                          | true     |
 contact_phone                         | string               | Phone number of primary contact for account                                          | true     |
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account                                   | true     |
-timezone                              | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'                                                                                         | true     |
+timezone                              | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'                                                                                             | true     |
 status                                | array[string]        | Account status. This can only be edited by superusers and account superusers from the parent/owner account. Values: 'active', 'inactive', 'pending_validation', 'suspended'. 'Active' means the account is in a normal working state. 'Inactive' means logins are not allowed. 'Suspended' means the account is effectively no longer operational ('pending_validation' is the default state after first creation, before the user has validated the account)                                                                                                                                            | true     |
 utc_offset                            | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | false    |
 access_restriction                    | array[string]        | Array of strings containing access restrictions. Possible values: 'enable_mobile' = If present this account has access to mobile clients. 'enable_ip_restrictions' = if present, and if 'allowable_ip_address_range' has been specified, limits logins to the address ranges specified                                                                                                                                           | false    |
@@ -211,13 +211,13 @@ contact_utc_offset                    | int                  | This field is no 
 ## Get Account
 <!--===================================================================-->
 
+Returns an Account object by id
+
 > Request
 
 ```shell
 curl -G https://login.eagleeyenetworks.com/g/account -d "id=[ID]&A=[AUTH_KEY]"
 ```
-
-Returns an Account object by id
 
 ### HTTP Request
 
@@ -241,13 +241,13 @@ HTTP Status Code | Description
 ## Create Account
 <!--===================================================================-->
 
+Create a new Account
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"name": "[NAME]", "contact_first_name": "[CONTACT_FIRST_NAME]", "contact_last_name": "[CONTACT_LAST_NAME]", "contact_email": "[CONTACT_EMAIL]"}'
 ```
-
-Create a new Account
 
 ### HTTP Request
 
@@ -265,7 +265,7 @@ contact_city                          | string        | City of primary contact 
 contact_state                         | string        | State/province of primary contact for account
 contact_postal_code                   | string        | Zip/postal code of primary contact for account
 contact_country                       | string        | Country code of primary contact for account
-timezone                              | string        | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
+timezone                              | string        | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'
 status                                | array[string] | Account status. This can only be edited by superusers and account superusers from the parent/owner account. 'realm_root' can only be set by superusers
 access_restriction                    | array[string] | Array of strings containing access restrictions. Possible values: 'enable_mobile' = If present this account has access to mobile clients. 'enable_ip_restrictions' = if present, and if 'allowable_ip_address_range' has been specified, limits logins to the address ranges specified
 allowable_ip_address_range            | array[string] | Each entry in the array specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 is implied
@@ -303,13 +303,13 @@ HTTP Status Code | Description
 ## Update Account
 <!--===================================================================-->
 
+Update Account information
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d '{"id": "[ACCOUNT_ID]", "contact_first_name": "[CONTACT_FIRST_NAME]"}'
 ```
-
-Update an Account
 
 ### HTTP Request
 
@@ -329,7 +329,7 @@ contact_postal_code                   | string               | Zip/postal code o
 contact_country                       | string               | Country code of primary contact for account
 contact_phone                         | string               | Phone number of primary contact for account
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account
-timezone                              | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska' or 'US/Arizona' or 'US/Central' or 'US/Eastern' or 'US/Hawaii' or 'America/Anchorage' or 'UTC'
+timezone                              | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'
 status                                | array[string]        | Account status. This can only be edited by superusers and account superusers from the parent/owner account. Values: 'active', 'inactive', 'pending_validation', 'suspended'. 'Active' means the account is in a normal working state. 'Inactive' means logins are not allowed. 'Suspended' means the account is effectively no longer operational ('pending_validation' is the default state after first creation, before the user has validated the account)
 access_restriction                    | array[string]        | Array of strings containing access restrictions. Possible values: 'enable_mobile' = If present this account has access to mobile clients. 'enable_ip_restrictions' = if present, and if 'allowable_ip_address_range' has been specified, limits logins to the address ranges specified
 allowable_ip_address_range            | array[string]        | Each entry in the array specifies one address range. Entries use the ‘/’ format. For example, to limit access to 192.168.123.0-192.168.123.255, the entry would be 192.168.123.0/24. If no entries are present, 0.0.0.0/0 is implied
@@ -402,13 +402,13 @@ HTTP Status Code | Description
 ## Delete Account
 <!--===================================================================-->
 
+Delete an Account
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -G
 ```
-
-Delete an Account
 
 ### HTTP Request
 
@@ -432,13 +432,13 @@ HTTP Status Code | Description
 ## Get List of Accounts
 <!--===================================================================-->
 
+Returns an array of arrays with each sub-array representing an account available to the user
+
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/account/list
 ```
-
-Return an array of arrays, with each sub-array representing an account available to the user. Please note that the account list model definition below has property keys, but that's only for reference purposes since it's actually just a standard array
 
 ### HTTP Request
 
@@ -495,6 +495,8 @@ Array Index | Attribute              | Data Type | Description
 15          | last_login             | string    | EEN timestamp of the last login by this account
 16          | average_retention_days | int       | The average number of retention days for the account
 17          | customer_id            | string    | The customer id assigned to this account
+
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
 ### Error Status Codes
 

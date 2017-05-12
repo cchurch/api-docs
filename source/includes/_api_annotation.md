@@ -12,12 +12,12 @@ The annotation service allows to push data into the event stream to add addition
 ## Create Annotation
 <!--===================================================================-->
 
+Create an annotation for a device with a particular timestamp and data describing the annotation
+
 > Request TODO
 
 ```shell
 ```
-
-Create an annotation for a device with a particular timestamp and data describing the annotation
 
 ### HTTP Request
 
@@ -51,12 +51,12 @@ HTTP Status Code | Description
 ## Update Annotation
 <!--===================================================================-->
 
+Update an Annotation for a device with a particular timestamp. Simple modifications ('atype'='mod') can be made and require you to pass the original 'timestamp' from when the Annotation was created. Zero to N 'heartbeats' ('atype'='hb') can also be applied to describe changes over time for the Annotation. The Annotation can be ended ('atype'='end') which closes the Annotation and lets you attach additional information. Each Annotation event is assumed to last for 10 seconds in the absence of a heartbeat extending it. After a heartbeat, it is assumed to last for another 10 seconds. Annotations can be truncated by specifying an end event ('atype'='end')
+
 > Request TODO
 
 ```shell
 ```
-
-Update an annotation for a device with a particular timestamp. Simple modifications ('atype'='mod') can be made and require you to pass the original 'timestamp' from when the annotation was created. Zero to N 'heartbeats' ('atype'='hb') can also be applied to describe changes over time for the annotation. The annotation can be ended ('atype'='end') which closes the annotation and lets you attach additional information. Each annotation event is assumed to last for 10 seconds in the absence of a heartbeat extending it. After a heartbeat, it is assumed to last for another 10 seconds. Annotations can be truncated by specifying an end event ('atype'='end')
 
 ### HTTP Request
 
