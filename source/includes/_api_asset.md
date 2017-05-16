@@ -9,7 +9,7 @@ Asset services provide access to Media Assets - previews and video in appropriat
 <aside class="notice">Assets are identified by a tuple of timestamp, cameraid, quality and format</aside>
 
   - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - 'now' is the current time (a value starting with + or - is an offset from the current time)
-  - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit id associated with a specific camera (CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
+  - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit ID associated with a specific camera (CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
   - **Quality*****(Future Feature)*****:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. Additional quality levels will be supported in time
     - **low:** around 100 KB/s
     - **med:** under 500 KB/s
@@ -54,7 +54,7 @@ Video is accessed via the 'play' command. Video is captured in segments, and is 
 
 If the end time of the segment is in the future, the video will follow the data stream as it arrives, delivering live video streaming with minimal latency (if the camera is not streaming video, the video will stop (and start again) as video is captured, which is typically not what is desired). MP4 format cannot be live streamed
 
-The keyword 'stream_<streamid>' can be used for the starting timestamp. This forces the camera to capture video and stream it to the cloud live. The stream id should be globally unique(ish) string - combination of a timestamp and user id works well
+The keyword 'stream_<streamid>' can be used for the starting timestamp. This forces the camera to capture video and stream it to the cloud live. The stream ID should be globally unique(ish) string - combination of a timestamp and user ID works well
 
 The start timestamp must match the starting timestamp of a video if the video already exists. Subsegments of a video span can be specified by using the 'to' (time offset) argument. For example, assume a 5 minute video has been recorded from 12:30 to 12:35. The query "?t=20181120123000.000;e=20181120123400.000;to=180000;..." will play one minute of video (timestamped at 12:33), 3 minutes into the video starting at 12:30, clipping off the last minute of the recorded segment
 
@@ -126,7 +126,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_
 
 Parameter         | Data Type    | Description   | Is Required
 ---------         | ---------    | -----------   | -----------
-**id**            | string       | Camera id     | true
+**id**            | string       | Camera ID     | true
 **timestamp**     | string       | Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
 quality           | string, enum | ***(Future Feature)*** Quality of the image <br><br>enum: low, med, high
@@ -173,7 +173,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_I
 
 Parameter           | Data Type    | Description    | Is Required
 ---------           | ---------    | -----------    | -----------
-**id**              | string       | Camera id      | true
+**id**              | string       | Camera ID      | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 quality             | string, enum | ***(Future Feature)*** Indicates the requested resolution if multiple are available <br><br>enum: low, med, high
@@ -220,7 +220,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_times
 
 Parameter           | Data Type | Description   | Is Required
 ---------           | --------- | -----------   | -----------
-**id**              | string    | Camera id     | true
+**id**              | string    | Camera ID     | true
 **start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
 
@@ -266,7 +266,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_times
 
 Parameter           | Data Type | Description   | Is Required
 ---------           | --------- | -----------   | -----------
-**id**              | string    | Camera id     | true
+**id**              | string    | Camera ID     | true
 **start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string    | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
@@ -315,7 +315,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=
 
 Parameter           | Data Type    | Description   | Is Required
 ---------           | ---------    | -----------   | -----------
-**id**              | string       | Camera id     | true
+**id**              | string       | Camera ID     | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**     | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
 end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
@@ -381,7 +381,7 @@ HTTP Status Code | Description
 ## Get List of Videos
 <!--===================================================================-->
 
-Get a list of objects, where each object contains the id, start and end timestamp of a single video clip
+Get a list of objects, where each object contains the ID, start and end timestamp of a single video clip
 
 <aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
 
@@ -399,7 +399,7 @@ curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=
 
 Parameter           | Data Type    | Description   | Is Required
 ---------           | ---------    | -----------   | -----------
-**id**              | string       | Camera id     | true
+**id**              | string       | Camera ID     | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
 count               | int          | Used instead of or with an 'end_timestamp' argument. If used with an 'end_timestamp' argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the 'end_timestamp' argument, returns N entries. Supports negative values, which return N entries before sorted in reverse order (i.e. '-5' will return 5 events prior to the specified time)

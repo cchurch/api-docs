@@ -81,7 +81,7 @@ Upon being logged in, we make a request to the GET /layout/list API. This return
 GET /layout/list
 `
 
-We take the layout id attribute for each layout of interest and pass it to the GET /layout API request. This will contain the information we need to construct the layout
+We take the layout ID attribute for each layout of interest and pass it to the GET /layout API request. This will contain the information we need to construct the layout
 
 `
 GET /layout
@@ -161,7 +161,7 @@ Video playback functionality can be accessed through the ‘/asset/play/video.{v
 
 Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on this site to generate the URL string. http://writecodeonline.com/javascript/
 
-The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [AUTH_KEY]. The [DEVICE_ID] represents the id of the camera of interest. The [AUTH_KEY] is used for authentication and can be found in the response header of the /aaa/authorization API
+The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [AUTH_KEY]. The [DEVICE_ID] represents the ID of the camera of interest. The [AUTH_KEY] is used for authentication and can be found in the response header of the /aaa/authorization API
 
 `
 eagleEyeLiveVideoApiUrl = "https://login.eagleeyenetworks.com/asset/play/video.flv" +

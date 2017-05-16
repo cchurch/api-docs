@@ -63,10 +63,10 @@ recording_%s_meta           | object        | Object of info about the recording
 Parameter   | Data Type     | Description
 ---------   | ---------     | -----------
 timestamp   | string        | Timestamp of when the recording was started
-layout_id   | boolean       | Id of a layout the recording was started for
-camera_ids  | array[string] | Array of camera ids who had recording started for
+layout_id   | boolean       | ID of a layout the recording was started for
+camera_ids  | array[string] | Array of camera IDs which had recording started for
 layout_name | string        | Name of layout at the time the recording started
-user_id     | string        | Id of the user who started/stopped the recording
+user_id     | string        | ID of the user who started/stopped the recording
 
 ### Error Status Codes
 
@@ -107,7 +107,7 @@ end_timestamp       | string    | End timestamp to use to limit search results (
 
 Parameter | Data Type     | Description
 --------- | ---------     | -----------
-???       | array[object] | ???
+<p hidden>???</p> | array[object] | <p hidden>???</p>
 
 
 

@@ -96,7 +96,7 @@ name                  | string               | Name of the layout               
 types                 | array[string]        | Specifies target(s) for layout. Multiple values are allowed.                             | true     | PUT
 permissions           | string               | String of zero or more characters. Each character defines a permission. Permissions include: 'R' - user can view this layout. 'W' - user can modify this layout. 'D' - user can delete this layout. 'S' - user can share this layout                                   | false    |
 current_recording_key | string               | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service.                                                                                                                | false    |
-shares                | array[array[string]] | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. Two special user id exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘1005f2ed’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.                                                                                                                  | false    |
+shares                | array[array[string]] | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. Two special user ID exist: ‘account’ specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account. Example: [‘1005f2ed’,’RWDS’] = user can view, change, delete or share this layout. [‘cafe0001’,’RW’] = user can view this layout and change this layout. [‘account’, ‘R’] = All users of the account can view this layout. Permissions for the user issuing the /layout GET are not included in this array.                                                                                                                  | false    |
 configuration         | [LayoutConfiguration](#layoutconfiguration-attributes) | Json object that defines the layout configuration       | true     |
 
 ### LayoutConfiguration Attributes
@@ -111,10 +111,10 @@ settings              | [LayoutConfigurationSettings](#layoutconfigurationsettin
 Parameter             | Data Type            | Description
 ---------             | ---------            | -----------
 name                  | string               | Layout pane name
-type                  | string               | ‘preview’ - shows live preview images form cameras. ‘carousel’- rotates between preview images, ids of cameras needs to be include in the cameras array along with an integer in the delay array. The delay is an integer value of milliseconds as too how long the Camera will be displayed before switching to the next Camera. A “carousel” with only one camera is the same as preview. ‘click’ - respond to click for other cameras in layout. ‘motion’ - respond to motion for other cameras in layout. ‘map’ - a static map with camera icons located on it. ‘url’ - displays the contents of the url in the pane as a frame
-pane_id               | int                  | Id given to pane when created from the Layout Manager
+type                  | string               | ‘preview’ - shows live preview images form cameras. ‘carousel’- rotates between preview images, IDs of cameras need to be included in the cameras array along with an integer in the delay array. The delay is an integer value of milliseconds as too how long the Camera will be displayed before switching to the next Camera. A “carousel” with only one camera is the same as preview. ‘click’ - respond to click for other cameras in layout. ‘motion’ - respond to motion for other cameras in layout. ‘map’ - a static map with camera icons located on it. ‘url’ - displays the contents of the url in the pane as a frame
+pane_id               | int                  | ID given to pane when created from the Layout Manager
 size                  | int                  | ['1' or '2' or '3']: Size to display image: 1 = small, 2 = medium, 3 = large
-cameras               | array[string]        | Array of camera ids. For ‘carousel’, cycle through the camera ids with the delay setting in the corresponding ‘delay’ property
+cameras               | array[string]        | Array of camera IDs. For ‘carousel’, cycle through the camera IDs with the delay setting in the corresponding ‘delay’ property
 
 ### LayoutConfigurationSettings Attributes
 
@@ -129,7 +129,7 @@ camera_row_limit      | int                  | ['3' or '4' or '5']: Max number o
 ## Get Layout
 <!--===================================================================-->
 
-Returns a Layout object by id
+Returns a Layout object by ID
 
 > Request
 
@@ -143,7 +143,7 @@ curl -G https://login.eagleeyenetworks.com/g/layout -d "A=[AUTH_KEY]&id=[LAYOUT_
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Layout id   | true
+**id**    | string    | Layout ID   | true
 
 ### Error Status Codes
 
@@ -175,7 +175,7 @@ Parameter     | Data Type     | Description | Is Required
 **name**      | string        | Layout name | true
 **types**     | array[string] | Specifies target(s) for layout. Multiple values are allowed. | true
 configuration | json          | Json object that defines the layout configuration
-shares        | array[array]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user id and the second field is the list of permissions for the user. Two special user ids exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['1005f2ed', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array
+shares        | array[array]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user ID and the second field is the list of permissions for the user. Two special user IDs exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['1005f2ed', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 
@@ -214,7 +214,7 @@ Parameter     | Data Type     | Description | Is Required
 **id**        | string        | Layout name | true
 **types**     | array[string] | Specifies target(s) for layout. Multiple values are allowed. | true
 configuration | json          | Json object that defines the layout configuration
-shares        | array[array]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user id and the second field is the list of permissions for the user. Two special user ids exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['1005f2ed', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array
+shares        | array[array]  | Array of arrays, one per account user for whom sharing is enabled for this layout. Each string contains two fields separated by a comma. The first field is a user ID and the second field is the list of permissions for the user. Two special user IDs exist: 'account' specifies that the layout is shared with all users of the account. The second field contains permissions for users in the account. Example: ['1005f2ed', 'RWDS'] = user can view, change, delete or share this layout. ['cafe0001', 'RW'] = user can view and change this layout. ['account', 'R'] = All users in the account can view the layout. Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 
@@ -257,7 +257,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 Parameter     | Data Type | Description | Is Required
 ---------     | --------- | ----------- | -----------
-**id**        | string    | Layout id   | true
+**id**        | string    | Layout ID   | true
 
 ### Error Status Codes
 
@@ -266,7 +266,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| Layout matching the id was not found
+404	| Layout matching the ID was not found
 200	| Request succeeded
 
 <!--===================================================================-->

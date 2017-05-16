@@ -115,75 +115,75 @@ The User service allows managing Users to a degree outlined by the permission le
 
 ### User Attributes
 
-Parameter                            | Data Type            | Description
----------                            | ---------            | -----------
-id                                   | string               | Unique identifier of the user
-first_name                           | string               | First name of the user
-last_name                            | string               | Last name of the user
-email                                | string               | Email address of the user (must contain only ASCII characters)
-owner_account_id                     | string               | Unique identifier of the account that the user belongs to
-active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the 'active_account_id' of that user in their session becomes the unique identifier of the sub-account that was switched into
-uid                                  | string               | Identifier of the user (**Internal use only**)
-is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)
-is_account_superuser                 | int                  | Indicates whether the user is an account superuser (1) or not (0)
-is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0) (**Internal use only**)
-is_active                            | int                  | Indicates whether the user is active (1) or not (0)
-is_pending                           | int                  | Indicates whether the user is pending (1) or not (0)
-is_master                            | int                  | Indicates whether the user is in a master account (1) or not (0)
-is_user_admin                        | int                  | This is for backwards compatibility **(DEPRECATED)**
-is_layout_admin                      | int                  | Indicates whether the user is a layout administrator (1) or not (0)
-is_live_video                        | int                  | Indicates whether the user is authorized to access live video (1) or not (0)
-is_device_admin                      | int                  | This is for backwards compatibility **(DEPRECATED)**
-is_export_video                      | int                  | Indicates whether the user is authorized to export video (1) or not (0)
-is_recorded_video                    | int                  | Indicates whether the user is authorized to view recorded video (1) or not (0)
-is_edit_cameras                      | int                  | Indicates whether the user is authorized to edit cameras (1) or not (0)
-is_edit_all_users                    | int                  | Indicates whether the user is authorized to manage users who are not administrators in the master account (1) or not (0)
-is_edit_account                      | int                  | Indicates whether the user is authorized to edit account settings (1) or not (0)
-is_system_notifications_disabled     | int                  | It reflects whether the account the user belongs to has system notifications disabled (1) or not (0). If true, then the user will not be able to receive any system alert notifications for the cameras in their account
-is_edit_ptz_stations                 | int                  | Indicates whether the user is authorized to edit PTZ stations (1) or not (0)
-is_view_preview_video                | int                  | Indicates whether the user is authorized to view preview images from cameras (1) or not (0)
-is_edit_camera_on_off                | int                  | Indicates whether the user is authorized to turn cameras on and off (1) or not (0)
-is_edit_camera_less_billing          | int                  | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)
-is_edit_all_and_add                  | int                  | Indicates whether the user is authorized to add/edit/delete bridges and cameras (1) or not (0)
-is_edit_sharing                      | int                  | Indicates whether the user is authorized to view/edit 'Sharing' and 'Responders' tabs under account settings (1) or not (0)
-is_mobile_branded                    | int                  | Used by mobile devices
-is_edit_admin_users                  | int                  | Indicates whether the user is authorized to manage all users in sub-account (1) or not (0)
-is_view_contract                     | int                  | Indicates whether the user is authorized to view contracts and replay them (1) or not (0)
-is_ptz_live                          | int                  | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)
-is_view_audit_trail                  | int                  | Indicates whether the user is authorized to view the audit trail feature (1) or not (0)
-is_edit_users                        | int                  | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)
+Parameter                            | Data Type            | Description                                                                           | Editable | Is Required
+---------                            | ---------            | -----------                                                                           | -------- | -----------
+**id**                               | string               | Unique identifier of the user                                                         | false    | **<sub><form action="#update-user"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-user"><button>DELETE</button></form></sub>**
+**first_name**                       | string               | First name of the user                                                                | true     | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
+**last_name**                        | string               | Last name of the user                                                                 | true     | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
+**email**                            | string               | Email address of the user (must contain only ASCII characters)                        | true     | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
+owner_account_id                     | string               | Unique identifier of the account that the user belongs to                             | false    |
+active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the 'active_account_id' of that user in their session becomes the unique identifier of the sub-account that was switched into                                                       | false    |
+uid                                  | string               | Identifier of the user (**Internal use only**)                                        | false    |
+is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0) (**Internal use only**)   | true     |
+is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this (**Internal use only**)                                                                                                                                             | true     |
+is_account_superuser                 | int                  | Indicates whether the user is an account superuser (1) or not (0)                     | true     |
+is_active                            | int                  | Indicates whether the user is active (1) or not (0)                                   | true     |
+is_pending                           | int                  | Indicates whether the user is pending (1) or not (0)                                  | false    |
+is_master                            | int                  | Indicates whether the user is in a master account (1) or not (0)                      | false    |
+is_user_admin                        | int                  | This is for backwards compatibility **(DEPRECATED)**                                  | true     |
+is_layout_admin                      | int                  | Indicates whether the user is a layout administrator (1) or not (0)                   | true     |
+is_live_video                        | int                  | Indicates whether the user is authorized to access live video (1) or not (0)          | true     |
+is_device_admin                      | int                  | This is for backwards compatibility **(DEPRECATED)**                                  | true     |
+is_export_video                      | int                  | Indicates whether the user is authorized to export video (1) or not (0)               | true     |
+is_recorded_video                    | int                  | Indicates whether the user is authorized to view recorded video (1) or not (0)        | true     |
+is_edit_cameras                      | int                  | Indicates whether the user is authorized to edit cameras (1) or not (0)               | true     |
+is_edit_all_users                    | int                  | Indicates whether the user is authorized to manage users who are not administrators in the master account (1) or not (0)                                                                                                                                             | true     |
+is_edit_account                      | int                  | Indicates whether the user is authorized to edit account settings (1) or not (0)      | true     |
+is_system_notifications_disabled     | int                  | It reflects whether the account the user belongs to has system notifications disabled (1) or not (0). If true, then the user will not be able to receive any system alert notifications for the cameras in their account                                           | true     |
+is_edit_ptz_stations                 | int                  | Indicates whether the user is authorized to edit PTZ stations (1) or not (0)          | true     |
+is_view_preview_video                | int                  | Indicates whether the user is authorized to view preview images from cameras (1) or not (0)                                                                                                                                                 | true     |
+is_edit_camera_on_off                | int                  | Indicates whether the user is authorized to turn cameras on and off (1) or not (0)    | true     |
+is_edit_camera_less_billing          | int                  | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)                                                                                                                                      | true     |
+is_edit_all_and_add                  | int                  | Indicates whether the user is authorized to add/edit/delete bridges and cameras (1) or not (0)                                                                                                                                                 | true     |
+is_edit_sharing                      | int                  | Indicates whether the user is authorized to view/edit 'Sharing' and 'Responders' tabs under account settings (1) or not (0)                                                                                                                                          | true     |
+is_mobile_branded                    | int                  | Used by mobile devices                                                                | false    |
+is_edit_admin_users                  | int                  | Indicates whether the user is authorized to manage all users in sub-account (1) or not (0)                                                                                                                                                 | true     |
+is_view_contract                     | int                  | Indicates whether the user is authorized to view contracts and replay them (1) or not | true     |
+is_ptz_live                          | int                  | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)                                                                                                            | true     |
+is_view_audit_trail                  | int                  | Indicates whether the user is authorized to view the audit trail feature (1) or not (0)                                                                                                                                                 | false    |
+is_edit_users                        | int                  | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)                                                                                                                                                 | true     |
 is_edit_motion_areas                 | int                  | Indicates whether the user is authorized to view and edit the 'Motion' tab under camera settings (1) or not (0)
-is_two_factor_authentication_enabled | int                  | ???
-user_authenticated_clients           | ???                  | ???
-account_utc_offset                   | int                  | Signed integer offset in seconds of the timezone from UTC. This is the 'utc_offset' value from the user's associated account model
-account_work_days                    | string               | The 'work_days' value from the user's associated account model. Indicates which day is a work day
-account_work_hours                   | array[string]        | The 'work_hours' value from the user's associated account model. Indicates work hours for the account
-language                             | string               | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages
-inactive_session_timeout             | int                  | Maximum time period in seconds without activity before web session expires. Defined in the settings of the account which the user belongs to
-street                               | array[string]        | Array of strings containing street addresses ['address line 1', 'address line 2']
-city                                 | string               | City
-state                                | string               | State/province
-country                              | string               | Two letter country code
-postal_code                          | string               | Zip/postal code
-phone                                | string               | Phone number
-mobile_phone                         | string               | Mobile phone number
-utc_offset                           | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field
-timezone                             | string               | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'
-last_login                           | string               | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN
-alternate_email                      | string               | Alternate email address
-sms_phone                            | string               | Phone number to be used for SMS notifications
-is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)
-json                                 | string               | Misc settings of the user as a Json string ([UserJson](#userjson-attributes))
-camera_access                        | array[array[string]] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[‘1005f2ed’,’RWS’] = user can view, change and delete this device <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share
-layouts                              | array[string]        | List of layout unique identifiers the user has access to
-is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)
-notify_period                        | array[string]        | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM
-notify_rule                          | array[string]        | Alert notification rules. Each rule contains three fields separated by dashes in the form: Alert_Label-Notification_Method-Delay <br><br>Alert_Label: name defined by the user <br>Notification_Method: email, SMS, or GUI <br>Delay: amount of time in minutes between notifications
-is_branded                           | int                  | Indicates whether the user is associated with an account that currently has branding enabled (1) or not (0)
-active_brand_subdomain               | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists
-account_map_lines                    | json                 | Automatically retrieved from the user's current account setting 'map_lines'
-access_period                        | array[string]        | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM
-is_terms_noncompliant                | int                  | Indicates whether the terms of service have been accepted by the user (0) or not (1)
+is_two_factor_authentication_enabled | int                  | <p hidden>???</p>                                                                     | <p hidden>???</p> |
+user_authenticated_clients           | <p hidden>???</p>    | <p hidden>???</p>                                                                     | <p hidden>???</p> |
+account_utc_offset                   | int                  | Signed integer offset in seconds of the timezone from UTC. This is the 'utc_offset' value from the user's associated account model                                                                                                                            | false    |
+account_work_days                    | string               | The 'work_days' value from the user's associated account model. Indicates which day is a work day                                                                                                                                                 | false    |
+account_work_hours                   | array[string]        | The 'work_hours' value from the user's associated account model. Indicates work hours for the account                                                                                                                                             | false    |
+language                             | string               | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages                                            | true     |
+inactive_session_timeout             | int                  | Maximum time period in seconds without activity before web session expires. Defined in the settings of the account which the user belongs to                                                                                                                           | false    |
+street                               | array[string]        | Array of strings containing street addresses ['address line 1', 'address line 2']     | true     |
+city                                 | string               | City                                                                                  | true     |
+state                                | string               | State/province                                                                        | true     |
+country                              | string               | Two letter country code                                                               | true     |
+postal_code                          | string               | Zip/postal code                                                                       | true     |
+phone                                | string               | Phone number                                                                          | true     |
+mobile_phone                         | string               | Mobile phone number                                                                   | true     |
+utc_offset                           | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | false    |
+timezone                             | string               | Timezone of the user. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'                                                                                             | true     |
+last_login                           | string               | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN               | false    |
+alternate_email                      | string               | Alternate email address                                                               | true     |
+sms_phone                            | string               | Phone number to be used for SMS notifications                                         | true     |
+is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)                                                                                                                                                 | true     |
+json                                 | string               | Misc settings of the user as a Json string ([UserJson](#userjson-attributes))         | true     |
+camera_access                        | array[array[string]] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[‘1005f2ed’,’RWS’] = user can view, change and delete this device <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share                                       | true     |
+layouts                              | array[string]        | List of layout unique identifiers the user has access to                              | true     |
+is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)               | true     |
+notify_period                        | array[string]        | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM                    | true     |
+notify_rule                          | array[string]        | Alert notification rules. Each rule contains three fields separated by dashes in the form: Alert_Label-Notification_Method-Delay <br><br>Alert_Label: name defined by the user <br>Notification_Method: email, SMS, or GUI <br>Delay: amount of time in minutes between notifications                                                                                                                                       | true     |
+is_branded                           | int                  | Indicates whether the user is associated with an account that currently has branding enabled (1) or not (0)                                                                                                                                                 | false    |
+active_brand_subdomain               | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists                                                                                                                                              | false    |
+account_map_lines                    | json                 | Automatically retrieved from the user's current account setting 'map_lines'           | false    |
+access_period                        | array[string]        | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM            | true     |
+is_terms_noncompliant                | int                  | Indicates whether the terms of service have been accepted by the user (0) or not (1)  | false    |
 
 ### UserJson Attributes
 
@@ -352,7 +352,7 @@ The table below shows which user management actions a user can execute depending
 ## Get User
 <!--===================================================================-->
 
-Returns a User object by id
+Returns a User object by ID
 
 <aside class="notice">If no unique identifier is passed in the request, then the response will return data of the current user</aside>
 
@@ -482,11 +482,12 @@ is_edit_camera_on_off       | int           | Indicates whether the user is auth
 is_edit_camera_less_billing | int           | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)
 is_edit_all_and_add         | int           | Indicates whether the user is authorized to add/edit/delete bridges and cameras (1) or not (0)
 is_edit_sharing             | int           | Indicates whether the user is authorized to view/edit 'Sharing' and 'Responders' tabs under account settings (1) or not (0)
+is_edit_admin_users         | int           | Indicates whether the user is authorized to manage all users in sub-account (1) or not (0)
+is_view_contract            | int           | Indicates whether the user is authorized to view contracts and replay them (1) or not (0)
 is_ptz_live                 | int           | Indicates whether the user is authorized to control pan, tilt, zoom, and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)
 is_edit_users               | int           | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)
-is_edit_admin_users         | int           | Indicates whether the user is authorized to manage all users in sub-account (1) or not (0)
 is_edit_motion_areas        | int           | Indicates whether the user is authorized to view and edit the 'Motion' tab under camera settings (1) or not (0)
-camera_access               | array         | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). The first field is the command 'M' - modify or 'D' - delete (clears all permissions, no arguments follow the camera id in the request), the second field is the device unique identifier and the third field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[‘M‘,‘1005f2ed’,’RWS’] = user can view, change and delete this device <br>[‘D‘,‘1005f2ed’] = clears user permissions for the device <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share
+camera_access               | array         | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). The first field is the command 'M' - modify or 'D' - delete (clears all permissions, no arguments follow the camera ID in the request), the second field is the device unique identifier and the third field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[‘M‘,‘1005f2ed’,’RWS’] = user can view, change and delete this device <br>[‘D‘,‘1005f2ed’] = clears user permissions for the device <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share
 sms_phone                   | string        | Phone number to be used for SMS notifications
 is_sms_include_picture      | int           | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)
 alternate_email             | string        | Alternate email address
@@ -496,7 +497,6 @@ notify_period               | array         | Time periods during which the user
 is_notify_enable            | int           | Indicates whether notifications are enabled for the user (1) or not (0)
 notify_rule                 | array         | Alert notification rules. Each rule contains three fields separated by dashes in the form: Alert_Label-Notification_Method-Delay <br><br>Alert_Label: name defined by the user <br>Notification_Method: email, SMS, or GUI <br>Delay: amount of time in minutes between notifications
 language                    | string        | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages
-is_view_contract            | int           | Indicates whether the user is authorized to view contracts and replay them (1) or not (0)
 
 <aside class="warning">If previously set, 'camera_access' can only be modified via command 'M' after clearing the permissions using command 'D'</aside>
 

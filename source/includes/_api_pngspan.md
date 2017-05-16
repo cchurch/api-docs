@@ -62,7 +62,7 @@ Parameter            | Data Type    | Description | Is Required
 **start_timestamp**  | string       | Start Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#een-timestamp) | true
 **end_timestamp**    | string       | End Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#een-timestamp) | true
 **width**            | int          | Width in pixels of resulting PNG. Must be an integer greater than 0. | true
-**id**               | string       | Camera id | true
+**id**               | string       | Camera ID | true
 **foreground_color** | string       | Color of foreground (active). If both fg and bg have 0 for alpha, assumed fully opaque (0xff). 32bit ARGB color. | true
 **background_color** | string       | Color of background (inactive). 32bit ARGB color. | true
 table                | string, enum | If provided, specifies name of table to be rendered. Required for type 'span' and 'event'. <br><br>enum: stream, onoff, video, register

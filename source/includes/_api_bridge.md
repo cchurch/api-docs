@@ -174,15 +174,15 @@ Parameter                     | Data Type     | Description
 id                            | string        | Unique identifier automatically generated and assigned while adding a device
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
 name                          | string        | User-defined device name
-timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Possible values: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
+timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
 utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field
 tags                          | array[string] | Array of strings each representing a tag name
-permissions                   | string        | String of zero or more characters each defining a permission level of the current user
+permissions                   | string        | String of characters each defining a permission level of the current user
 bridges                       |               | (**Applies only to Cameras**)
-[settings](#bridge-settings)  | json          | Basic settings (location, etc.). If bridge settings cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404
-[camera_info](#bridge-camera_info) | json          | Basic bridge information
+[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)
+[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404
 camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)
-camera_parameters             | json          | Bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404
+camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404
 camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)
 camera_settings               | string        | This is for backwards compatibility **(DEPRECATED)**
 camera_settings_status_code   | int           | This is for backwards compatibility **(DEPRECATED)**
@@ -192,13 +192,13 @@ camera_settings_status_code   | int           | This is for backwards compatibil
 Parameter                     | Data Type     | Description
 ---------                     | ---------     | -----------
 analog_inputs_ignored         | array[string] | An array of numbers of analog inputs which the user wants to ignore
-event_data_start_timestamp    | string        | ???
+event_data_start_timestamp    | string        | <p hidden>???</p>
 local_display_layout_ids      | array[string] | An array of available layouts on a local display
 bridge                        | null          | (**Applies only to Cameras**)
 site_name                     | string        | User-defined bridge location name
 floor                         | int           | The floor of the building given that it is a multi-storey
-retention_days                | int           | ???
-local_retention_days          | int           | ???
+retention_days                | int           | <p hidden>???</p>
+local_retention_days          | int           | <p hidden>???</p>
 longitude                     | float         | Longitude of the bridge location
 latitude                      | float         | Latitude of the bridge location
 street_address                | string        | Street address of the bridge location
@@ -209,37 +209,37 @@ street_address                | string        | Street address of the bridge loc
 
 Parameter                     | Data Type | Description
 ---------                     | --------- | -----------
-camera_property_model         | string    | ???
-model                         | string    | ???
-camera_property_version       | string    | ???
-version                       | string    | ???
-camera_property_make          | string    | ???
-make                          | string    | ???
-camera_abs_newest             | string    | ???
-camera_newest                 | string    | ???
-camera_abs_oldest             | string    | ???
-camera_oldest                 | string    | ???
+camera_property_model         | string    | <p hidden>???</p>
+model                         | string    | <p hidden>???</p>
+camera_property_version       | string    | <p hidden>???</p>
+version                       | string    | <p hidden>???</p>
+camera_property_make          | string    | <p hidden>???</p>
+make                          | string    | <p hidden>???</p>
+camera_abs_newest             | string    | <p hidden>???</p>
+camera_newest                 | string    | <p hidden>???</p>
+camera_abs_oldest             | string    | <p hidden>???</p>
+camera_oldest                 | string    | <p hidden>???</p>
 uuid                          | string    | Identical to 'guid' from the [device attributes](#bridge-model) section
 ipaddr                        | string    | IP addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk (\*)
 esn                           | string    | Identical to 'id' from the [device attributes](#bridge-model) section
 class                         | string    | Determines the type of a device ("bridge" or "camera")
-service                       | string    | ???
+service                       | string    | <p hidden>???</p>
 [status](#status-bitmask)     | string    | The device status bitmask
-camera_state_version          | int       | ???
-no_video                      | int       | ???
-tagmap_status_state           | int       | ???
-camera_retention_asset        | int       | ???
-camera_retention_etag         | int       | ???
-run_mode                      | string    | ???
-register_id                   | int       | ???
-camera_now                    | string    | ???
+camera_state_version          | int       | <p hidden>???</p>
+no_video                      | int       | <p hidden>???</p>
+tagmap_status_state           | int       | <p hidden>???</p>
+camera_retention_asset        | int       | <p hidden>???</p>
+camera_retention_etag         | int       | <p hidden>???</p>
+run_mode                      | string    | <p hidden>???</p>
+register_id                   | int       | <p hidden>???</p>
+camera_now                    | string    | <p hidden>???</p>
 ssn                           | string    | The serial number of a bridge
-proxy                         | string    | ???
+proxy                         | string    | <p hidden>???</p>
 now                           | string    | The current time of when the request has been completed in EEN format: YYYYMMDDHHMMSS.NNN
-camera_property_analog        | boolean   | ???
+camera_property_analog        | boolean   | <p hidden>???</p>
 [status_hex](#status-bitmask) | string    | The device status bitmask as a hexadecimal value
-camera_retention_interval     | int       | ???
-camera_valid_ts               | string    | ???
+camera_retention_interval     | int       | <p hidden>???</p>
+camera_valid_ts               | string    | <p hidden>???</p>
 
 <!--TODO: Add the full bridge model device attributes table-->
 
@@ -247,7 +247,7 @@ camera_valid_ts               | string    | ???
 ## Get Bridge
 <!--===================================================================-->
 
-Returns a Bridge object by id
+Returns a Bridge object by ID
 
 > Request
 
@@ -261,7 +261,7 @@ curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Bridge id   | true
+**id**    | string    | Bridge ID   | true
 
 ### Error Status Codes
 
@@ -339,11 +339,11 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -
 
 Parameter                | Data Type     | Description | Is Required
 ---------                | ---------     | ----------- | -----------
-**id**                   | string        | Bridge id   | true
+**id**                   | string        | Bridge ID   | true
 name                     | string        | Bridge name
-timezone                 | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Possible values: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
+timezone                 | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
 tags                     | array[string] | Array of strings each representing a tag name
-[settings](#bridge-settings) | json          | Basic settings (location, etc.)
+[settings](#bridge-settings) | json          | Json object of basic settings (location, etc.)
 camera_parameters_add    | json          | Json object of camera settings to add/update
 camera_parameters_delete | json          | Json object of camera settings to delete
 
@@ -390,7 +390,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Bridge id   | true
+**id**    | string    | Bridge ID   | true
 
 ### Error Status Codes
 
@@ -421,7 +421,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-e         | string    | Bridge id
+e         | string    | Bridge ID
 n         | string    | Bridge name
 t         | string    | Device type
 s         | string    | Device service status
@@ -573,7 +573,7 @@ Array Index | Attribute           | Data Type            | Description
 8           | guid                | string               | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
 9           | serial_number       | string               | Serial number of the device
 10          | [device_status](#status-bitmask) | int                  | The device status bitmask
-11          | timezone            | string               | Indicates the timezone of where the device is installed. Defaults to the account timezone. Possible values: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
+11          | timezone            | string               | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
 12          | timezone_utc_offset | int                  | The signed integer offset in seconds of a timezone from UTC
 13          | is_unsupported      | int                  | Indicates whether the device is NOT supported (1) or is supported (0)
 14          | ip_address          | string               | IP address assigned to the device
@@ -583,7 +583,7 @@ Array Index | Attribute           | Data Type            | Description
 18          | video_input         | string               | Indicates the video input channel of the camera (**Applies to analog Cameras**)
 19          | video_status        | string               | Indicates the video status of the camera: (**Applies to analog Cameras**) <br>'0x00000000' - signal ok <br>'0x00000102' - no signal
 20          | location            | array                | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(int/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
-21          | parent_camera_id    | string               | Parent camera id
+21          | parent_camera_id    | string               | Parent camera ID
 22          | child_camera_view   | string               | Child camera view
 23          | is_hidden           | int                  | GUI control to not show device
 24          | ignored_inputs      | array[string]        | Array of analog port numbers which should be ignored by the bridge

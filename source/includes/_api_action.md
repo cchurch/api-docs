@@ -76,8 +76,8 @@ curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetwork
 
 Parameter     | Data Type | Description
 ---------     | --------- | -----------
-device_id     | string    | Id of the camera to record. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used
-layout_id     | string    | Id of the layout for which cameras will be set to record. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
+device_id     | string    | ID of the camera to record. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used
+layout_id     | string    | ID of the layout for which cameras will be set to record. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
 recording_key | string    | A key used to tag this recording. Can be used to retrieve this recording info later using the GET 'recording' service
 
 ### Error Status Codes
@@ -107,8 +107,8 @@ curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetwork
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-device_id | string    | Id of the camera to turn off recording for. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used
-layout_id | string    | Id of the layout for which cameras will have recording turned off. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
+device_id | string    | ID of the camera to turn off recording for. If this parameter and the 'layout_id' parameter are omitted, all cameras with write access available to the requesting user will be used
+layout_id | string    | ID of the layout for which cameras will have recording turned off. All cameras in the layout will be affected. If this parameter and the 'device_id' parameter are omitted, all cameras with write access available to the requesting user will be used
 
 ### Error Status Codes
 
