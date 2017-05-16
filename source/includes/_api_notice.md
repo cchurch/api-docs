@@ -37,7 +37,7 @@ curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --coo
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-id        | string    | User id     | false
+id        | string    | User ID     | false
 
 > Json Response
 
@@ -102,7 +102,7 @@ Parameter | Data Type     | Description | Is Required
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | User id
+id        | string    | User ID
 
 ### Error Status Codes
 
@@ -144,7 +144,7 @@ curl -X PUT https://28888.eagleeyenetworks.com/g/account/terms -d '{"is_admin_re
 Parameter         | Data Type | Description                                  | Is Required   | Default                  | Limitation
 ---------         | --------- | -----------                                  | -----------   | -------                  | ----------
 **text**          | string    | Text of the terms to accept                  | true          |                          | Use single LF character for line break
-id                | string    | Unique id of the Account                     | false         | requester's account      |
+id                | string    | Unique ID of the Account                     | false         | requester's account      |
 title             | string    | Title of the terms to accept                 | false         | "Terms and Conditions"   | 32 bytes of alpha numeric characters
 version           | string    | Version of the title, which should be unique | false         | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required | boolean   | Whether or not administrators have to accept | false         | not updating             |
@@ -204,7 +204,7 @@ curl -X POST https://28888.eagleeyenetworks.com/g/account/terms -d '{"is_admin_r
 Parameter         | Data Type | Description                                  | Is Required | Default                  | Limitation
 ---------         | --------- | -----------                                  | ----------- | -------                  | ----------
 text              | string    | Text of the terms to accept                  | false       |                          |  use single LF character for line break
-id                | string    | Unique id of the Account                     | false       | requester's account      |
+id                | string    | Unique ID of the Account                     | false       | requester's account      |
 title             | string    | Title of the terms to accept                 | false       | "Terms and Conditions"   | 32 bytes of alpha numeric characters
 version           | string    | Version of the title, which should be unique | false       | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required | boolean   | Whether or not administrators have to accept | false       | not updating             |
@@ -260,7 +260,7 @@ curl -X DELETE https://28888.eagleeyenetworks.com/g/user/terms?id=cafe81f5 --coo
 
 Parameter | Data Type | Description        | Is Required
 --------- | --------- | -----------        | -----------
-**id**    | string    | Account id         | true
+**id**    | string    | Account ID         | true
 title     | string    | Title of the terms | false
 
 > Json Response
@@ -274,7 +274,7 @@ title     | string    | Title of the terms | false
 
 Parameter          | Data Type | Description
 ---------          | --------- | -----------
-account_id         | string    | Unique Id of the account that is requesting this term of service
+account_id         | string    | Unique ID of the account that is requesting this term of service
 account_name       | string    | Name of the account that is requesting this term of service
 title              | string    | Title of the term of service
 version            | int       | Version number for the term title
@@ -315,7 +315,7 @@ curl -X GET https://28888.eagleeyenetworks.com/g/account/terms?id=00009436 --coo
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Account id  | true
+**id**    | string    | Account ID  | true
 
 > Json Response
 
@@ -327,7 +327,7 @@ Parameter | Data Type | Description | Is Required
 
 Array Index | Attribute         | Data Type | Description
 ----------- | ---------         | --------- | -----------
-0           | account_id        | string    | Unique Id of the account that is requesting this notice
+0           | account_id        | string    | Unique ID of the account that is requesting this notice
 1           | account_name      | string    | Name of the account that is requesting this notice
 2           | title             | string    | Title of the notice
 3           | version           | int       | Version number for the notice title, a larger version number will retire other versions

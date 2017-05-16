@@ -25,7 +25,7 @@ Create an annotation for a device with a particular timestamp and data describin
 
 Parameter     | Data Type | Description | Is Required
 ---------     | --------- | ----------- | -----------
-**device_id** | string    | Id of the device the annotation should be associated with | true
+**device_id** | string    | ID of the device the annotation should be associated with | true
 **timestamp** | string    | Timestamp associated with the annotation | true
 **data**      | json      | Json object representing the data associated with the annotation (No predefined data fields required) | true
 
@@ -64,8 +64,8 @@ Update an Annotation for a device with a particular timestamp. Simple modificati
 
 Parameter     | Data Type    | Description | Is Required
 ---------     | ---------    | ----------- | -----------
-**id**        | string       | Id of the annotation being updated, which is returned by PUT /annotation | true
-**device_id** | string       | Id of the device the associated with the annotation being updated | true
+**id**        | string       | ID of the annotation being updated, which is returned by PUT /annotation | true
+**device_id** | string       | ID of the device the associated with the annotation being updated | true
 **timestamp** | string       | If atype='mod', then this must be the timestamp associated with the annotation when originally created. If atype is 'hb' or 'end', this timestamp can be a different timestamp than the original | true
 **data**      | json         | Json object representing the data to update the annotation with. No predefined data fields required | true
 atype         | string, enum | The type of annotation update to make. Defaults to 'mod'. 'mod' is a simple modification of the annotation. 'hb' indicates a heartbeat event, adding information on parameters that have changed and extending duration. 'end' indicates the end of the event, and no 'hb' with a later timestamp will be accepted <br><br>enum: end, hb, mod

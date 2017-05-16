@@ -138,13 +138,12 @@ The account service allows managing Accounts by superusers and account superuser
 
 ### Account Attributes
 
-Parameter                             | Data Type            | Description                                                                          | Editable | Required
----------                             | ---------            | -----------                                                                          | -------- | --------
-id                                    | string               | Unique identifier of the account                                                     | false    | GET, POST, DELETE
-name                                  | string               | Name of the account                                                                  | true     | PUT
-owner_account_id                      | string               | Id of the parent account. Defaults to the account of the creating user               | false    |
-contact_first_name                    | string               | First name of primary contact for account                                            | true     | PUT
-contact_last_name                     | string               | Last name of primary contact for account                                             | true     | PUT
+Parameter                             | Data Type            | Description                                                                          | Editable | Is Required
+---------                             | ---------            | -----------                                                                          | -------- | -----------
+**id**                                | string               | Unique identifier of the account                                                     | false    | **<sub><form action="#get-account"><button>GET</button></form></sub>** <br>**<sub><form action="#update-account"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-account"><button>DELETE</button></form></sub>**
+**name**                              | string               | Name of the account                                                                  | true     | **<sub><form action="#create-account"><button>PUT</button></form></sub>**
+**contact_first_name**                | string               | First name of primary contact for account                                            | true     | **<sub><form action="#create-account"><button>PUT</button></form></sub>**
+**contact_last_name**                 | string               | Last name of primary contact for account                                             | true     | **<sub><form action="#create-account"><button>PUT</button></form></sub>**
 contact_email                         | string               | Email of primary contact for account                                                 | true     |
 contact_street                        | array[string]        | Array of strings containing street addresses of the primary contact for account ['address line 1', 'address line 2']                                                                                                                                                 | true     |
 contact_city                          | string               | City of primary contact for account                                                  | true     |
@@ -153,6 +152,7 @@ contact_postal_code                   | string               | Zip/postal code o
 contact_country                       | string               | Country code of primary contact for account                                          | true     |
 contact_phone                         | string               | Phone number of primary contact for account                                          | true     |
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account                                   | true     |
+owner_account_id                      | string               | ID of the parent account. Defaults to the account of the creating user               | false    |
 timezone                              | string               | Timezone of the account. Defaults to 'US/Pacific'. Possible values: 'US/Alaska', 'US/Arizona', 'US/Central', 'US/Eastern', 'US/Hawaii', 'America/Anchorage' or 'UTC'                                                                                             | true     |
 status                                | array[string]        | Account status. This can only be edited by superusers and account superusers from the parent/owner account. Values: 'active', 'inactive', 'pending_validation', 'suspended'. 'Active' means the account is in a normal working state. 'Inactive' means logins are not allowed. 'Suspended' means the account is effectively no longer operational ('pending_validation' is the default state after first creation, before the user has validated the account)                                                                                                                                            | true     |
 utc_offset                            | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | false    |
@@ -183,7 +183,7 @@ brand_name                            | string               | Branded company n
 brand_saml_publickey_cert             | string               | Public certificate which Eagle Eye Networks will use to decrypt the SAML for SSO     | true     |
 brand_saml_nameid_path                | string               | The path within the SAML xml to find the users email address                         | true     |
 is_without_initial_user               | string               | Indicates whether to create the new account without an initial user (1) or not (0). Defaults to 0, meaning an initial user with 'is_account_superuser=1' will be created using the arguments 'contact_first_name/contact_last_name/contact_email' specified upon account creation                                                                                                                                            | true     |
-customer_id                           | string               | Arbitrary id assigned to a sub-account by a master account                           | true     |
+customer_id                           | string               | Arbitrary ID assigned to a sub-account by a master account                           | true     |
 is_master_video_disabled_allowed      | int                  | Indicates whether a sub-account can block video access to reseller (1) or not (0)    | true     |
 is_master_video_disabled              | int                  | Indicates whether video access is blocked to reseller (1) or not (0)                 | true     |
 is_contract_recording                 | int                  | Indicates whether the account is of type contract_recording. Controls whether contract recording features are enabled for the users in this account on the front-end GUI (1) or not (0)                                                                           | true     |
@@ -192,7 +192,7 @@ is_billing_disabled                   | int                  | Indicates whether
 is_add_delete_disabled                | int                  | Indicates whether the reseller has disabled adding or deleting devices (1) or not (0)| true     |
 is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing                                                                                                                  | true     |
 first_responders                      | array[array[string]] | Array of arrays with each sub-array representing an emergency responder. Accounts can identify a list of email accounts that will serve as emergency responders.  Emergency responders get access to the identified 'responder_cameras' during an emergency (triggered by setting 'responder_active'). A responder is identified by their email, first name, last name, company, their account<br><br>Example: [['mark@responders.com', 'Mark', 'O'Malley', 'Responders', 'Fake Account']]                                                                                                                      | true     |
-responder_active                      | ???                  | Indicates whether the responder cameras can be seen by the users defined under 'first_responders'                                                                                                                                  | true     |
+responder_active                      | <p hidden>???</p>    | Indicates whether the responder cameras can be seen by the users defined under 'first_responders'                                                                                                                                  | true     |
 responder_cameras                     | array[string]        | Array of camera ESNs that are shared to first responders                             | true     |
 inactive_session_timeout              | int                  | Maximum time period in seconds without activity before web session expires           | true     |
 login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked       | true     |
@@ -211,7 +211,7 @@ contact_utc_offset                    | int                  | This field is no 
 ## Get Account
 <!--===================================================================-->
 
-Returns an Account object by id
+Returns an Account object by ID
 
 > Request
 
@@ -234,7 +234,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| Account not found with the supplied id
+404	| Account not found with the supplied ID
 200	| Request succeeded
 
 <!--===================================================================-->
@@ -256,7 +256,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H
 Parameter                             | Data Type     | Description                                                                                            | Is Required
 ---------                             | ---------     | -----------                                                                                            | -----------
 **name**                              | string        | Name of the account                                                                                    | true
-owner_account_id                      | string        | Id of the parent account. Defaults to the account of the creating user
+owner_account_id                      | string        | ID of the parent account. Defaults to the account of the creating user
 **contact_first_name**                | string        | First name of primary contact for account                                                              | true
 **contact_last_name**                 | string        | Last name of primary contact for account                                                               | true
 **contact_email**                     | string        | Email of primary contact for account                                                                   | true
@@ -358,14 +358,14 @@ is_billing_disabled                   | int                  | Indicates whether
 is_add_delete_disabled                | int                  | Indicates whether the reseller has disabled adding or deleting devices (1) or not (0)
 is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing
 first_responders                      | array[array[string]] | Array of arrays with each sub-array representing an emergency responder. Accounts can identify a list of email accounts that will serve as emergency responders.  Emergency responders get access to the identified 'responder_cameras' during an emergency (triggered by setting 'responder_active'). A responder is identified by their email, first name, last name, company, their account<br><br>Example: [['mark@responders.com', 'Mark', 'O'Malley', 'Responders', 'Fake Account']]
-responder_active                      | ???                  | Indicates whether the responder cameras can be seen by the users defined under 'first_responders'
+responder_active                      | <p hidden>???</p>    | Indicates whether the responder cameras can be seen by the users defined under 'first_responders'
 responder_cameras                     | array[string]        | Array of camera ESNs that are shared to first responders
 inactive_session_timeout              | int                  | Maximum time period in seconds without activity before web session expires
 login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked
 is_rtsp_cameras_enabled               | int                  | Indicates whether the account can have cameras attached over RTSP (instead of ONVIF) (1) or not (0)
 brand_support_phone                   | string               | Branded support phone number
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to
-customer_id                           | string               | Arbitrary id assigned to a sub-account by a master account
+customer_id                           | string               | Arbitrary ID assigned to a sub-account by a master account
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)
 map_lines                             | string               | This is used by the front end to overlay lines over a map of the cameras for the account
 contact_utc_offset                    | int                  | This field is no longer being used **(DEPRECATED)**
@@ -395,7 +395,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| Account not found with the supplied id
+404	| Account not found with the supplied ID
 200	| Request succeeded
 
 <!--===================================================================-->
@@ -416,7 +416,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:"
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-**id**    | string    | Account id
+**id**    | string    | Account ID
 
 ### Error Status Codes
 
@@ -425,14 +425,14 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| Account not found with the supplied id
+404	| Account not found with the supplied ID
 200	| Delete succeeded
 
 <!--===================================================================-->
 ## Get List of Accounts
 <!--===================================================================-->
 
-Returns an array of arrays with each sub-array representing an account available to the user
+Returns an array of arrays with each sub-array representing an Account available to the user
 
 > Request
 
@@ -494,7 +494,7 @@ Array Index | Attribute              | Data Type | Description
 14          | is_account_active      | int       | Indicates the account is active (1) or not (0)
 15          | last_login             | string    | EEN timestamp of the last login by this account
 16          | average_retention_days | int       | The average number of retention days for the account
-17          | customer_id            | string    | The customer id assigned to this account
+17          | customer_id            | string    | The customer ID assigned to this account
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 

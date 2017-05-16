@@ -24,7 +24,7 @@ curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[AUTH_
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**          | string       | Camera id   | true
+**id**          | string       | Camera ID   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
 end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
 group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
@@ -150,7 +150,7 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[AUTH_
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**          | string       | Bridge id   | true
+**id**          | string       | Bridge ID   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
 end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
 group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute

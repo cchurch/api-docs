@@ -26,7 +26,7 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 Poll is a stateful request for updates any time a matching event occurs within the service. The initial Poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
 
-Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
+Each object consists of an ID element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
 ### Response Resource Types
 
@@ -132,15 +132,15 @@ EMES      | Motion start event                                                 |
 EMEU      | Motion update event                                              | cameraid, videoid, eventid
 EMEE      | Motion end event                                                   | cameraid, eventid
 ESES      | Stream start event                                                 | cameraid, videoid, eventid
-EAES      | ???                                                              | cameraid, videoid, eventid
-EPES      | ???                                                              | cameraid, videoid, eventid
-ENES      | ???                                                              | cameraid, videoid, eventid, ns
-ENEU      | ???                                                              | cameraid, videoid, eventid, ns
+EAES      | <p hidden>???</p>                                                | cameraid, videoid, eventid
+EPES      | <p hidden>???</p>                                                | cameraid, videoid, eventid
+ENES      | <p hidden>???</p>                                                | cameraid, videoid, eventid, ns
+ENEU      | <p hidden>???</p>                                                | cameraid, videoid, eventid, ns
 EVVS      | Video swap event                                                   | cameraid, videoid, eventid
 ESEE      | Stream stop event                                                  | cameraid, eventid
-EAEE      | ???                                                              | cameraid, eventid
-EPEE      | ???                                                              | cameraid, eventid
-ENEE      | ???                                                              | cameraid, eventid, ns
+EAEE      | <p hidden>???</p>                                                | cameraid, eventid
+EPEE      | <p hidden>???</p>                                                | cameraid, eventid
+ENEE      | <p hidden>???</p>                                                | cameraid, eventid, ns
 ECON      | Camera online event                                                | cameraid
 ECOF      | Camera offline event                                               | cameraid
 RCON      | Camera register online event                                     | cameraid, registerid
@@ -167,32 +167,32 @@ CECF      | Camera found event                                                 |
 CECL      | Camera lost event                                                | cameraid
 CSAT      | Camera stream attach event                                         | cameraid, stream_format, stream_type
 CSDT      | Camera stream detach event                                         | cameraid, stream_format, stream_type
-CSAU      | ???                                                              | cameraid, streamid, stream_format, stream_type
-CSDU      | ???                                                              | cameraid, streamid, stream_format, stream_type
+CSAU      | <p hidden>???</p>                                                | cameraid, streamid, stream_format, stream_type
+CSDU      | <p hidden>???</p>                                                | cameraid, streamid, stream_format, stream_type
 COFF      | Camera off event                                                   | cameraid
 CONN      | Camera on event                                                    | cameraid
 COBC      | Camera bounce event                                                | cameraid
 CSTS      | Camera settings event                                              | cameraid, sequence, settings
-CZTS      | ???                                                              | cameraid, sequence, settings
+CZTS      | <p hidden>???</p>                                                | cameraid, sequence, settings
 CSTC      | Camera settings change event                                       | cameraid, sequence, settings
-CZTC      | ???                                                              | cameraid, userid, flags, command, change
-CZDC      | ???                                                              | cameraid, userid, flags, command, change
+CZTC      | <p hidden>???</p>                                                | cameraid, userid, flags, command, change
+CZDC      | <p hidden>???</p>                                                | cameraid, userid, flags, command, change
 CPRG      | Camera purge event                                                 | cameraid, day, bytes
 CDLT      | Camera data lost event                                             | cameraid, day, bytes
 CBWS      | Camera bandwidth sample event                                      | cameraid, kbytesondisk, bytesstored, bytesshaped, bytesstreamed, bytesfreed, daysondisk
 BBWS      | Bridge bandwidth sample event                                      | cameraid, kbytessize, kbytesavail, bytesstored, bytesshaped, bytesstreamed, bytesfreed
-SBWS      | ???                                                              | cameraid, bw10, bw60, bw300, streamtype
-SBW0      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW1      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW2      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW3      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW4      | ???                                                              | cameraid, bw10, bw60, bw300
-BBTW      | ???                                                              | cameraid, ip, bytes_sent, bytes_rcvd, active_write_us, paused_write_us
+SBWS      | <p hidden>???</p>                                                | cameraid, bw10, bw60, bw300, streamtype
+SBW0      | <p hidden>???</p>                                                | cameraid, bw10, bw60, bw300
+SBW1      | <p hidden>???</p>                                                | cameraid, bw10, bw60, bw300
+SBW2      | <p hidden>???</p>                                                | cameraid, bw10, bw60, bw300
+SBW3      | <p hidden>???</p>                                                | cameraid, bw10, bw60, bw300
+SBW4      | <p hidden>???</p>                                                | cameraid, bw10, bw60, bw300
+BBTW      | <p hidden>???</p>                                                | cameraid, ip, bytes_sent, bytes_rcvd, active_write_us, paused_write_us
 BBOO      | Bridge boot event                                                | cameraid, booted
 MRBX      | Motion box event                                                   | cameraid
 MRSZ      | Motion size reports event                                          | cameraid, flags, motion
 ROMS      | Region of interest motion start event                              | cameraid, roiid, videoid, eventid
-ROMU      | ???                                                              | cameraid, roiid, videoid, eventid
+ROMU      | <p hidden>???</p>                                                | cameraid, roiid, videoid, eventid
 ROME      | Region of interest motion end event                                | cameraid, eventid
 ALMS      | Motion alert start event                                           | cameraid, eventid, alertid, alertmotionid
 ALME      | Motion alert end event                                             | cameraid, alertmotionid
@@ -200,134 +200,115 @@ ALRS      | Region of interest alert start event                               |
 ALRE      | Region of interest alert end event                                 | cameraid, alertroiid
 AEDA      | Device alert event                                                 | cameraid, status, deviceid, source_userid, source_accountid, values
 AEDN      | Device alert notification event                                    | cameraid, status, target_deviceid, triggerid, starttime, endtime, target_userid, json
-NOOP      | ???                                                              | cameraid
-CSST      | ???                                                              | cameraid, streamtype, total_expected, total_rcvd, delta_expected, delta_rcvd, interval
-CSSU      | ???                                                              | cameraid, streamtype, streamformat, total_expected, total_rcvd, delta_expected, delta_rcvd, interval, streamid
-CCCF      | ???                                                              | cameraid, errcode
-BUBW      | ???                                                              | cameraid, bytessent, millisecs
+NOOP      | <p hidden>???</p>                                                | cameraid
+CSST      | <p hidden>???</p>                                                | cameraid, streamtype, total_expected, total_rcvd, delta_expected, delta_rcvd, interval
+CSSU      | <p hidden>???</p>                                                | cameraid, streamtype, streamformat, total_expected, total_rcvd, delta_expected, delta_rcvd, interval, streamid
+CCCF      | <p hidden>???</p>                                                | cameraid, errcode
+BUBW      | <p hidden>???</p>                                                | cameraid, bytessent, millisecs
 ABRT      | Camera abort event                                               | cameraid, aborted
-AABT      | ???                                                              | cameraid, aborted
-NVPT      | ???                                                              | cameraid, ns, key_offset, op, mpack
+AABT      | <p hidden>???</p>                                                | cameraid, aborted
+NVPT      | <p hidden>???</p>                                                | cameraid, ns, key_offset, op, mpack
 ANNT      | Annotation event                                                 | cameraid, ns, flags, uuid, seq, op, mpack
-SCRN      | ???                                                              | cameraid, ns, uuid, mpack
-CCLC      | ???                                                              | cameraid, src_ip, dest_ip, src_port, dest_port, ctype
-CCLD      | ???                                                              | cameraid, src_ip, dest_ip, src_port, dest_port, ctype, reason, seconds
-SSTE      | ???                                                              | cameraid, stype, event, seconds
-ITFU      | ???                                                              | cameraid, ip, flags, valid, mpack
-PTZS      | ???                                                              | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
+SCRN      | <p hidden>???</p>                                                | cameraid, ns, uuid, mpack
+CCLC      | <p hidden>???</p>                                                | cameraid, src_ip, dest_ip, src_port, dest_port, ctype
+CCLD      | <p hidden>???</p>                                                | cameraid, src_ip, dest_ip, src_port, dest_port, ctype, reason, seconds
+SSTE      | <p hidden>???</p>                                                | cameraid, stype, event, seconds
+ITFU      | <p hidden>???</p>                                                | cameraid, ip, flags, valid, mpack
+PTZS      | <p hidden>???</p>                                                | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
 
 ### Event Parameters
 
 Parameter        | Description
 ---------        | -----------
-aborted          |
-active_write_us  |
-alertid          |
-alertmotionid    |
-alertroiid       |
-booted           |
-bw10             |
-bw60             |
-bw300            |
-bytes            |
-bytes_rcvd       |
-bytes_sent       |
-bytesfreed       |
-bytessent        |
-bytesshaped      |
-bytesstored      |
-bytesstreamed    |
-cameraid         |
-change           |
-command          |
-ctype            |
-day              |
-daysondisk       |
-delta_expected   |
-delta_rcvd       |
-dest_ip          |
-dest_port        |
-deviceid         |
-duration         |
-endtime          |
-errcode          |
-event            |
-eventid          |
-file_offset      |
-flags            |
-format           |
-frame_delay      |
-frame_size       |
-interval         |
-ip               |
-kbytesavail      |
-kbytesondisk     |
-kbytessize       |
-key_offset       |
-layoutid         |
-millisecs        |
-motion           |
-mpack            |
-new_accountid    |
-ns               |
-op               |
-pan_status       |
-paused_write_us  |
-previewid        |
-reason           |
-registerid       |
-resource_type    |
-roiid            |
-seconds          |
-seq              |
-sequence         |
-settings         |
-source_accountid |
-source_userid    |
-src_ip           |
-src_port         |
-starttime        |
-status           |
-stream_format    |
-stream_type      |
-streamformat     |
-streamid         |
-streamtype       |
-stype            |
-target_deviceid  |
-target_userid    |
-total_expected   |
-total_rcvd       |
-triggerid        |
-userid           |
-uuid             |
-valid            |
-values           |
-videoid          |
-videosize        |
-x                |
-y                |
-z                |
-zoom_status      |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+aborted          | <p hidden>???</p>
+active_write_us  | <p hidden>???</p>
+alertid          | <p hidden>???</p>
+alertmotionid    | <p hidden>???</p>
+alertroiid       | <p hidden>???</p>
+booted           | <p hidden>???</p>
+bw10             | <p hidden>???</p>
+bw60             | <p hidden>???</p>
+bw300            | <p hidden>???</p>
+bytes            | <p hidden>???</p>
+bytes_rcvd       | <p hidden>???</p>
+bytes_sent       | <p hidden>???</p>
+bytesfreed       | <p hidden>???</p>
+bytessent        | <p hidden>???</p>
+bytesshaped      | <p hidden>???</p>
+bytesstored      | <p hidden>???</p>
+bytesstreamed    | <p hidden>???</p>
+cameraid         | <p hidden>???</p>
+change           | <p hidden>???</p>
+command          | <p hidden>???</p>
+ctype            | <p hidden>???</p>
+day              | <p hidden>???</p>
+daysondisk       | <p hidden>???</p>
+delta_expected   | <p hidden>???</p>
+delta_rcvd       | <p hidden>???</p>
+dest_ip          | <p hidden>???</p>
+dest_port        | <p hidden>???</p>
+deviceid         | <p hidden>???</p>
+duration         | <p hidden>???</p>
+endtime          | <p hidden>???</p>
+errcode          | <p hidden>???</p>
+event            | <p hidden>???</p>
+eventid          | <p hidden>???</p>
+file_offset      | <p hidden>???</p>
+flags            | <p hidden>???</p>
+format           | <p hidden>???</p>
+frame_delay      | <p hidden>???</p>
+frame_size       | <p hidden>???</p>
+interval         | <p hidden>???</p>
+ip               | <p hidden>???</p>
+kbytesavail      | <p hidden>???</p>
+kbytesondisk     | <p hidden>???</p>
+kbytessize       | <p hidden>???</p>
+key_offset       | <p hidden>???</p>
+layoutid         | <p hidden>???</p>
+millisecs        | <p hidden>???</p>
+motion           | <p hidden>???</p>
+mpack            | <p hidden>???</p>
+new_accountid    | <p hidden>???</p>
+ns               | <p hidden>???</p>
+op               | <p hidden>???</p>
+pan_status       | <p hidden>???</p>
+paused_write_us  | <p hidden>???</p>
+previewid        | <p hidden>???</p>
+reason           | <p hidden>???</p>
+registerid       | <p hidden>???</p>
+resource_type    | <p hidden>???</p>
+roiid            | <p hidden>???</p>
+seconds          | <p hidden>???</p>
+seq              | <p hidden>???</p>
+sequence         | <p hidden>???</p>
+settings         | <p hidden>???</p>
+source_accountid | <p hidden>???</p>
+source_userid    | <p hidden>???</p>
+src_ip           | <p hidden>???</p>
+src_port         | <p hidden>???</p>
+starttime        | <p hidden>???</p>
+status           | <p hidden>???</p>
+stream_format    | <p hidden>???</p>
+stream_type      | <p hidden>???</p>
+streamformat     | <p hidden>???</p>
+streamid         | <p hidden>???</p>
+streamtype       | <p hidden>???</p>
+stype            | <p hidden>???</p>
+target_deviceid  | <p hidden>???</p>
+target_userid    | <p hidden>???</p>
+total_expected   | <p hidden>???</p>
+total_rcvd       | <p hidden>???</p>
+triggerid        | <p hidden>???</p>
+userid           | <p hidden>???</p>
+uuid             | <p hidden>???</p>
+valid            | <p hidden>???</p>
+values           | <p hidden>???</p>
+videoid          | <p hidden>???</p>
+videosize        | <p hidden>???</p>
+x                | <p hidden>???</p>
+y                | <p hidden>???</p>
+z                | <p hidden>???</p>
+zoom_status      | <p hidden>???</p>
 
 <!--===================================================================-->
 ## Initialize Poll
@@ -381,13 +362,13 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
 
 `POST https://login.eagleeyenetworks.com/poll`
 
-<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by id (camera, bridge or account ESN)</aside>
+<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by ID (camera, bridge or account ESN)</aside>
 
 Due to the progressing expansion of the event polling mechanic, the parameter 'cameras' has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the [\<object_id\>](#object-structure) (can contain multiple Json objects, even of different types)
+Parameter | Data Type | Description
+--------- | --------- | -----------
+cameras   | json      | Json attribute keyed with the [\<object_id\>](#object-structure) (can contain multiple Json objects, even of different types)
 
 ### Object Structure
 
@@ -427,10 +408,10 @@ event        | array[string] | Array of one or more string containing the event 
 
 ### HTTP Response (Json Attributes)
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the [\<object_id\>](#response-object-structure) (can contain multiple Json objects, even of different types)
-token       | string    | Token to be used for subsequent GET /poll requests
+Parameter | Data Type | Description
+--------- | --------- | -----------
+cameras   | json      | Json attribute keyed with the [\<object_id\>](#response-object-structure) (can contain multiple Json objects, even of different types)
+token     | string    | Token to be used for subsequent GET /poll requests
 
 ### Response Object Structure
 
@@ -530,9 +511,9 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
 
 ### HTTP Response (Json Attributes)
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the \<object_id\> (can contain multiple Json objects, even of different types)
+Parameter | Data Type | Description
+--------- | --------- | -----------
+cameras   | json      | Json attribute keyed with the \<object_id\> (can contain multiple Json objects, even of different types)
 
 ### Response Object Structure
 
@@ -636,7 +617,7 @@ The WebSocket protocol has two parts:
         <td style="text-align:center;">server</td>
         <td style="text-align:center;">API version</td>
         <td style="text-align:center;">resource</td>
-        <td style="text-align:center;">account id</td>
+        <td style="text-align:center;">account ID</td>
         <td style="text-align:center;">'Events' suffix</td>
     </tr>
 </table>

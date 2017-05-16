@@ -19,6 +19,7 @@ This service is used to retrieve and update Recording Information for Recordings
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
 
 
 
@@ -79,6 +80,7 @@ meta              | object    | Meta data. This is meant to be a generic object 
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
 
 
 

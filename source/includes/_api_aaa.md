@@ -10,7 +10,7 @@ This service enables the creation of new independent accounts and provides the m
 ## Create Account
 <!--===================================================================-->
 
-This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account id and activation token), which the user must click to activate the account. Account cannot be used until it is activated
+This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account ID and activation token), which the user must click to activate the account. Account cannot be used until it is activated
 
 > Request
 
@@ -22,10 +22,10 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/create_account --da
 
 `POST https://login.eagleeyenetworks.com/g/aaa/create_account`
 
-Parameter            | Data Type | Description | Required For
----------            | --------- | ----------- | ------------
-email                | string    | Email address | POST
-password             | string    | Password | POST
+Parameter            | Data Type | Description | Is Required
+---------            | --------- | ----------- | -----------
+**email**            | string    | Email address | true
+**password**         | string    | Password | true
 name                 | string    | Account name
 realm                | string    | Realm (defaults to current user's realm)
 first_name           | string    | User first name
@@ -58,10 +58,10 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/validate_account --
 
 `POST https://login.eagleeyenetworks.com/g/aaa/validate_account`
 
-Parameter | Data Type   | Description | Required For
---------- | ---------   | ----------- | ------------
-id        | string      | Account id  | POST
-token     | string      | Account validation token | POST
+Parameter | Data Type   | Description | Is Required
+--------- | ---------   | ----------- | -----------
+**id**    | string      | Account ID  | true
+**token** | string      | Account validation token | true
 
 > Json Response
 
@@ -109,9 +109,9 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/forgot_password --d
 
 `POST https://login.eagleeyenetworks.com/g/aaa/forgot_password`
 
-Parameter | Data Type | Description | Required For
---------- | --------- | ----------- | ------------
-email     | string    | Email address | POST
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**email** | string    | Email address | true
 
 ### Error Status Codes
 
@@ -142,9 +142,9 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_toke
 
 `POST https://login.eagleeyenetworks.com/g/aaa/check_pw_reset_token`
 
-Parameter | Data Type | Description | Required For
---------- | --------- | ----------- | ------------
-token     | string    | Password reset token provided in email | POST
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**token** | string    | Password reset token provided in email | true
 
 ### Error Status Codes
 
@@ -174,10 +174,10 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/reset_password --da
 
 `POST https://login.eagleeyenetworks.com/g/aaa/reset_password`
 
-Parameter                      | Data Type | Description | Required For
----------                      | --------- | ----------- | ------------
-token                          | string    | Password reset token provided in email | POST
-password                       | string    | New password | POST
+Parameter                      | Data Type | Description | Is Required
+---------                      | --------- | ----------- | -----------
+**token**                      | string    | Password reset token provided in email | true
+**password**                   | string    | New password | true
 accepted_terms_of_service_urls | string    | New terms of service acceptance url
 
 > Json Response
@@ -222,9 +222,9 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/resend_registration
 
 `POST https://login.eagleeyenetworks.com/g/aaa/resend_registration_email`
 
-Parameter | Data Type | Description | Required For
---------- | --------- | ----------- | ------------
-email     | string    | Email address of the account contact for a pending account | POST
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**email** | string    | Email address of the account contact for a pending account | true
 realm     | string    | Realm (defaults to current user's realm)
 
 ### Error Status Codes
@@ -255,9 +255,9 @@ curl --request POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verific
 
 `POST https://login.eagleeyenetworks.com/g/aaa/resend_user_verification_email`
 
-Parameter | Data Type | Description | Required For
---------- | --------- | ----------- | ------------
-email     | string    | Email address of the new user | POST
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**email** | string    | Email address of the new user | true
 realm     | string    | Realm (defaults to current user's realm)
 
 ### Error Status Codes
@@ -279,8 +279,8 @@ HTTP Status Code | Description
 
 This allows a user to change their password directly while authenticated and also allows super users to change the password of the users they manage:
 
-  - While changing the own password, the current password needs to be provided as well (user id should be omitted)
-  - While changing the password of one of the managed users, only the new password is required (aside from the managed user's id)
+  - While changing the own password, the current password needs to be provided as well (User ID should be omitted)
+  - While changing the password of one of the managed users, only the new password is required (aside from the managed user's ID)
 
 > Request
 
@@ -292,11 +292,11 @@ curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://log
 
 `POST https://login.eagleeyenetworks.com/g/aaa/change_password`
 
-Parameter        | Data Type | Description | Required For
----------        | --------- | ----------- | ------------
-id               | string    | Id of the user having their password changed. Optional. Defaults to the id of the authenticated user. If empty or equal to authenticated user, then 'current_password' becomes required
-password         | string    | New password | POST
-current_password | string    | Current password of the user. Optional. If 'id' argument is empty, or is equal to the authenticated user's id, then this is required
+Parameter        | Data Type | Description | Is Required
+---------        | --------- | ----------- | -----------
+**password**     | string    | New password | true
+id               | string    | ID of the user having their password changed. Optional. Defaults to the ID of the authenticated user. If empty or equal to authenticated user, then 'current_password' becomes required
+current_password | string    | Current password of the user. Optional. If 'id' argument is empty, or is equal to the authenticated user's ID, then this is required
 
 > Json Response
 
@@ -338,9 +338,9 @@ curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetwork
 
 `POST https://login.eagleeyenetworks.com/g/aaa/switch_account`
 
-Parameter  | Data Type | Description | Required For
----------  | --------- | ----------- | ------------
-account_id | string    | Id of the account to login to. Optional. Defaults to the account id that the user belongs to | POST
+Parameter  | Data Type | Description
+---------  | --------- | -----------
+account_id | string    | ID of the account to login to. Optional. Defaults to the account ID that the user belongs to
 
 ### Error Status Codes
 
@@ -365,7 +365,7 @@ This is done through the standard SAML (Security Assertion Markup Language) and 
 
 Once the identity provider's account has been registered for SSO, then the identity provider can validate their users and then make a single sign on request with the users email address and the return link.
 This 64 bit encrypted message will be extracted from the header to be decoded and verified using the saml public key.
-Then using the saml named id path, the user's email will be extracted and an auth_key will be provided for that user.
+Then using the saml named ID path, the user's email will be extracted and an auth_key will be provided for that user.
 
 > Request
 
