@@ -4,13 +4,13 @@
 ## Overview
 <!--===================================================================-->
 
-This service enables the creation of new independent accounts and provides the means to recover an account. If you are creating sub-accounts tied to your current account refer to [Account](#account)
+This service enables the creation of new independent accounts and provides the means to recover an account. If you are creating sub-accounts tied to your current account refer to the [Account](#account) section
 
 <!--===================================================================-->
-## Create Account
+<h2 id=create-aaa-account>Create Account</h2>
 <!--===================================================================-->
 
-This is used to create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account ID and activation token), which the user must click to activate the account. Account cannot be used until it is activated
+Create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account ID and activation token), which the user must click to activate the account (cannot be used until it is activated)
 
 > Request
 
@@ -46,7 +46,7 @@ HTTP Status Code | Description
 ## Validate Account
 <!--===================================================================-->
 
-This is used to verify the email address supplied when the account is created. When successful, the account is set to active and a user session is created. User will not be required to login again
+Verify the email address supplied when the account is created. When successful, the account is set to active and a user session is created. User will not be required to login again
 
 > Request
 
