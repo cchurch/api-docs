@@ -113,10 +113,10 @@ The User service allows managing Users to a degree outlined by the permission le
 }
 ```
 
-### User Attributes
+### User (Attributes)
 
-Parameter                            | Data Type            | Description                                                                           | Editable | Is Required
----------                            | ---------            | -----------                                                                           | -------- | -----------
+Parameter                            | Data Type            | Description                                                                           | Editable | Required
+---------                            | ---------            | -----------                                                                           | -------- | --------
 **id**                               | string               | Unique identifier of the user                                                         | false    | **<sub><form action="#update-user"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-user"><button>DELETE</button></form></sub>**
 **first_name**                       | string               | First name of the user                                                                | true     | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
 **last_name**                        | string               | Last name of the user                                                                 | true     | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
@@ -558,7 +558,7 @@ HTTP Status Code | Description
 ## Get List of Users
 <!--===================================================================-->
 
-Returns array of arrays with each sub-array representing a user available to the current user
+Returns array of arrays with each sub-array representing a User available to the current User
 
 > Request
 

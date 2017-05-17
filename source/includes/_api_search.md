@@ -17,7 +17,7 @@ This service enables the Search across various types of data
 ```json
 ```
 
-### Search Attributes
+### Search (Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------

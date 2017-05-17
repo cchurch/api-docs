@@ -15,7 +15,7 @@ This service is used to retrieve and update Recording Information for Recordings
 ```json
 ```
 
-### Recording Attributes
+### Recording (Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------

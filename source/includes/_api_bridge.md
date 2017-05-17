@@ -167,25 +167,25 @@ The Bridge is a product of Eagle Eye that is deployed at the customer location a
   }
 ```
 
-### Device Attributes
+### Bridge (Attributes)
 
-Parameter                     | Data Type     | Description
----------                     | ---------     | -----------
-id                            | string        | Unique identifier automatically generated and assigned while adding a device
-guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
-name                          | string        | User-defined device name
-timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’
-utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field
-tags                          | array[string] | Array of strings each representing a tag name
-permissions                   | string        | String of characters each defining a permission level of the current user
-bridges                       |               | (**Applies only to Cameras**)
-[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)
-[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404
-camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)
-camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404
-camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)
-camera_settings               | string        | This is for backwards compatibility **(DEPRECATED)**
-camera_settings_status_code   | int           | This is for backwards compatibility **(DEPRECATED)**
+Parameter                     | Data Type     | Description                                                                                         | Editable | Required
+---------                     | ---------     | -----------                                                                                         | -------- | --------
+**id**                        | string        | Unique identifier automatically generated and assigned while adding a device                        | false    | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
+**name**                      | string        | Name of the bridge                                                                                  | true     | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
+guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                             | false    |
+timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’                                                                               | true     |
+utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | false    |
+tags                          | array[string] | Array of strings each representing a tag name                                                       | true     |
+permissions                   | string        | String of characters each defining a permission level of the current user                           | false    |
+[bridges](#camera-bridges)    | json          | (**Applies only to Cameras**)                                                                       | false    |
+[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)                                                      | true     |
+[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                            | false    |
+camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)       | false    |
+camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                             | true     |
+camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)           | false    |
+camera_settings               | string        | This is for backwards compatibility **(DEPRECATED)**                                                | false    |
+camera_settings_status_code   | int           | This is for backwards compatibility **(DEPRECATED)**                                                | false    |
 
 ### Bridge - settings
 
@@ -197,8 +197,8 @@ local_display_layout_ids      | array[string] | An array of available layouts on
 bridge                        | null          | (**Applies only to Cameras**)
 site_name                     | string        | User-defined bridge location name
 floor                         | int           | The floor of the building given that it is a multi-storey
-retention_days                | int           | <p hidden>???</p>
-local_retention_days          | int           | <p hidden>???</p>
+retention_days                | int           | Total amount of days the bridge should store data. Data exceeding this threshold will gradually be deleted
+local_retention_days          | int           | Total amount of days the bridge should store data locally. Normally data is not being stored and the value is set to '-1', meaning the bridge should directly upload any and all data during the specified times. Data exceeding this threshold will gradually be deleted
 longitude                     | float         | Longitude of the bridge location
 latitude                      | float         | Latitude of the bridge location
 street_address                | string        | Street address of the bridge location
@@ -219,10 +219,10 @@ camera_abs_newest             | string    | <p hidden>???</p>
 camera_newest                 | string    | <p hidden>???</p>
 camera_abs_oldest             | string    | <p hidden>???</p>
 camera_oldest                 | string    | <p hidden>???</p>
-uuid                          | string    | Identical to 'guid' from the [device attributes](#bridge-model) section
+uuid                          | string    | Identical to 'guid' from the [bridge attributes](#bridge-model) section
 ipaddr                        | string    | IP addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk (\*)
-esn                           | string    | Identical to 'id' from the [device attributes](#bridge-model) section
-class                         | string    | Determines the type of a device ("bridge" or "camera")
+esn                           | string    | Identical to 'id' from the [bridge attributes](#bridge-model) section
+class                         | string    | Determines the type of a device ('bridge' or 'camera')
 service                       | string    | <p hidden>???</p>
 [status](#status-bitmask)     | string    | The device status bitmask
 camera_state_version          | int       | <p hidden>???</p>
@@ -241,7 +241,7 @@ camera_property_analog        | boolean   | <p hidden>???</p>
 camera_retention_interval     | int       | <p hidden>???</p>
 camera_valid_ts               | string    | <p hidden>???</p>
 
-<!--TODO: Add the full bridge model device attributes table-->
+<!--TODO: Add the full bridge model bridge attributes table-->
 
 <!--===================================================================-->
 ## Get Bridge
@@ -407,7 +407,7 @@ HTTP Status Code | Description
 ## Get List of Bridges
 <!--===================================================================-->
 
-Returns array of arrays with each sub-array representing a device available to the user
+Returns array of arrays with each sub-array representing a Bridge available to the user
 
 > Request
 
