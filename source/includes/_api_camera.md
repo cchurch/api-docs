@@ -15,7 +15,7 @@ The camera setting system is based on an inheritance model. User settings are �
 Under the covers this works as follows:
 
   - There is a default setting, range, and value for everything built into the code, guaranteeing there are always settings for any feature supported by the software. These values are defined when the feature is implemented in software
-  - There is an optional "global" setting file that can/will be distributed during patches/updates that can override and extend default settings, including changing valid ranges etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules etc. which do not imply code changes
+  - There is an optional "global" setting file that can/will be distributed during patches/updates that can override and extend default settings, including changing valid ranges, etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules, etc. which do not imply code changes
   - There is an optional per make/model/version file, part of the make/model/version driver deployment, that can add and adjust settings for anything above. This is used to optimize things like sensitivity or codec parameters while building the driver for the specific device, and is released a camera driver is updated. This is also where camera specific features (audio availability) is announced
   - The first three get merged to produce the base settings for the the camera, which defines the value, min, and max for every supported feature
   - User settings (things the user has consciously "taken control of") are dynamically overlay-ed on the above settings inheritance to produce the active settings on the camera
@@ -966,22 +966,22 @@ ROME
 
 ### Camera (Attributes)
 
-Parameter                     | Data Type     | Description                                                                                        | Editable | Required
----------                     | ---------     | -----------                                                                                        | -------- | --------
-**id**                        | string        | Unique identifier for the device (automatically generated and assigned while adding the camera to a bridge)                                                                                                                                            | false    | **<sub><form action="#get-camera"><button>GET</button></form></sub>** <br>**<sub><form action="#update-camera"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-camera"><button>DELETE</button></form></sub>**
-**name**                      | string        | Device name                                                                                        | true     | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
-**[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions etc.)                                   | true     | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
-camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404)               | false    |
-timezone                      | string        | Indicates the timezone of the camera. Defaults to the cameras’s bridge timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’                                                                              | true     |
-utcOffset                     | int           | Signed UTC offset in seconds of the timezone in which this device is installed                     | false    |
-guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | false    |
-permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share    | false    |
-tags                          | array[string] | Array of strings each representing a tag name                                                      | true     |
-[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>'ATTD' - the camera is attached to a bridge <br>'IGND' - the camera is unattached and is available to be attached                                                                     | false    |
-camera_parameters             | json          | Json object of camera parameters. If camera parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                            | true     |
-camera_parameters_status_code | int           | Indicates whether it was possible to retrieve the device parameters (200) or not (404)             | false    |
-[camera_info](#camera-camera_info) | json          | Json object of basic information related to a camera. If camera information cannot be retrieved for whatever reason (example: communication with camera has been lost), then this will be empty, and camera_info_status_code will be 404                        | false    |
-camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)      | false    |
+Parameter                     | Data Type     | Description                                                                                        | Editable    | Required
+---------                     | ---------     | -----------                                                                                        |:-----------:| --------
+**id**                        | string        | Unique identifier for the device (automatically generated and assigned while adding the camera to a bridge)                                                                                                                                            | **&cross;** | **<sub><form action="#get-camera"><button>GET</button></form></sub>** <br>**<sub><form action="#update-camera"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-camera"><button>DELETE</button></form></sub>**
+**name**                      | string        | Device name                                                                                        | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+**[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.)                                  | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404)               | **&cross;** |
+timezone                      | string        | Indicates the timezone of the camera. Defaults to the cameras’s bridge timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’                                                                              | **&check;** |
+utcOffset                     | int           | Signed UTC offset in seconds of the timezone in which this device is installed                     | **&cross;** |
+guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
+permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share                                                                                                                                              | **&cross;** |
+tags                          | array[string] | Array of strings each representing a tag name                                                      | **&check;** |
+[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>'ATTD' - the camera is attached to a bridge <br>'IGND' - the camera is unattached and is available to be attached                                                                       | **&cross;** |
+camera_parameters             | json          | Json object of camera parameters. If camera parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                            | **&check;** |
+camera_parameters_status_code | int           | Indicates whether it was possible to retrieve the device parameters (200) or not (404)             | **&cross;** |
+[camera_info](#camera-camera_info) | json          | Json object of basic information related to a camera. If camera information cannot be retrieved for whatever reason (example: communication with camera has been lost), then this will be empty, and camera_info_status_code will be 404                               | **&cross;** |
+camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)      | **&cross;** |
 
 <aside class="notice">All cameras in a group must have the ‘S’ permission or the group cannot be shared</aside>
 
@@ -989,14 +989,14 @@ camera_info_status_code       | int           | Indicates whether it was possibl
 
 Parameter             | Data Type | Description | Required
 ---------             | --------- | ----------- | --------
-**bridge**            | string    | Device ID of bridge the camera is currently attached to (or ID of the bridge to attach camera to) (**Applies only to Cameras**) | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+**bridge**            | string    | Device ID of bridge the camera is currently attached to (or ID of the bridge to attach camera to) <small>**(APPLIES ONLY TO CAMERAS)**</small> | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
 **guid**              | string    | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
-username              | string    | Username to login to camera (**Applies only to Cameras**)
-password              | string    | Password to login to camera (**Applies only to Cameras**)
-[roi_names](#camera-settings-roi_names) | json      | Json object of ROI names keyed by ROI ID (**Applies only to Cameras**)
-[alert_notifications](#camera-settings-alert_notifications) | json      | Json object of user IDs keyed by ROI ID (**Applies only to Cameras**)
-[alert_modes](#camera-settings-alert_modes) | json      | Json object of alert modes keyed by ROI ID (**Applies only to Cameras**)
-[alert_levels](#camera-settings-alert_levels) | json      | Json object of alert levels keyed by ROI ID (**Applies only to Cameras**)
+username              | string    | Username to login to camera <small>**(APPLIES ONLY TO CAMERAS)**</small>
+password              | string    | Password to login to camera <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[roi_names](#camera-settings-roi_names) | json      | Json object of ROI names keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[alert_notifications](#camera-settings-alert_notifications) | json      | Json object of user IDs keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[alert_modes](#camera-settings-alert_modes) | json      | Json object of alert modes keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[alert_levels](#camera-settings-alert_levels) | json      | Json object of alert levels keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
 notes                 | string    | Notes
 latitude              | float     | Latitude of the camera's location
 longitude             | float     | Longitude of the camera's location
@@ -1124,7 +1124,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H
 Parameter | Data Type     | Description | Is Required
 --------- | ---------     | ----------- | -----------
 **name**  | string        | Camera name | true
-**[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions etc.) | true
+**[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.) | true
 timezone  | string        | If unspecified, this will default to the camera’s bridge timezone
 tags      | array[string] | Array of strings each representing a tag name
 
@@ -1177,7 +1177,7 @@ Parameter                | Data Type     | Description | Is Required
 name                     | string        | Camera name
 timezone                 | strings       | If unspecified, this will default to the camera’s bridge timezone
 tags                     | array[string] | Array of strings each representing a tag name
-[settings](#camera-settings) | json          | Json object of basic settings (location, motion regions etc.)
+[settings](#camera-settings) | json          | Json object of basic settings (location, motion regions, etc.)
 camera_parameters_add    | json          | Json object of camera parameters/settings to add/update
 camera_parameters_delete | json          | Json object of camera parameters/settings to delete
 

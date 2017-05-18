@@ -169,23 +169,23 @@ The Bridge is a product of Eagle Eye that is deployed at the customer location a
 
 ### Bridge (Attributes)
 
-Parameter                     | Data Type     | Description                                                                                         | Editable | Required
----------                     | ---------     | -----------                                                                                         | -------- | --------
-**id**                        | string        | Unique identifier automatically generated and assigned while adding a device                        | false    | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
-**name**                      | string        | Name of the bridge                                                                                  | true     | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
-guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                             | false    |
-timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’                                                                               | true     |
-utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | false    |
-tags                          | array[string] | Array of strings each representing a tag name                                                       | true     |
-permissions                   | string        | String of characters each defining a permission level of the current user                           | false    |
-[bridges](#camera-bridges)    | json          | (**Applies only to Cameras**)                                                                       | false    |
-[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)                                                      | true     |
-[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                            | false    |
-camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)       | false    |
-camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                             | true     |
-camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)           | false    |
-camera_settings               | string        | This is for backwards compatibility **(DEPRECATED)**                                                | false    |
-camera_settings_status_code   | int           | This is for backwards compatibility **(DEPRECATED)**                                                | false    |
+Parameter                     | Data Type     | Description                                                                                         | Editable    | Required
+---------                     | ---------     | -----------                                                                                         |:-----------:| --------
+**id**                        | string        | Unique identifier automatically generated and assigned while adding a device                        | **&cross;** | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
+**name**                      | string        | Name of the bridge                                                                                  | **&check;** | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
+guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                             | **&cross;** |
+timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’                                                                               | **&check;** |
+utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | **&cross;** |
+tags                          | array[string] | Array of strings each representing a tag name                                                       | **&check;** |
+permissions                   | string        | String of characters each defining a permission level of the current user                           | **&cross;** |
+[bridges](#camera-bridges)    | json          | <small>**(APPLIES ONLY TO CAMERAS)**</small>                                                        | **&cross;** |
+[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)                                                      | **&check;** |
+[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                            | **&cross;** |
+camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)       | **&cross;** |
+camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                             | **&check;** |
+camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)           | **&cross;** |
+camera_settings               | string        | This is for backwards compatibility <small>**(DEPRECATED)**</small>                                 | **&cross;** |
+camera_settings_status_code   | int           | This is for backwards compatibility <small>**(DEPRECATED)**</small>                                 | **&cross;** |
 
 ### Bridge - settings
 
@@ -194,7 +194,7 @@ Parameter                     | Data Type     | Description
 analog_inputs_ignored         | array[string] | An array of numbers of analog inputs which the user wants to ignore
 event_data_start_timestamp    | string        | <p hidden>???</p>
 local_display_layout_ids      | array[string] | An array of available layouts on a local display
-bridge                        | null          | (**Applies only to Cameras**)
+bridge                        | null          | <small>**(APPLIES ONLY TO CAMERAS)**</small>
 site_name                     | string        | User-defined bridge location name
 floor                         | int           | The floor of the building given that it is a multi-storey
 retention_days                | int           | Total amount of days the bridge should store data. Data exceeding this threshold will gradually be deleted
@@ -577,11 +577,11 @@ Array Index | Attribute           | Data Type            | Description
 12          | timezone_utc_offset | int                  | The signed integer offset in seconds of a timezone from UTC
 13          | is_unsupported      | int                  | Indicates whether the device is NOT supported (1) or is supported (0)
 14          | ip_address          | string               | IP address assigned to the device
-15          | is_shared           | int                  | Indicates whether the device is shared (1) or not (0) (**Applies only to Cameras**)
+15          | is_shared           | int                  | Indicates whether the device is shared (1) or not (0) <small>**(APPLIES ONLY TO CAMERAS)**</small>
 16          | owner_account_name  | string               | Name of the account that owns the device
-17          | is_upnp             | boolean              | Indicates whether the device is a UPNP device (1) or not (0) (**Applies only to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP**)
-18          | video_input         | string               | Indicates the video input channel of the camera (**Applies to analog Cameras**)
-19          | video_status        | string               | Indicates the video status of the camera: (**Applies to analog Cameras**) <br>'0x00000000' - signal ok <br>'0x00000102' - no signal
+17          | is_upnp             | boolean              | Indicates whether the device is a UPNP device (1) or not (0) <small>**(APPLIES ONLY TO CAMERAS THAT HAVEN’T YET BEEN ATTACHED TO THE ACCOUNT, IN WHICH THEY COULD HAVE BEEN DETECTED VIA ONVIF OR UPNP)**</small>
+18          | video_input         | string               | Indicates the video input channel of the camera <small>**(APPLIES TO ANALOG CAMERAS)**</small>
+19          | video_status        | string               | Indicates the video status of the camera: <small>**(APPLIES TO ANALOG CAMERAS)**</small> <br>'0x00000000' - signal ok <br>'0x00000102' - no signal
 20          | location            | array                | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(int/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
 21          | parent_camera_id    | string               | Parent camera ID
 22          | child_camera_view   | string               | Child camera view

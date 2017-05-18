@@ -16,7 +16,9 @@ Since the API is based on REST principles, it’s very easy to write and test ap
 ## Get an API Key
 <!--===================================================================-->
 
-[Create Developer Account](https://login.eagleeyenetworks.com/api_signup.html)
+### Create a Developer Account
+
+<aside><form action="https://login.eagleeyenetworks.com/api_signup.html"><button>Create Developer Account</button></form></aside>
 
 To get started with the Eagle Eye Video API you will need an API Key. This is used to identify you and your application. It also makes everything secure. To get an API Key you will need an account (so that you have some place to do some testing). You can either use your existing account or create a Developer Account. You can create an API Key in your existing account under the Account Settings
 
@@ -26,7 +28,9 @@ You may also want to purchase a development hardware kit from us (so you can con
 
 The API Key should be located in the header under the "Authorization" key with a colon appended to it
 
-**Note user password authentication is still required**. Please see the section on [Single Sign On](#single-sign-on) for alternatives to password authentication
+<aside class="notice">User password authentication is still required</aside>
+
+Please see the section on [Single Sign On](#single-sign-on) for alternatives to password authentication
 
 > Request
 

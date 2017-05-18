@@ -44,10 +44,10 @@ video                     | [startts, endts] | List of start and end timestamps 
 
 HEX Value | Status
 --------- | ------
-0x000001  | Camera online **(DEPRECATED)**
-0x000002  | Stream attached (camera communicating with bridge) **(DEPRECATED)**
-0x000004  | Camera on (user setting) **(DEPRECATED)**
-0x000008  | Camera recording **(DEPRECATED)**
+0x000001  | Camera online <small>**(DEPRECATED)**</small>
+0x000002  | Stream attached (camera communicating with bridge) <small>**(DEPRECATED)**</small>
+0x000004  | Camera on (user setting) <small>**(DEPRECATED)**</small>
+0x000008  | Camera recording <small>**(DEPRECATED)**</small>
 0x000010  | Camera sending previews
 0x000020  | Camera located (bridge has found the camera)
 0x000040  | Camera not supported
