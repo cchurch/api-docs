@@ -282,7 +282,7 @@ is_admin_required  | boolean   | Whether or not administrators have to accept
 is_user_required   | boolean   | Whether or not users have to accept
 timestamp          | string    | Date of the term of service
 url                | string    | URL of the file containing the text for the term of service
-status             | string    | **(DEPRECATED)**
+status             | string    | This field is no longer being used <small>**(DEPRECATED)**</small>
 
 ### Error Status Codes
 
