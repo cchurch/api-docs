@@ -4,55 +4,55 @@
 ## Overview
 <!--===================================================================-->
 
-The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. Get method is available to any user with Camera ‘R’ (read) permission. Methods Post, Delete are available to account superusers and users with Camera ‘W’ (write) permissions for the indicated camera. Put method is only available to account superusers
+The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. Get method is available to any user with Camera `'R'` (read) permission. Methods Post, Delete are available to account superusers and users with Camera `'W'` (write) permissions for the indicated camera. Put method is only available to account superusers
 
 When adding a new Camera, the name and settings parameters are required. The settings parameter should contain the ID of the bridge and the GUID of the Camera
 
 ### Camera Settings Overview
 
-The camera setting system is based on an inheritance model. User settings are “overlaid” on top of default settings for a device. By removing the user settings, the camera setting will automatically go back to the default value provided and maintained by Eagle Eye for the camera
+The camera setting system is based on an inheritance model. User settings are *overlaid* on top of default settings for a device. By removing the user settings, the camera setting will automatically go back to the default value provided and maintained by Eagle Eye for the camera
 
 Under the covers this works as follows:
 
   - There is a default setting, range, and value for everything built into the code, guaranteeing there are always settings for any feature supported by the software. These values are defined when the feature is implemented in software
-  - There is an optional "global" setting file that can/will be distributed during patches/updates that can override and extend default settings, including changing valid ranges, etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules, etc. which do not imply code changes
+  - There is an optional *global* setting file that can/will be distributed during patches/updates that can override and extend default settings including changing valid ranges, etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules, etc. which do not imply code changes
   - There is an optional per make/model/version file, part of the make/model/version driver deployment, that can add and adjust settings for anything above. This is used to optimize things like sensitivity or codec parameters while building the driver for the specific device, and is released a camera driver is updated. This is also where camera specific features (audio availability) is announced
   - The first three get merged to produce the base settings for the the camera, which defines the value, min, and max for every supported feature
-  - User settings (things the user has consciously "taken control of") are dynamically overlay-ed on the above settings inheritance to produce the active settings on the camera
-  - Any scheduled or triggered changes are then overlaid on top create the running settings (so upload bandwidth can be changed in a schedule to something different from the users settings, which is also different from the system default, and when the schedule is “removed” the bandwidth will go back to the user value
+  - User settings (things the user has consciously *taken control of*) are dynamically overlaid on the above settings inheritance to produce the active settings on the camera
+  - Any scheduled or triggered changes are then overlaid on top create the running settings (so upload bandwidth can be changed in a schedule to something different from the users settings, which is also different from the system default and when the schedule is *removed* the bandwidth will go back to the user value
 
-The implication of this is that if a user has not "pinned" a setting by changing/managing it, it will track any system or make/model/version release updates. That is, EEN can optimize operating parameters and they will automatically propagate unless the user has changed/pinned them. Further, the user should be "aware" of this, which works well with an open/closed control metaphor or a check box - an y setting control that is open/checked is "manually" set by the user, whereas closed controls will track EEN system wide recommendations. Finally, it is expected that the “user” settings will be managed to be only the value specifically modified by users, not all settings
+The implication of this is that if a user has not *pinned* a setting by changing/managing it, it will track any system or make/model/version release updates. That is, EEN can optimize operating parameters and they will automatically propagate unless the user has changed/pinned them. Further, the user should be *aware* of this, which works well with an open/closed control metaphor or a check box - an y setting control that is open/checked is *manually* set by the user, whereas closed controls will track EEN system wide recommendations. Finally, it is expected that the *user* settings will be managed to be only the value specifically modified by users, not all settings
 
-The set of all settings is potentially large, and far more than most users will ever want or need to manage. A separate table will be maintained which lists the “normal” settings - settings most users may want to interact with. This is standard across all devices, and contains a list of settings names that should be accessible to the user. This list should be “joined” with the list of all settings to result in a subset of controls to be displayed in basic mode. An advanced mode should make all settings available with primitive controls to set or delete a value
+The set of all settings is potentially large, and far more than most users will ever want or need to manage. A separate table will be maintained which lists the *normal* settings - settings most users may want to interact with. This is standard across all devices, and contains a list of settings names that should be accessible to the user. This list should be *joined* with the list of all settings to result in a subset of controls to be displayed in basic mode. An advanced mode should make all settings available with primitive controls to set or delete a value
 
-An implication of this model the “user settings” object is a generic object that is only lightly interpreted by the device. Settings that match a known names (i.e. are within the camera base or mmv settings) will be utilized, but all values will be stored and returned as part of the “user settings” field. This can be used to support user interface elements on a per camera basis with values the bridge/camera do not interpret
+An implication of this model the *user settings* object is a generic object that is only lightly interpreted by the device. Settings that match a known names (i.e. are within the camera base or mmv settings) will be utilized, but all values will be stored and returned as part of the *user settings* field. This can be used to support user interface elements on a per camera basis with values the bridge/camera do not interpret
 
-### Read Camera Settings (GET device "camera_settings" property)
+### Read Camera Settings (GET device 'camera_settings' property)
 
 When getting the camera settings, a Json string representing a Json object is returned containing:
 
-    - “active_settings”: A set of named entities encapsulating all settings understood for this device. Each entity contains an object of
-      - “v”: the current value of the setting, as influenced by filters on top of base settings
-      - “max”: the maximum allowed value
-      - “min”: the minimum allowed value
-      - “d”: the default value of the setting, also defining the expected type for the field
+    - `'active_settings'`: A set of named entities encapsulating all settings understood for this device. Each entity contains an object of
+      - `'v'`: the current value of the setting, as influenced by filters on top of base settings
+      - `'max'`: the maximum allowed value
+      - `'min'`: the minimum allowed value
+      - `'d'`: the default value of the setting, also defining the expected type for the field
       - Note: max and min are applicable for numeric fields. for set fields (e.g. preview_resolution) the min field will contain an array of the valid values
       - Note: additional descriptive members may be added to this object over time, implementation must ignore fields they do not understand
-    - “active_filters”: an array of filters currently being applied. List is in priority order, that is earlier entries will override later entries in the list. Each entry is a string with format of one of
-      - “schedule_<name>”: name replaced by schedule name
-      - “user_user”: constant, indicating where user settings are applied
-      - “trigger_<name>”: name replaced by the triggered name (i.e. “night”)
-    - “user_settings”: an object with the following fields:
-      - “settings”
+    - `'active_filters'`: an array of filters currently being applied. List is in priority order, that is earlier entries will override later entries in the list. Each entry is a string with format of one of
+      - `'schedule_<name>'`: name replaced by schedule name
+      - `'user_user'`: constant, indicating where user settings are applied
+      - `'trigger_<name>'`: name replaced by the triggered name (i.e. `'night'`)
+    - `'user_settings'`: an object with the following fields:
+      - `'settings'`
         - A subset of the base settings, indicating items the user has specifically set
-        - The user settings contain only the “v” of the setting and are bare objects (e.g. “contrast”: 0.1)
-        - Most setting are “atomic” entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
-        - A few settings (currently "alerts","rois","active_alerts","active_rois") are accumulation settings. A setting add transaction adds the new member to the set, and a settings delete removes a member
-      - “schedules”: A set of named members, each with the following members
-        - “start”: time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { “start”: { “hours”: 8, “wdays”: [1,2,3,4,5]}, “end”: {“hours”: 17, “wdays”: [1,2,3,4,5] }}
-        - “end”: time object, indicating when the schedule is removed
-        - “priority”: a floating point value defining the priority of the schedule. Lowest number wins. All user settings are applied with priority of 10.0, so schedule values with priority < 10 will override user settings, while value > 10 will not. It priority or two schedules is equal and their settings conflict,
-        - “settings”: a object with members mirroring the settings above, indicating the new value for settings to use while the schedule is active. For accumulation settings, values will be added into the set when activated and removed when deactivated
+        - The user settings contain only the `'v'` of the setting and are bare objects (e.g. `'contrast'`: 0.1)
+        - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
+        - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set, and a settings delete removes a member
+      - `'schedules'`: A set of named members, each with the following members
+        - `'start'`: time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { `'start'`: { `'hours'`: `8`, `'wdays'`: `[1,2,3,4,5]`}, `'end'`: {`'hours'`: `17`, `'wdays'`: `[1,2,3,4,5]` }}
+        - `'end'`: time object, indicating when the schedule is removed
+        - `'priority'`: a floating point value defining the priority of the schedule. Lowest number wins. All user settings are applied with priority of 10.0, so schedule values with priority < 10 will override user settings, while value > 10 will not. It priority or two schedules is equal and their settings conflict,
+        - `'settings'`: a object with members mirroring the settings above, indicating the new value for settings to use while the schedule is active. For accumulation settings, values will be added into the set when activated and removed when deactivated
       - time object is a object with the following named members, loosely patterned after crontab arguments. Each time the fields match the current time, the event is toggled
         - fields
             - seconds(0-59)(defaults to 0)
@@ -65,57 +65,57 @@ When getting the camera settings, a Json string representing a Json object is re
             - single integer
             - string “\*” indicating all
             - list of integers
-        - if both “days” fields are set, the action will be run on the union
+        - if both `'days'` fields are set, the action will be ran on the union
 
-### Update Camera Settings (POST device "camera_settings_add" argument)
+### Update Camera Settings (POST device 'camera_settings_add' argument)
 
-To update/set settings (i.e. override default setting value with a "user" setting), a Json string is sent representing a Json object containing:
+To update/set settings (i.e. override default setting value with a *user* setting), a Json string is sent representing a Json object containing:
 
-  - “settings”: an optional object with members to be overlaid over base settings value. Values are bare (that is simply replacements for the “v” field of base)
-  - “schedules”: an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value
+  - `'settings'`: an optional object with members to be overlaid over base settings value. Values are bare (that is simply replacements for the `'v'` field of base)
+  - `'schedules'`: an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value
 
-### Delete Camera Settings (POST device "camera_settings_delete" argument)
+### Delete Camera Settings (POST device 'camera_settings_delete' argument)
 
 To delete/unset settings (i.e. return to default setting value), a Json string is sent representing a Json object containing:
 
-  - “settings”: an optional object with members to be removed from user settings. Values ignored
-  - “schedules”: an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored
+  - `'settings'`: an optional object with members to be removed from user settings. Values ignored
+  - `'schedules'`: an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored
 
 ### Camera Settings Currently Supported
 
 Each camera make/model/version is different, thus not every setting is supported for some cameras, but here is list of core camera settings that are relevant to most applications:
 
-  - "active_rois": object indicating which rois are currently active (by "name"; see "rois" setting below)
-  - "audio_enable": boolean (true/false) indicating whether audio is enabled or not
-  - "camera_on": boolean integer (1/0) indicating whether camera is turned on/off respectively
-  - "motion_sensitivity": float between 0 and 1 indicating how sensitive the motion detection is
-  - "motion_size_ratio": float between 0 and 1 indicating the size of objects to detect for motion
-  - "motion_boxes_metric_active": boolean integer indicating whether motion boxes are enabled
-  - "preview_realtime_bandwidth": float indicating the max bandwidth of real-time preview image transmission
-  - "preview_transmit_mode": string indicating when preview images are transmitted to the cloud
-  - "preview_interval_ms": integer indicating how many milliseconds between preview images
-  - "preview_resolution": string indicating the resolution of the preview images. When displaying the options for this setting, you must use the data from "video_config.v.preview_quality_settings.<preview_resolution>" ("w" and "h") to show what this resolution string translates to for display purposes
-  - "preview_quality": string indicating the quality of the preview images
-  - "retention_days": integer indicating how many days worth of data should be retained in the cloud
-  - "rois": extensible object, containing multiple ROI objects keyed by a "name", with each ROI object supporting the following members:
-      - “verts”: [[x,y],...], polygon vertices in order. Coordinates will be scaled so 0-1.0 is full screen for x and y, with 0,0 being top left corner. Edges can’t cross or bad things will happen
-      - "motion_noise_filter": as for main screen. If < 0.001 will not be applied
-      - "motion_sensitivity": as for main screen. If < 0.001 will not be applied
-      - "motion_hold_interval": as for main screen. If < 0.001 will not be applied
-      - “priority”: float (bigger wins), control settings overlay. Defaults to 0.0
-      - “motion_threshold”: (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen
-      - "name": string used for the display name of the ROI in a GUI. Not to be confused with the "name" of the ROI as the key of this ROI object
-      - "ignore_motion": boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set motion_sensitivity to ".001" and motion_noise_filter to ".99"
-      - “roiid”: (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
-      - “hold_off_ms”: (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
-      - “hold_on_ms”: (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings
-  - "scene_type": string indicating the type of scene the camera is viewing
-  - "video_transmit_mode": string indicating when video is transmitted to the cloud
-  - "video_capture_mode": string indicating when video will being recorded
-  - "video_bandwidth_factor": integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from "video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps" to show what this setting translates to for display purposes
-  - "video_resolution": string indicating the resolution of the video. When displaying the options for this setting, you must use the data from "video_config.v.video_quality_settings.<video_resolution>" ("w" and "h") to show what this resolution string translates to
-  - "video_quality": string indicating the quality of the video
-  - "video_config": READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the "preview_resolution", "video_resolution", and "video_bandwidth_factor" settings/options
+  - `'active_rois'`: object indicating which rois are currently active (by \<roiname\>; see `'rois'` setting below)
+  - `'audio_enable'`: boolean (true/false) indicating whether audio is enabled or not
+  - `'camera_on'`: boolean integer (1/0) indicating whether camera is turned on/off respectively
+  - `'motion_sensitivity'`: float between 0 and 1 indicating how sensitive the motion detection is
+  - `'motion_size_ratio'`: float between 0 and 1 indicating the size of objects to detect for motion
+  - `'motion_boxes_metric_active'`: boolean integer indicating whether motion boxes are enabled
+  - `'preview_realtime_bandwidth'`: float indicating the max bandwidth of real-time preview image transmission
+  - `'preview_transmit_mode'`: string indicating when preview images are transmitted to the cloud
+  - `'preview_interval_ms'`: integer indicating how many milliseconds between preview images
+  - `'preview_resolution'`: string indicating the resolution of the preview images. When displaying the options for this setting, you must use the data from `'video_config.v.preview_quality_settings.<preview_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to for display purposes
+  - `'preview_quality'`: string indicating the quality of the preview images
+  - `'retention_days'`: integer indicating how many days worth of data should be retained in the cloud
+  - `'rois'`: extensible object, containing multiple ROI objects keyed by a \<roiname\>, with each ROI object supporting the following members:
+      - `'verts'`: [[`'x'`,`'y'`],`'...'`], polygon vertices in order. Coordinates will be scaled so `'0-1.0'` is full screen for `'x'` and `'y'`, with `'0,0'` being top left corner. Edges can’t cross or bad things will happen
+      - `'motion_noise_filter'`: as for main screen. If < 0.001 will not be applied
+      - `'motion_sensitivity'`: as for main screen. If < 0.001 will not be applied
+      - `'motion_hold_interval'`: as for main screen. If < 0.001 will not be applied
+      - `'priority'`: float (bigger wins), control settings overlay. Defaults to 0.0
+      - `'motion_threshold'`: (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen
+      - `'name'`: string used for the display name of the ROI in a GUI. Not to be confused with the \<roiname\> as the key of this ROI object
+      - `'ignore_motion'`: boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set motion_sensitivity to `'.001'` and motion_noise_filter to `'.99'`
+      - `'roiid'`: (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
+      - `'hold_off_ms'`: (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
+      - `'hold_on_ms'`: (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings
+  - `'scene_type'`: string indicating the type of scene the camera is viewing
+  - `'video_transmit_mode'`: string indicating when video is transmitted to the cloud
+  - `'video_capture_mode'`: string indicating when video will being recorded
+  - `'video_bandwidth_factor'`: integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps'` to show what this setting translates to for display purposes
+  - `'video_resolution'`: string indicating the resolution of the video. When displaying the options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to
+  - `'video_quality'`: string indicating the quality of the video
+  - `'video_config'`: READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'`, and `'video_bandwidth_factor'` settings/options
 
 ### Regions of Interest (ROIs)
 
@@ -128,9 +128,9 @@ ROIs can
   - characterize an object for later alert/event processing (dwell, transitions counting)
   - turn on certain detectors within a region
 
-ROIs within settings will be “rois”: { “roiname”: roi,... }. ROIs are enabled and disabled by “active_rois”: { “roiname”: true,...} to allow ROIs to easily turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments
+ROIs within settings will be `'rois'`: { `\<roiname\>`: { `'roiid'`: `1437974150`, `'name'`: `'Rusty Region'`, `'...'` }. ROIs are enabled and disabled by `'active_rois'`: { `\<roiname\>`: `true`, `...` } to allow ROIs to easily be turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments
 
-Like the alert logic, “rois” and “active_rois” are accumulation settings - adding an object adds it to the holding object instead of replacing the entire object like most settings. Similarly, deleting an object removes it from the parent object, but leave the parent in place. Both also automatically trigger updates to the active ESN data streams
+Like the alert logic, `'rois'` and `'active_rois'` are accumulation settings - adding an object adds it to the holding object instead of replacing the entire object like most settings. Similarly, deleting an object removes it from the parent object, but leave the parent in place. Both also automatically trigger updates to the active ESN data streams
 
 ROIs can produce events and force video recording on activity within them. These events are distinct from motion events (whole screen events). Each ROI event has a simple snapshot algorithm the grabs a snapshot immediately, as opposed to the optimized object tracking for motion events. Since ROIs are presumed to be smaller, this should result in good summary images
 
@@ -972,12 +972,12 @@ Parameter                     | Data Type     | Description                     
 **name**                      | string        | Device name                                                                                        | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
 **[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.)                                  | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
 camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404)               | **&cross;** |
-timezone                      | string        | Indicates the timezone of the camera. Defaults to the cameras’s bridge timezone. Example: ‘US/Alaska’, ‘US/Arizona’, ‘US/Central’, ‘US/Eastern’, ‘US/Hawaii’, ‘America/Anchorage’ or ‘UTC’                                                                              | **&check;** |
+timezone                      | string        | Indicates the timezone of the camera. Defaults to the cameras’s bridge timezone. Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                                    | **&check;** |
 utcOffset                     | int           | Signed UTC offset in seconds of the timezone in which this device is installed                     | **&cross;** |
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
-permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share                                                                                                                                              | **&cross;** |
+permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                                                              | **&cross;** |
 tags                          | array[string] | Array of strings each representing a tag name                                                      | **&check;** |
-[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>'ATTD' - the camera is attached to a bridge <br>'IGND' - the camera is unattached and is available to be attached                                                                       | **&cross;** |
+[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>`'ATTD'` - the camera is attached to a bridge <br>`'IGND'` - the camera is unattached and is available to be attached                                                                     | **&cross;** |
 camera_parameters             | json          | Json object of camera parameters. If camera parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                            | **&check;** |
 camera_parameters_status_code | int           | Indicates whether it was possible to retrieve the device parameters (200) or not (404)             | **&cross;** |
 [camera_info](#camera-camera_info) | json          | Json object of basic information related to a camera. If camera information cannot be retrieved for whatever reason (example: communication with camera has been lost), then this will be empty, and camera_info_status_code will be 404                               | **&cross;** |
@@ -1002,12 +1002,12 @@ latitude              | float     | Latitude of the camera's location
 longitude             | float     | Longitude of the camera's location
 street_address        | string    | Street address of the camera's location
 azimuth               | float     | Direction which the camera faces. Possible values: `0.0`-`360.0` (North=`0.0`)
-range                 | int       | Effective distance the camera can 'see' in feet
+range                 | int       | Effective distance the camera can *see* in feet
 floor                 | int       | The floor of the building given that it is a multi-storey building
 share_email           | string    | Comma-delimited list of emails to share this device with
-local_retention_days  | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"max": 10000,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"min": 1,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"d": 14,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"v": 14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
-cloud_retention_days  | json      | Json object of retention days in the cloud defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"max": 10000,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"min": 1,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"d": 14,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"v": 14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
-bridge_retention_days | json      | Json object of retention days on the bridge defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"max": 10000,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"min": 1,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"d": 14,` <br>&nbsp;&nbsp;&nbsp;&nbsp;`"v": 14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
+local_retention_days  | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
+cloud_retention_days  | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
+bridge_retention_days | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
 
 <aside class="success">The listed settings are most common examples because the model differs from device to device</aside>
 
@@ -1241,7 +1241,7 @@ HTTP Status Code | Description
 ## Get List of Cameras
 <!--===================================================================-->
 
-Returns an array of arrays with each sub-array representing a Camera available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached
+Returns an array of arrays with each sub-array representing a Camera available to the user. The `'service_status'` attribute is either to `'ATTD'` or `'IGND'`. If the service_status is `'ATTD'`, the camera is attached to a bridge. If the service_status is `'IGND'`, the camera is unattached from any bridge and is available to be attached
 
 > Request
 
@@ -1301,7 +1301,12 @@ s         | string    | Device Service Status
             null,
             null,
             null
-        ]
+        ],
+        null,
+        null,
+        0,
+        [],
+        0
     ],
     [
         "00004206",
@@ -1336,7 +1341,12 @@ s         | string    | Device Service Status
             null,
             null,
             null
-        ]
+        ],
+        null,
+        null,
+        0,
+        [],
+        0
     ],
     [...],
     [...],
@@ -1353,21 +1363,27 @@ Array Index | Attribute           | Data Type     | Description
 2           | name                | string        | Device name
 3           | type                | string, enum  | Device type <br><br>enum: camera, bridge
 4           | bridges             | array[array[string]]  | This is an array of string arrays, each array representing a bridge that can see the camera. The first element of the array is the bridge ESN. The second element is the service status
-5           | service_status      | string, enum  | Device service status: <br>'ATTD' = camera is attached to a bridge <br>'IGND' = camera is unattached from all bridges and is available to be attached to a bridge <br><br>enum: ATTD, IGND
-6           | permissions         | string        | String of one or more characters each defining a permission level <br><br>Permissions include: <br>'R' - user has access to view images and video for this camera <br>'W' - user can modify and delete this camera <br>'S' - user can share this camera in a group share
+5           | service_status      | string, enum  | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br><br>enum: ATTD, IGND
+6           | permissions         | string        | String of one or more characters each defining a permission level <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share
 7           | tags                | array[string] | Array of strings each representing a tag name
 8           | guid                | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
 9           | serial_number       | string        | Serial number of the device
 10          | [device_status](#status-bitmask) | int           | The device status bitmask
 11          | timezone            | string        | Indicates the timezone of the camera
-12          | timezone_utc_offset | int           | Timezone UTC offset as signed integer in seconds (example: '-25200' translates to -7 hours from UTC)
+12          | timezone_utc_offset | int           | Timezone UTC offset as signed integer in seconds (example: `-25200` translates to -7 hours from UTC)
 13          | is_unsupported      | int           | Indicates whether the camera is NOT supported (1) or is supported (0)
 14          | ip_address          | string        | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)
 15          | is_shared           | int           | Indicates whether the camera is shared (1) or not (0)
 16          | owner_account_name  | string        | Name of the account that owns the device. This only applies to shared cameras, since they will be owned by a different account
-17          | is_upnp             | boolean       | Indicates whether the camera is a UPNP device. Note that this property is different then all the other 'is_*' properties in the API, which normally are integers (0 or 1). Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP
+17          | is_upnp             | boolean       | Indicates whether the camera is a UPNP device. Note that this property is different then all the other `'is_*'` properties in the API, which normally are integers (0 or 1). Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP
 18          | video_input         | string        | For analog cameras only, this indicates the video input channel of the camera
 19          | video_status        | string        | For analog cameras only, this indicates the video status of the camera
+20          | location            | array         | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(int/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
+21          | parent_camera_id    | string        | Parent camera ID
+22          | child_camera_view   | string        | Child camera view
+23          | is_hidden           | int           | GUI control to not show device
+24          | ignored_inputs      | array[string] | Array of analog port numbers which should be ignored by the bridge
+25          | responder_camera    | int           | Indicates whether the camera is a first responder camera (1) or not (0)
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 

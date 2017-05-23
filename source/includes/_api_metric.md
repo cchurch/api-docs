@@ -26,10 +26,10 @@ Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
 **id**          | string       | Camera ID   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
-group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
+end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
+group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
 motion_interval | int          | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
-metrics         | string, enum | String delimited list used to filter which metrics gets returned. Setting this parameter to 'core,motion' will return data only for core and motion <br><br>enum: core, packets, motion
+metrics         | string, enum | String delimited list used to filter which metrics get returned. Setting this parameter to `'core,motion'` will return data only for core and motion <br><br>enum: core, packets, motion
 
 > Json Response
 
@@ -152,8 +152,8 @@ Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
 **id**          | string       | Bridge ID   | true
 start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to now
-group_by        | string, enum | Hour or Day, indicating how the results should be grouped <br><br>enum: day, hour, minute
+end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
+group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
 
 > Json Response
 
@@ -260,7 +260,7 @@ Index     | Data Type | Description
 Index     | Data Type | Description
 -----     | --------- | -----------
 0         | string    | EEN Timestamp: YYYYMMDDHHMMSS.NNN
-1         | float     | Bytes diff
+1         | float     | Bytes difference
 
 ### Error Status Codes
 

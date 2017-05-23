@@ -30,7 +30,7 @@ name                 | string    | Account name
 realm                | string    | Realm (defaults to current user's realm)
 first_name           | string    | User first name
 last_name            | string    | User last name
-timezone             | string    | Timezone name (defaults to 'US/Pacific')
+timezone             | string    | Timezone name (defaults to `'US/Pacific'`)
 is_api_access_needed | boolean   | Grant API access to this new account
 
 ### Error Status Codes
@@ -280,7 +280,7 @@ HTTP Status Code | Description
 This allows a user to change their password directly while authenticated and also allows super users to change the password of the users they manage:
 
   - While changing the own password, the current password needs to be provided as well (User ID should be omitted)
-  - While changing the password of one of the managed users, only the new password is required (aside from the managed user's ID)
+  - While changing the password of one of the managed users only the new password is required (aside from the managed user's ID)
 
 > Request
 
@@ -295,8 +295,8 @@ curl --cookie "auth_key=[AUTH_KEY]&api_key=[API_KEY]" --request POST https://log
 Parameter        | Data Type | Description | Is Required
 ---------        | --------- | ----------- | -----------
 **password**     | string    | New password | true
-id               | string    | ID of the user having their password changed. Optional. Defaults to the ID of the authenticated user. If empty or equal to authenticated user, then 'current_password' becomes required
-current_password | string    | Current password of the user. Optional. If 'id' argument is empty, or is equal to the authenticated user's ID, then this is required
+id               | string    | ID of the user having their password changed (Defaults to the ID of the authenticated user). If empty or equal to authenticated user, then `'current_password'` becomes required
+current_password | string    | Current password of the user. If `'id'` argument is empty or equal to the authenticated user's ID, then this is required
 
 > Json Response
 
@@ -318,15 +318,15 @@ HTTP Status Code | Description
 ---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
-404	| User with the 'id' provided cannot be found
-406	| The 'current_password' provided does not match the password of the authenticated user
+404	| User with the `'id'` provided cannot be found
+406	| The `'current_password'` provided does not match the password of the authenticated user
 200	| User password was changed successfully
 
 <!--===================================================================-->
 ## Switch Account
 <!--===================================================================-->
 
-Allows a user to 'log in' to another account which the they have access to (see 'account/list'). Most commonly this would be needed for a master account user accessing their sub-accounts. Only applicable to accounts from the [Account](#account) model
+Allows a user to 'log in' to another account which the they have access to (see [Get List of Accounts](#get-list-of-accounts)). Most commonly this would be needed for a master account user accessing their sub-accounts. Only applicable to accounts from the [Account](#account) model
 
 > Request
 
@@ -348,7 +348,7 @@ HTTP Status Code | Description
 ---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
-404	| Account with the 'account_id' provided cannot be found
+404	| Account with the `'account_id'` provided cannot be found
 200	| Account context switch successful
 
 <!--===================================================================-->
@@ -357,15 +357,15 @@ HTTP Status Code | Description
 
 SSO allows a reseller to maintain account management and act as an identity provider to have their system proxy the authorization requests to Eagle Eye Network servers after users have logged into the identity providers system
 
-This is done through the standard SAML (Security Assertion Markup Language) and as such the identity provider will setup their account with a **brand_saml_publickey_ret** and **brand_saml_namedid_path**.
+This is done through the standard SAML (Security Assertion Markup Language) and as such the identity provider will setup their account with a **brand_saml_publickey_ret** and **brand_saml_namedid_path**
 
   - The **brand_saml_publickey_cert** is a x509 certificate that contains a public key with which Eagle Eye Networks can validate that an SSO message is valid and verify that it has not been altered.  The format of this certificate is PEM (ascii encoded base 64 surrounded by lines containing **'-----BEGIN CERTIFICATE——‘** and **'——END CERTIFICATE——'**
 
-  - The **brand_saml_namedid_path** is the xml xpath to the node that contains the email address of the user being logged in.
+  - The **brand_saml_namedid_path** is the xml xpath to the node that contains the email address of the user being logged in
 
-Once the identity provider's account has been registered for SSO, then the identity provider can validate their users and then make a single sign on request with the users email address and the return link.
-This 64 bit encrypted message will be extracted from the header to be decoded and verified using the saml public key.
-Then using the saml named ID path, the user's email will be extracted and an auth_key will be provided for that user.
+Once the identity provider's account has been registered for SSO, then the identity provider can validate their users and then make a single sign on request with the users email address and the return link
+This 64 bit encrypted message will be extracted from the header to be decoded and verified using the saml public key
+Then using the saml named ID path, the user's email will be extracted and an auth_key will be provided for that user
 
 > Request
 
@@ -383,7 +383,7 @@ HTTP Status Code | Description
 ---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
-404	| Account with the 'account_id' provided cannot be found
+404	| Account with the `'account_id'` provided cannot be found
 200	| Account context switch successful
 
 <!--===================================================================-->
