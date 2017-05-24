@@ -24,7 +24,7 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 <aside class="success">This service will continually be extended</aside>
 
-Poll is a stateful request for updates any time a matching event occurs within the service. The initial Poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
+Poll is a stateful request for updates any time a matching event occurs within the service. The initial Poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre and thumbnail automatically register the API caller to their respective events. However, resource type `'event'` requires the API caller to tell the API what events to listen for
 
 Each object consists of an ID element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
@@ -364,7 +364,7 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
 
 <aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by ID (camera, bridge or account ESN)</aside>
 
-Due to the progressing expansion of the event polling mechanic, the parameter 'cameras' has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
+Due to the progressing expansion of the event polling mechanic, the parameter `'cameras'` has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
@@ -374,14 +374,14 @@ cameras   | json      | Json attribute keyed with the [\<object_id\>](#object-st
 
 Parameter     | Data Type | Description
 ---------     | --------- | -----------
-\<object_id\> | json      | Json attribute keyed with 'resource' and/or 'event'
+\<object_id\> | json      | Json attribute keyed with `'resource'` and/or `'event'`
 
 The Json object allows to narrow down the polling scope by specifying which type of entity to poll for. The types include:
 
 Parameter    | Data Type     | Description | Is Required
 ---------    | ---------     | ----------- | -----------
 **resource** | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
-event        | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
+event        | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains `'event'`, the array of events specified here will narrow down the scope of retrieved events)
 
 <!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
 
@@ -419,7 +419,7 @@ Parameter     | Data Type | Description
 ---------     | --------- | -----------
 \<object_id\> | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
-The amount of keys depends on the sent request inquiry (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
+The amount of keys depends on the sent request inquiry (if the request entailed `'pre'` and `'video'`, then the retrieved data will only cover `'pre'` and `'video'` information)
 
 If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
@@ -521,7 +521,7 @@ Parameter     | Data Type | Description
 ---------     | --------- | -----------
 \<object_id\> | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
-The amount of keys depends on the sent POST request (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
+The amount of keys depends on the sent POST request (if the request entailed `'pre'` and `'video'`, then the retrieved data will only cover `'pre'` and `'video'` information)
 
 If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
@@ -626,7 +626,7 @@ WebSocket URLs use the WS scheme or alternatively WSS for secure connections whi
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**A**     | string    | Used to replace the 'auth_key' cookie | false
+**A**     | string    | Used to replace the `'auth_key'` cookie | false
 
 ### Server Handshake Response
 
@@ -650,17 +650,17 @@ HTTP Status Code | Description
 
 ### Data Exchange
 
-The client communicates with the server after a successful handshake by sending an object as Json-formatted string. The 'message' send is being triggered by the client by calling the appropriate WebSocket 'send' function (the method depends on the client environment)
+The client communicates with the server after a successful handshake by sending an object as Json-formatted string. The *message* send is being triggered by the client by calling the appropriate WebSocket *send* function (the method depends on the client environment)
 
 The client has to specify via Json what kind of data it is going to be polling and from which devices (See [Initialize Poll](#initialize-poll), [Resource Type](#poll), [Event Objects](#event-objects))
 
-WebSocket is an event-driven API. When messages are received a message event is delivered to the the 'onmessage' function, where the message is being received and parsed
+WebSocket is an event-driven API. When messages are received a message event is delivered to the the *onmessage* function, where the message is being received and parsed
 
-The connection can be severed at any given time using the 'close' function
+The connection can be severed at any given time using the *close* function
 
 <aside class="warning">A successful handshake can be established even with an incorrect data set in the Json-formatted string</aside>
 
-WebSocket polling will additionally return 'message' response error codes for each individual encountered problem based on the [Errors](#errors) section
+WebSocket polling will additionally return *message* response error codes for each individual encountered problem based on the [Errors](#errors) section
 
 ### Message Error Status Codes
 

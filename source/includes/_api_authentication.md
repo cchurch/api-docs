@@ -19,13 +19,13 @@ Once the `'auth_key'` cookie is obtained from the Authorize call, there are 2 me
   3. `'A'` parameter in the request body (e.g. PUT)
   4. `'auth_key'` cookie
 
-All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met, and the last one listed is the one that will be returned if none of the preceding codes' conditions are met
+All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met and the last one listed is the one that will be returned if none of the preceding codes' conditions are met
 
 <!--===================================================================-->
 ## Step 1: Authenticate
 <!--===================================================================-->
 
-Login is a 2 step process when using Simple Authentication and a 3 step process using TFA
+Login is a two-step process when using Simple Authentication and a three-step process using TFA
 
 ***Simple scheme:***
 
@@ -119,7 +119,7 @@ HTTP Status Code | Description
 <!--===================================================================-->
 
 This step is only to be executed when TFA scheme is used for the user log in (i.e. if the Authenticate call returned `'two_factor_authentication_code'` key in response)
-Otherwise proceed to step 3: Authorize
+Otherwise proceed to Step 3: Authorize
 
 > Request (Simple Authentication)
 
@@ -162,13 +162,13 @@ HTTP Status Code | Description
 <!--===================================================================-->
 
 Authorize is the final step of the Login process, by using the token from the first step (Authenticate) and - if TFA scheme is used - the TFA code delivered to the user by e-mail or SMS
-A Successful Authorize call returns an authorized user object, and sets the `'auth_key'` cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the `'A'` parameter
+A Successful Authorize call returns an authorized user object and sets the `'auth_key'` cookie. For all subsequent API calls, either the cookie can be sent or the value of the cookie can be sent as the `'A'` parameter
 When TFA scheme is used, this call will also set `'tfa_key'` cookie. See **Authorized devices** section for more detail on this cookie
 
 API calls can originally be done against "https://login.eagleeyenetworks.com" (The host url), but after authorization is returned the API should then use the **branded subdomain**
-At this stage the branded host url will become "https://[active_brand_subdomain].eagleeyenetworks.com" where the **active_brand_subdomain** field is returned in the authorization response
+At this stage the branded host url will become `'https://[active_brand_subdomain].eagleeyenetworks.com'` where the **active_brand_subdomain** field is returned in the authorization response
 
-For example after the authorization in the example on the right, the host url should be changed to "https://c001.eagleyenetworks.com"
+For example after the authorization in the example on the right, the host url should be changed to `'https://c001.eagleyenetworks.com'`
 
 Each account will consistently have the same **branded subdomain** and as such will not change throughout the life of the session
 Caching the subdomain is safe to do as long as the client software validates against the active_brand_subdomain after authorization.  Using the **branded subdomain** is important for speed and robustness
@@ -304,7 +304,7 @@ This flag can be set or cleared by the account superuser with the [Update Accoun
 If the `'is_two_factor_authentication_forced'` is set to 0 the user may switch to Simple Authentication
 scheme. That is achieved by clearing `'is_two_factor_authentication_enabled'` flag in the User record
 This can only be achieved by the user themselves (not by an account superuser)
-Update of any TFA-related field in the User record is performed through a dedicated TFA update endpoint `''/g/aaa/two_factor_authenticate/update'`. See next section
+Update of any TFA-related field in the User record is performed through a dedicated TFA update endpoint `'/g/aaa/two_factor_authenticate/update'`. See next section
 
 <!--===================================================================-->
 ## TFA Update

@@ -4,15 +4,15 @@
 ## Overview
 <!--===================================================================-->
 
-The annotation service allows to push data into the event stream to add additional information about a camera/video. Annotations are associated with a device and a timestamp
+The Annotation service allows to push data (valid Json, can include HTML elements) into the event stream to add additional information about a camera/video. Annotations are associated with a device and a timestamp
 
-<aside class="notice">Annotations are subject to normal retention logic and as such will be discarded when the annotated time has passed the retention</aside>
+<aside class="notice">Annotations are subject to normal retention logic and as such will be discarded when the annotated time has exceeded retention</aside>
 
 <!--===================================================================-->
 ## Create Annotation
 <!--===================================================================-->
 
-Create an annotation for a device with a particular timestamp and data describing the annotation
+Create an Annotation for a device with a specific timestamp and data describing it
 
 > Request TODO
 
@@ -21,13 +21,17 @@ Create an annotation for a device with a particular timestamp and data describin
 
 ### HTTP Request
 
-`PUT https://login.eagleeyenetworks.com/g/annotation`
+`PUT http://login.eagleeyenetworks.com/annt`
 
-Parameter     | Data Type | Description | Is Required
----------     | --------- | ----------- | -----------
-**device_id** | string    | ID of the device the annotation should be associated with | true
-**timestamp** | string    | Timestamp associated with the annotation | true
-**data**      | json      | Json object representing the data associated with the annotation (No predefined data fields required) | true
+Parameter     | Data Type | Description                                                                                                                      | Required    |
+---------     | --------- | -----------                                                                                                                      |:-----------:|
+**id**        | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
+**ns**        | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&check;** |
+**u**         | string    | A randomly generated UUID used for indexing purposes and quick retrieval of events                                               | **&check;** |
+**ts**        | string    | Timestamp associated with the annotation                                                                                         | **&check;** |
+**type**      | string    | Type of operation to execute: <br>`'add'` - adds the annotation                                                                  | **&check;** |
+
+<!--TODO: Investigate whether the table row is in use: **data**      | json      | Json object representing the data associated with the annotation (No predefined data fields required)                             | **&check;** -->
 
 > Json Response TODO
 
@@ -48,10 +52,10 @@ HTTP Status Code | Description
 200	| Request succeeded
 
 <!--===================================================================-->
-## Update Annotation
+## Get Annotation
 <!--===================================================================-->
 
-Update an Annotation for a device with a particular timestamp. Simple modifications (`'atype=mod'`) can be made and require you to pass the original `'timestamp'` from when the Annotation was created. Zero to N `'heartbeats'` (`'atype=hb'`) can also be applied to describe changes over time for the Annotation. The Annotation can be ended (`'atype=end'`) which closes the Annotation and lets you attach additional information. Each Annotation event is assumed to last for 10 seconds in the absence of a heartbeat extending it. After a heartbeat, it is assumed to last for another 10 seconds. Annotations can be truncated by specifying an end event (`'atype=end'`)
+Returns an Annotation object by ID/UUID
 
 > Request TODO
 
@@ -60,22 +64,61 @@ Update an Annotation for a device with a particular timestamp. Simple modificati
 
 ### HTTP Request
 
-`POST https://login.eagleeyenetworks.com/g/annotation`
+`GET https://login.eagleeyenetworks.com/annt/get`
 
-Parameter     | Data Type    | Description | Is Required
----------     | ---------    | ----------- | -----------
-**id**        | string       | ID of the annotation being updated, which is returned by PUT /annotation | true
-**device_id** | string       | ID of the device the associated with the annotation being updated | true
-**timestamp** | string       | If `'atype=mod'`, then this must be the timestamp associated with the annotation when originally created. If `'atype'` is `'hb'` or `'end'`, this timestamp can be a different timestamp than the original | true
-**data**      | json         | Json object representing the data to update the annotation with. No predefined data fields required | true
-atype         | string, enum | The type of annotation update to make (Defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and no `'hb'` with a later timestamp will be accepted <br><br>enum: end, hb, mod
+Parameter     | Data Type     | Description                                                                                                                  | Required    |
+---------     | ---------     | -----------                                                                                                                  |:-----------:|
+**id**        | string        | ID of the device the annotation should be associated with                                                                    | **&check;** |
+**u**         | array[string] | Array of comma-separated UUIDs to return                                                                                     | **&check;** |
 
 > Json Response TODO
 
 ```json
 ```
 
-### HTTP Response (Json Attributes)
+### HTTP Response (Array Attributes)
+
+
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
+
+<!--===================================================================-->
+## Get List of Annotations
+<!--===================================================================-->
+
+Returns an array of Annotations by count or time range
+
+> Request TODO
+
+```shell
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/annt/get`
+
+Parameter           | Data Type     | Description                                                                                                            | Required    |
+---------           | ---------     | -----------                                                                                                            |:-----------:|
+**id**              | string        | ID of the device the annotation should be associated with                                                              | **&check;** |
+**start_timestamp** | string        | Start timestamp of the annotations to return                                                                           | **&check;** |
+**end_timestamp**   | string        | End timestamp of the annotations to return                                                                             | **&check;** |
+uuid                | array[string] | Array of comma-delimited UUIDs to list                                                                                 | **&cross;** |
+namespace           | array[int]    | Array of 1 to N comma-delimited namespaces to list                                                                     | **&cross;** |
+exclusive           | boolean       | Whether to include annotations that span start or end (0) or not (1)                                                   | **&cross;** |
+
+> Json Response TODO
+
+```json
+```
+
+### HTTP Response (Array Attributes)
 
 
 
