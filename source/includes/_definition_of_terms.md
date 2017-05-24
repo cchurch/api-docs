@@ -1,10 +1,10 @@
 # Definition of Terms
 
 **Eagle Eye Video Bank (EEVB)**<br id=DOT-EEVB>
-The service that Eagle Eye provides that safely, securely, and easily stores video from surveillance and other cameras, allows access via the world wide web, and provides a comprehensive control and management platform for multi camera surveillance
+The service that Eagle Eye provides that safely, securely and easily stores video from surveillance and other cameras, allows access via the world wide web and provides a comprehensive control and management platform for multi camera surveillance
 
 **Eagle Eye Video Bank Services (EEVBS)**<br id=DOT-EEVBS>
-This is the exposed WWW RESTful services that are used internally as well as externally for the interface of Cameras, User Interfaces, Mobile Applications, and Image Analysis applications. This is described in this document
+This is the exposed WWW RESTful services that are used internally as well as externally for the interface of Cameras, User Interfaces, Mobile Applications and Image Analysis applications. This is described in this document
 
 **ESN**<br id=DOT-ESN>
 Electronic Serial Number. It can represent an Account, Bridge, Camera or User
@@ -43,10 +43,10 @@ This is 16 digit mixed numeric and alpha string broken into 4 sets of 4 digits. 
 This is the unique ID of the hardware of the Device. This ID varies based on the type of camera and other parameters. It is basically a string of up to 128 characters. A Hardware ID is mapped to a CameraID by the EEVB when the Assets are stored. When physical cameras are attached to a Bridge we use the ONVIF GUID as the Hardware ID
 
 **Account**<br id=DOT-Account>
-An Account is the billing entity and the master control entity in the EEVB. All Cameras, Assets, Users, and other items are associated with an Account. Accounts are identified by an Account Number. An Account has Users which are identified by email addresses (which is also their User Login)
+An Account is the billing entity and the master control entity in the EEVB. All Cameras, Assets, Users and other items are associated with an Account. Accounts are identified by an Account Number. An Account has Users which are identified by email addresses (which is also their User Login)
 
 **Sub-Account**<br id=DOT-Sub-Account>
-A Sub-Account is an Account that is under another Account (called the Master Account) A Sub-Account is primarily a billing relationship and for most intents and purposes appears as a complete separate account. There is only 1 level of Sub-Accounts. An Administrator of a Master Account can get Administrator Access to a Sub-Account via a method still TBD. A Sub-Account has an indicator with regards to billing. A Sub-Account can either be billed via the Master Account or can be billed separately. If Billed separately the Sub-Account operates like any other account. If not billed separately then billing for a Master Account will show all the items of any Sub-Account broken out by Sub-Account, and the Sub-Account will have NO billing of any kind (no permissions, no bill display, no credit card entry - nothing). There must be Eagle Eye administrator functionality to change the billing indicator, change Sub-Accounts to Accounts, and move Sub-Accounts to other Master Accounts. Basically Sub-Accounts are used by Resellers; We can keep track of which Accounts are associated with which Reseller, Resellers can get administrator access, and we can either bill to the Reseller or bill the customer directly. Sub-Accounts are also used by large companies who want separate billing by division
+A Sub-Account is an Account that is under another Account (called the Master Account) A Sub-Account is primarily a billing relationship and for most intents and purposes appears as a complete separate account. There is only 1 level of Sub-Accounts. An Administrator of a Master Account can get Administrator Access to a Sub-Account via a method still TBD. A Sub-Account has an indicator with regards to billing. A Sub-Account can either be billed via the Master Account or can be billed separately. If Billed separately the Sub-Account operates like any other account. If not billed separately then billing for a Master Account will show all the items of any Sub-Account broken out by Sub-Account and the Sub-Account will have NO billing of any kind (no permissions, no bill display, no credit card entry - nothing). There must be Eagle Eye administrator functionality to change the billing indicator, change Sub-Accounts to Accounts and move Sub-Accounts to other Master Accounts. Basically Sub-Accounts are used by Resellers; We can keep track of which Accounts are associated with which Reseller, Resellers can get administrator access and we can either bill to the Reseller or bill the customer directly. Sub-Accounts are also used by large companies who want separate billing by division
 
 **AccountID**<br id=DOT-AccountID>
 A 64 bit decimal number that uniquely identifies an Account. This is a numeric number that is assigned by the EEVB when a new Account is created. The Administrator User is made aware of his Account Number, but does not need to know it for logging in. He may need it when calling in for billing questions. This Account Number is used to tie into the Eagle Eye accounting systems. All billing is based on an Account
@@ -64,13 +64,13 @@ A UserID is a 32 bit hex number that uniquely identifies a User. This UserID is 
 A User’s Login is his email address. This uniquely identifies the user and provides for password recovery. EEVB only supports only email based User Logins. Each User is associated with one and only one Account. Each User will have only one UserID assigned by the system. Can Users belong to multiple Accounts??
 
 **Administrator User**<br id=DOT-Administrator-User>
-An Account must have at least one Administrator User. The last Administrator User cannot be deleted. An Account may have multiple Administrator Users. The Administrator User can add and delete other users, can change permissions, add and delete Cameras, and view all Assets. The Administrator Users will be notified if there are any billing issues and can view the billing history. Administrator Users can change billing and purchase additional services
+An Account must have at least one Administrator User. The last Administrator User cannot be deleted. An Account may have multiple Administrator Users. The Administrator User can add and delete other users, can change permissions, add and delete Cameras and view all Assets. The Administrator Users will be notified if there are any billing issues and can view the billing history. Administrator Users can change billing and purchase additional services
 
 **Layout**<br id=DOT-Layout>
 A collection of cameras, the position and size on the screen, the setting associated with the display of the cameras on the screen stored and named. Layouts are used to display cameras on monitor screens and to assist with research work. Layouts are created by Users and named by them. Layouts can be either User specific or global in nature. Account Layouts are visible to all Users of an account. Each Camera Group has an associated implied Layout with it. Layouts have permissions for each User
 
 **Activation**<br id=DOT-Activation>
-Process when a new camera or bridge comes online and the User acknowledges it, names it, and brings into his system. Billing starts at the Activation time. Any terms and conditions might have to be agreed at activation time as well
+Process when a new camera or bridge comes online and the User acknowledges it, names it and brings into his system. Billing starts at the Activation time. Any terms and conditions might have to be agreed at activation time as well
 
 **Camera TagID**<br id=DOT-Camera-TagID>
 Token assigned by EEVB to identify a Camera Tag
@@ -108,13 +108,13 @@ A span is a duration of time between two events that compliment each other
 Image that is the representative image of an Event. Generally selected from the middle of a motion segment
 
 **Analysis Systems**<br id=DOT-Analysis-Systems>
-Analysis Systems use the EEVBS to analyze existing or incoming Assets and attach meta data to the Assets in the form of Meta Data Assets. The Meta Data can identify people, places, and things in the Asset Streams. This Meta Data can then be searched, organized, analyzed, and alerted upon
+Analysis Systems use the EEVBS to analyze existing or incoming Assets and attach meta data to the Assets in the form of Meta Data Assets. The Meta Data can identify people, places and things in the Asset Streams. This Meta Data can then be searched, organized, analyzed and alerted upon
 
 **Alert Events**<br id=DOT-Alert-Events>
 Alert Events are Events that are known to generate an Alert
 
 **Alerts/Notifications**<br id=DOT-Alerts/Notifications>
-Alerts or Notifications are generated from Events when the User has created criteria to create them. Alerts may be given in any number of methods (on screen, email, text message, etc.). Alerts may have to be acknowledged by the User. The EEVBS will collapse alerts into a single alert to avoid creating too many that would be annoying. Alerts are almost always generated from Events. Alerts are commonly generated when Cameras are turned off, go offline, or when motion is detected in areas where there should not be any motion. The Alert may or may not include the video or other Assets of interest. Alerts sent to Users automatically create a Save to provide organized access to the related image, video, and meta-data. The URL to the save is provide within the Alert for immediate access. (THIS IS PROBABLY ACTUALLY A SHARE, A GROUP OF SAVES, SINCE ALERTS USUALLY “CLUSTER”)
+Alerts or Notifications are generated from Events when the User has created criteria to create them. Alerts may be given in any number of methods (on screen, email, text message, etc.). Alerts may have to be acknowledged by the User. The EEVBS will collapse alerts into a single alert to avoid creating too many that would be annoying. Alerts are almost always generated from Events. Alerts are commonly generated when Cameras are turned off, go offline, or when motion is detected in areas where there should not be any motion. The Alert may or may not include the video or other Assets of interest. Alerts sent to Users automatically create a Save to provide organized access to the related image, video and meta-data. The URL to the save is provide within the Alert for immediate access. (THIS IS PROBABLY ACTUALLY A SHARE, A GROUP OF SAVES, SINCE ALERTS USUALLY “CLUSTER”)
 
 **Motion Detection Region**<br id=DOT-Motion-Detection-Region>
 Each camera can have 1 or more Motion Detection Regions. These are areas where motion detection will be performed. Normally if there is motion in ANY Motion Detection Region video recording will be enabled. Motion Detection in any region will always generate an Event. The Events will generate Alerts if the User has configured it to generate Alerts on that Motion Detection Region
@@ -125,13 +125,13 @@ Each camera can have 1 or more Motion Detection Regions. These are areas where m
 A Camera may have 1 or more Privacy Regions defined. This is a mask where all Asset images and video are blanked out
 
 **Meta Data Asset**<br id=DOT-Meta-Data-Asset>
-This is data that identifies items in the Video Assets. Used to identify faces, license plates, activity, motion, and other items that are happening in the video Assets
+This is data that identifies items in the Video Assets. Used to identify faces, license plates, activity, motion and other items that are happening in the video Assets
 
 **Audit Trail**<br id=DOT-Audit-Trail>
 All changes and activities by each user are recorded for audit trail. These items are stored on a per user basis. Things stored included: all configuration changes, all camera configuration changes (PTZ), all video’s viewed, all camera adds and deletes, all manual recordings, all changes to schedule, all changes to alerts
 
 **EE Director**<br id=DOT-EE-Director>
-The Director is the URL first contacted when a camera is connecting with the EEVBS. The Director performs verification of access, provides account information, and lists of Cameras in an Account. Given a Camera ID it provides the URL of the appropriate EE Archiver(s) that have the Assets of the requested Camera so the application in question can get them for display. http://d.eagleeyenetworks.com. Cameras also contact the EE Director to determine where they should send their Assets
+The Director is the URL first contacted when a camera is connecting with the EEVBS. The Director performs verification of access, provides account information and lists of Cameras in an Account. Given a Camera ID it provides the URL of the appropriate EE Archiver(s) that have the Assets of the requested Camera so the application in question can get them for display. http://d.eagleeyenetworks.com. Cameras also contact the EE Director to determine where they should send their Assets
 
 **EE GUI**<br id=DOT-EE-GUI>
 Eagle Eye Graphical User Interface (built on HTTP Java script) to control and view Cameras. The [EEN user interface](http://eagleeyenetworks.com) is built on the EEVB API
@@ -140,6 +140,6 @@ Eagle Eye Graphical User Interface (built on HTTP Java script) to control and vi
 The architectural element that communicates with the Cameras and stores all the Assets. It serves up the Assets to the EE GUI as well as the iOS App and Android App. EE Archivers are accessed via IP address
 
 **EE Locator**<br id=DOT-EE-Locator>
-The EE Locator has a fixed IP address that does not change. Camera and Bridges when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it, and directs it to the appropriate Archiver and other connections it will need to communicate with the EEVB. If the Locator goes down, the only function that will stop working is adding new Cameras
+The EE Locator has a fixed IP address that does not change. Camera and Bridges when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it and directs it to the appropriate Archiver and other connections it will need to communicate with the EEVB. If the Locator goes down, the only function that will stop working is adding new Cameras
 
 <!--TODO: Maybe include abbreviations: GUID, ESN-->

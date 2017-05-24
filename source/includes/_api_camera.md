@@ -14,16 +14,16 @@ The camera setting system is based on an inheritance model. User settings are *o
 
 Under the covers this works as follows:
 
-  - There is a default setting, range, and value for everything built into the code, guaranteeing there are always settings for any feature supported by the software. These values are defined when the feature is implemented in software
+  - There is a default setting, range and value for everything built into the code, guaranteeing there are always settings for any feature supported by the software. These values are defined when the feature is implemented in software
   - There is an optional *global* setting file that can/will be distributed during patches/updates that can override and extend default settings including changing valid ranges, etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules, etc. which do not imply code changes
-  - There is an optional per make/model/version file, part of the make/model/version driver deployment, that can add and adjust settings for anything above. This is used to optimize things like sensitivity or codec parameters while building the driver for the specific device, and is released a camera driver is updated. This is also where camera specific features (audio availability) is announced
-  - The first three get merged to produce the base settings for the the camera, which defines the value, min, and max for every supported feature
+  - There is an optional per make/model/version file, part of the make/model/version driver deployment, that can add and adjust settings for anything above. This is used to optimize things like sensitivity or codec parameters while building the driver for the specific device and is released a camera driver is updated. This is also where camera specific features (audio availability) is announced
+  - The first three get merged to produce the base settings for the the camera, which defines the value, min and max for every supported feature
   - User settings (things the user has consciously *taken control of*) are dynamically overlaid on the above settings inheritance to produce the active settings on the camera
   - Any scheduled or triggered changes are then overlaid on top create the running settings (so upload bandwidth can be changed in a schedule to something different from the users settings, which is also different from the system default and when the schedule is *removed* the bandwidth will go back to the user value
 
 The implication of this is that if a user has not *pinned* a setting by changing/managing it, it will track any system or make/model/version release updates. That is, EEN can optimize operating parameters and they will automatically propagate unless the user has changed/pinned them. Further, the user should be *aware* of this, which works well with an open/closed control metaphor or a check box - an y setting control that is open/checked is *manually* set by the user, whereas closed controls will track EEN system wide recommendations. Finally, it is expected that the *user* settings will be managed to be only the value specifically modified by users, not all settings
 
-The set of all settings is potentially large, and far more than most users will ever want or need to manage. A separate table will be maintained which lists the *normal* settings - settings most users may want to interact with. This is standard across all devices, and contains a list of settings names that should be accessible to the user. This list should be *joined* with the list of all settings to result in a subset of controls to be displayed in basic mode. An advanced mode should make all settings available with primitive controls to set or delete a value
+The set of all settings is potentially large and far more than most users will ever want or need to manage. A separate table will be maintained which lists the *normal* settings - settings most users may want to interact with. This is standard across all devices and contains a list of settings names that should be accessible to the user. This list should be *joined* with the list of all settings to result in a subset of controls to be displayed in basic mode. An advanced mode should make all settings available with primitive controls to set or delete a value
 
 An implication of this model the *user settings* object is a generic object that is only lightly interpreted by the device. Settings that match a known names (i.e. are within the camera base or mmv settings) will be utilized, but all values will be stored and returned as part of the *user settings* field. This can be used to support user interface elements on a per camera basis with values the bridge/camera do not interpret
 
@@ -47,7 +47,7 @@ When getting the camera settings, a Json string representing a Json object is re
         - A subset of the base settings, indicating items the user has specifically set
         - The user settings contain only the `'v'` of the setting and are bare objects (e.g. `'contrast'`: 0.1)
         - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
-        - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set, and a settings delete removes a member
+        - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set and a settings delete removes a member
       - `'schedules'`: A set of named members, each with the following members
         - `'start'`: time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { `'start'`: { `'hours'`: `8`, `'wdays'`: `[1,2,3,4,5]`}, `'end'`: {`'hours'`: `17`, `'wdays'`: `[1,2,3,4,5]` }}
         - `'end'`: time object, indicating when the schedule is removed
@@ -115,11 +115,11 @@ Each camera make/model/version is different, thus not every setting is supported
   - `'video_bandwidth_factor'`: integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps'` to show what this setting translates to for display purposes
   - `'video_resolution'`: string indicating the resolution of the video. When displaying the options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to
   - `'video_quality'`: string indicating the quality of the video
-  - `'video_config'`: READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'`, and `'video_bandwidth_factor'` settings/options
+  - `'video_config'`: READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'` and `'video_bandwidth_factor'` settings/options
 
 ### Regions of Interest (ROIs)
 
-ROIs will be defined by simple polygons - sequences of x,y coordinates that form a closed object, edge crosses are illegal and will have bizarre results. Each ROI will describe a portion of the screen. ROIs can overlap, and priority (higher wins) determines what sensitivity settings to use. For overlapping ROIs, all will get motion block detection and can trigger ROI motion spans
+ROIs will be defined by simple polygons - sequences of x,y coordinates that form a closed object, edge crosses are illegal and will have bizarre results. Each ROI will describe a portion of the screen. ROIs can overlap and priority (higher wins) determines what sensitivity settings to use. For overlapping ROIs, all will get motion block detection and can trigger ROI motion spans
 
 ROIs can
 
@@ -977,10 +977,10 @@ utcOffset                     | int           | Signed UTC offset in seconds of 
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
 permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                                                              | **&cross;** |
 tags                          | array[string] | Array of strings each representing a tag name                                                      | **&check;** |
-[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>`'ATTD'` - the camera is attached to a bridge <br>`'IGND'` - the camera is unattached and is available to be attached                                                                     | **&cross;** |
-camera_parameters             | json          | Json object of camera parameters. If camera parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                            | **&check;** |
+[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>`'ATTD'` - the camera is attached to a bridge <br>`'IGND'` - the camera is unattached and is available to be attached                                                                | **&cross;** |
+camera_parameters             | json          | Json object of camera parameters. If camera parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                   | **&check;** |
 camera_parameters_status_code | int           | Indicates whether it was possible to retrieve the device parameters (200) or not (404)             | **&cross;** |
-[camera_info](#camera-camera_info) | json          | Json object of basic information related to a camera. If camera information cannot be retrieved for whatever reason (example: communication with camera has been lost), then this will be empty, and camera_info_status_code will be 404                               | **&cross;** |
+[camera_info](#camera-camera_info) | json          | Json object of basic information related to a camera. If camera information cannot be retrieved for whatever reason (example: communication with camera has been lost), then this will be empty and camera_info_status_code will be 404                                | **&cross;** |
 camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)      | **&cross;** |
 
 <aside class="notice">All cameras in a group must have the ‘S’ permission or the group cannot be shared</aside>
@@ -1056,7 +1056,7 @@ camera_oldest       | string      | Timestamp of oldest event available in EEN T
 camera_info_version | int         | Camera info version
 connect             | string      | Camera connect status
 camera_min_time     | string      | Minimum timestamp available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-uuid                | string      | UUID string
+uuid                | string      | UUID uniquely identifying the device
 service             | string      | Service status
 make                | string      | Make of the device
 ipaddr              | string      | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)

@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-This service offers native PNG span rendering to support metric visualization. For spans, the image is filled with the foreground color where the specified span is active, and with the background where it is inactive. At least one pixel will be filled for a span, independent of scale, though the span may overlap others. For etags, one pixel is filled for each active event, but as with spans the pixel may overlap others
+This service offers native PNG span rendering to support metric visualization. For spans, the image is filled with the foreground color where the specified span is active and with the background where it is inactive. At least one pixel will be filled for a span, independent of scale, though the span may overlap others. For etags, one pixel is filled for each active event, but as with spans the pixel may overlap others
 
 ### Response Headers
 
@@ -16,7 +16,7 @@ The pngspan is a very efficient mechanism for visualizing where metrics and span
 
 Tile the PNGs for fast, infinite scrolling. Render a width/timespan that represents a rational chunk of the current screen - say 4 hours in a day view. Fill the screen with tiles, fetch offscreen at the same size in preparation to scroll. Change origin of each entity to accomplish fast smooth scrolling. Fetch successive offscreen buffers as they come on screen
 
-Hit detection (for rollover) can be done in a browser by rendering opaque colors and reading pixels values from a one pixel high offscreen image. If an active pixel is detected, fetch the window of events around the timestamp estimate (since the pixel resolution is usually much less than the ms resolution needed for a timestamp), and use the response to determine what metric/span to display (i.e. the closest one…)
+Hit detection (for rollover) can be done in a browser by rendering opaque colors and reading pixels values from a one pixel high offscreen image. If an active pixel is detected, fetch the window of events around the timestamp estimate (since the pixel resolution is usually much less than the ms resolution needed for a timestamp) and use the response to determine what metric/span to display (i.e. the closest one…)
 
 ### PNG Types
 

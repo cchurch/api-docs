@@ -1,16 +1,16 @@
 # Introduction
 
-The Eagle Eye Video API is a comprehensive REST based API for recording, indexing, and storing camera video.  The Eagle Eye Video API handles all the heavy lifting of interfacing to the cameras, recording video, securely transmitting video to the cloud, storing video, and making video available for use for your applications. All of the Eagle Eye Security Camera VMS user interfaces (web, iOS, Android) have been built using this API
+The Eagle Eye Video API is a comprehensive REST based API for recording, indexing and storing camera video.  The Eagle Eye Video API handles all the heavy lifting of interfacing to the cameras, recording video, securely transmitting video to the cloud, storing video and making video available for use for your applications. All of the Eagle Eye Security Camera VMS user interfaces (web, iOS, Android) have been built using this API
 
-We have language bindings in cURL. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right (when available)
+We have language bindings in cURL. You can view code examples in the dark area to the right and you can switch the programming language of the examples with the tabs in the top right (when available)
 
 <!--===================================================================-->
 ## Getting Started
 <!--===================================================================-->
 
-The Eagle Eye Video API allows you to securely record, manage, and playback video from any camera, any place, any time.  A robust annotation interface and smart bandwidth management allows you to turn terabytes of raw video into useful data
+The Eagle Eye Video API allows you to securely record, manage and playback video from any camera, any place, any time.  A robust annotation interface and smart bandwidth management allows you to turn terabytes of raw video into useful data
 
-Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs, and you can use many different HTTP clients in nearly any programming language
+Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs and you can use many different HTTP clients in nearly any programming language
 
 <!--===================================================================-->
 ## Get an API Key
@@ -26,7 +26,7 @@ You will have to verify your email address to create your Developer Account. You
 
 You may also want to purchase a development hardware kit from us (so you can connect some cameras). These are available at a large discount for developers. You can get an Eagle Eye Bridge and even some cameras from us for development and testing. Just email us for more info and pricing
 
-The API Key should be located in the header under the "Authorization" key with a colon appended to it
+The API Key should be located in the header under the `'Authorization'` key with a colon appended to it
 
 <aside class="notice">User password authentication is still required</aside>
 
