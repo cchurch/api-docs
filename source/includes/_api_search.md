@@ -54,9 +54,9 @@ Parameter                   | Data Type     | Description
 ---------                   | ---------     | -----------
 \_key                       | string        | Unique identifier (within the user's account) of the recording
 current_recording_timestamp | string        | Timestamp of when the current recording (if any) was started
-recording_%s_start          | RecordingInfo | Object of info about the recording start event, where '%s' is the timestamp it started. Could be N number of these
-recording_%s_stop           | RecordingInfo | Object of info about the recording stop event, where '%s' is the timestamp it started. Must have a matching 'recording_%s_start' event. Could be N number of these
-recording_%s_meta           | object        | Object of info about the recording, where '%s' is the timestamp it started. Must have a matching 'recording_%s_start' event
+recording_%s_start          | RecordingInfo | Object of info about the recording start event, where `'%s'` is the timestamp it started. Could be N number of these
+recording_%s_stop           | RecordingInfo | Object of info about the recording stop event, where `'%s'` is the timestamp it started. Must have a matching `'recording_%s_start'` event. Could be N number of these
+recording_%s_meta           | object        | Object of info about the recording, where `'%s'` is the timestamp it started. Must have a matching `'recording_%s_start'` event
 
 ### RecordingInfo Json Attributes
 
@@ -96,7 +96,7 @@ Parameter           | Data Type | Description | Is Required
 ---------           | --------- | ----------- | -----------
 **value**           | string    | Value to search for | true
 **start_timestamp** | string    | Start timestamp to use to limit search results | true
-end_timestamp       | string    | End timestamp to use to limit search results (defaults to 'now')
+end_timestamp       | string    | End timestamp to use to limit search results (defaults to *now*)
 
 > Json Response TODO
 

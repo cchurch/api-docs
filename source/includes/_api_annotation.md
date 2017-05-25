@@ -8,6 +8,8 @@ The Annotation service allows to push data (valid Json, can include HTML element
 
 <aside class="notice">Annotations are subject to normal retention logic and as such will be discarded when the annotated time has exceeded retention</aside>
 
+<aside class="success">This service will continually be extended</aside>
+
 <!--===================================================================-->
 ## Create Annotation
 <!--===================================================================-->
