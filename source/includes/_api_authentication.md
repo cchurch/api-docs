@@ -124,11 +124,11 @@ Otherwise proceed to Step 3: Authorize
 > Request (Simple Authentication)
 
 ```shell
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate --data-urlencode token=[TOKEN] two_factor_authentication_type=sms
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate --data-urlencode "token=[TOKEN]" "two_factor_authentication_type=sms"
 ```
 
 ```shell
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate --data-urlencode token=[TOKEN] two_factor_authentication_type=email
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate --data-urlencode "token=[TOKEN]" "two_factor_authentication_type=email"
 ```
 
 ### HTTP Request
@@ -176,13 +176,13 @@ Caching the subdomain is safe to do as long as the client software validates aga
 > Request (Simple Authentication)
 
 ```shell
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN]
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode "token=[TOKEN]"
 ```
 
 > Request (TFA scheme)
 
 ```shell
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN] two_factor_authentication_code=[TFA_CODE]
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode "token=[TOKEN]" "two_factor_authentication_code=[TFA_CODE]"
 ```
 
 ### HTTP Request

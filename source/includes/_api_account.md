@@ -407,7 +407,7 @@ Delete an Account
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -441,7 +441,7 @@ Returns an array of arrays with each sub-array representing an Account available
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/account/list
+curl --request GET https://login.eagleeyenetworks.com/g/account/list --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request

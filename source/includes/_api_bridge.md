@@ -282,7 +282,7 @@ Adds a Bridge to the Eagle Eye Video Bank
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectID":[CONNECT_ID]}'
+curl -X PUT https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","connectID":[CONNECT_ID]}' -H "content-type: application/json"-H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -330,7 +330,7 @@ Update Bridge information
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[BRIDGE_ID], "name": "[NAME]"}'
+curl -X POST https://login.eagleeyenetworks.com/g/device -d '{"id": "[BRIDGE_ID], "name": "[NAME]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -381,7 +381,7 @@ Delete a Bridge from the Eagle Eye Video Bank
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -G
+curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -412,7 +412,7 @@ Returns array of arrays with each sub-array representing a Bridge available to t
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/device/list
+curl --request GET https://login.eagleeyenetworks.com/g/device/list --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request

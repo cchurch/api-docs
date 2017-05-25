@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. Get method is available to any user with Camera `'R'` (read) permission. Methods Post, Delete are available to account superusers and users with Camera `'W'` (write) permissions for the indicated camera. Put method is only available to account superusers
+The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. Get method is available to any user with Camera `'R'` (Read) permission. Methods Post, Delete are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. Put method is only available to account superusers
 
 When adding a new Camera, the name and settings parameters are required. The settings parameter should contain the ID of the bridge and the GUID of the Camera
 
@@ -31,91 +31,91 @@ An implication of this model the *user settings* object is a generic object that
 
 When getting the camera settings, a Json string representing a Json object is returned containing:
 
-    - `'active_settings'`: A set of named entities encapsulating all settings understood for this device. Each entity contains an object of
-      - `'v'`: the current value of the setting, as influenced by filters on top of base settings
-      - `'max'`: the maximum allowed value
-      - `'min'`: the minimum allowed value
-      - `'d'`: the default value of the setting, also defining the expected type for the field
-      - Note: max and min are applicable for numeric fields. for set fields (e.g. preview_resolution) the min field will contain an array of the valid values
-      - Note: additional descriptive members may be added to this object over time, implementation must ignore fields they do not understand
-    - `'active_filters'`: an array of filters currently being applied. List is in priority order, that is earlier entries will override later entries in the list. Each entry is a string with format of one of
-      - `'schedule_<name>'`: name replaced by schedule name
-      - `'user_user'`: constant, indicating where user settings are applied
-      - `'trigger_<name>'`: name replaced by the triggered name (i.e. `'night'`)
-    - `'user_settings'`: an object with the following fields:
-      - `'settings'`
-        - A subset of the base settings, indicating items the user has specifically set
-        - The user settings contain only the `'v'` of the setting and are bare objects (e.g. `'contrast'`: 0.1)
-        - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
-        - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set and a settings delete removes a member
-      - `'schedules'`: A set of named members, each with the following members
-        - `'start'`: time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { `'start'`: { `'hours'`: `8`, `'wdays'`: `[1,2,3,4,5]`}, `'end'`: {`'hours'`: `17`, `'wdays'`: `[1,2,3,4,5]` }}
-        - `'end'`: time object, indicating when the schedule is removed
-        - `'priority'`: a floating point value defining the priority of the schedule. Lowest number wins. All user settings are applied with priority of 10.0, so schedule values with priority < 10 will override user settings, while value > 10 will not. It priority or two schedules is equal and their settings conflict,
-        - `'settings'`: a object with members mirroring the settings above, indicating the new value for settings to use while the schedule is active. For accumulation settings, values will be added into the set when activated and removed when deactivated
-      - time object is a object with the following named members, loosely patterned after crontab arguments. Each time the fields match the current time, the event is toggled
-        - fields
-            - seconds(0-59)(defaults to 0)
-            - minutes (0-59) (defaults to 0)
-            - hours (0-23) (defaults to 0)
-            - mdays(1-31) (defaults to \*)
-            - wdays(1-7) (1=Monday, 7=Sunday. defaults to nothing.)
-            - months(1-12) (defaults to \*)
-        - each field can be
-            - single integer
-            - string “\*” indicating all
-            - list of integers
-        - if both `'days'` fields are set, the action will be ran on the union
+  - `'active_settings'` - A set of named entities encapsulating all settings understood for this device. Each entity contains an object of:
+    - `'v'` - the current value of the setting, as influenced by filters on top of base settings
+    - `'max'` - the maximum allowed value
+    - `'min'` - the minimum allowed value
+    - `'d'` - the default value of the setting, also defining the expected type for the field
+    - Note: max and min are applicable for numeric fields. for set fields (e.g. preview_resolution) the min field will contain an array of the valid values
+    - Note: additional descriptive members may be added to this object over time, implementation must ignore fields they do not understand
+  - `'active_filters'` - an array of filters currently being applied. List is in priority order, that is earlier entries will override later entries in the list. Each entry is a string with format of one of:
+    - `'schedule_<name>'` - name replaced by schedule name
+    - `'user_user'` - constant, indicating where user settings are applied
+    - `'trigger_<name>'` - name replaced by the triggered name (i.e. `'night'`)
+  - `'user_settings'` - an object with the following fields:
+    - `'settings'`
+      - A subset of the base settings, indicating items the user has specifically set
+      - The user settings contain only the `'v'` of the setting and are bare objects (e.g. `'contrast=0.1'`)
+      - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
+      - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set and a settings delete removes a member
+    - `'schedules'` - A set of named fields as follows:
+      - `'start'` - time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { `'start'`: { `'hours'`: `8`, `'wdays'`: `[1,2,3,4,5]`}, `'end'`: {`'hours'`: `17`, `'wdays'`: `[1,2,3,4,5]` }}
+      - `'end'` - time object, indicating when the schedule is removed
+      - `'priority'` - a floating point value defining the priority of the schedule. Lowest number wins. All user settings are applied with priority of 10.0, so schedule values with priority < 10 will override user settings, while value > 10 will not. It priority or two schedules is equal and their settings conflict,
+      - `'settings'` - a object with members mirroring the settings above, indicating the new value for settings to use while the schedule is active. For accumulation settings, values will be added into the set when activated and removed when deactivated
+    - time object is a object with the following named members, loosely patterned after crontab arguments. Each time the fields match the current time, the event is toggled
+      - fields
+          - seconds(0-59)(defaults to 0)
+          - minutes (0-59) (defaults to 0)
+          - hours (0-23) (defaults to 0)
+          - mdays(1-31) (defaults to \*)
+          - wdays(1-7) (1=Monday, 7=Sunday. defaults to nothing.)
+          - months(1-12) (defaults to \*)
+      - each field can be
+          - single integer
+          - string “\*” indicating all
+          - list of integers
+      - If both `'days'` fields are set, the action will be ran on the union
 
 ### Update Camera Settings (POST device 'camera_settings_add' argument)
 
 To update/set settings (i.e. override default setting value with a *user* setting), a Json string is sent representing a Json object containing:
 
-  - `'settings'`: an optional object with members to be overlaid over base settings value. Values are bare (that is simply replacements for the `'v'` field of base)
-  - `'schedules'`: an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value
+  - `'settings'` - an optional object with members to be overlaid over base settings value. Values are bare (that is simply replacements for the `'v'` field of base)
+  - `'schedules'` - an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value
 
 ### Delete Camera Settings (POST device 'camera_settings_delete' argument)
 
 To delete/unset settings (i.e. return to default setting value), a Json string is sent representing a Json object containing:
 
-  - `'settings'`: an optional object with members to be removed from user settings. Values ignored
-  - `'schedules'`: an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored
+  - `'settings'` - an optional object with members to be removed from user settings. Values ignored
+  - `'schedules'` - an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored
 
 ### Camera Settings Currently Supported
 
 Each camera make/model/version is different, thus not every setting is supported for some cameras, but here is list of core camera settings that are relevant to most applications:
 
-  - `'active_rois'`: object indicating which rois are currently active (by \<roiname\>; see `'rois'` setting below)
-  - `'audio_enable'`: boolean (true/false) indicating whether audio is enabled or not
-  - `'camera_on'`: boolean integer (1/0) indicating whether camera is turned on/off respectively
-  - `'motion_sensitivity'`: float between 0 and 1 indicating how sensitive the motion detection is
-  - `'motion_size_ratio'`: float between 0 and 1 indicating the size of objects to detect for motion
-  - `'motion_boxes_metric_active'`: boolean integer indicating whether motion boxes are enabled
-  - `'preview_realtime_bandwidth'`: float indicating the max bandwidth of real-time preview image transmission
-  - `'preview_transmit_mode'`: string indicating when preview images are transmitted to the cloud
-  - `'preview_interval_ms'`: integer indicating how many milliseconds between preview images
-  - `'preview_resolution'`: string indicating the resolution of the preview images. When displaying the options for this setting, you must use the data from `'video_config.v.preview_quality_settings.<preview_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to for display purposes
-  - `'preview_quality'`: string indicating the quality of the preview images
-  - `'retention_days'`: integer indicating how many days worth of data should be retained in the cloud
-  - `'rois'`: extensible object, containing multiple ROI objects keyed by a \<roiname\>, with each ROI object supporting the following members:
-      - `'verts'`: [[`'x'`,`'y'`],`'...'`], polygon vertices in order. Coordinates will be scaled so `'0-1.0'` is full screen for `'x'` and `'y'`, with `'0,0'` being top left corner. Edges can’t cross or bad things will happen
-      - `'motion_noise_filter'`: as for main screen. If < 0.001 will not be applied
-      - `'motion_sensitivity'`: as for main screen. If < 0.001 will not be applied
-      - `'motion_hold_interval'`: as for main screen. If < 0.001 will not be applied
-      - `'priority'`: float (bigger wins), control settings overlay. Defaults to 0.0
-      - `'motion_threshold'`: (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen
-      - `'name'`: string used for the display name of the ROI in a GUI. Not to be confused with the \<roiname\> as the key of this ROI object
-      - `'ignore_motion'`: boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set motion_sensitivity to `'.001'` and motion_noise_filter to `'.99'`
-      - `'roiid'`: (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
-      - `'hold_off_ms'`: (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
-      - `'hold_on_ms'`: (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings
-  - `'scene_type'`: string indicating the type of scene the camera is viewing
-  - `'video_transmit_mode'`: string indicating when video is transmitted to the cloud
-  - `'video_capture_mode'`: string indicating when video will being recorded
-  - `'video_bandwidth_factor'`: integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps'` to show what this setting translates to for display purposes
-  - `'video_resolution'`: string indicating the resolution of the video. When displaying the options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to
-  - `'video_quality'`: string indicating the quality of the video
-  - `'video_config'`: READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'` and `'video_bandwidth_factor'` settings/options
+  - `'active_rois'` - object indicating which rois are currently active (by `'<roiname>'`, see `'rois'` setting below)
+  - `'audio_enable'` - boolean (true/false) indicating whether audio is enabled or not
+  - `'camera_on'` - boolean integer (1/0) indicating whether camera is turned on/off respectively
+  - `'motion_sensitivity'` - float between 0 and 1 indicating how sensitive the motion detection is
+  - `'motion_size_ratio'` - float between 0 and 1 indicating the size of objects to detect for motion
+  - `'motion_boxes_metric_active'` - boolean integer indicating whether motion boxes are enabled
+  - `'preview_realtime_bandwidth'` - float indicating the max bandwidth of real-time preview image transmission
+  - `'preview_transmit_mode'` - string indicating when preview images are transmitted to the cloud
+  - `'preview_interval_ms'` - integer indicating how many milliseconds between preview images
+  - `'preview_resolution'` - string indicating the resolution of the preview images. When displaying the options for this setting, you must use the data from `'video_config.v.preview_quality_settings.<preview_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to for display purposes
+  - `'preview_quality'` - string indicating the quality of the preview images
+  - `'retention_days'` - integer indicating how many days worth of data should be retained in the cloud
+  - `'rois'` - extensible object, containing multiple ROI objects keyed by a `'<roiname>'`, with each ROI object supporting the following members:
+      - `'verts'` - [[`'x'`,`'y'`], ...], polygon vertices in order. Coordinates will be scaled so `'0-1.0'` is full screen for `'x'` and `'y'`, with `'0,0'` being top left corner. Edges can’t cross or bad things will happen
+      - `'motion_noise_filter'` - as for main screen. If < 0.001 will not be applied
+      - `'motion_sensitivity'` - as for main screen. If < 0.001 will not be applied
+      - `'motion_hold_interval'` - as for main screen. If < 0.001 will not be applied
+      - `'priority'` - float (bigger wins), control settings overlay. Defaults to 0.0
+      - `'motion_threshold'` - (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen
+      - `'name'` - string used for the display name of the ROI in a GUI. Not to be confused with the `'<roiname>'` as the key of this ROI object
+      - `'ignore_motion'` - boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set `'motion_sensitivity'` to `'0.001'` and `'motion_noise_filter'` to `'0.99'`
+      - `'roiid'` - (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
+      - `'hold_off_ms'` - (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
+      - `'hold_on_ms'` - (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings
+  - `'scene_type'` - string indicating the type of scene the camera is viewing
+  - `'video_transmit_mode'` - string indicating when video is transmitted to the cloud
+  - `'video_capture_mode'` - string indicating when video will being recorded
+  - `'video_bandwidth_factor'` - integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps'` to show what this setting translates to for display purposes
+  - `'video_resolution'` - string indicating the resolution of the video. When displaying the options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to
+  - `'video_quality'` - string indicating the quality of the video
+  - `'video_config'` - READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'` and `'video_bandwidth_factor'` settings/options
 
 ### Regions of Interest (ROIs)
 
@@ -128,7 +128,7 @@ ROIs can
   - characterize an object for later alert/event processing (dwell, transitions counting)
   - turn on certain detectors within a region
 
-ROIs within settings will be `'rois'`: { `\<roiname\>`: { `'roiid'`: `1437974150`, `'name'`: `'Rusty Region'`, `'...'` }. ROIs are enabled and disabled by `'active_rois'`: { `\<roiname\>`: `true`, `...` } to allow ROIs to easily be turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments
+ROIs within settings will be `'rois'`: { `'<roiname>'`: { `'roiid'`: `1437974150`, `'name'`: `'Rusty Region'`, ... }. ROIs are enabled and disabled by `'active_rois'`: { `'<roiname>'`: `true`, ... } to allow ROIs to easily be turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments
 
 Like the alert logic, `'rois'` and `'active_rois'` are accumulation settings - adding an object adds it to the holding object instead of replacing the entire object like most settings. Similarly, deleting an object removes it from the parent object, but leave the parent in place. Both also automatically trigger updates to the active ESN data streams
 
@@ -1114,7 +1114,7 @@ Adds an unattached Camera to the bridge
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}'
+curl -X PUT https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -1164,7 +1164,7 @@ Update Camera information
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[CAMERA_ID], "name": "[NAME]"}'
+curl -X POST https://login.eagleeyenetworks.com/g/device -d '{"id": "[CAMERA_ID], "name": "[NAME]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:"  --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -1215,7 +1215,7 @@ Delete a Camera from the bridge (effectively unassigning it, the camera can then
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G
+curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -1246,7 +1246,7 @@ Returns an array of arrays with each sub-array representing a Camera available t
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/device/list
+curl --request GET https://login.eagleeyenetworks.com/g/device/list --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
