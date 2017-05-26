@@ -208,7 +208,7 @@ The ease of constructing layouts is highly dependent on the robustness of the 3r
 
 Video playback functionality can be accessed through the `'/asset/play/video.{video_format}'` API. We will show You how to use this API to play live video, though the same API can also be used to play historic video
 
-Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on [this site](http://writecodeonline.com/javascript/) to generate the URL string
+Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on [this site](https://js.do) to generate the URL string
 
 The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [AUTH_KEY]. The [DEVICE_ID] represents the ID of the camera of interest. The [AUTH_KEY] is used for authentication and can be found in the response header of the `'/aaa/authorization'` API
 

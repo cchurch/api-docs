@@ -4,10 +4,14 @@
 The Eagle Eye Video APIs are publicly open for anyone to use <br>Users will need a valid API key to successfully make API calls
 
 **How do I get my API key?**<br id=FAQ-002>
-You can get an API key by filling out the form **[here](https://login.eagleeyenetworks.com/api_signup.html)**
+You can get an API key by filling out the form
+
+<aside><form action="https://login.eagleeyenetworks.com/api_signup.html"><button><b>&#128267;</b> Request API Key</button></form></aside>
 
 **I found an error with Eagle Eye Video API, where should I report it?**<br id=FAQ-003>
-For API specific questions, issues or feature requests, please submit a request **[here](http://www.eagleeyenetworks.com/support/)**
+For API specific questions, issues or feature requests, please submit a request
+
+<aside><form action="http://www.eagleeyenetworks.com/support"><button><b>&#128030;</b> Report a Bug</button></form></aside>
 
 **How do you charge for the Eagle Eye Video API use?**<br id=FAQ-004>
 The Eagle Eye Video API does not require any additional fees for use <br>The only fees are the per camera fees for the use of the Eagle Eye system
