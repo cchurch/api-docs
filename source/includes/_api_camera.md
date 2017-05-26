@@ -27,7 +27,7 @@ The set of all settings is potentially large and far more than most users will e
 
 An implication of this model the *user settings* object is a generic object that is only lightly interpreted by the device. Settings that match a known names (i.e. are within the camera base or mmv settings) will be utilized, but all values will be stored and returned as part of the *user settings* field. This can be used to support user interface elements on a per camera basis with values the bridge/camera do not interpret
 
-### Read Camera Settings (GET device 'camera_settings' property)
+### Read Camera Settings (<small>GET device `'camera_settings'` property</small>)
 
 When getting the camera settings, a Json string representing a Json object is returned containing:
 
@@ -63,25 +63,25 @@ When getting the camera settings, a Json string representing a Json object is re
           - months(1-12) (defaults to \*)
       - each field can be
           - single integer
-          - string “\*” indicating all
+          - string `'*'` indicating all
           - list of integers
       - If both `'days'` fields are set, the action will be ran on the union
 
-### Update Camera Settings (POST device 'camera_settings_add' argument)
+### Update Camera Settings (<small>POST device `'camera_settings_add'` argument</small>)
 
 To update/set settings (i.e. override default setting value with a *user* setting), a Json string is sent representing a Json object containing:
 
   - `'settings'` - an optional object with members to be overlaid over base settings value. Values are bare (that is simply replacements for the `'v'` field of base)
   - `'schedules'` - an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value
 
-### Delete Camera Settings (POST device 'camera_settings_delete' argument)
+### Delete Camera Settings (<small>POST device `'camera_settings_delete'` argument</small>)
 
 To delete/unset settings (i.e. return to default setting value), a Json string is sent representing a Json object containing:
 
   - `'settings'` - an optional object with members to be removed from user settings. Values ignored
   - `'schedules'` - an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored
 
-### Camera Settings Currently Supported
+### Camera Settings (<small>Currently Supported</small>)
 
 Each camera make/model/version is different, thus not every setting is supported for some cameras, but here is list of core camera settings that are relevant to most applications:
 
@@ -115,9 +115,9 @@ Each camera make/model/version is different, thus not every setting is supported
   - `'video_bandwidth_factor'` - integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps'` to show what this setting translates to for display purposes
   - `'video_resolution'` - string indicating the resolution of the video. When displaying the options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to
   - `'video_quality'` - string indicating the quality of the video
-  - `'video_config'` - READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'` and `'video_bandwidth_factor'` settings/options
+  - `'video_config'` - *Read-Only* object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'` and `'video_bandwidth_factor'` settings/options
 
-### Regions of Interest (ROIs)
+### Regions of Interest (<small>ROIs</small>)
 
 ROIs will be defined by simple polygons - sequences of x,y coordinates that form a closed object, edge crosses are illegal and will have bizarre results. Each ROI will describe a portion of the screen. ROIs can overlap and priority (higher wins) determines what sensitivity settings to use. For overlapping ROIs, all will get motion block detection and can trigger ROI motion spans
 
