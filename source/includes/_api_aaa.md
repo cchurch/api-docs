@@ -355,6 +355,8 @@ HTTP Status Code | Description
 ## Single Sign On
 <!--===================================================================-->
 
+<aside class="success">This service is currently under development and not yet functional</aside>
+
 SSO allows a reseller to maintain account management and act as an identity provider to have their system proxy the authorization requests to Eagle Eye Network servers after users have logged into the identity providers system
 
 This is done through the standard SAML (Security Assertion Markup Language) and as such the identity provider will setup their account with a **brand_saml_publickey_ret** and **brand_saml_namedid_path**
