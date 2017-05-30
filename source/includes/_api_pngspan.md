@@ -59,8 +59,8 @@ curl -G https://login.eagleeyenetworks.com/pngspan/span.png -d "start_timestamp=
 
 Parameter            | Data Type    | Description | Is Required
 ---------            | ---------    | ----------- | -----------
-**start_timestamp**  | string       | Start Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#een-timestamp) | true
-**end_timestamp**    | string       | End Timestamp in EEN format: [YYYYMMDDHHMMSS.NNN](#een-timestamp) | true
+**start_timestamp**  | string       | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**    | string       | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **width**            | int          | Width in pixels of resulting PNG. Must be an integer greater than 0 | true
 **id**               | string       | Camera ID | true
 **foreground_color** | string       | Color of foreground (active). If both fg and bg have 0 for alpha, assumed fully opaque (0xff). 32 bit ARGB color | true
