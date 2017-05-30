@@ -101,8 +101,8 @@ Header            | Data Type      | Description
 x-ee-timestamp    | type-timestamp | Specifies asset type and timestamp of the provided image <br><br>Type: video, preview, thumb, event
 x-ee-prev         | type-timestamp <br>*(or `'unknown'`)* | Specifies asset type of the previous image matching the class filter or `'unknown'` if the previous image was too complex to figure out
 x-ee-next         | type-timestamp <br>*(or `'unknown'`)* | Specifies asset type of the following image matching the class filter or `'unknown'` if the following image was too complex to figure out
-content-type      | image/jpeg     | Specifies the content type
-location          | /asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb | Identifies actual asset time of the image in response
+content-type      | `'image/jpeg'` | Specifies the content type
+location          | `'/asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb'` | Identifies actual asset time of the image in response
 
 > Request
 
@@ -403,7 +403,7 @@ Parameter           | Data Type    | Description   | Is Required
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
 count               | int          | Used instead of or with an `'end_timestamp'` argument. If used with an `'end_timestamp'` argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the `'end_timestamp'` argument, returns N entries. Supports negative values, which return N entries before sorted in reverse order (i.e. `'-5'` will return 5 events prior to the specified time)
-o                   | string, enum | Additional modifier options <br><br>enum: coalesce *(coalesces spans together if the start or end timestamp of either object overlaps with another, otherwise returns the same output)*
+o                   | string, enum | Additional modifier options <br><br>enum: coalesce <small>(coalesces spans together if the start or end timestamp of either object overlaps with another, otherwise returns the same output)</small>
 
 > Json Response
 
