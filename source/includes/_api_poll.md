@@ -115,109 +115,114 @@ IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits wer
 
 <aside class="notice">Each event type is returned with the EEN formatted timestamp: YYYYMMDDhhmmss.xxx</aside>
 
-***Note:*** Event object descriptions marked with '&#9702;' can be expanded for additional information on the event
+**Note:** Event object descriptions marked with '&#9702;' can be expanded for additional information on the event
 
-Four CC   | Description                                                        | Returned parameters
--------   | -----------                                                        | -------------------
-VRES      | Video start event                                                  | cameraid, videoid, format, status
-VREE      | Video end event                                                    | cameraid, videoid, videosize, format, status
-VRKF      | Video key frame event                                              | cameraid, videoid, file_offset, format
-VRSU      | Video update event                                                 | cameraid, videoid, format, status
-PRSS      | Preview stream start event                                         | cameraid, previewid, frame_delay, duration, flags, format, status
-PRTH      | Thumbnail event                                                    | cameraid, previewid, eventid, file_offset, frame_size
-PRFR      | Preview event                                                      | cameraid, previewid, file_offset, frame_size
-PRFB      | Preview backing event                                            | cameraid, previewid, file_offset, frame_size
-PRFU      | Preview upload event                                             | cameraid, file_offset, frame_size
-PRSE      | Preview stream end event                                           | cameraid, previewid, status
-PRSU      | Preview stream update event                                        | cameraid, previewid, status
-EMES      | Motion start event                                                 | cameraid, videoid, eventid
-EMEU      | Motion update event                                              | cameraid, videoid, eventid
-EMEE      | Motion end event                                                   | cameraid, eventid
-ESES      | Stream start event                                                 | cameraid, videoid, eventid
-EAES      | <details><summary>Always record video start event &#9702;</summary><p><br>Background "always" record video event has started</br></p></details>  | cameraid, videoid, eventid
-EPES      | <details><summary>PTZ camera event start &#9702;</summary><p><br>PTZ camera move/change event has started</br></p></details>  | cameraid, videoid, eventid
-ENES      | App-specific event start                                         | cameraid, videoid, eventid, ns
-ENEU      | <details><summary>App-specific update event &#9702;</summary><p><br>Heartbeat for an application event (10s interval)</br></p></details>  | cameraid, videoid, eventid, ns
-EVVS      | <details><summary>Video swap event &#9702;</summary><p><br>The event spans across two different video IDs: `'eventid'` and `'videoid'` (new swapped-in ID)</br></p></details> | cameraid, videoid, eventid
-ESEE      | Stream stop event                                                  | cameraid, eventid
-EAEE      | <details><summary>Always record video end event &#9702;</summary><p><br>Background "always" record video event has ended</br></p></details>  | cameraid, eventid
-EPEE      | <details><summary>PTZ camera event end &#9702;</summary><p><br>PTZ camera move/change event has ended</br></p></details>  | cameraid, eventid
-ENEE      | App-specific event end                                           | cameraid, eventid, ns
-ECON      | Camera online event                                                | cameraid
-ECOF      | Camera offline event                                               | cameraid
-RCON      | Camera register online event                                     | cameraid, registerid
-RCOF      | Camera register offline event                                    | cameraid, registerid
-RCHB      | Camera register heartbeat event                                  | cameraid, registerid
-AELI      | Account log in event                                               | cameraid, status, source_userid
-AELO      | Account log out event                                              | cameraid, status, source_userid
-AEDO      | Download video event                                               | cameraid, status, source_userid, source_accountid, resource_type, deviceid, endtime
-AEUC      | Create user event                                                  | cameraid, status, target_userid, source_userid, source_accountid
-AEUD      | Delete user event                                                  | cameraid, status, target_userid, source_userid, source_accountid
-AECC      | User configuration change event                                    | cameraid, status, target_userid, source_userid, source_accountid, values
-AELD      | Live display event                                                 | cameraid, status, source_userid, deviceid
-AEPT      | Pan tilt zoom event                                                | cameraid, status, source_userid, deviceid
-AEEC      | Create layout event                                              | cameraid, status, source_userid, source_accountid, layoutid
-AEED      | Delete layout event                                                | cameraid, status, source_userid, source_accountid, layoutid
-AEEL      | Layout change event                                                | cameraid, status, source_userid, source_accountid, layoutid, values
-AEAC      | Create account event                                               | cameraid, status, new_accountid, source_userid, source_accountid
-AEAD      | Delete account event                                               | cameraid, status, source_userid, source_accountid
-AEAH      | Account change event                                               | cameraid, status, source_userid, source_accountid, values
-AEDC      | Create device event                                                | cameraid, status, deviceid, source_userid, source_accountid
-AEDD      | Delete device event                                                | cameraid, status, deviceid, source_userid, source_accountid
-AEDH      | Device change event                                                | cameraid, status, deviceid, source_userid, source_accountid, values
-CECF      | Camera found event                                                 | cameraid, uuid, svc_state
-CECL      | Camera lost event                                                | cameraid
-CSAT      | Camera stream attach event <small>**(DEPRECATED)**</small>         | cameraid, stream_format, stream_type
-CSDT      | Camera stream detach event <small>**(DEPRECATED)**</small>         | cameraid, stream_format, stream_type
-CSAU      | <details><summary>Camera stream attach event &#9702;</summary><p><br>Camera has started streaming data to bridge (`'streamid'` is common with CSDU and CSSU)</br></p></details>  | cameraid, streamid, stream_format, stream_type
-CSDU      | <details><summary>Camera stream detach event &#9702;</summary><p><br>Camera has stopped streaming data to bridge</br></p></details>  | cameraid, streamid, stream_format, stream_type
-COFF      | Camera off event                                                   | cameraid
-CONN      | Camera on event                                                    | cameraid
-COBC      | Camera bounce event                                                | cameraid
-CSTS      | Camera settings change event <small>**(DEPRECATED)**</small>       | cameraid, sequence, settings
-CZTS      | <details><summary>Camera settings change event &#9702;</summary><p><br>Camera settings have been changed (data is zlib compressed)</br></p></details>  | cameraid, sequence, settings
-CSTC      | Camera settings change event <small>**(DEPRECATED)**</small>       | cameraid, sequence, settings
-CZTC      | <details><summary>Individual camera setting change event &#9702;</summary><p><br>Indicated camera setting has changed to the new value (data is zlib compressed)</br></p></details>  | cameraid, userid, flags, command, change
-CZDC      | <details><summary>Camera settings change event &#9702;</summary><p><br>Camera settings have changed from old to new (data is zlib compressed)</br></p></details>  | cameraid, userid, flags, command, change
-CPRG      | Camera purge event                                                 | cameraid, day, bytes
-CDLT      | Camera data lost event                                             | cameraid, day, bytes
-CBWS      | Camera bandwidth sample event                                      | cameraid, kbytesondisk, bytesstored, bytesshaped, bytesstreamed, bytesfreed, daysondisk
-BBWS      | <details><summary>Bridge bandwidth sample event &#9702;</summary><p><br>Stats regarding the amount of data all devices on this bridge have captured and sent to the cloud</br></p></details> | cameraid, kbytessize, kbytesavail, bytesstored, bytesshaped, bytesstreamed, bytesfreed
-SBWS      | <details><summary>Stream bandwidth sample event &#9702;</summary><p><br>If enabled, the last N seconds of bandwidth from the camera</br></p></details>  | cameraid, bw10, bw60, bw300, streamtype
-SBW0      | <details><summary>Stream bandwidth sample0 event &#9702;</summary><p><br>Samples of camera bandwidth for stream 0 <br><br>`'PREV'` - base bandwidth preview channel+thumbs (all frames at selected rate/quality, no compression)</br></p></details>  | cameraid, bw10, bw60, bw300
-SBW1      | <details><summary>Stream bandwidth sample1 event &#9702;</summary><p><br>Samples of camera bandwidth for stream 1 <br><br>`'PSND'` - bandwidth of what *should be sent* <br>`'VIDC'` - video captured bandwidth (video and audio together)</br></p></details>  | cameraid, bw10, bw60, bw300
-SBW2      | <details><summary>Stream bandwidth sample2 event &#9702;</summary><p><br>Samples of camera bandwidth for stream 2 <br><br>`'VIDE'` - base bandwidth of the video stream (not motion filtered)</br></p></details>  | cameraid, bw10, bw60, bw300
-SBW3      | <details><summary>Stream bandwidth sample3 event &#9702;</summary><p><br>Samples of camera bandwidth for stream 3 <br><br>`'AUDI'` - base bandwidth of the audio stream (not motion filtered)</br></p></details>  | cameraid, bw10, bw60, bw300
-SBW4      | <details><summary>Stream bandwidth sample4 event &#9702;</summary><p><br>Samples of camera bandwidth for stream 4 <br><br>`'VIDC'` - video captured bandwidth (video and audio together)</br></p></details>  | cameraid, bw10, bw60, bw300
-BBTW      | <details><summary>Bridge bandwidth tagflow event &#9702;</summary><p><br>Stats regarding bandwidth between bridge and cloud</br></p></details>  | cameraid, ip, bytes_sent, bytes_rcvd, active_write_us, paused_write_us
-BBOO      | Bridge boot event                                                | cameraid, booted
-MRBX      | Motion box event                                                   | cameraid
-MRSZ      | Motion size reports event                                          | cameraid, flags, motion
-ROMS      | Region of interest motion start event                              | cameraid, roiid, videoid, eventid
-ROMU      | <details><summary>Region of interest motion update event &#9702;</summary><p><br>Heartbeat for a ROI motion event</br></p></details>  | cameraid, roiid, videoid, eventid
-ROME      | Region of interest motion end event                                | cameraid, eventid
-ALMS      | Motion alert start event                                           | cameraid, eventid, alertid, alertmotionid
-ALME      | Motion alert end event                                             | cameraid, alertmotionid
-ALRS      | Region of interest alert start event                               | cameraid, eventid, alertid, alertroiid
-ALRE      | Region of interest alert end event                                 | cameraid, alertroiid
-AEDA      | Device alert event                                                 | cameraid, status, deviceid, source_userid, source_accountid, values
-AEDN      | Device alert notification event                                    | cameraid, status, target_deviceid, triggerid, starttime, endtime, target_userid, json
-NOOP      | No operation event                                               | cameraid
-CSST      | Camera stream stats event <small>**(DEPRECATED)**</small>        | cameraid, streamtype, total_expected, total_rcvd, delta_expected, delta_rcvd, interval
-CSSU      | <details><summary>Camera stream stats event &#9702;</summary><p><br>Camera is sending stats for the stream between camera and bridge (Heartbeat for CSAU/CSDU)</br></p></details>  | cameraid, streamtype, streamformat, total_expected, total_rcvd, delta_expected, delta_rcvd, interval, streamid
-CCCF      | <details><summary>Curl fail event &#9702;</summary><p><br>Failed communication between bridge and camera with indicated cURL error code</br></p></details>  | cameraid, errcode
-BUBW      | <details><summary>Upload bandwidth sample event &#9702;</summary><p><br>Data is periodically sent to cloud to test bandwidth, this metric is the result (`'bytessent'` in N millisec)</br></p></details>  | cameraid, bytessent, millisecs
-ABRT      | Camera abort event                                               | cameraid, aborted
-AABT      | Camera archiver abort event <small>**(INTERNAL USE ONLY)**</small>  | cameraid, aborted
-NVPT      | Name value table event                                           | cameraid, ns, key_offset, op, mpack
-ANNT      | Annotation event                                                 | cameraid, ns, flags, uuid, seq, op, mpack
-SCRN      | Screen connect event                                             | cameraid, ns, uuid, mpack
-CCLC      | <details><summary>Cloud connect event &#9702;</summary><p><br>Bridge connected to the cloud over indicated connection</br></p></details>  | cameraid, src_ip, dest_ip, src_port, dest_port, ctype
-CCLD      | <details><summary>Cloud disconnect event &#9702;</summary><p><br>Bridge lost connection to the cloud</br></p></details>  | cameraid, src_ip, dest_ip, src_port, dest_port, ctype, reason, seconds
-SSTE      | Streamer status event                                            | cameraid, stype, event, seconds
-ITFU      | Interface update event                                           | cameraid, ip, flags, valid, mpack
-PTZS      | <details><summary>PTZ status event &#9702;</summary><p><br>Snapshot of the PTZ state as point in time (Used to track PTZ during movement)</br></p></details>  | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
+<!-- Order: category (example groups: account, user, camera, stream), then start, end, update -->
 
+Four&nbsp;CC | Description                                                     | Returned parameters
+------------ | -----------                                                     | -------------------
+VRES	| Video record start event                                               | cameraid, videoid, format, status
+VREE	| Video record end event                                                 | cameraid, videoid, videosize, format, status
+VRKF	| Video record key frame event                                           | cameraid, videoid, file_offset, format
+EAES	| <details><summary>Always record video start event&nbsp;&#9702;</summary><p><br>Background "always" record video event has started</br></p></details> | cameraid, videoid, eventid
+EAEE	| <details><summary>Always record video end event&nbsp;&#9702;</summary><p><br>Background "always" record video event has ended</br></p></details> | cameraid, eventid
+AEDO	| Video download event                                                   | cameraid, status, source_userid, source_accountid, resource_type, deviceid, endtime
+EVVS	| <details><summary>Video swap event&nbsp;&#9702;</summary><p><br>The event spans across two different video IDs: `'eventid'` and `'videoid'` (new swapped-in ID)</br></p></details> | cameraid, videoid, eventid
+PRTH	| Thumbnail event                                                        | cameraid, previewid, eventid, file_offset, frame_size
+PRFR	| <details><summary>Preview event&nbsp;&#9702;</summary><p><br>indicates a preview frame has been recorded</br></p></details> | cameraid, previewid, file_offset, frame_size
+PRFB	| Preview backing event                                                  | cameraid, previewid, file_offset, frame_size
+EMES	| Motion start event                                                     | cameraid, videoid, eventid
+EMEE	| Motion end event                                                       | cameraid, eventid
+EMEU	| <details><summary>Motion update event&nbsp;&#9702;</summary><p><br>Heartbeat for a motion event <br>(10 sec interval)</br></p></details> | cameraid, videoid, eventid
+MRBX	| <details><summary>Motion box event&nbsp;&#9702;</summary><p><br>Motion has occurred in the indicated region (coordinates are from top right corner in fraction of 0xffff)</br></p></details> | cameraid
+MRSZ	| <details><summary>Motion size reports event&nbsp;&#9702;</summary><p><br>Indicates the amount of motion on screen and for each active ROI (in ratio over 0xffff as percentage of screen) <br><br>Flag is `'0x1'` - motion greater than defined threshold (region is *in motion*)</br></p></details> | cameraid, flags, motion
+ALMS	| <details><summary>Motion alert start event&nbsp;&#9702;</summary><p><br>Motion event has occurred (related to the indicated alert)</br></p></details> | cameraid, eventid, alertid, alertmotionid
+ALME	| <details><summary>Motion alert end event&nbsp;&#9702;</summary><p><br>Motion event has ended (related to the indicated alert)</br></p></details> | cameraid, alertmotionid
+ROMS	| <details><summary>ROI motion start event&nbsp;&#9702;</summary><p><br>Region of interest motion start event</br></p></details> | cameraid, roiid, videoid, eventid
+ROME	| <details><summary>ROI motion end event&nbsp;&#9702;</summary><p><br>Region of interest motion end event</br></p></details> | cameraid, eventid
+ROMU	| <details><summary>ROI motion update event&nbsp;&#9702;</summary><p><br>Heartbeat for a ROI motion event</br></p></details> | cameraid, roiid, videoid, eventid
+ALRS	| <details><summary>ROI alert start event&nbsp;&#9702;</summary><p><br>ROI motion event linked to alert has started</br></p></details> | cameraid, eventid, alertid, alertroiid
+ALRE	| <details><summary>ROI alert end event&nbsp;&#9702;</summary><p><br>ROI motion event linked to alert has ended</br></p></details> | cameraid, alertroiid
+AEDA	| Device alert event                                                     | cameraid, status, deviceid, source_userid, source_accountid, values
+AEDN	| Device alert notification event                                        | cameraid, status, target_deviceid, triggerid, starttime, endtime, target_userid, json
+AEDC	| <details><summary>Create device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
+AEDD	| <details><summary>Delete device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
+AEDH	| <details><summary>Device change event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid, values
+ESES	| <details><summary>Stream start event&nbsp;&#9702;</summary><p><br>User-requested stream event has started</br></p></details> | cameraid, videoid, eventid
+ESEE	| <details><summary>Stream end event&nbsp;&#9702;</summary><p><br>User-requested stream event has ended</br></p></details> | cameraid, eventid
+SBWS	| <details><summary>Stream bw sample event&nbsp;&#9702;</summary><p><br>If enabled, the last N seconds of bandwidth from the camera</br></p></details> | cameraid, bw10, bw60, bw300, streamtype
+SBW0  | <details><summary>Stream bw sample 0 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 0 <br><br>`'PREV'` - base bandwidth preview channel+thumbs (all frames at selected rate/quality, no compression)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW1  | <details><summary>Stream bw sample 1 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 1 <br><br>`'PSND'` - bandwidth of what *should be sent* <br>`'VIDC'` - video captured bandwidth (video and audio together)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW2  | <details><summary>Stream bw sample 2 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 2 <br><br>`'VIDE'` - base bandwidth of the video stream (not motion filtered)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW3  | <details><summary>Stream bw sample 3 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 3 <br><br>`'AUDI'` - base bandwidth of the audio stream (not motion filtered)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW4  | <details><summary>Stream bw sample 4 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 4 <br><br>`'VIDC'` - video captured bandwidth (video and audio together)</br></p></details> | cameraid, bw10, bw60, bw300
+SSTE	| Streamer status event                                                  | cameraid, stype, event, seconds
+CSAU	| <details><summary>Camera stream attach event&nbsp;&#9702;</summary><p><br>Camera has started streaming data to bridge (`'streamid'` is common with CSDU and CSSU)</br></p></details> | cameraid, streamid, stream_format, stream_type
+CSDU	| <details><summary>Camera stream detach event&nbsp;&#9702;</summary><p><br>Camera has stopped streaming data to bridge</br></p></details> | cameraid, streamid, stream_format, stream_type
+CSSU	| <details><summary>Camera stream stats event&nbsp;&#9702;</summary><p><br>Camera is sending stats for the stream between camera and bridge (Heartbeat for CSAU/CSDU)</br></p></details> | cameraid, streamtype, streamformat, total_expected, total_rcvd, delta_expected, delta_rcvd, interval, streamid
+CECF	| <details><summary>Camera found event&nbsp;&#9702;</summary><p><br>Camera has been detected by the bridge</br></p></details> | cameraid, uuid, svc_state
+CECL	| <details><summary>Camera lost event&nbsp;&#9702;</summary><p><br>Camera has stopped responding correctly after being found by the bridge</br></p></details> | cameraid
+RCON	| Camera online event                                                    | cameraid, registerid
+RCOF	| Camera offline event                                                   | cameraid, registerid
+CONN	| Camera on event                                                        | cameraid
+COFF	| Camera off event                                                       | cameraid
+RCHB	| <details><summary>Camera heartbeat event&nbsp;&#9702;</summary><p><br>Heartbeat indicating a camera is still registered</br></p></details> | cameraid, registerid
+ABRT	| <details><summary>Camera abort event&nbsp;&#9702;</summary><p><br>Bridge process restarted (abort all camera streams)</br></p></details> | cameraid, aborted
+COBC	| <details><summary>Camera bounce event&nbsp;&#9702;</summary><p><br>Camera has camera has been forced to restart</br></p></details> | cameraid
+CZTC	| <details><summary>Camera setting change event&nbsp;&#9702;</summary><p><br>Indicated camera setting has changed to the new value (data is zlib compressed)</br></p></details> | cameraid, userid, flags, command, change
+CZTS	| <details><summary>Camera settings change event&nbsp;&#9702;</summary><p><br>Camera settings have been changed (data is zlib compressed)</br></p></details> | cameraid, sequence, settings
+CZDC	| <details><summary>Camera settings change event&nbsp;&#9702;</summary><p><br>Camera settings have changed from old to new (data is zlib compressed)</br></p></details> | cameraid, userid, flags, command, change
+CPRG	| <details><summary>Camera purge event&nbsp;&#9702;</summary><p><br>Camera has purged data due to storage limitations</br></p></details> | cameraid, day, bytes
+CDLT	| <details><summary>Camera data lost event&nbsp;&#9702;</summary><p><br>Camera has deleted data within retention interval due to storage limitations</br></p></details> | cameraid, day, bytes
+CBWS	| <details><summary>Camera bw sample event&nbsp;&#9702;</summary><p><br>Data amount a camera has captured/sent to the cloud</br></p></details> | cameraid, kbytesondisk, bytesstored, bytesshaped, bytesstreamed, bytesfreed, daysondisk
+BBWS	| <details><summary>Bridge bw sample event&nbsp;&#9702;</summary><p><br>Stats regarding the amount of data all devices on this bridge have captured and sent to the cloud</br></p></details> | cameraid, kbytessize, kbytesavail, bytesstored, bytesshaped, bytesstreamed, bytesfreed
+BBTW	| <details><summary>Bridge bw tagflow event&nbsp;&#9702;</summary><p><br>Stats regarding bandwidth between bridge and cloud</br></p></details> | cameraid, ip, bytes_sent, bytes_rcvd, active_write_us, paused_write_us
+BUBW	| <details><summary>Upload bw sample event&nbsp;&#9702;</summary><p><br>Metric of data being periodically sent to the cloud to test bandwidth (`'bytessent'` in N millisec)</br></p></details> | cameraid, bytessent, millisecs
+BBOO	| Bridge boot event                                                      | cameraid, booted
+NOOP	| No operation event                                                     | cameraid
+AEAC	| Create account event                                                   | cameraid, status, new_accountid, source_userid, source_accountid
+AEAD	| Delete account event                                                   | cameraid, status, source_userid, source_accountid
+AEAH	| Account change event                                                   | cameraid, status, source_userid, source_accountid, values
+AELI	| Account log in event                                                   | cameraid, status, source_userid
+AELO	| Account log out event                                                  | cameraid, status, source_userid
+AEUC	| Create user event                                                      | cameraid, status, target_userid, source_userid, source_accountid
+AEUD	| Delete user event                                                      | cameraid, status, target_userid, source_userid, source_accountid
+AECC	| User setting change event                                              | cameraid, status, target_userid, source_userid, source_accountid, values
+AEEC	| Create layout event                                                    | cameraid, status, source_userid, source_accountid, layoutid
+AEED	| Delete layout event                                                    | cameraid, status, source_userid, source_accountid, layoutid
+AEEL	| Layout change event                                                    | cameraid, status, source_userid, source_accountid, layoutid, values
+CCCF	| <details><summary>Curl fail event&nbsp;&#9702;</summary><p><br>Failed communication between bridge and camera with indicated cURL error code</br></p></details> | cameraid, errcode
+ANNT	| Annotation event                                                       | cameraid, ns, flags, uuid, seq, op, mpack
+NVPT	| Name value table event                                                 | cameraid, ns, key_offset, op, mpack
+ITFU	| Interface update event                                                 | cameraid, ip, flags, valid, mpack
+SCRN	| Screen connect event                                                   | cameraid, ns, uuid, mpack
+AELD	| Live display event                                                     | cameraid, status, source_userid, deviceid
+CCLC	| <details><summary>Cloud connect event&nbsp;&#9702;</summary><p><br>Bridge connected to the cloud over indicated connection</br></p></details> | cameraid, src_ip, dest_ip, src_port, dest_port, ctype
+CCLD	| <details><summary>Cloud disconnect event&nbsp;&#9702;</summary><p><br>Bridge lost connection to the cloud</br></p></details> | cameraid, src_ip, dest_ip, src_port, dest_port, ctype, reason, seconds
+ENES	| App-specific event start                                               | cameraid, videoid, eventid, ns
+ENEE	| App-specific event end                                                 | cameraid, eventid, ns
+ENEU	| <details><summary>App-specific update event&nbsp;&#9702;</summary><p><br>Heartbeat for an application event <br>(10 sec interval)</br></p></details> | cameraid, videoid, eventid, ns
+AEPT	| <details><summary>PTZ event&nbsp;&#9702;</summary><p><br>Pan tilt zoom event</br></p></details> | cameraid, status, source_userid, deviceid
+EPES	| <details><summary>PTZ camera event start&nbsp;&#9702;</summary><p><br>PTZ camera move/change event has started</br></p></details> | cameraid, videoid, eventid
+EPEE	| <details><summary>PTZ camera event end&nbsp;&#9702;</summary><p><br>PTZ camera move/change event has ended</br></p></details> | cameraid, eventid
+PTZS	| <details><summary>PTZ status event&nbsp;&#9702;</summary><p><br>Snapshot of the PTZ state as point in time (For tracking PTZ during movement)</br></p></details> | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
+PRSS	| <small>Preview stream start event <br>**(INTERNAL USE ONLY)**</small>  | cameraid, previewid, frame_delay, duration, flags, format, status
+PRSE	| <small>Preview stream end event <br>**(INTERNAL USE ONLY)**</small>    | cameraid, previewid, status
+PRFU	| <small>Preview upload event <br>**(INTERNAL USE ONLY)**</small>        | cameraid, file_offset, frame_size
+AABT	| <small>Camera archiver abort event <br>**(INTERNAL USE ONLY)**</small> | cameraid, aborted
+ECON	| <small>Camera online event <br>**(DEPRECATED)**</small>                | cameraid
+ECOF	| <small>Camera offline event <br>**(DEPRECATED)**</small>               | cameraid
+CSTS	| <small>Camera settings change event <br>**(DEPRECATED)**</small>       | cameraid, sequence, settings
+CSTC	| <small>Camera settings change event <br>**(DEPRECATED)**</small>       | cameraid, sequence, settings
+CSAT	| <small>Camera stream attach event <br>**(DEPRECATED)**</small>         | cameraid, stream_format, stream_type
+CSDT	| <small>Camera stream detach event <br>**(DEPRECATED)**</small>         | cameraid, stream_format, stream_type
+CSST	| <small>Camera stream stats event <br>**(DEPRECATED)**</small>          | cameraid, streamtype, total_expected, total_rcvd, delta_expected, delta_rcvd, interval
+PRSU	| <small>Preview stream update event <br>**(DEPRECATED)**</small>        | cameraid, previewid, status
+VRSU	| <small>Video update event <br>**(DEPRECATED)**</small>                 | cameraid, videoid, format, status
+
+<!-- TODO: Unhide and fill out the below table when the information gets delivered -->
+
+<details hidden>
 ### Event Parameters
 
 Parameter        | Description
@@ -311,6 +316,7 @@ x                | <p hidden>???</p>
 y                | <p hidden>???</p>
 z                | <p hidden>???</p>
 zoom_status      | <p hidden>???</p>
+</details>
 
 <!--===================================================================-->
 ## Initialize Poll
