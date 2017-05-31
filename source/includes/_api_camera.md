@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. Get method is available to any user with Camera `'R'` (Read) permission. Methods Post, Delete are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. Put method is only available to account superusers
+The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. The GET method is available to any user with Camera `'R'` (Read) permission. Methods POST, DELETE are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. PUT method is only available to account superusers
 
 When adding a new Camera, the name and settings parameters are required. The settings parameter should contain the ID of the bridge and the GUID of the Camera
 
@@ -121,12 +121,12 @@ Each camera make/model/version is different, thus not every setting is supported
 
 ROIs will be defined by simple polygons - sequences of x,y coordinates that form a closed object, edge crosses are illegal and will have bizarre results. Each ROI will describe a portion of the screen. ROIs can overlap and priority (higher wins) determines what sensitivity settings to use. For overlapping ROIs, all will get motion block detection and can trigger ROI motion spans
 
-ROIs can
+ROIs can:
 
-  - adjust DCT sensitivity and detection properties (ignore stuff in an area, track stuff aggressively in an area)
-  - cause specific events
-  - characterize an object for later alert/event processing (dwell, transitions counting)
-  - turn on certain detectors within a region
+  - Adjust DCT sensitivity and detection properties (ignore stuff in an area, track stuff aggressively in an area)
+  - Cause specific events
+  - Characterize an object for later alert/event processing (dwell, transitions counting)
+  - Turn on certain detectors within a region
 
 ROIs within settings will be `'rois'`: { `'<roiname>'`: { `'roiid'`: `1437974150`, `'name'`: `'Rusty Region'`, ... }. ROIs are enabled and disabled by `'active_rois'`: { `'<roiname>'`: `true`, ... } to allow ROIs to easily be turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments
 
@@ -134,19 +134,19 @@ Like the alert logic, `'rois'` and `'active_rois'` are accumulation settings - a
 
 ROIs can produce events and force video recording on activity within them. These events are distinct from motion events (whole screen events). Each ROI event has a simple snapshot algorithm the grabs a snapshot immediately, as opposed to the optimized object tracking for motion events. Since ROIs are presumed to be smaller, this should result in good summary images
 
-ROI events are reported by the ROMS and ROME etags
+ROI [events](#event-objects) are reported by the ROMS and ROME etags:
 
 ROMS
 
-  - cameraid (guint32)
-  - eventid(guint32) - unique to this event
-  - roiid(guint32) - ROI ID from the ROI definition
-  - videoid(guint32) - ID of the associated video
+  - cameraid <small>(guint32)</small> - ID of the device this event was reported by
+  - eventid <small>(guint32)</small> - ID unique to this event
+  - roiid <small>(guint32)</small> - ROI ID from the ROI definition
+  - videoid <small>(guint32)</small> - ID of the associated video
 
 ROME
 
-  - cameraid (guint32)
-  - eventid(guint32) - unique to this event
+  - cameraid <small>(guint32)</small> - ID of the device this event was reported by
+  - eventid <small>(guint32)</small> - ID unique to this event
 
 <!--===================================================================-->
 ## Camera Model
@@ -195,14 +195,14 @@ ROME
         "intf": "Camera LAN",
         "camera_retention": 2592000000,
         "tagmap_status_state": 2,
-        "camera_newest": "20141006190516.702",
-        "camera_oldest": "20140906000000.000",
+        "camera_newest": "20181006190516.702",
+        "camera_oldest": "20180906000000.000",
         "connect": "STRM",
         "uuid": "c6d11f36-9e63-11e1-a5b0-00408cdf9191",
         "service": "ATTD",
         "make": "AXIS",
         "ipaddr": "*169.254.12.141,10.143.236.65",
-        "ts": "20141006182806.570",
+        "ts": "20181006182806.570",
         "version": "5.40.9.2",
         "admin_password": null,
         "esn": "1000f60d",
@@ -212,12 +212,12 @@ ROME
         "mac": "00:40:8C:DF:91:91",
         "proxy": "secondary",
         "bridgeid": "100a9af6",
-        "now": "20141006210729.065",
+        "now": "20181006210729.065",
         "class": "camera",
         "status_hex": "001e003f",
-        "camera_now": "20141006210729.688",
-        "camera_abs_newest": "20141006190516.702",
-        "camera_abs_oldest": "20140906000000.000",
+        "camera_now": "20181006210729.688",
+        "camera_abs_newest": "20181006190516.702",
+        "camera_abs_oldest": "20180906000000.000",
         "model": "AXIS M1054",
         "camtype": "ONVIF"
     },
@@ -1132,7 +1132,7 @@ tags      | array[string] | Array of strings each representing a tag name
 
 ```json
 {
-  "id": "100c339a"
+    "id": "100c339a"
 }
 ```
 
@@ -1185,7 +1185,7 @@ camera_parameters_delete | json          | Json object of camera parameters/sett
 
 ```json
 {
-  "id": "100c339a"
+    "id": "100c339a"
 }
 ```
 
@@ -1241,7 +1241,7 @@ HTTP Status Code | Description
 ## Get List of Cameras
 <!--===================================================================-->
 
-Returns an array of arrays with each sub-array representing a Camera available to the user. The `'service_status'` attribute is either to `'ATTD'` or `'IGND'`. If the service_status is `'ATTD'`, the camera is attached to a bridge. If the service_status is `'IGND'`, the camera is unattached from any bridge and is available to be attached
+Returns an array of arrays with each sub-array representing a Camera available to the user. The `'service_status'` attribute is set either to `'ATTD'`, `'IGND'`, `'IDLE'` or `'ERSE'`. If the `'service_status'` is `'ATTD'`, the camera is attached to a bridge. If the `'service_status'` is `'IGND'`, the camera is unattached from any bridge and is available to be attached. If the `'service_status'` is `'IGND'`, the camera will register but will not operate (unregistered bridges). The `'ERSE'` status is used to erase all camera data from the bridge
 
 > Request
 
@@ -1363,7 +1363,7 @@ Array Index | Attribute           | Data Type     | Description
 2           | name                | string        | Device name
 3           | type                | string, enum  | Device type <br><br>enum: camera, bridge
 4           | bridges             | array[array[string]]  | This is an array of string arrays, each array representing a bridge that can see the camera. The first element of the array is the bridge ESN. The second element is the service status
-5           | service_status      | string, enum  | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br><br>enum: ATTD, IGND
+5           | service_status      | string, enum  | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br>`'IDLE'` - camera will register but will not operate (unregistered bridges) <br>`'ERSE'` - one shot, all camera data will be erased <br><br>enum: ATTD, IGND, IDLE, ERSE
 6           | permissions         | string        | String of one or more characters each defining a permission level <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share
 7           | tags                | array[string] | Array of strings each representing a tag name
 8           | guid                | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
