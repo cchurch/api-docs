@@ -298,7 +298,7 @@ Parameter     | Data Type | Description | Is Required
 
 ```json
 {
-    "id": "100c339a"
+    "id": "100d88a8"
 }
 ```
 
@@ -351,7 +351,7 @@ camera_parameters_delete | json          | Json object of camera settings to del
 
 ```json
 {
-    "id": "100c339a"
+    "id": "100d88a8"
 }
 ```
 
@@ -567,7 +567,7 @@ Array Index | Attribute           | Data Type            | Description
 2           | name                | string               | Device name
 3           | type                | string, enum         | Device type <br><br>enum: bridge, camera
 4           | cameras             | array[array[string]] | This is an array of string arrays, each array representing a camera that is attached to the bridge. The first element of the array is the camera ESN. The second element is the service status
-5           | service_status      | string, enum         | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br><br>For bridges this field is always `'ATTD'` <br><br>enum: ATTD, IGND
+5           | service_status      | string, enum         | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br>`'IDLE'` - camera will register but will not operate (unregistered bridges) <br>`'ERSE'` - one shot, all camera data will be erased <br><br>For bridges this field is always `'ATTD'` <br><br>enum: ATTD, IGND, IDLE, ERSE
 6           | permissions         | string               | String of zero or more characters each defining a permission level (of the current user)
 7           | tags                | array[string]        | Array of strings each representing a tag name
 8           | guid                | string               | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
