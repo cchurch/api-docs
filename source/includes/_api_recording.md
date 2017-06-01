@@ -6,6 +6,8 @@
 
 This service is used to retrieve and update Recording Information for Recordings that were started/stopped using the `'action/recordnow'` and `'action/recordoff'` endpoints
 
+<aside class="success">This service will continually be extended</aside>
+
 <!--===================================================================-->
 ## Recording Model
 <!--===================================================================-->

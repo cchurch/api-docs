@@ -4,11 +4,9 @@
 ## Overview
 <!--===================================================================-->
 
-The Annotation service allows to push data (valid Json, can include HTML elements) into the event stream to add additional information about a camera/video. Annotations are associated with a device and a timestamp
+The Annotation service allows to push data (including HTML elements) into the event stream to add additional information about a camera/video. Annotations are associated with a device and a timestamp
 
 <aside class="notice">Annotations are subject to normal retention logic and as such will be discarded when the annotated time has exceeded retention</aside>
-
-<aside class="success">This service will continually be extended</aside>
 
 <!--===================================================================-->
 ## Create Annotation
@@ -16,33 +14,44 @@ The Annotation service allows to push data (valid Json, can include HTML element
 
 Create an Annotation for a device with a specific timestamp and data describing it
 
-> Request TODO
+<aside class="notice">Annotations can only be created from within the account, where the device resides for which the annotation is being created</aside>
+
+> Request
 
 ```shell
+curl -X PUT "https://login.eagleeyenetworks.com/annt/set?c=[ID]&ts=[TIMESTAMP]&ns=[NAMESPACE]" -d '{"data": "[ANNOTATION_DATA]"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
 
-`PUT http://login.eagleeyenetworks.com/annt`
+`PUT http://login.eagleeyenetworks.com/annt/set`
 
 Parameter     | Data Type | Description                                                                                                                      | Required    |
 ---------     | --------- | -----------                                                                                                                      |:-----------:|
-**id**        | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
-**ns**        | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&check;** |
-**u**         | string    | A randomly generated UUID used for indexing purposes and quick retrieval of events                                               | **&check;** |
+**c**         | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
 **ts**        | string    | Timestamp associated with the annotation                                                                                         | **&check;** |
-**type**      | string    | Type of operation to execute: <br>`'add'` - adds the annotation                                                                  | **&check;** |
+**ns**        | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&check;** |
+**\<data\>**  | json      | Json object representing the data to be used as the annotation content (can include HTML elements)                               | **&check;** |
 
-<!--TODO: Investigate whether the table row is in use: **data**      | json      | Json object representing the data associated with the annotation (No predefined data fields required)                             | **&check;** -->
-
-> Json Response TODO
+> Json Response
 
 ```json
+{
+    "uuid": "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+    "cameraid": "1000f60d",
+    "ts": "20180526095435.831",
+    "ns": 11
+}
 ```
 
 ### HTTP Response (Json Attributes)
 
-
+Parameter | Data Type | Description
+--------- | --------- | -----------
+uuid      | string    | Unique identifier of the annotation
+cameraid  | string    | Unique identifier of the device
+ts        | string    | Timestamp associated with the annotation
+ns        | string    | Namespace associated with the annotation
 
 ### Error Status Codes
 
@@ -59,9 +68,10 @@ HTTP Status Code | Description
 
 Returns an Annotation object by ID/UUID
 
-> Request TODO
+> Request
 
 ```shell
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/get -d "id=[ID]" -d "uuid=[UUID1],[UUID2],[UUID3]" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -71,16 +81,42 @@ Returns an Annotation object by ID/UUID
 Parameter     | Data Type     | Description                                                                                                                  | Required    |
 ---------     | ---------     | -----------                                                                                                                  |:-----------:|
 **id**        | string        | ID of the device the annotation should be associated with                                                                    | **&check;** |
-**u**         | array[string] | Array of comma-separated UUIDs to return                                                                                     | **&check;** |
+**uuid**      | array[string] | Array of comma-separated annotation UUIDs to return                                                                          | **&check;** |
 
-> Json Response TODO
+> Json Response
 
 ```json
+[
+    [
+        "3f06b432-41f9-11e7-aaf2-1c1b0daef2f5",
+        "20180526095347.742",
+        2,
+        {
+            "data": "{\"info\":\"Annotation1\";}"
+        }
+    ],
+    [
+        "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+        "20180526095435.831",
+        11,
+        {
+            "info": "Annotation by cafedead"
+        }
+    ],
+    [...]
+]
 ```
 
 ### HTTP Response (Array Attributes)
 
+Array Index | Attribute              | Data Type | Description
+----------- | ---------              | --------- | -----------
+0           | uuid                   | string    | Unique identifier for the annotation assigned to it during creation
+1           | timestamp              | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+2           | namespace              | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
+3           | \<data\>               | json      | Content of the annotation
 
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
 ### Error Status Codes
 
@@ -97,9 +133,10 @@ HTTP Status Code | Description
 
 Returns an array of Annotations by count or time range
 
-> Request TODO
+> Request
 
 ```shell
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/list -d "id=[ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" -H 'Content-type: application/json' --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -109,8 +146,8 @@ Returns an array of Annotations by count or time range
 Parameter           | Data Type     | Description                                                                                                            | Required    |
 ---------           | ---------     | -----------                                                                                                            |:-----------:|
 **id**              | string        | ID of the device the annotation should be associated with                                                              | **&check;** |
+**start_timestamp** | string        | Start timestamp of the annotations to return                                                                           | **&check;** |
 **end_timestamp**   | string        | End timestamp of the annotations to return                                                                             | **&check;** |
-start_timestamp     | string        | Start timestamp of the annotations to return                                                                           | **&cross;** |
 count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                       | **&cross;** |
 uuid                | array[string] | Array of comma-delimited UUIDs to list                                                                                 | **&cross;** |
 namespace           | array[int]    | Array of 1 to N comma-delimited namespaces to list                                                                     | **&cross;** |
@@ -131,7 +168,7 @@ exclusive           | boolean       | Whether to include annotations that span s
     [
         "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
         "20180526095435.831",
-        911,
+        11,
         {
             "info": "Annotation by cafedead"
         }
@@ -149,7 +186,7 @@ Array Index | Attribute              | Data Type | Description
 0           | uuid                   | string    | Unique identifier for the annotation assigned to it during creation
 1           | timestamp              | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
 2           | namespace              | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
-3           | data                   | json      | Content of the annotation
+3           | \<data\>               | json      | Content of the annotation
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
@@ -161,3 +198,22 @@ HTTP Status Code | Description
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
 200	| Request succeeded
+
+<!-- TODO: Add sub-sections for Prev/Next/Window and verify error codes above and below
+
+[REMEMBER TO SUBSTITUTE THE ARCHIVER ADDRESSES WITH EEN URLS IN THE ENDPOINTS]
+------------------------------------------------------------------------------
+Prev Annotation
+
+curl -X GET http://192.40.4.149/annt/annt/prev -d "c=1007fdae" -d "et=20170601074600.192" --cookie "auth_key=c001~751b93c6cd5935e62ea2a61a69b9bcc7" -G
+------------------------------------------------------------------------------
+Next Annotation
+
+curl -X GET http://192.40.4.149/annt/annt/next -d "c=1007fdae" -d "st=20170601074600.192" --cookie "auth_key=c001~751b93c6cd5935e62ea2a61a69b9bcc7" -G
+------------------------------------------------------------------------------
+Window Annotation
+
+curl -X GET http://192.40.4.149/annt/annt/next -d "c=1007fdae" -d "st=20170601074500.192" -d "et=20170601074600.192" --cookie "auth_key=c001~751b93c6cd5935e62ea2a61a69b9bcc7" -G
+------------------------------------------------------------------------------
+
+-->

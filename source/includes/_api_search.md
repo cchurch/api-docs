@@ -48,7 +48,7 @@ Parameter | Data Type | Description | Is Required
 ```json
 ```
 
-### HTTP Response (Json Attributes)
+### HTTP Response (Array Attributes)
 
 Parameter                   | Data Type     | Description
 ---------                   | ---------     | -----------
@@ -103,7 +103,7 @@ end_timestamp       | string    | End timestamp to use to limit search results (
 ```json
 ```
 
-### HTTP Response (Json Attributes)
+### HTTP Response (Array Attributes)
 
 Parameter | Data Type     | Description
 --------- | ---------     | -----------
