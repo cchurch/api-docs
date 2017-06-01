@@ -117,8 +117,6 @@ IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits wer
 
 **Note:** Event object descriptions marked with '&#9702;' can be expanded for additional information on the event
 
-<!-- Order: category (example groups: account, user, camera, stream), then start, end, update -->
-
 Four&nbsp;CC | Description                                                     | Returned parameters
 ------------ | -----------                                                     | -------------------
 VRES	| Video record start event                                               | cameraid, videoid, format, status
