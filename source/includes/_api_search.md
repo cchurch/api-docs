@@ -19,9 +19,11 @@ This service enables the Search across various types of data
 
 ### Search (Attributes)
 
+<details hidden>
 Parameter | Data Type | Description
 --------- | --------- | -----------
-
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
+</details>
 
 
 <!--===================================================================-->
@@ -95,20 +97,21 @@ Returns array of annotation objects that match a search value
 Parameter           | Data Type | Description | Is Required
 ---------           | --------- | ----------- | -----------
 **value**           | string    | Value to search for | true
-**start_timestamp** | string    | Start timestamp to use to limit search results | true
-end_timestamp       | string    | End timestamp to use to limit search results (defaults to *now*)
+**start_timestamp** | string    | Start timestamp used to limit search results | true
+end_timestamp       | string    | End timestamp used to limit search results (defaults to *now*)
 
 > Json Response TODO
 
 ```json
 ```
 
+<details hidden>
 ### HTTP Response (Array Attributes)
 
 Parameter | Data Type     | Description
 --------- | ---------     | -----------
 <p hidden>???</p> | array[object] | <p hidden>???</p>
-
+</details>
 
 
 ### Error Status Codes

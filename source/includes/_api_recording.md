@@ -19,10 +19,11 @@ This service is used to retrieve and update Recording Information for Recordings
 
 ### Recording (Attributes)
 
+<details hidden>
 Parameter | Data Type | Description
 --------- | --------- | -----------
 <p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
-
+</details>
 
 
 <!--===================================================================-->
@@ -78,12 +79,13 @@ meta              | object    | Meta data. This is meant to be a generic object 
 ```json
 ```
 
+<details hidden>
 ### HTTP Response (Json Attributes)
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
 <p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
-
+</details>
 
 
 ### Error Status Codes
