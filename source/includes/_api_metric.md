@@ -25,8 +25,8 @@ curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[AUTH_
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
 **id**          | string       | Camera ID   | true
-start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
+start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
+end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
 group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
 motion_interval | int          | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
 metrics         | string, enum | String delimited list used to filter which metrics get returned. Setting this parameter to `'core,motion'` will return data only for core and motion <br><br>enum: core, packets, motion
@@ -151,8 +151,8 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[AUTH_
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
 **id**          | string       | Bridge ID   | true
-start_timestamp | string       | Start timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp   | string       | End timestamp of query, in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
+start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
+end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
 group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
 
 > Json Response

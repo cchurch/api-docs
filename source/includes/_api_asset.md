@@ -299,7 +299,7 @@ HTTP Status Code | Description
 ## Get List of Images
 <!--===================================================================-->
 
-Get a list of objects, where each object contains the timestamp and type of a JPEG image
+Get a list of objects, where each object contains the type of event delivering the image and timestamp
 
 <aside class="notice">When formatting the request, either the 'end_timestamp' or 'count' parameter is required</aside>
 

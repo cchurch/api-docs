@@ -24,14 +24,14 @@ curl -X PUT "https://login.eagleeyenetworks.com/annt/set?c=[ID]&ts=[TIMESTAMP]&n
 
 ### HTTP Request
 
-`PUT http://login.eagleeyenetworks.com/annt/set`
+`PUT https://login.eagleeyenetworks.com/annt/set`
 
 Parameter     | Data Type | Description                                                                                                                      | Required    |
 ---------     | --------- | -----------                                                                                                                      |:-----------:|
 **c**         | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
-**ts**        | string    | Timestamp associated with the annotation                                                                                         | **&check;** |
 **ns**        | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&check;** |
 **\<data\>**  | json      | Json object representing the data to be used as the annotation content (can include HTML elements)                               | **&check;** |
+ts            | string    | Timestamp associated with the annotation (optional - if left out the system will automatically provide a timestamp)              | **&cross;** |
 
 > Json Response
 
@@ -76,11 +76,11 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/get -d "id=[ID]" -d "uu
 
 ### HTTP Request
 
-`GET https://login.eagleeyenetworks.com/annt/get`
+`GET https://login.eagleeyenetworks.com/annt/annt/get`
 
 Parameter     | Data Type     | Description                                                                                                                  | Required    |
 ---------     | ---------     | -----------                                                                                                                  |:-----------:|
-**id**        | string        | ID of the device the annotation should be associated with                                                                    | **&check;** |
+**id**        | string        | ID of the device the annotation is associated with                                                                           | **&check;** |
 **uuid**      | array[string] | Array of comma-separated annotation UUIDs to return                                                                          | **&check;** |
 
 > Json Response
@@ -109,14 +109,205 @@ Parameter     | Data Type     | Description                                     
 
 ### HTTP Response (Array Attributes)
 
-Array Index | Attribute              | Data Type | Description
------------ | ---------              | --------- | -----------
-0           | uuid                   | string    | Unique identifier for the annotation assigned to it during creation
-1           | timestamp              | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-2           | namespace              | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
-3           | \<data\>               | json      | Content of the annotation
+Array Index | Attribute | Data Type | Description
+----------- | --------- | --------- | -----------
+0           | uuid      | string    | Unique identifier for the annotation assigned to it during creation
+1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+2           | namespace | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
+3           | \<data\>  | json      | Content of the annotation
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
+
+<!--===================================================================-->
+## Next Annotation
+<!--===================================================================-->
+
+Returns an object populated by Annotations occurring *around* the defined timestamp by searching for the next event in the indicated direction
+
+> Request
+
+```shell
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/next -d "c=[ID]" -d "st=[START_TIMESTAMP]" --cookie "auth_key=[AUTH_KEY]" -G
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/annt/annt/next`
+
+Parameter | Data Type | Description                                                                                                                          | Required    |
+--------- | --------- | -----------                                                                                                                          |:-----------:|
+**c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
+**st**    | string    | Timestamp to get annotation(s) for in EEN format: YYYYMMDDHHMMSS.NNN                                                                 | **&check;** |
+
+> Json Response
+
+```json
+{
+    "ts": "20180526095435.831",
+    "new": [
+        [
+            "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+            "20180526095435.831",
+            11,
+            {
+                "info": "Annotation by cafedead"
+            }
+        ],
+        [...],
+        [...]
+    ],
+    "active": [
+        "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+        "<uuid>",
+        "<uuid>"
+    ]
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type         | Description
+--------- | ---------         | -----------
+ts        | string            | Timestamp to get annotation(s) after in EEN format: YYYYMMDDHHMMSS.NNN
+new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
+active    | array[string]     | Array of all annotation UUIDs active around the specified `'st'` (or within the defined time window)
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
+
+<!--===================================================================-->
+## Previous Annotation
+<!--===================================================================-->
+
+Returns an object populated by Annotations occurring *around* the defined timestamp by searching for the previous event in the indicated direction
+
+> Request
+
+```shell
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/prev -d "c=[ID]" -d "et=[END_TIMESTAMP]" --cookie "auth_key=[AUTH_KEY]" -G
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/annt/annt/prev`
+
+Parameter | Data Type | Description                                                                                                                          | Required    |
+--------- | --------- | -----------                                                                                                                          |:-----------:|
+**c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
+**et**    | string    | Timestamp to get annotation(s) for in EEN format: YYYYMMDDHHMMSS.NNN                                                                 | **&check;** |
+
+> Json Response
+
+```json
+{
+    "ts": "20180526095435.831",
+    "new": [
+        [
+            "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+            "20180526095435.831",
+            11,
+            {
+                "info": "Annotation by cafedead"
+            }
+        ],
+        [...],
+        [...]
+    ],
+    "active": [
+        "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+        "<uuid>",
+        "<uuid>"
+    ]
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type         | Description
+--------- | ---------         | -----------
+ts        | string            | Timestamp to get annotation(s) before in EEN format: YYYYMMDDHHMMSS.NNN
+new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
+active    | array[string]     | Array of all annotation UUIDs active around the specified `'et'` (or within the defined time window)
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
+
+<!--===================================================================-->
+## Window of Annotations
+<!--===================================================================-->
+
+Return an object populated by active annotations as a point in time (optionally including annotations that have recently ended). The result can be filtered by passing UUIDs to be excluded from the list. By specifying `'st'` the result will include any documents ended between `'st'` and `'et'` (specifying `'st'` does not change the search interval)
+
+> Request
+
+```shell
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/window  -d "c=[ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" --cookie "auth_key=[AUTH_KEY]" -G
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/annt/annt/window`
+
+Parameter | Data Type     | Description                                                                                                                      | Required    |
+--------- | ---------     | -----------                                                                                                                      |:-----------:|
+**c**     | string        | ID of the device the annotation is associated with                                                                               | **&check;** |
+**et**    | string        | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                         | **&check;** |
+st        | string        | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                       | **&cross;** |
+uuid      | array[string] | Array of UUIDs to exclude from results                                                                                           | **&cross;** |
+
+> Json Response
+
+```json
+{
+    "ts": "20180526095435.831",
+    "new": [
+        [
+            "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+            "20180526095435.831",
+            11,
+            {
+                "info": "Annotation by cafedead"
+            }
+        ],
+        [...],
+        [...]
+    ],
+    "active": [
+        "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+        "<uuid>",
+        "<uuid>"
+    ]
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type         | Description
+--------- | ---------         | -----------
+ts        | string            | Timestamp to get annotation(s) for in EEN format: YYYYMMDDHHMMSS.NNN
+new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
+active    | array[string]     | Array of all annotation UUIDs returned based on the specified criteria
 
 ### Error Status Codes
 
@@ -198,22 +389,3 @@ HTTP Status Code | Description
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
 200	| Request succeeded
-
-<!-- TODO: Add sub-sections for Prev/Next/Window and verify error codes above and below
-
-[REMEMBER TO SUBSTITUTE THE ARCHIVER ADDRESSES WITH EEN URLS IN THE ENDPOINTS]
-------------------------------------------------------------------------------
-Prev Annotation
-
-curl -X GET http://192.40.4.149/annt/annt/prev -d "c=1007fdae" -d "et=20170601074600.192" --cookie "auth_key=c001~751b93c6cd5935e62ea2a61a69b9bcc7" -G
-------------------------------------------------------------------------------
-Next Annotation
-
-curl -X GET http://192.40.4.149/annt/annt/next -d "c=1007fdae" -d "st=20170601074600.192" --cookie "auth_key=c001~751b93c6cd5935e62ea2a61a69b9bcc7" -G
-------------------------------------------------------------------------------
-Window Annotation
-
-curl -X GET http://192.40.4.149/annt/annt/next -d "c=1007fdae" -d "st=20170601074500.192" -d "et=20170601074600.192" --cookie "auth_key=c001~751b93c6cd5935e62ea2a61a69b9bcc7" -G
-------------------------------------------------------------------------------
-
--->
