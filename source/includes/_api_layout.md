@@ -91,13 +91,14 @@ Rendered Layouts on Web and Mobile:
 
 Property              | Data Type            | Description                                                                                          | Editable    | Required
 --------              | ---------            | -----------                                                                                          |:-----------:| --------
-**id**                | string               | Unique identifier for the layout                                                                     | **&cross;** | **<sub><form action="#get-layout"><button>GET</button></form></sub>** <br>**<sub><form action="#create-layout"><button>PUT</button></form></sub>** <br>**<sub><form action="#update-layout"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-layout"><button>DELETE</button></form></sub>**
+**id**                | string               | Unique identifier for the layout                                                                     | **&cross;** | **<sub><form action="#get-layout"><button>GET</button></form></sub>** <br>**<sub><form action="#update-layout"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-layout"><button>DELETE</button></form></sub>**
 **name**              | string               | Name of the layout                                                                                   | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 **types**             | array[string]        | Specifies target(s) for layout. Multiple values are allowed                                          | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
+**[configuration](#layout-configuration)** | json             | Json object of layout configuration                                                     | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 permissions           | string               | String of zero or more characters. Each character defines a permission <br><br>Permissions include: <br>`'R'` - user can view this layout <br>`'W'` - user can modify this layout <br>`'D'` - user can delete this layout <br>`'S'` - user can share this layout             | **&cross;** |
 current_recording_key | string               | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service                                                                                                                            | **&cross;** |
 shares                | array[array[string]] | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array                                                                                                                                               | **&check;** |
-[configuration](#layout-configuration) | json             | Json object of layout configuration                                                     | **&check;** |
+
 
 ### Layout - configuration
 
@@ -124,6 +125,7 @@ camera_border       | boolean   | Show camera pane borders
 camera_name         | boolean   | Show camera name
 camera_aspect_ratio | float     | Aspect ratio of images: <br>`0.5625` - 16x9 <br>`0.75` - 4x3
 camera_row_limit    | int       | Max number of cameras to show per row: <br>`3` - 3 cameras per row <br>`4` - 4 cameras per row  <br>`5` - 5 cameras per row
+custom_id           | string    |
 
 <!--===================================================================-->
 ## Get Layout
@@ -152,6 +154,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
+404	| Layout matching the ID was not found
 200	| Request succeeded
 
 <!--===================================================================-->
@@ -170,12 +173,12 @@ curl -X PUT https://login.eagleeyenetworks.com/g/layout -d '{"name": "[NAME]", "
 
 `PUT https://login.eagleeyenetworks.com/g/layout`
 
-Parameter     | Data Type     | Description | Is Required
----------     | ---------     | ----------- | -----------
-**name**      | string        | Layout name | true
-**types**     | array[string] | Specifies target(s) for layout. Multiple values are allowed | true
-configuration | json          | Json object of layout configuration
-shares        | array[array]  | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
+Parameter         | Data Type     | Description | Is Required
+---------         | ---------     | ----------- | -----------
+**name**          | string        | Layout name | true
+**types**         | array[string] | Specifies target(s) for layout. Multiple values are allowed | true
+**[configuration](#layout-configuration)** | json          | Json object of layout configuration | true
+shares            | array[array]  | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 
@@ -218,9 +221,9 @@ Update Layout information
 Parameter     | Data Type     | Description | Is Required
 ---------     | ---------     | ----------- | -----------
 **id**        | string        | Layout name | true
-**name**      | string        | Unique identifier of layout | true
-**types**     | array[string] | Specifies target(s) for layout. Multiple values are allowed | true
-configuration | json          | Json object of layout configuration
+name          | string        | Unique identifier of layout
+types         | array[string] | Specifies target(s) for layout. Multiple values are allowed
+[configuration](#layout-configuration) | json          | Json object of layout configuration
 shares        | array[array]  | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user aid and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
@@ -244,6 +247,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
+404	| Layout matching the ID was not found
 200	| Request succeeded
 
 <!--===================================================================-->
@@ -324,7 +328,7 @@ Array Index | Attribute   | Data Type     | Description
 ----------- | ---------   | ---------     | -----------
 0           | id          | string        | Unique identifier for the layout
 1           | name        | string        | Name of the layout
-2           | types       | array[string] | Array of types defined for the layout. This attribute has not yet been implemented
+2           | types       | array[string] | Array of types defined for the layout
 3           | permissions | string        | String of zero or more characters. Each character defines a permission <br><br>Permissions include: <br>`'R'` - user can view this layout <br>`'W'` - user can modify this layout <br>`'D'` - user can delete this layout <br>`'S'` - user can share this layout
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
