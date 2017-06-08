@@ -2,153 +2,155 @@
 
 <!--===================================================================-->
 ## Overview
+<!--===================================================================-->
 
-The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. Get method is available to any user with camera ‘R’ (read) permission. Methods Post, Delete are available to account super users and users with Camera ‘W’ (write) permissions for the indicated camera. Put method is only available to account super users.
+The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. The GET method is available to any user with Camera `'R'` (Read) permission. Methods POST, DELETE are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. PUT method is only available to account superusers
 
-When adding a new camera, the name and settings parameters are required. The settings parameter should contain the id of the bridge and the guid of the camera.
+When adding a new Camera, the name and settings parameters are required. The settings parameter should contain the ID of the bridge and the GUID of the Camera
 
 ### Camera Settings Overview
 
-The camera setting system is based on an inheritance model. User settings are “overlayed” on top of default settings for a device. By removing the user settings, the camera setting will automatically go back to the default value provided and maintained by Eagle Eye for the camera.
+The camera setting system is based on an inheritance model. User settings are *overlaid* on top of default settings for a device. By removing the user settings, the camera setting will automatically go back to the default value provided and maintained by Eagle Eye for the camera
 
 Under the covers this works as follows:
 
-* There is a default setting, range, and value for everything built into the code, guaranteeing there are always settings for any feature supported by the software. These values are defined when the feature is implemented in software.
-* There is an optional "global" setting file that can/will be distributed during patches/updates that can override and extend default settings, including changing valid ranges etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules etc. which do not imply code changes.
-* There is an optional per make/model/version file, part of the make/model/version driver deployment, that can add and adjust settings for anything above. This is used to optimize things like sensitivity or codec parameters while building the driver for the specific device, and is released a camera driver is updated. This is also where camera specific features (audio availability) is announced.
-* The first three get merged to produce the base settings for the the camera, which defines the value, min, and max for every supported feature.
-* User settings (things the user has consciously "taken control of") are dynamically overlay-ed on the above settings inheritance to produce the active settings on the camera.
-* Any scheduled or triggered changes are then overlayed on top create the running settings (so upload bandwidth can be changed in a schedule to something different from the users settings, which is also different from the system default, and when the schedule is “removed” the bandwidth will go back to the user value.
+  - There is a default setting, range and value for everything built into the code, guaranteeing there are always settings for any feature supported by the software. These values are defined when the feature is implemented in software
+  - There is an optional *global* setting file that can/will be distributed during patches/updates that can override and extend default settings including changing valid ranges, etc. As with 1, this is a constant across all bridges that get the upgrade. It is tweaked for system policy changes like different upload bandwidth, default schedules, etc. which do not imply code changes
+  - There is an optional per make/model/version file, part of the make/model/version driver deployment, that can add and adjust settings for anything above. This is used to optimize things like sensitivity or codec parameters while building the driver for the specific device and is released a camera driver is updated. This is also where camera specific features (audio availability) is announced
+  - The first three get merged to produce the base settings for the the camera, which defines the value, min and max for every supported feature
+  - User settings (things the user has consciously *taken control of*) are dynamically overlaid on the above settings inheritance to produce the active settings on the camera
+  - Any scheduled or triggered changes are then overlaid on top create the running settings (so upload bandwidth can be changed in a schedule to something different from the users settings, which is also different from the system default and when the schedule is *removed* the bandwidth will go back to the user value
 
-The implication of this is that if a user has not "pinned" a setting by changing/managing it, it will track any system or make/model/version release updates. That is, EEN can optimize operating parameters and they will automatically propagate unless the user has changed/pinned them. Further, the user should be "aware" of this, which works well with an open/closed control metaphor or a check box - an y setting control that is open/checked is "manually" set by the user, whereas closed controls will track EEN system wide recommendations. Finally, it is expected that the “user” settings will be managed to be only the value specifically modified by users, not all settings.
+The implication of this is that if a user has not *pinned* a setting by changing/managing it, it will track any system or make/model/version release updates. That is, EEN can optimize operating parameters and they will automatically propagate unless the user has changed/pinned them. Further, the user should be *aware* of this, which works well with an open/closed control metaphor or a check box - an y setting control that is open/checked is *manually* set by the user, whereas closed controls will track EEN system wide recommendations. Finally, it is expected that the *user* settings will be managed to be only the value specifically modified by users, not all settings
 
-The set of all settings is potentially large, and far more than most users will ever want or need to manage. A separate table will be maintained which lists the “normal” settings - settings most users may want to interact with. This is standard across all devices, and contains a list of settings names that should be accessible to the user. This list should be “joined” with the list of all settings to result in a subset of controls to be displayed in basic mode. An advanced mode should make all settings available with primitive controls to set or delete a value.
+The set of all settings is potentially large and far more than most users will ever want or need to manage. A separate table will be maintained which lists the *normal* settings - settings most users may want to interact with. This is standard across all devices and contains a list of settings names that should be accessible to the user. This list should be *joined* with the list of all settings to result in a subset of controls to be displayed in basic mode. An advanced mode should make all settings available with primitive controls to set or delete a value
 
-An implication of this model the “user settings” object is a generic object that is only lightly interpreted by the device. Settings that match a known names (ie are within the camera base or mmv settings) will be utilized, but all values will be stored and returned as part of the “user settings” field. This can be used to support user interface elements on a per camera basis with values the bridge/camera do not interpret.
+An implication of this model the *user settings* object is a generic object that is only lightly interpreted by the device. Settings that match a known names (i.e. are within the camera base or mmv settings) will be utilized, but all values will be stored and returned as part of the *user settings* field. This can be used to support user interface elements on a per camera basis with values the bridge/camera do not interpret
 
-### Read Camera Settings (GET device "camera_settings" property)
+### Read Camera Settings (<small>GET device `'camera_settings'` property</small>)
 
-When getting the camera settings, a JSON string representing a JSON object is returned containing:
+When getting the camera settings, a Json string representing a Json object is returned containing:
 
-  * “active_settings”: A set of named entities encapsulating all settings understood for this device. Each entity contains an object of
-    * “v”: the current value of the setting, as influenced by filters on top of base settings
-    * “max”: the maximum allowed value
-    * “min”: the minimum allowed value.
-    * “d”: the default value of the setting, also defining the expected type for the field
-    * Note: max and min are applicable for numeric fields. for set fields (e.g. preview_resolution) the min field will contain an array of the valid values
-    * Note: additional descriptive members may be added to this object over time, implementation must ignore fields they do not understand.
-  * “active_filters”: an array of filters currently being applied. List is in priority order, that is earlier entries will override later entries in the list. Each entry is a string with format of one of
-    * “schedule_<name>”: name replaced by schedule name
-    * “user_user”: constant, indicating where user settings are applied
-    * “trigger_<name>”: name replaced by the triggered name (ie “night”).
-  * “user_settings”: an object with the following fields:
-    * “settings”
-      * A subset of the base settings, indicating items the user has specifically set.
-      * The user settings contain only the “v” of the setting and are bare objects (e.g. “contrast”: 0.1)
-      * Most setting are “atomic” entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value.
-      * A few settings (currently "alerts","rois","active_alerts","active_rois") are accumulation settings. A setting add transaction adds the new member to the set, and a settings delete removes a member.
-    * “schedules”: A set of named members, each with the following members
-      * “start”: time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { “start”: { “hours”: 8, “wdays”: [1,2,3,4,5]}, “end”: {“hours”: 17, “wdays”: [1,2,3,4,5] }}.
-      * “end”: time object, indicating when the schedule is removed
-      * “priority”: a floating point value defining the priority of the schedule. Lowest number wins. All user settings are applied with priority of 10.0, so schedule values with priority < 10 will override user settings, while value > 10 will not. It priority or two schedules is equal and their settings conflict,
-      * “settings”: a object with members mirroring the settings above, indicating the new value for settings to use while the schedule is active. For accumulation settings, values will be added into the set when activated and removed when deactivated.
-    * time object is a object with the following named members, loosely patterned after crontab arguments. Each time the fields match the current time, the event is toggled.
-      * fields
-          * seconds(0-59)(defaults to 0)
-          * minutes (0-59) (defaults to 0)
-          * hours (0-23) (defaults to 0)
-          * mdays(1-31) (defaults to *)
-          * wdays(1-7) (1=Monday, 7=Sunday. defaults to nothing.)
-          * months(1-12) (defaults to *)
-      * each field can be
-          * single integer
-          * string “*” indicating all
-          * list of integers
-      * if both “days” fields are set, the action will be run on the union
+  - `'active_settings'` - A set of named entities encapsulating all settings understood for this device. Each entity contains an object of:
+    - `'v'` - the current value of the setting, as influenced by filters on top of base settings
+    - `'max'` - the maximum allowed value
+    - `'min'` - the minimum allowed value
+    - `'d'` - the default value of the setting, also defining the expected type for the field
+    - Note: max and min are applicable for numeric fields. for set fields (e.g. preview_resolution) the min field will contain an array of the valid values
+    - Note: additional descriptive members may be added to this object over time, implementation must ignore fields they do not understand
+  - `'active_filters'` - an array of filters currently being applied. List is in priority order, that is earlier entries will override later entries in the list. Each entry is a string with format of one of:
+    - `'schedule_<name>'` - name replaced by schedule name
+    - `'user_user'` - constant, indicating where user settings are applied
+    - `'trigger_<name>'` - name replaced by the triggered name (i.e. `'night'`)
+  - `'user_settings'` - an object with the following fields:
+    - `'settings'`
+      - A subset of the base settings, indicating items the user has specifically set
+      - The user settings contain only the `'v'` of the setting and are bare objects (e.g. `'contrast=0.1'`)
+      - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
+      - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set and a settings delete removes a member
+    - `'schedules'` - A set of named fields as follows:
+      - `'start'` - time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { `'start'`: { `'hours'`: `8`, `'wdays'`: `[1,2,3,4,5]`}, `'end'`: {`'hours'`: `17`, `'wdays'`: `[1,2,3,4,5]` }}
+      - `'end'` - time object, indicating when the schedule is removed
+      - `'priority'` - a floating point value defining the priority of the schedule. Lowest number wins. All user settings are applied with priority of 10.0, so schedule values with priority < 10 will override user settings, while value > 10 will not. It priority or two schedules is equal and their settings conflict,
+      - `'settings'` - a object with members mirroring the settings above, indicating the new value for settings to use while the schedule is active. For accumulation settings, values will be added into the set when activated and removed when deactivated
+    - time object is a object with the following named members, loosely patterned after crontab arguments. Each time the fields match the current time, the event is toggled
+      - fields
+          - seconds(0-59)(defaults to 0)
+          - minutes (0-59) (defaults to 0)
+          - hours (0-23) (defaults to 0)
+          - mdays(1-31) (defaults to \*)
+          - wdays(1-7) (1=Monday, 7=Sunday. defaults to nothing.)
+          - months(1-12) (defaults to \*)
+      - each field can be
+          - single integer
+          - string `'*'` indicating all
+          - list of integers
+      - If both `'days'` fields are set, the action will be ran on the union
 
-### Update Camera Settings (POST device "camera_settings_add" argument)
+### Update Camera Settings (<small>POST device `'camera_settings_add'` argument</small>)
 
-To update/set settings (i.e. override default setting value with a "user" setting), a JSON string is sent representing a JSON object containing:
+To update/set settings (i.e. override default setting value with a *user* setting), a Json string is sent representing a Json object containing:
 
-* “settings”: an optional object with members to be overlayed over base settings value. Values are bare (that is simply replacements for the “v” field of base)
-* “schedules”: an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value.
+  - `'settings'` - an optional object with members to be overlaid over base settings value. Values are bare (that is simply replacements for the `'v'` field of base)
+  - `'schedules'` - an optional object with 1 or more members, each a schedule object per the get description. Note schedules with the same name will be replaced in the their entirety with the new value
 
-### Delete Camera Settings (POST device "camera_settings_delete" argument)
+### Delete Camera Settings (<small>POST device `'camera_settings_delete'` argument</small>)
 
-To delete/unset settings (i.e. return to default setting value), a JSON string is sent representing a JSON object containing:
+To delete/unset settings (i.e. return to default setting value), a Json string is sent representing a Json object containing:
 
-* “settings”: an optional object with members to be removed from user settings. Values ignored.
-* “schedules”: an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored.
+  - `'settings'` - an optional object with members to be removed from user settings. Values ignored
+  - `'schedules'` - an optional object with 1 or more members, each a the name of a current schedule. Value of the members are ignored
 
-### Camera Settings Currently Supported
+### Camera Settings (<small>Currently Supported</small>)
 
 Each camera make/model/version is different, thus not every setting is supported for some cameras, but here is list of core camera settings that are relevant to most applications:
 
-* "active_rois": object indicating which rois are currently active (by "name"; see "rois" setting below)
-* "audio_enable": boolean (true/false) indicating whether audio is enabled or not
-* "camera_on": boolean integer (1/0) indicating whether camera is turned on/off respectively
-* "motion_sensitivity": float between 0 and 1 indicating how sensitive the motion detection is
-* "motion_size_ratio": float between 0 and 1 indicating the size of objects to detect for motion
-* "motion_boxes_metric_active": boolean integer indicating whether motion boxes are enabled
-* "preview_realtime_bandwidth": float indicating the max bandwidth of real-time preview image transmission
-* "preview_transmit_mode": string indicating when preview images are transmitted to the cloud
-* "preview_interval_ms": integer indicating how many milliseconds between preview images
-* "preview_resolution": string indicating the resolution of the preview images. When displaying the options for this setting, you must use the data from "video_config.v.preview_quality_settings.<preview_resolution>" ("w" and "h") to show what this resolution string translates to for display purposes.
-* "preview_quality": string indicating the quality of the preview images
-* "retention_days": integer indicating how many days worth of data should be retained in the cloud
-* "rois": extensible object, containing multiple ROI objects keyed by a "name", with each ROI object supporting the following members:
-    * “verts”: [[x,y],...], polygon vertices in order. Coordinates will be scaled so 0-1.0 is full screen for x and y, with 0,0 being top left corner. Edges can’t cross or bad things will happen.
-    * "motion_noise_filter": as for main screen. If < 0.001 will not be applied
-    * "motion_sensitivity": as for main screen. If < 0.001 will not be applied
-    * "motion_hold_interval": as for main screen. If < 0.001 will not be applied
-    * “priority”: float (bigger wins), control settings overlay. Defaults to 0.0
-    * “motion_threshold”: (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen.
-    * "name": string used for the display name of the ROI in a GUI. Not to be confused with the "name" of the ROI as the key of this ROI object.
-    * "ignore_motion": boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set motion_sensitivity to ".001" and motion_noise_filter to ".99"
-    * “roiid”: (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts.
-    * “hold_off_ms”: (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
-    * “hold_on_ms”: (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings.
-* "scene_type": string indicating the type of scene the camera is viewing
-* "video_transmit_mode": string indicating when video is transmitted to the cloud
-* "video_capture_mode": string indicating when video will being recorded
-* "video_bandwidth_factor": integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from "video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps" to show what this setting translates to for display purposes.
-* "video_resolution": string indicating the resolution of the video. When displaying the options for this setting, you must use the data from "video_config.v.video_quality_settings.<video_resolution>" ("w" and "h") to show what this resolution string translates to.
-* "video_quality": string indicating the quality of the video
-* "video_config": READ-ONLY object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the "preview_resolution", "video_resolution", and "video_bandwidth_factor" settings/options.
+  - `'active_rois'` - object indicating which rois are currently active (by `'<roiname>'`, see `'rois'` setting below)
+  - `'audio_enable'` - boolean (true/false) indicating whether audio is enabled or not
+  - `'camera_on'` - boolean integer (1/0) indicating whether camera is turned on/off respectively
+  - `'motion_sensitivity'` - float between 0 and 1 indicating how sensitive the motion detection is
+  - `'motion_size_ratio'` - float between 0 and 1 indicating the size of objects to detect for motion
+  - `'motion_boxes_metric_active'` - boolean integer indicating whether motion boxes are enabled
+  - `'preview_realtime_bandwidth'` - float indicating the max bandwidth of real-time preview image transmission
+  - `'preview_transmit_mode'` - string indicating when preview images are transmitted to the cloud
+  - `'preview_interval_ms'` - integer indicating how many milliseconds between preview images
+  - `'preview_resolution'` - string indicating the resolution of the preview images. When displaying the options for this setting, you must use the data from `'video_config.v.preview_quality_settings.<preview_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to for display purposes
+  - `'preview_quality'` - string indicating the quality of the preview images
+  - `'retention_days'` - integer indicating how many days worth of data should be retained in the cloud
+  - `'rois'` - extensible object, containing multiple ROI objects keyed by a `'<roiname>'`, with each ROI object supporting the following members:
+      - `'verts'` - [[`'x'`,`'y'`], ...], polygon vertices in order. Coordinates will be scaled so `'0-1.0'` is full screen for `'x'` and `'y'`, with `'0,0'` being top left corner. Edges can’t cross or bad things will happen
+      - `'motion_noise_filter'` - as for main screen. If < 0.001 will not be applied
+      - `'motion_sensitivity'` - as for main screen. If < 0.001 will not be applied
+      - `'motion_hold_interval'` - as for main screen. If < 0.001 will not be applied
+      - `'priority'` - float (bigger wins), control settings overlay. Defaults to 0.0
+      - `'motion_threshold'` - (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen
+      - `'name'` - string used for the display name of the ROI in a GUI. Not to be confused with the `'<roiname>'` as the key of this ROI object
+      - `'ignore_motion'` - boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set `'motion_sensitivity'` to `'0.001'` and `'motion_noise_filter'` to `'0.99'`
+      - `'roiid'` - (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
+      - `'hold_off_ms'` - (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
+      - `'hold_on_ms'` - (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings
+  - `'scene_type'` - string indicating the type of scene the camera is viewing
+  - `'video_transmit_mode'` - string indicating when video is transmitted to the cloud
+  - `'video_capture_mode'` - string indicating when video will being recorded
+  - `'video_bandwidth_factor'` - integer indicating the bit rate of the video. When displaying options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>.quality.<video_quality>.kbps'` to show what this setting translates to for display purposes
+  - `'video_resolution'` - string indicating the resolution of the video. When displaying the options for this setting, you must use the data from `'video_config.v.video_quality_settings.<video_resolution>'` (`'w'` and `'h'`) to show what this resolution string translates to
+  - `'video_quality'` - string indicating the quality of the video
+  - `'video_config'` - *Read-Only* object defining all the preview/video configuration parameters for each available resolution. Helps give useful information for display purposes of the `'preview_resolution'`, `'video_resolution'` and `'video_bandwidth_factor'` settings/options
 
-### Regions of Interest (ROIs)
+### Regions of Interest (<small>ROIs</small>)
 
-ROIs will be defined by simple polygons - sequences of x,y coordinates that form a closed object, edge crosses are illegal and will have bizarre results. Each ROI will describe a portion of the screen. ROIs can overlap, and priority (higher wins) determines what sensitivity settings to use. For overlapping ROIs, all will get motion block detection and can trigger ROI motion spans.
+ROIs will be defined by simple polygons - sequences of x,y coordinates that form a closed object, edge crosses are illegal and will have bizarre results. Each ROI will describe a portion of the screen. ROIs can overlap and priority (higher wins) determines what sensitivity settings to use. For overlapping ROIs, all will get motion block detection and can trigger ROI motion spans
 
-ROIs can
+ROIs can:
 
-* adjust DCT sensitivity and detection properties (ignore stuff in an area, track stuff aggressively in an area)
-* cause specific events
-* characterize an object for later alert/event processing (dwell, transitions counting)
-* turn on certain detectors within a region.
+  - Adjust DCT sensitivity and detection properties (ignore stuff in an area, track stuff aggressively in an area)
+  - Cause specific events
+  - Characterize an object for later alert/event processing (dwell, transitions counting)
+  - Turn on certain detectors within a region
 
-ROIs within settings will be “rois”: { “roiname”: roi,... }. ROIs are enabled and disabled by “active_rois”: { “roiname”: true,...} to allow ROIs to easily turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments.
+ROIs within settings will be `'rois'`: { `'<roiname>'`: { `'roiid'`: `1437974150`, `'name'`: `'Rusty Region'`, ... }. ROIs are enabled and disabled by `'active_rois'`: { `'<roiname>'`: `true`, ... } to allow ROIs to easily be turned on and off to support schedules and ROI based alerts. To remove an active ROI delete it with the same arguments
 
-Like the alert logic, “rois” and “active_rois” are accumulation settings - adding an object adds it to the holding object instead of replacing the entire object like most settings. Similarly, deleting an object removes it from the parent object, but leave the parent in place. Both also automatically trigger updates to the active esn data streams.
+Like the alert logic, `'rois'` and `'active_rois'` are accumulation settings - adding an object adds it to the holding object instead of replacing the entire object like most settings. Similarly, deleting an object removes it from the parent object, but leave the parent in place. Both also automatically trigger updates to the active ESN data streams
 
-ROIs can produce events and force video recording on activity within them. These events are distinct from motion events (whole screen events). Each ROI event has a simple snapshot algorithm the grabs a snapshot immediately, as opposed to the optimized object tracking for motion events. Since ROIs are presumed to be smaller, this should result in good summary images.
+ROIs can produce events and force video recording on activity within them. These events are distinct from motion events (whole screen events). Each ROI event has a simple snapshot algorithm the grabs a snapshot immediately, as opposed to the optimized object tracking for motion events. Since ROIs are presumed to be smaller, this should result in good summary images
 
-ROI events are reported by the ROMS and ROME etags
+ROI [events](#event-objects) are reported by the ROMS and ROME etags:
 
 ROMS
 
-* cameraid (guint32)
-* eventid(guint32) - unique to this event
-* roiid(guint32) - roi id from the ROI definition
-* videoid(guint32) - id of the associated video
+  - cameraid <small>(guint32)</small> - ID of the device this event was reported by
+  - eventid <small>(guint32)</small> - ID unique to this event
+  - roiid <small>(guint32)</small> - ROI ID from the ROI definition
+  - videoid <small>(guint32)</small> - ID of the associated video
 
 ROME
 
-* cameraid (guint32)
-* eventid(guint32) - unique to this event
+  - cameraid <small>(guint32)</small> - ID of the device this event was reported by
+  - eventid <small>(guint32)</small> - ID unique to this event
 
 <!--===================================================================-->
 ## Camera Model
+<!--===================================================================-->
 
 > Camera Model
 
@@ -193,14 +195,14 @@ ROME
         "intf": "Camera LAN",
         "camera_retention": 2592000000,
         "tagmap_status_state": 2,
-        "camera_newest": "20141006190516.702",
-        "camera_oldest": "20140906000000.000",
+        "camera_newest": "20181006190516.702",
+        "camera_oldest": "20180906000000.000",
         "connect": "STRM",
         "uuid": "c6d11f36-9e63-11e1-a5b0-00408cdf9191",
         "service": "ATTD",
         "make": "AXIS",
         "ipaddr": "*169.254.12.141,10.143.236.65",
-        "ts": "20141006182806.570",
+        "ts": "20181006182806.570",
         "version": "5.40.9.2",
         "admin_password": null,
         "esn": "1000f60d",
@@ -210,12 +212,12 @@ ROME
         "mac": "00:40:8C:DF:91:91",
         "proxy": "secondary",
         "bridgeid": "100a9af6",
-        "now": "20141006210729.065",
+        "now": "20181006210729.065",
         "class": "camera",
         "status_hex": "001e003f",
-        "camera_now": "20141006210729.688",
-        "camera_abs_newest": "20141006190516.702",
-        "camera_abs_oldest": "20140906000000.000",
+        "camera_now": "20181006210729.688",
+        "camera_abs_newest": "20181006190516.702",
+        "camera_abs_oldest": "20180906000000.000",
         "model": "AXIS M1054",
         "camtype": "ONVIF"
     },
@@ -962,112 +964,123 @@ ROME
 }
 ```
 
-### Device Attributes
+### Camera (Attributes)
 
-Parameter                     | Data Type         | Description
----------                     | ---------------   | -----------
-id                            | string            | Unique identifier for the Device
-name                          | string            | Name of the device
-utcOffset                     | int               | Signed UTC offset in seconds of the timezone from UTC, where this device is installed.
-timezone                      | string            | Supported timezones: If this is a bridge, defaults to the Account timezone. If this is a camera, defaults to the camers’s Bridge timezone. Otherwise defaults to US/Pacific. <br><br>enum: US/Alaska, US/Arizona, US/Central, US/Pacific, US/Eastern, US/Mountain, US/Hawaii, UTC
-guid                          | string            | guid or other physical identifier of device
-permissions                   | string            | String of one or more characters. Each character defines a permission. Permissions include: 'R' - user has access to view images and video for this camera. 'A' - user is an admin for this camera. 'S' - user can share this camera in a group share. Note: All cameras in a group must have the ‘S’ permission or the group cannot be shared
-tags                          | array[string]     | Array of strings, which each string representing a "tag"
-bridges                       | [DeviceBridges](#devicebridges-attributes)     | Bridges this device is seen by
-settings                      | [DeviceSettings](#devicesettings-attributes)    | Misc settings
-camera_parameters             | object            | JSON object of camera parameters/settings (see Overview for details). If camera parameters cannot be retrieved for whatever reason (such as when communication with camera has been lost), then this will be empty, and camera_parameters_status_code will be 404.
-camera_parameters_status_code | int               | 200 if camera_parameters were retrieved. 404 if camera_parameters were unable to be retrieved.
-camera_info                   | [DeviceCameraInfo](#devicecamerainfo-attributes)  | Camera related info, which only applies to devices that are cameras
-camera_info_status_code       | int               | 200 if camera_info was retrieved. 404 if camera_info was unable to be retrieved.
+Parameter                     | Data Type     | Description                                                                                        | Editable    | Required
+---------                     | ---------     | -----------                                                                                        |:-----------:| --------
+**id**                        | string        | Unique identifier for the device (automatically generated and assigned while adding the camera to a bridge)                                                                                                                                            | **&cross;** | **<sub><form action="#get-camera"><button>GET</button></form></sub>** <br>**<sub><form action="#update-camera"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-camera"><button>DELETE</button></form></sub>**
+**name**                      | string        | Device name                                                                                        | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+**[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.)                                  | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404)               | **&cross;** |
+timezone                      | string        | Indicates the timezone of the camera. Defaults to the cameras’s bridge timezone. Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                                    | **&check;** |
+utcOffset                     | int           | Signed UTC offset in seconds of the timezone in which this device is installed                     | **&cross;** |
+guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
+permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                                                              | **&cross;** |
+tags                          | array[string] | Array of strings each representing a tag name                                                      | **&check;** |
+[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by and the camera attach status: <br>`'ATTD'` - the camera is attached to a bridge <br>`'IGND'` - the camera is unattached and is available to be attached                                                                | **&cross;** |
+camera_parameters             | json          | Json object of camera parameters. If camera parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                   | **&check;** |
+camera_parameters_status_code | int           | Indicates whether it was possible to retrieve the device parameters (200) or not (404)             | **&cross;** |
+[camera_info](#camera-camera_info) | json          | Json object of basic information related to a camera. If camera information cannot be retrieved for whatever reason (example: communication with camera has been lost), then this will be empty and camera_info_status_code will be 404                                | **&cross;** |
+camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)      | **&cross;** |
 
-### DeviceSettings Attributes
+<aside class="notice">All cameras in a group must have the ‘S’ permission or the group cannot be shared</aside>
 
-Parameter           | Data Type                         | Description
----------           | ---------------                   | -----------
-username            | string                            | Username to login to camera. Only applies to Cameras.
-password            | string                            | Password to login to camera. Only applies to Cameras.
-bridge              | string                            | Device ID of bridge to attach camera to. Only applies to Cameras. Required for PUT for Cameras.
-guid                | string                            | GUID of physical device. Only applies to Cameras. Required for PUT for Cameras.
-roi_names           | [DeviceSettingsRoiNames](#devicesettingsroinames-attributes) | ROI names keyed by ROI ID. Only applies to Cameras.
-alert_notifications | [DeviceSettingsAlertNotifications](#devicesettingsalertnotifications-attributes) | Arrays of User IDs keyed by ROI ID. Only applies to Cameras.
-alert_modes         | [DeviceSettingsAlertModes](#devicesettingsalertmodes-attributes) | Arrays of Alert modes keyed by ROI ID. Only applies to Cameras.
-alert_levels        | [DeviceSettingsAlertLevels](#devicesettingsalertlevels-attributes) | Arrays of Alert levels keyed by ROI ID. Only applies to Cameras.
-notes               | string                            | Notes
-latitude            | float                             | Latitude of the cameras location.
-longitude           | float                             | Longitude of the cameras location.
-street_address      | string                            | Street Address of the cameras location.
-azimuth             | float                             | Direction that the center of the camera faces. Values from 0.0-360.0 North=0.0.
-range               | int                               | Effective distance the camera can 'see' in feet.
-floor               | int                               | The floor of the building given that it is multiple stories.
-share_email         | string                            | Comma delimited list of emails to share this device with
-local_retention_days| json                              | JSON object of total retention days         e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
-cloud_retention_days| json                              | JSON object of retention days in the cloud  e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
-bridge_retention_days| json                             | JSON object of retention days on the bridge e.g. ``{"max": 10000,"min": 1,"d": 14,"v": 14}``
-* Note local_retention_days and cloud_retention_days are meaningless in **CMVR** mode
+### Camera - settings
 
-### DeviceCameraInfo Attributes
+Parameter             | Data Type | Description | Required
+---------             | --------- | ----------- | --------
+**bridge**            | string    | Device ID of bridge the camera is currently attached to (or ID of the bridge to attach camera to) <small>**(APPLIES ONLY TO CAMERAS)**</small> | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+**guid**              | string    | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
+username              | string    | Username to login to camera <small>**(APPLIES ONLY TO CAMERAS)**</small>
+password              | string    | Password to login to camera <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[roi_names](#camera-settings-roi_names) | json      | Json object of ROI names keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[alert_notifications](#camera-settings-alert_notifications) | json      | Json object of user IDs keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[alert_modes](#camera-settings-alert_modes) | json      | Json object of alert modes keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+[alert_levels](#camera-settings-alert_levels) | json      | Json object of alert levels keyed by ROI ID <small>**(APPLIES ONLY TO CAMERAS)**</small>
+notes                 | string    | Notes
+latitude              | float     | Latitude of the camera's location
+longitude             | float     | Longitude of the camera's location
+street_address        | string    | Street address of the camera's location
+azimuth               | float     | Direction which the camera faces. Possible values: `0.0`-`360.0` (North=`0.0`)
+range                 | int       | Effective distance the camera can *see* in feet
+floor                 | int       | The floor of the building given that it is a multi-storey building
+share_email           | string    | Comma-delimited list of emails to share this device with
+local_retention_days  | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
+cloud_retention_days  | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
+bridge_retention_days | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
 
-Parameter           | Data Type         | Description
----------           | ---------------   | -----------
-bridge              | string            | GUID of bridge the camera is attached to
-camera_retention    | int               | Retention period in milliseconds
-camera_newest       | string            | Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_oldest       | string            | Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_info_version | int               | Camera info version
-connect             | string            | Camera connect status
-camera_min_time     | string            | Minimum timestamp available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-uuid                | string            | UUID string
-service             | string            | Service status
-make                | string            | Make of the device
-ipaddr              | string            | IP Addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk *
-ts                  | string            | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-version             | string            | Firmware version
-[status](#status-bitmask) | string            | Status bitmask
-mac                 | string            | MAC address
-proxy               | string            | Proxy
-bridgeid            | string            | Device of bridge this device is attached to
-now                 | string            | Current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-class               | string            | Camera, or Bridge, etc.
-camera_now          | string            | Camera's current timestamp, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_newest   | string            | Timestamp of newest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_oldest   | string            | Timestamp of oldest event available, in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-model               | string            | Device model
-esn                 | string            | ESN id
-admin_user          | string            | Web Username
-admin_password      | string            | Web Password
+<aside class="success">The listed settings are most common examples because the model differs from device to device</aside>
 
-### DeviceSettingsRoiNames Attributes
+<aside class="notice">local_retention_days and cloud_retention_days are unpurposed in CMVR mode</aside>
 
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | string            | Object with keys being ROI IDs, and values being the name.
+<!--TODO: Add the full camera model device settings table-->
 
-### DeviceSettingsAlertNotifications Attributes
+### Camera - settings - roi_names
 
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | array[string]     | Object with keys being ROI IDs, and values being the array of User IDs
+Parameter  | Data Type | Description
+---------  | --------- | -----------
+\<roi_id\> | string    | Object with keys being ROI IDs and values being the name
 
-### DeviceSettingsAlertModes Attributes
+### Camera - settings - alert_notifications
 
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | array[string]     | Object with keys being ROI IDs, and values being the array of alert modes
+Parameter  | Data Type     | Description
+---------  | ---------     | -----------
+\<roi_id\> | array[string] | Object with keys being ROI IDs and values being the array of User IDs
 
-### DeviceSettingsAlertLevels Attributes
+### Camera - settings - alert_modes
 
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-roi_id      | array[string]     | Object with keys being ROI IDs, and values being the array of alert levels
+Parameter  | Data Type     | Description
+---------  | ---------     | -----------
+\<roi_id\> | array[string] | Object with keys being ROI IDs and values being the array of alert modes
 
-### DeviceBridges Attributes
+### Camera - settings - alert_levels
 
-Parameter   | Data Type         | Description
----------   | ---------------   | -----------
-device_id   | string            | Object with keys being Bridge Device IDs, and values being the service status of the camera on that bridge
+Parameter  | Data Type     | Description
+---------  | ---------     | -----------
+\<roi_id\> | array[string] | Object with keys being ROI IDs and values being the array of alert levels
+
+### Camera - bridges
+
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<device_id\> | string    | Object with keys being bridge IDs and values being the service status of the camera on that bridge
+
+### Camera - camera_info
+
+Parameter           | Data Type   | Description
+---------           | ---------   | -----------
+bridge              | string      | GUID of the bridge the camera is attached to
+camera_retention    | int         | Retention period in milliseconds
+camera_newest       | string      | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_oldest       | string      | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_info_version | int         | Camera info version
+connect             | string      | Camera connect status
+camera_min_time     | string      | Minimum timestamp available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+uuid                | string      | UUID uniquely identifying the device
+service             | string      | Service status
+make                | string      | Make of the device
+ipaddr              | string      | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)
+ts                  | string      | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+version             | string      | Firmware version
+[status](#status-bitmask) | string      | Status bitmask
+mac                 | string      | MAC address
+proxy               | string      | Proxy
+bridgeid            | string      | Device of bridge this device is attached to
+now                 | string      | Current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+class               | string      | Camera or bridge, etc.
+camera_now          | string      | Camera's current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_newest   | string      | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_oldest   | string      | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+model               | string      | Device model
+esn                 | string      | Electronic Serial Number
+admin_user          | string      | Web username
+admin_password      | string      | Web password
 
 <!--===================================================================-->
 ## Get Camera
+<!--===================================================================-->
+
+Returns a Camera object by ID
 
 > Request
 
@@ -1075,156 +1088,177 @@ device_id   | string            | Object with keys being Bridge Device IDs, and 
 curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[CAMERA_ID]"
 ```
 
-Returns camera object by id
-
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Camera Id
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**    | string    | Camera ID   | true
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Add Camera to Bridge
+<!--===================================================================-->
+
+Adds an unattached Camera to the bridge
 
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X PUT -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}'
+curl -X PUT https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","timezone":[TIMEZONE],"settings":{"bridge":"[BRIDGE_ID]","guid":"[CAMERA_GUID]","username":"","password":""}}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
-
-> Json Response
-
-```json
-{
-  "id": "100c339a"
-}
-```
-
-Adds an Unattached Camera to the Bridge
 
 ### HTTP Request
 
 `PUT https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type     | Description | Is Required
----------     | -----------   | ----------- | -----------
-**name**      | string        | Camera Name | true
-**settings**  | [DeviceSettings](#devicesettings-attributes)          | Misc Settings | true
-timezone      | string        | If unspecified, this will default to the camera’s Bridge timezone
-tags          | array[string] | Array of strings, which each string representing a "tag"
-
-### Response Json Attributes
-
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
-
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | No device matching the ConnectID or GUID was found
-409 | ConnectID or GUID is currently already in use by an account
-410 | Communication cannot be made to attach the camera to the bridge
-415 | Device associated with the given GUID is unsupported
-
-<!--===================================================================-->
-## Update Camera
-
-> Request
-
-```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X POST -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d '{"id": "[CAMERA_ID], "name": "[NAME]"}'
-```
+Parameter | Data Type     | Description | Is Required
+--------- | ---------     | ----------- | -----------
+**name**  | string        | Camera name | true
+**[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.) | true
+timezone  | string        | If unspecified, this will default to the camera’s bridge timezone
+tags      | array[string] | Array of strings each representing a tag name
 
 > Json Response
 
 ```json
 {
-  "id": "100c339a"
+    "id": "100c339a"
 }
+```
+
+### HTTP Response (Array Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier for the device
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| No device matching the ConnectID or GUID was found
+409	| ConnectID or GUID is currently already in use by an account
+410	| Communication cannot be made to attach the camera to the bridge
+415	| Device associated with the given GUID is unsupported
+200	| Request succeeded
+
+<!--===================================================================-->
+## Update Camera
+<!--===================================================================-->
+
+Update Camera information
+
+> Request
+
+```shell
+curl -X POST https://login.eagleeyenetworks.com/g/device -d '{"id": "[CAMERA_ID], "name": "[NAME]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:"  --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/device`
 
-Parameter                 | Data Type     | Description   | Is Required
----------                 | -----------   | -----------   | -----------
-**id**                    | string        | Camera Id     | true
-name                      | string        | Camera Name
-timezone                  | strings       | If unspecified, this will default to the camera’s Bridge timezone
-tags                      | array[string] | Array of strings, which each string representing a "tag"
-settings                  | json          | Misc Settings
-camera_parameters_add     | json          | JSON object of camera parameters/settings to add/update
-camera_parameters_delete  | json          | JSON object of camera parameters/settings to delete
+Parameter                | Data Type     | Description | Is Required
+---------                | ---------     | ----------- | -----------
+**id**                   | string        | Camera ID   | true
+name                     | string        | Camera name
+timezone                 | strings       | If unspecified, this will default to the camera’s bridge timezone
+tags                     | array[string] | Array of strings each representing a tag name
+[settings](#camera-settings) | json          | Json object of basic settings (location, motion regions, etc.)
+camera_parameters_add    | json          | Json object of camera parameters/settings to add/update
+camera_parameters_delete | json          | Json object of camera parameters/settings to delete
 
-### Response Json Attributes
+> Json Response
 
-Parameter       | Data Type   | Description
----------       | ----------- | -----------
-id              | string      | Unique identifier for the device
+```json
+{
+    "id": "100c339a"
+}
+```
+
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+id        | string    | Unique identifier for the device
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera to add/delete camera settings, contact support
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Device matching the ID was not found
+463	| Unable to communicate with the camera to add/delete camera settings, contact support
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Delete Camera
+<!--===================================================================-->
+
+Delete a Camera from the bridge (effectively unassigning it, the camera can then be added to another or the same device)
 
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X DELETE -v -H "Authentication: [API_KEY]:" -H "content-type: application/json" https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G
+curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
 
 `DELETE https://login.eagleeyenetworks.com/g/device`
 
-Parameter     | Data Type   | Description
----------     | ----------- | -----------
-**id**        | string      | Camera Id
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**    | string    | Camera ID   | true
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
-404 | Device matching the ID was not found
-463 | Unable to communicate with the camera or bridge, contact support
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Device matching the ID was not found
+463	| Unable to communicate with the camera or bridge, contact support
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Get List of Cameras
+<!--===================================================================-->
+
+Returns an array of arrays with each sub-array representing a Camera available to the user. The `'service_status'` attribute is set either to `'ATTD'`, `'IGND'`, `'IDLE'` or `'ERSE'`. If the `'service_status'` is `'ATTD'`, the camera is attached to a bridge. If the `'service_status'` is `'IGND'`, the camera is unattached from any bridge and is available to be attached. If the `'service_status'` is `'IGND'`, the camera will register but will not operate (unregistered bridges). The `'ERSE'` status is used to erase all camera data from the bridge
 
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/device/list
+curl --request GET https://login.eagleeyenetworks.com/g/device/list --cookie "auth_key=[AUTH_KEY]"
 ```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/device/list`
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+e         | string    | Camera ID
+n         | string    | Camera Name
+t         | string    | Device Type
+s         | string    | Device Service Status
 
 > Json Response
 
@@ -1267,7 +1301,12 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
             null,
             null,
             null
-        ]
+        ],
+        null,
+        null,
+        0,
+        [],
+        0
     ],
     [
         "00004206",
@@ -1302,7 +1341,12 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
             null,
             null,
             null
-        ]
+        ],
+        null,
+        null,
+        0,
+        [],
+        0
     ],
     [...],
     [...],
@@ -1310,49 +1354,44 @@ curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks
 ]
 ```
 
-Returns array of arrays, with each sub-array representing a device available to the user. The 'service_status' attribute either be set to 'ATTD' or 'IGND'. If the service_status is 'ATTD', the camera is attached to a bridge. If the service_status is 'IGND', the camera is unattached from any bridge and is available to be attached. Please note that the ListDevice model definition below has property keys, but that's only for reference purposes since it's actually just a standard array.
+### HTTP Response (Array Attributes)
 
-### HTTP Request
+Array Index | Attribute           | Data Type     | Description
+----------- | ---------           | ---------     | -----------
+0           | account_id          | string        | Unique identifier of the device’s account
+1           | id                  | string        | Unique identifier of a device
+2           | name                | string        | Device name
+3           | type                | string, enum  | Device type <br><br>enum: camera, bridge
+4           | bridges             | array[array[string]]  | This is an array of string arrays, each array representing a bridge that can see the camera. The first element of the array is the bridge ESN. The second element is the service status
+5           | service_status      | string, enum  | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br>`'IDLE'` - camera will register but will not operate (unregistered bridges) <br>`'ERSE'` - one shot, all camera data will be erased <br><br>enum: ATTD, IGND, IDLE, ERSE
+6           | permissions         | string        | String of one or more characters each defining a permission level <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share
+7           | tags                | array[string] | Array of strings each representing a tag name
+8           | guid                | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
+9           | serial_number       | string        | Serial number of the device
+10          | [device_status](#status-bitmask) | int           | The device status bitmask
+11          | timezone            | string        | Indicates the timezone of the camera
+12          | timezone_utc_offset | int           | Timezone UTC offset as signed integer in seconds (example: `-25200` translates to -7 hours from UTC)
+13          | is_unsupported      | int           | Indicates whether the camera is NOT supported (1) or is supported (0)
+14          | ip_address          | string        | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)
+15          | is_shared           | int           | Indicates whether the camera is shared (1) or not (0)
+16          | owner_account_name  | string        | Name of the account that owns the device. This only applies to shared cameras, since they will be owned by a different account
+17          | is_upnp             | boolean       | Indicates whether the camera is a UPNP device. Note that this property is different then all the other `'is_*'` properties in the API, which normally are integers (0 or 1). Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP
+18          | video_input         | string        | For analog cameras only, this indicates the video input channel of the camera
+19          | video_status        | string        | For analog cameras only, this indicates the video status of the camera
+20          | location            | array         | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(int/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
+21          | parent_camera_id    | string        | Parent camera ID
+22          | child_camera_view   | string        | Child camera view
+23          | is_hidden           | int           | GUI control to not show device
+24          | ignored_inputs      | array[string] | Array of analog port numbers which should be ignored by the bridge
+25          | responder_camera    | int           | Indicates whether the camera is a first responder camera (1) or not (0)
 
-`GET https://login.eagleeyenetworks.com/g/device/list`
-
-Parameter | Data Type   | Description
---------- | ----------- | -----------           
-e         | string      | Camera Id             
-n         | string      | Camera Name           
-t         | string      | Device Type           
-s         | string      | Device Service Status
-
-### Response: Camera Model
-
-Array Index | Attribute           | Data Type             | Description
----------   | -----------         | -----------           | -----------           
-0           | account_id          | string                | Unique identifier for the Device's Account
-1           | id                  | string                | Unique identifier for the Device
-2           | name                | string                | Name of the device
-3           | type                | string, enum          | Type of device <br><br>enum: camera, bridge
-4           | bridges             | array[array[string]]  | This is an array of string arrays, each string array represents a bridge that can see the camera. The first element of the string array is the bridge ESN. The second element is the status.
-5           | service_status      | string, enum          | Device service status. ATTD = camera is attached to a bridge. IGND = camera is unattached from all bridges and is available to be attached to a bridge. <br><br>enum: ATTD, IGND
-6           | permissions         | string                | String of zero or more characters. Each character defines a permission that the current user has for the device. Permissions include: 'R' - user can view this device. 'W' - user can modify and delete this device. 'S' - user can share this device.
-7           | tags                | array[string]         | Tags
-8           | guid                | string                | GUID
-9           | serial_number       | string                | Serial number
-10          | [device_status](#status-bitmask) | int                   | Device status bitmask
-11          | timezone            | string                | Timezone
-12          | timezone_utc_offset | int                   | Timezone UTC offset as signed integer in seconds, such as “-25200”, which translates to -7 hours from UTC.
-13          | is_unsupported      | int                   | Indicates the camera is NOT supported (1) or IS supported (0)
-14          | ip_address          | string                | IP Address of device
-15          | is_shared           | int                   | Indicates the camera is shared (1) or not (0)
-16          | owner_account_name  | string                | Name of the account that owns the device. This only applies to shared cameras, since they will be owned by a different account.
-17          | is_upnp             | boolean               | Indicates whether the camera is a UPNP device. Note that this property is different then all the other 'is_*' properties in the API, which normally are integers (0 or 1). Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP.
-18          | video_input         | string                | For analog cameras only, this indicates the video input channel of the camera.
-19          | video_status        | string                | For analog cameras only, this indicates the video status of the camera.
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | -----------
-200 | Request succeeded
-400 | Unexpected or non-identifiable arguments are supplied
-401 | Unauthorized due to invalid session cookie
-403 | Forbidden due to the user missing the necessary privileges
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded

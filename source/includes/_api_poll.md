@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The poll service provides a mechanism for an application to receive notifications of events or spans from Eagle Eye Networks. These entities are grouped by resource
+The Poll service provides a mechanism for an application to receive notifications of events or spans from Eagle Eye Networks. These entities are grouped by resource
 
 Resources:
 
@@ -24,9 +24,9 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 <aside class="success">This service will continually be extended</aside>
 
-Poll is a stateful request for updates any time a matching event occurs within the service. The initial poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre, and thumbnail automatically register the API caller to their respective events. However, resource type ‘event’ requires the API caller to tell the API what events to listen for
+Poll is a stateful request for updates any time a matching event occurs within the service. The initial Poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre and thumbnail automatically register the API caller to their respective events. However, resource type `'event'` requires the API caller to tell the API what events to listen for
 
-Each object consists of an id element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
+Each object consists of an ID element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
 ### Response Resource Types
 
@@ -44,10 +44,10 @@ video                     | [startts, endts] | List of start and end timestamps 
 
 HEX Value | Status
 --------- | ------
-0x000001  | Camera online **(DEPRECATED)**
-0x000002  | Stream attached (camera communicating with bridge) **(DEPRECATED)**
-0x000004  | Camera on (user setting) **(DEPRECATED)**
-0x000008  | Camera recording **(DEPRECATED)**
+0x000001  | Camera online <small>**(DEPRECATED)**</small>
+0x000002  | Stream attached (camera communicating with bridge) <small>**(DEPRECATED)**</small>
+0x000004  | Camera on (user setting) <small>**(DEPRECATED)**</small>
+0x000008  | Camera recording <small>**(DEPRECATED)**</small>
 0x000010  | Camera sending previews
 0x000020  | Camera located (bridge has found the camera)
 0x000040  | Camera not supported
@@ -81,9 +81,11 @@ IF "Camera On" (**bit 17**)==0 THEN "Off" (orange forbidden icon)
 IF "Recording" (**bit 19**) THEN Recording (green circle icon)
 IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits were set previously)
 
+<!--===================================================================-->
 ## Event Objects
+<!--===================================================================-->
 
-> Json Response
+> Event Objects
 
 ```json
 {
@@ -113,223 +115,214 @@ IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits wer
 
 <aside class="notice">Each event type is returned with the EEN formatted timestamp: YYYYMMDDhhmmss.xxx</aside>
 
-Four CC   | Description                                                        | Returned parameters
--------   | -----------                                                        | -------------------
-VRES      | Video start event                                                  | cameraid, videoid, format, status
-VREE      | Video end event                                                    | cameraid, videoid, videosize, format, status
-VRKF      | Video key frame event                                              | cameraid, videoid, file_offset, format
-VRSU      | Video update event                                                 | cameraid, videoid, format, status
-PRSS      | Preview stream start event                                         | cameraid, previewid, frame_delay, duration, flags, format, status
-PRTH      | Thumbnail event                                                    | cameraid, previewid, eventid, file_offset, frame_size
-PRFR      | Preview event                                                      | cameraid, previewid, file_offset, frame_size
-PRFB      | Preview backing event                                            | cameraid, previewid, file_offset, frame_size
-PRFU      | Preview upload event                                             | cameraid, file_offset, frame_size
-PRSE      | Preview stream end event                                           | cameraid, previewid, status
-PRSU      | Preview stream update event                                        | cameraid, previewid, status
-EMES      | Motion start event                                                 | cameraid, videoid, eventid
-EMEU      | Motion update event                                              | cameraid, videoid, eventid
-EMEE      | Motion end event                                                   | cameraid, eventid
-ESES      | Stream start event                                                 | cameraid, videoid, eventid
-EAES      | ???                                                              | cameraid, videoid, eventid
-EPES      | ???                                                              | cameraid, videoid, eventid
-ENES      | ???                                                              | cameraid, videoid, eventid, ns
-ENEU      | ???                                                              | cameraid, videoid, eventid, ns
-EVVS      | Video swap event                                                   | cameraid, videoid, eventid
-ESEE      | Stream stop event                                                  | cameraid, eventid
-EAEE      | ???                                                              | cameraid, eventid
-EPEE      | ???                                                              | cameraid, eventid
-ENEE      | ???                                                              | cameraid, eventid, ns
-ECON      | Camera online event                                                | cameraid
-ECOF      | Camera offline event                                               | cameraid
-RCON      | Camera register online event                                     | cameraid, registerid
-RCOF      | Camera register offline event                                    | cameraid, registerid
-RCHB      | Camera register heartbeat event                                  | cameraid, registerid
-AELI      | Account log in event                                               | cameraid, status, source_userid
-AELO      | Account log out event                                              | cameraid, status, source_userid
-AEDO      | Download video event                                               | cameraid, status, source_userid, source_accountid, resource_type, deviceid, endtime
-AEUC      | Create user event                                                  | cameraid, status, target_userid, source_userid, source_accountid
-AEUD      | Delete user event                                                  | cameraid, status, target_userid, source_userid, source_accountid
-AECC      | User configuration change event                                    | cameraid, status, target_userid, source_userid, source_accountid, values
-AELD      | Live display event                                                 | cameraid, status, source_userid, deviceid
-AEPT      | Pan tilt zoom event                                                | cameraid, status, source_userid, deviceid
-AEEC      | Create layout event                                              | cameraid, status, source_userid, source_accountid, layoutid
-AEED      | Delete layout event                                                | cameraid, status, source_userid, source_accountid, layoutid
-AEEL      | Layout change event                                                | cameraid, status, source_userid, source_accountid, layoutid, values
-AEAC      | Create account event                                               | cameraid, status, new_accountid, source_userid, source_accountid
-AEAD      | Delete account event                                               | cameraid, status, source_userid, source_accountid
-AEAH      | Account change event                                               | cameraid, status, source_userid, source_accountid, values
-AEDC      | Create device event                                                | cameraid, status, deviceid, source_userid, source_accountid
-AEDD      | Delete device event                                                | cameraid, status, deviceid, source_userid, source_accountid
-AEDH      | Device change event                                                | cameraid, status, deviceid, source_userid, source_accountid, values
-CECF      | Camera found event                                                 | cameraid, uuid, svc_state
-CECL      | Camera lost event                                                | cameraid
-CSAT      | Camera stream attach event                                         | cameraid, stream_format, stream_type
-CSDT      | Camera stream detach event                                         | cameraid, stream_format, stream_type
-CSAU      | ???                                                              | cameraid, streamid, stream_format, stream_type
-CSDU      | ???                                                              | cameraid, streamid, stream_format, stream_type
-COFF      | Camera off event                                                   | cameraid
-CONN      | Camera on event                                                    | cameraid
-COBC      | Camera bounce event                                                | cameraid
-CSTS      | Camera settings event                                              | cameraid, sequence, settings
-CZTS      | ???                                                              | cameraid, sequence, settings
-CSTC      | Camera settings change event                                       | cameraid, sequence, settings
-CZTC      | ???                                                              | cameraid, userid, flags, command, change
-CZDC      | ???                                                              | cameraid, userid, flags, command, change
-CPRG      | Camera purge event                                                 | cameraid, day, bytes
-CDLT      | Camera data lost event                                             | cameraid, day, bytes
-CBWS      | Camera bandwidth sample event                                      | cameraid, kbytesondisk, bytesstored, bytesshaped, bytesstreamed, bytesfreed, daysondisk
-BBWS      | Bridge bandwidth sample event                                      | cameraid, kbytessize, kbytesavail, bytesstored, bytesshaped, bytesstreamed, bytesfreed
-SBWS      | ???                                                              | cameraid, bw10, bw60, bw300, streamtype
-SBW0      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW1      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW2      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW3      | ???                                                              | cameraid, bw10, bw60, bw300
-SBW4      | ???                                                              | cameraid, bw10, bw60, bw300
-BBTW      | ???                                                              | cameraid, ip, bytes_sent, bytes_rcvd, active_write_us, paused_write_us
-BBOO      | Bridge boot event                                                | cameraid, booted
-MRBX      | Motion box event                                                   | cameraid
-MRSZ      | Motion size reports event                                          | cameraid, flags, motion
-ROMS      | Region of interest motion start event                              | cameraid, roiid, videoid, eventid
-ROMU      | ???                                                              | cameraid, roiid, videoid, eventid
-ROME      | Region of interest motion end event                                | cameraid, eventid
-ALMS      | Motion alert start event                                           | cameraid, eventid, alertid, alertmotionid
-ALME      | Motion alert end event                                             | cameraid, alertmotionid
-ALRS      | Region of interest alert start event                               | cameraid, eventid, alertid, alertroiid
-ALRE      | Region of interest alert end event                                 | cameraid, alertroiid
-AEDA      | Device alert event                                                 | cameraid, status, deviceid, source_userid, source_accountid, values
-AEDN      | Device alert notification event                                    | cameraid, status, target_deviceid, triggerid, starttime, endtime, target_userid, json
-NOOP      | ???                                                              | cameraid
-CSST      | ???                                                              | cameraid, streamtype, total_expected, total_rcvd, delta_expected, delta_rcvd, interval
-CSSU      | ???                                                              | cameraid, streamtype, streamformat, total_expected, total_rcvd, delta_expected, delta_rcvd, interval, streamid
-CCCF      | ???                                                              | cameraid, errcode
-BUBW      | ???                                                              | cameraid, bytessent, millisecs
-ABRT      | Camera abort event                                               | cameraid, aborted
-AABT      | ???                                                              | cameraid, aborted
-NVPT      | ???                                                              | cameraid, ns, key_offset, op, mpack
-ANNT      | Annotation event                                                 | cameraid, ns, flags, uuid, seq, op, mpack
-SCRN      | ???                                                              | cameraid, ns, uuid, mpack
-CCLC      | ???                                                              | cameraid, src_ip, dest_ip, src_port, dest_port, ctype
-CCLD      | ???                                                              | cameraid, src_ip, dest_ip, src_port, dest_port, ctype, reason, seconds
-SSTE      | ???                                                              | cameraid, stype, event, seconds
-ITFU      | ???                                                              | cameraid, ip, flags, valid, mpack
-PTZS      | ???                                                              | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
+**Note:** Event object descriptions marked with '&#9702;' can be expanded for additional information on the event
 
+Four&nbsp;CC | Description                                                     | Returned parameters
+------------ | -----------                                                     | -------------------
+VRES	| Video record start event                                               | cameraid, videoid, format, status
+VREE	| Video record end event                                                 | cameraid, videoid, videosize, format, status
+VRKF	| Video record key frame event                                           | cameraid, videoid, file_offset, format
+EAES	| <details><summary>Always record video start event&nbsp;&#9702;</summary><p><br>Background "always" record video event has started</br></p></details> | cameraid, videoid, eventid
+EAEE	| <details><summary>Always record video end event&nbsp;&#9702;</summary><p><br>Background "always" record video event has ended</br></p></details> | cameraid, eventid
+AEDO	| Video download event                                                   | cameraid, status, source_userid, source_accountid, resource_type, deviceid, endtime
+EVVS	| <details><summary>Video swap event&nbsp;&#9702;</summary><p><br>The event spans across two different video IDs: `'eventid'` and `'videoid'` (new swapped-in ID)</br></p></details> | cameraid, videoid, eventid
+PRTH	| Thumbnail event                                                        | cameraid, previewid, eventid, file_offset, frame_size
+PRFR	| <details><summary>Preview event&nbsp;&#9702;</summary><p><br>indicates a preview frame has been recorded</br></p></details> | cameraid, previewid, file_offset, frame_size
+PRFB	| Preview backing event                                                  | cameraid, previewid, file_offset, frame_size
+EMES	| Motion start event                                                     | cameraid, videoid, eventid
+EMEE	| Motion end event                                                       | cameraid, eventid
+EMEU	| <details><summary>Motion update event&nbsp;&#9702;</summary><p><br>Heartbeat for a motion event <br>(10 sec interval)</br></p></details> | cameraid, videoid, eventid
+MRBX	| <details><summary>Motion box event&nbsp;&#9702;</summary><p><br>Motion has occurred in the indicated region (coordinates are from top right corner in fraction of 0xffff)</br></p></details> | cameraid
+MRSZ	| <details><summary>Motion size reports event&nbsp;&#9702;</summary><p><br>Indicates the amount of motion on screen and for each active ROI (in ratio over 0xffff as percentage of screen) <br><br>Flag is `'0x1'` - motion greater than defined threshold (region is *in motion*)</br></p></details> | cameraid, flags, motion
+ALMS	| <details><summary>Motion alert start event&nbsp;&#9702;</summary><p><br>Motion event has occurred (related to the indicated alert)</br></p></details> | cameraid, eventid, alertid, alertmotionid
+ALME	| <details><summary>Motion alert end event&nbsp;&#9702;</summary><p><br>Motion event has ended (related to the indicated alert)</br></p></details> | cameraid, alertmotionid
+ROMS	| <details><summary>ROI motion start event&nbsp;&#9702;</summary><p><br>Region of interest motion start event</br></p></details> | cameraid, roiid, videoid, eventid
+ROME	| <details><summary>ROI motion end event&nbsp;&#9702;</summary><p><br>Region of interest motion end event</br></p></details> | cameraid, eventid
+ROMU	| <details><summary>ROI motion update event&nbsp;&#9702;</summary><p><br>Heartbeat for a ROI motion event</br></p></details> | cameraid, roiid, videoid, eventid
+ALRS	| <details><summary>ROI alert start event&nbsp;&#9702;</summary><p><br>ROI motion event linked to alert has started</br></p></details> | cameraid, eventid, alertid, alertroiid
+ALRE	| <details><summary>ROI alert end event&nbsp;&#9702;</summary><p><br>ROI motion event linked to alert has ended</br></p></details> | cameraid, alertroiid
+AEDA	| Device alert event                                                     | cameraid, status, deviceid, source_userid, source_accountid, values
+AEDN	| Device alert notification event                                        | cameraid, status, target_deviceid, triggerid, starttime, endtime, target_userid, json
+AEDC	| <details><summary>Create device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
+AEDD	| <details><summary>Delete device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
+AEDH	| <details><summary>Device change event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid, values
+ESES	| <details><summary>Stream start event&nbsp;&#9702;</summary><p><br>User-requested stream event has started</br></p></details> | cameraid, videoid, eventid
+ESEE	| <details><summary>Stream end event&nbsp;&#9702;</summary><p><br>User-requested stream event has ended</br></p></details> | cameraid, eventid
+SBWS	| <details><summary>Stream bw sample event&nbsp;&#9702;</summary><p><br>If enabled, the last N seconds of bandwidth from the camera</br></p></details> | cameraid, bw10, bw60, bw300, streamtype
+SBW0  | <details><summary>Stream bw sample 0 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 0 <br><br>`'PREV'` - base bandwidth preview channel+thumbs (all frames at selected rate/quality, no compression)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW1  | <details><summary>Stream bw sample 1 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 1 <br><br>`'PSND'` - bandwidth of what *should be sent* <br>`'VIDC'` - video captured bandwidth (video and audio together)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW2  | <details><summary>Stream bw sample 2 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 2 <br><br>`'VIDE'` - base bandwidth of the video stream (not motion filtered)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW3  | <details><summary>Stream bw sample 3 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 3 <br><br>`'AUDI'` - base bandwidth of the audio stream (not motion filtered)</br></p></details> | cameraid, bw10, bw60, bw300
+SBW4  | <details><summary>Stream bw sample 4 event&nbsp;&#9702;</summary><p><br>Samples of camera bandwidth for stream 4 <br><br>`'VIDC'` - video captured bandwidth (video and audio together)</br></p></details> | cameraid, bw10, bw60, bw300
+SSTE	| Streamer status event                                                  | cameraid, stype, event, seconds
+CSAU	| <details><summary>Camera stream attach event&nbsp;&#9702;</summary><p><br>Camera has started streaming data to bridge (`'streamid'` is common with CSDU and CSSU)</br></p></details> | cameraid, streamid, stream_format, stream_type
+CSDU	| <details><summary>Camera stream detach event&nbsp;&#9702;</summary><p><br>Camera has stopped streaming data to bridge</br></p></details> | cameraid, streamid, stream_format, stream_type
+CSSU	| <details><summary>Camera stream stats event&nbsp;&#9702;</summary><p><br>Camera is sending stats for the stream between camera and bridge (Heartbeat for CSAU/CSDU)</br></p></details> | cameraid, streamtype, streamformat, total_expected, total_rcvd, delta_expected, delta_rcvd, interval, streamid
+CECF	| <details><summary>Camera found event&nbsp;&#9702;</summary><p><br>Camera has been detected by the bridge</br></p></details> | cameraid, uuid, svc_state
+CECL	| <details><summary>Camera lost event&nbsp;&#9702;</summary><p><br>Camera has stopped responding correctly after being found by the bridge</br></p></details> | cameraid
+RCON	| Camera online event                                                    | cameraid, registerid
+RCOF	| Camera offline event                                                   | cameraid, registerid
+CONN	| Camera on event                                                        | cameraid
+COFF	| Camera off event                                                       | cameraid
+RCHB	| <details><summary>Camera heartbeat event&nbsp;&#9702;</summary><p><br>Heartbeat indicating a camera is still registered</br></p></details> | cameraid, registerid
+ABRT	| <details><summary>Camera abort event&nbsp;&#9702;</summary><p><br>Bridge process restarted (abort all camera streams)</br></p></details> | cameraid, aborted
+COBC	| <details><summary>Camera bounce event&nbsp;&#9702;</summary><p><br>Camera has camera has been forced to restart</br></p></details> | cameraid
+CZTC	| <details><summary>Camera setting change event&nbsp;&#9702;</summary><p><br>Indicated camera setting has changed to the new value (data is zlib compressed)</br></p></details> | cameraid, userid, flags, command, change
+CZTS	| <details><summary>Camera settings change event&nbsp;&#9702;</summary><p><br>Camera settings have been changed (data is zlib compressed)</br></p></details> | cameraid, sequence, settings
+CZDC	| <details><summary>Camera settings change event&nbsp;&#9702;</summary><p><br>Camera settings have changed from old to new (data is zlib compressed)</br></p></details> | cameraid, userid, flags, command, change
+CPRG	| <details><summary>Camera purge event&nbsp;&#9702;</summary><p><br>Camera has purged data due to storage limitations</br></p></details> | cameraid, day, bytes
+CDLT	| <details><summary>Camera data lost event&nbsp;&#9702;</summary><p><br>Camera has deleted data within retention interval due to storage limitations</br></p></details> | cameraid, day, bytes
+CBWS	| <details><summary>Camera bw sample event&nbsp;&#9702;</summary><p><br>Data amount a camera has captured/sent to the cloud</br></p></details> | cameraid, kbytesondisk, bytesstored, bytesshaped, bytesstreamed, bytesfreed, daysondisk
+BBWS	| <details><summary>Bridge bw sample event&nbsp;&#9702;</summary><p><br>Stats regarding the amount of data all devices on this bridge have captured and sent to the cloud</br></p></details> | cameraid, kbytessize, kbytesavail, bytesstored, bytesshaped, bytesstreamed, bytesfreed
+BBTW	| <details><summary>Bridge bw tagflow event&nbsp;&#9702;</summary><p><br>Stats regarding bandwidth between bridge and cloud</br></p></details> | cameraid, ip, bytes_sent, bytes_rcvd, active_write_us, paused_write_us
+BUBW	| <details><summary>Upload bw sample event&nbsp;&#9702;</summary><p><br>Metric of data being periodically sent to the cloud to test bandwidth (`'bytessent'` in N millisec)</br></p></details> | cameraid, bytessent, millisecs
+BBOO	| Bridge boot event                                                      | cameraid, booted
+NOOP	| No operation event                                                     | cameraid
+AEAC	| Create account event                                                   | cameraid, status, new_accountid, source_userid, source_accountid
+AEAD	| Delete account event                                                   | cameraid, status, source_userid, source_accountid
+AEAH	| Account change event                                                   | cameraid, status, source_userid, source_accountid, values
+AELI	| Account log in event                                                   | cameraid, status, source_userid
+AELO	| Account log out event                                                  | cameraid, status, source_userid
+AEUC	| Create user event                                                      | cameraid, status, target_userid, source_userid, source_accountid
+AEUD	| Delete user event                                                      | cameraid, status, target_userid, source_userid, source_accountid
+AECC	| User setting change event                                              | cameraid, status, target_userid, source_userid, source_accountid, values
+AEEC	| Create layout event                                                    | cameraid, status, source_userid, source_accountid, layoutid
+AEED	| Delete layout event                                                    | cameraid, status, source_userid, source_accountid, layoutid
+AEEL	| Layout change event                                                    | cameraid, status, source_userid, source_accountid, layoutid, values
+CCCF	| <details><summary>Curl fail event&nbsp;&#9702;</summary><p><br>Failed communication between bridge and camera with indicated cURL error code</br></p></details> | cameraid, errcode
+ANNT	| Annotation event                                                       | cameraid, ns, flags, uuid, seq, op, mpack
+NVPT	| Name value table event                                                 | cameraid, ns, key_offset, op, mpack
+ITFU	| Interface update event                                                 | cameraid, ip, flags, valid, mpack
+SCRN	| Screen connect event                                                   | cameraid, ns, uuid, mpack
+AELD	| Live display event                                                     | cameraid, status, source_userid, deviceid
+CCLC	| <details><summary>Cloud connect event&nbsp;&#9702;</summary><p><br>Bridge connected to the cloud over indicated connection</br></p></details> | cameraid, src_ip, dest_ip, src_port, dest_port, ctype
+CCLD	| <details><summary>Cloud disconnect event&nbsp;&#9702;</summary><p><br>Bridge lost connection to the cloud</br></p></details> | cameraid, src_ip, dest_ip, src_port, dest_port, ctype, reason, seconds
+ENES	| App-specific event start                                               | cameraid, videoid, eventid, ns
+ENEE	| App-specific event end                                                 | cameraid, eventid, ns
+ENEU	| <details><summary>App-specific update event&nbsp;&#9702;</summary><p><br>Heartbeat for an application event <br>(10 sec interval)</br></p></details> | cameraid, videoid, eventid, ns
+AEPT	| <details><summary>PTZ event&nbsp;&#9702;</summary><p><br>Pan tilt zoom event</br></p></details> | cameraid, status, source_userid, deviceid
+EPES	| <details><summary>PTZ camera event start&nbsp;&#9702;</summary><p><br>PTZ camera move/change event has started</br></p></details> | cameraid, videoid, eventid
+EPEE	| <details><summary>PTZ camera event end&nbsp;&#9702;</summary><p><br>PTZ camera move/change event has ended</br></p></details> | cameraid, eventid
+PTZS	| <details><summary>PTZ status event&nbsp;&#9702;</summary><p><br>Snapshot of the PTZ state as point in time (For tracking PTZ during movement)</br></p></details> | cameraid, userid, flags, reason, pan_status, zoom_status, x, y, z
+PRSS	| <small>Preview stream start event <br>**(INTERNAL USE ONLY)**</small>  | cameraid, previewid, frame_delay, duration, flags, format, status
+PRSE	| <small>Preview stream end event <br>**(INTERNAL USE ONLY)**</small>    | cameraid, previewid, status
+PRFU	| <small>Preview upload event <br>**(INTERNAL USE ONLY)**</small>        | cameraid, file_offset, frame_size
+AABT	| <small>Camera archiver abort event <br>**(INTERNAL USE ONLY)**</small> | cameraid, aborted
+ECON	| <small>Camera online event <br>**(DEPRECATED)**</small>                | cameraid
+ECOF	| <small>Camera offline event <br>**(DEPRECATED)**</small>               | cameraid
+CSTS	| <small>Camera settings change event <br>**(DEPRECATED)**</small>       | cameraid, sequence, settings
+CSTC	| <small>Camera settings change event <br>**(DEPRECATED)**</small>       | cameraid, sequence, settings
+CSAT	| <small>Camera stream attach event <br>**(DEPRECATED)**</small>         | cameraid, stream_format, stream_type
+CSDT	| <small>Camera stream detach event <br>**(DEPRECATED)**</small>         | cameraid, stream_format, stream_type
+CSST	| <small>Camera stream stats event <br>**(DEPRECATED)**</small>          | cameraid, streamtype, total_expected, total_rcvd, delta_expected, delta_rcvd, interval
+PRSU	| <small>Preview stream update event <br>**(DEPRECATED)**</small>        | cameraid, previewid, status
+VRSU	| <small>Video update event <br>**(DEPRECATED)**</small>                 | cameraid, videoid, format, status
+
+<!-- TODO: Unhide and fill out the below table when the information gets delivered -->
+
+<details hidden>
 ### Event Parameters
 
 Parameter        | Description
 ---------        | -----------
-aborted          |
-active_write_us  |
-alertid          |
-alertmotionid    |
-alertroiid       |
-booted           |
-bw10             |
-bw60             |
-bw300            |
-bytes            |
-bytes_rcvd       |
-bytes_sent       |
-bytesfreed       |
-bytessent        |
-bytesshaped      |
-bytesstored      |
-bytesstreamed    |
-cameraid         |
-change           |
-command          |
-ctype            |
-day              |
-daysondisk       |
-delta_expected   |
-delta_rcvd       |
-dest_ip          |
-dest_port        |
-deviceid         |
-duration         |
-endtime          |
-errcode          |
-event            |
-eventid          |
-file_offset      |
-flags            |
-format           |
-frame_delay      |
-frame_size       |
-interval         |
-ip               |
-kbytesavail      |
-kbytesondisk     |
-kbytessize       |
-key_offset       |
-layoutid         |
-millisecs        |
-motion           |
-mpack            |
-new_accountid    |
-ns               |
-op               |
-pan_status       |
-paused_write_us  |
-previewid        |
-reason           |
-registerid       |
-resource_type    |
-roiid            |
-seconds          |
-seq              |
-sequence         |
-settings         |
-source_accountid |
-source_userid    |
-src_ip           |
-src_port         |
-starttime        |
-status           |
-stream_format    |
-stream_type      |
-streamformat     |
-streamid         |
-streamtype       |
-stype            |
-target_deviceid  |
-target_userid    |
-total_expected   |
-total_rcvd       |
-triggerid        |
-userid           |
-uuid             |
-valid            |
-values           |
-videoid          |
-videosize        |
-x                |
-y                |
-z                |
-zoom_status      |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+aborted          | <p hidden>???</p>
+active_write_us  | <p hidden>???</p>
+alertid          | <p hidden>???</p>
+alertmotionid    | <p hidden>???</p>
+alertroiid       | <p hidden>???</p>
+booted           | <p hidden>???</p>
+bw10             | <p hidden>???</p>
+bw60             | <p hidden>???</p>
+bw300            | <p hidden>???</p>
+bytes            | <p hidden>???</p>
+bytes_rcvd       | <p hidden>???</p>
+bytes_sent       | <p hidden>???</p>
+bytesfreed       | <p hidden>???</p>
+bytessent        | <p hidden>???</p>
+bytesshaped      | <p hidden>???</p>
+bytesstored      | <p hidden>???</p>
+bytesstreamed    | <p hidden>???</p>
+cameraid         | <p hidden>???</p>
+change           | <p hidden>???</p>
+command          | <p hidden>???</p>
+ctype            | <p hidden>???</p>
+day              | <p hidden>???</p>
+daysondisk       | <p hidden>???</p>
+delta_expected   | <p hidden>???</p>
+delta_rcvd       | <p hidden>???</p>
+dest_ip          | <p hidden>???</p>
+dest_port        | <p hidden>???</p>
+deviceid         | <p hidden>???</p>
+duration         | <p hidden>???</p>
+endtime          | <p hidden>???</p>
+errcode          | <p hidden>???</p>
+event            | <p hidden>???</p>
+eventid          | <p hidden>???</p>
+file_offset      | <p hidden>???</p>
+flags            | <p hidden>???</p>
+format           | <p hidden>???</p>
+frame_delay      | <p hidden>???</p>
+frame_size       | <p hidden>???</p>
+interval         | <p hidden>???</p>
+ip               | <p hidden>???</p>
+kbytesavail      | <p hidden>???</p>
+kbytesondisk     | <p hidden>???</p>
+kbytessize       | <p hidden>???</p>
+key_offset       | <p hidden>???</p>
+layoutid         | <p hidden>???</p>
+millisecs        | <p hidden>???</p>
+motion           | <p hidden>???</p>
+mpack            | <p hidden>???</p>
+new_accountid    | <p hidden>???</p>
+ns               | <p hidden>???</p>
+op               | <p hidden>???</p>
+pan_status       | <p hidden>???</p>
+paused_write_us  | <p hidden>???</p>
+previewid        | <p hidden>???</p>
+reason           | <p hidden>???</p>
+registerid       | <p hidden>???</p>
+resource_type    | <p hidden>???</p>
+roiid            | <p hidden>???</p>
+seconds          | <p hidden>???</p>
+seq              | <p hidden>???</p>
+sequence         | <p hidden>???</p>
+settings         | <p hidden>???</p>
+source_accountid | <p hidden>???</p>
+source_userid    | <p hidden>???</p>
+src_ip           | <p hidden>???</p>
+src_port         | <p hidden>???</p>
+starttime        | <p hidden>???</p>
+status           | <p hidden>???</p>
+stream_format    | <p hidden>???</p>
+stream_type      | <p hidden>???</p>
+streamformat     | <p hidden>???</p>
+streamid         | <p hidden>???</p>
+streamtype       | <p hidden>???</p>
+stype            | <p hidden>???</p>
+target_deviceid  | <p hidden>???</p>
+target_userid    | <p hidden>???</p>
+total_expected   | <p hidden>???</p>
+total_rcvd       | <p hidden>???</p>
+triggerid        | <p hidden>???</p>
+userid           | <p hidden>???</p>
+uuid             | <p hidden>???</p>
+valid            | <p hidden>???</p>
+values           | <p hidden>???</p>
+videoid          | <p hidden>???</p>
+videosize        | <p hidden>???</p>
+x                | <p hidden>???</p>
+y                | <p hidden>???</p>
+z                | <p hidden>???</p>
+zoom_status      | <p hidden>???</p>
+</details>
 
 <!--===================================================================-->
 ## Initialize Poll
 <!--===================================================================-->
+
+<aside class="notice">Subscribe to the poll service, which is required for GET /poll. Response: token=xxxxx / Response headers: set_cookie: ee-poll-ses/poll_id=xxxxx</aside>
+
+Response includes 2 session cookies and a returned token (which are identical). Only one of the session cookies has to be provided to the GET /poll request
 
 > Request
 
@@ -370,40 +363,35 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
     }
 }
 ```
-<aside class="notice">Subscribe to the poll service, which is required for GET /poll. Response: token=xxxxx / Response headers: set_cookie: ee-poll-ses/poll_id=xxxxx</aside>
-
-Response includes 2 session cookies and a returned token (which are identical). Only one of the session cookies has to be provided to the GET /poll request
 
 ### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/poll`
 
-<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by id (camera, bridge or account ESN)</aside>
+<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by ID (camera, bridge or account ESN)</aside>
 
-Due to the progressing expansion of the event polling mechanic, the parameter 'cameras' has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
+Due to the progressing expansion of the event polling mechanic, the parameter `'cameras'` has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the [object_id](#object-structure) (can contain multiple Json objects, even of different types)
+Parameter | Data Type | Description
+--------- | --------- | -----------
+cameras   | json      | Json attribute keyed with the [\<object_id\>](#object-structure) (can contain multiple Json objects, even of different types)
 
 ### Object Structure
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-[object_id] | json      | Json attribute keyed with 'resource' and/or 'event'
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<object_id\> | json      | Json attribute keyed with `'resource'` and/or `'event'`
 
 The Json object allows to narrow down the polling scope by specifying which type of entity to poll for. The types include:
 
 Parameter    | Data Type     | Description | Is Required
 ---------    | ---------     | ----------- | -----------
 **resource** | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
-event        | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains 'event', the array of events specified here will narrow down the scope of retrieved events)
+event        | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains `'event'`, the array of events specified here will narrow down the scope of retrieved events)
 
 <!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
 
 <aside class="warning">The event parameter is required to have the event resource present when polling over HTTP (instead of WebSocket)</aside>
-
-### HTTP Response
 
 > Json Response
 
@@ -424,18 +412,20 @@ event        | array[string] | Array of one or more string containing the event 
 }
 ```
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the [object_id](#response-object-structure) (can contain multiple Json objects, even of different types)
-token       | string    | Token to be used for subsequent GET /poll requests
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+cameras   | json      | Json attribute keyed with the [\<object_id\>](#response-object-structure) (can contain multiple Json objects, even of different types)
+token     | string    | Token to be used for subsequent GET /poll requests
 
 ### Response Object Structure
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-[object_id] | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<object_id\> | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
-The amount of keys depends on the sent request inquiry (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
+The amount of keys depends on the sent request inquiry (if the request entailed `'pre'` and `'video'`, then the retrieved data will only cover `'pre'` and `'video'` information)
 
 If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
@@ -458,17 +448,15 @@ HTTP Status Code | Description
 
 <aside class="notice">Used to receive updates on real-time changes. This API call requires a valid 'ee-poll-ses' cookie from POST /poll</aside>
 
-### HTTP Request
-
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c001.eagleeyenetworks.com/poll
 ```
 
-`GET https://login.eagleeyenetworks.com/poll`
+### HTTP Request
 
-### HTTP Response
+`GET https://login.eagleeyenetworks.com/poll`
 
 > Json Response
 
@@ -527,17 +515,19 @@ curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c0
 }
 ```
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-cameras     | json      | Json attribute keyed with the object_id (can contain multiple Json objects, even of different types)
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+cameras   | json      | Json attribute keyed with the \<object_id\> (can contain multiple Json objects, even of different types)
 
 ### Response Object Structure
 
-Parameter   | Data Type | Description
----------   | --------- | -----------
-[object_id] | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
+Parameter     | Data Type | Description
+---------     | --------- | -----------
+\<object_id\> | json      | Json attribute keyed with [resource](#poll) types. Retrieved values are the most recent entities for the specified resource
 
-The amount of keys depends on the sent POST request (if the request entailed 'pre' and 'video', then the retrieved data will only cover 'pre' and 'video' information)
+The amount of keys depends on the sent POST request (if the request entailed `'pre'` and `'video'`, then the retrieved data will only cover `'pre'` and `'video'` information)
 
 If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
@@ -557,6 +547,10 @@ HTTP Status Code | Description
 <!--===================================================================-->
 ## WebSocket Polling
 <!--===================================================================-->
+
+WebSockets provide a persistent connection between a client and server. This uplink enables a two-way data stream over which chunked data can be sent and received as messages. This protocol provides a full-duplex communications channel over a single TCP connection, allowing the client to receive event-driven responses without having to poll the server for a reply (effectively decreasing data traffic)
+
+<aside class="notice">The WebSocket similarity to the HTTP protocol is that its handshake is interpreted by HTTP servers as a HTTP 'upgrade request'</aside>
 
 > Request Json
 
@@ -591,10 +585,6 @@ HTTP Status Code | Description
     }
 }
 ```
-
-WebSockets provide a persistent connection between a client and server. This uplink enables a two-way data stream over which chunked data can be sent and received as messages. This protocol provides a full-duplex communications channel over a single TCP connection, allowing the client to receive event-driven responses without having to poll the server for a reply (effectively decreasing data traffic)
-
-<aside class="notice">The WebSocket similarity to the HTTP protocol is that its handshake is interpreted by HTTP servers as a HTTP 'upgrade request'</aside>
 
 ### Client Handshake Request
 
@@ -633,7 +623,7 @@ The WebSocket protocol has two parts:
         <td style="text-align:center;">server</td>
         <td style="text-align:center;">API version</td>
         <td style="text-align:center;">resource</td>
-        <td style="text-align:center;">account id</td>
+        <td style="text-align:center;">account ID</td>
         <td style="text-align:center;">'Events' suffix</td>
     </tr>
 </table>
@@ -642,7 +632,7 @@ WebSocket URLs use the WS scheme or alternatively WSS for secure connections whi
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**A**     | string    | Used to replace the 'auth_key' cookie | false
+**A**     | string    | Used to replace the `'auth_key'` cookie | false
 
 ### Server Handshake Response
 
@@ -666,17 +656,17 @@ HTTP Status Code | Description
 
 ### Data Exchange
 
-The client communicates with the server after a successful handshake by sending an object as Json-formatted string. The 'message' send is being triggered by the client by calling the appropriate WebSocket 'send' function (the method depends on the client environment)
+The client communicates with the server after a successful handshake by sending an object as Json-formatted string. The *message* send is being triggered by the client by calling the appropriate WebSocket *send* function (the method depends on the client environment)
 
 The client has to specify via Json what kind of data it is going to be polling and from which devices (See [Initialize Poll](#initialize-poll), [Resource Type](#poll), [Event Objects](#event-objects))
 
-WebSocket is an event-driven API. When messages are received a message event is delivered to the the 'onmessage' function, where the message is being received and parsed
+WebSocket is an event-driven API. When messages are received a message event is delivered to the the *onmessage* function, where the message is being received and parsed
 
-The connection can be severed at any given time using the 'close' function
+The connection can be severed at any given time using the *close* function
 
 <aside class="warning">A successful handshake can be established even with an incorrect data set in the Json-formatted string</aside>
 
-WebSocket polling will additionally return 'message' response error codes for each individual encountered problem based on the [Errors](#errors) section
+WebSocket polling will additionally return *message* response error codes for each individual encountered problem based on the [Errors](#errors) section
 
 ### Message Error Status Codes
 

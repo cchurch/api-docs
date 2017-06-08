@@ -4,31 +4,46 @@
 ## Overview
 <!--===================================================================-->
 
-This service is used to retrieve and update recording information for recordings that were started/stopped using the 'action/recordnow' and 'action/recordoff' endpoints
+This service is used to retrieve and update Recording Information for Recordings that were started/stopped using the `'action/recordnow'` and `'action/recordoff'` endpoints
+
+<aside class="success">This service will continually be extended</aside>
+
+<!--===================================================================-->
+## Recording Model
+<!--===================================================================-->
+
+> Recording Model TODO
+
+```json
+```
+
+### Recording (Attributes)
+
+<details hidden>
+Parameter | Data Type | Description
+--------- | --------- | -----------
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
+</details>
+
 
 <!--===================================================================-->
 ## Get Recording Object
 <!--===================================================================-->
+
+Returns a Recording object by recording_key
 
 > Request TODO
 
 ```shell
 ```
 
-> Json Response TODO
-
-```json
-```
-
-Returns recording object by recording_key
-
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/recording`
 
-Parameter         | Data Type | Description
----------         | --------- | -----------
-**recording_key** | string    | Recording key
+Parameter         | Data Type | Description | Is Required
+---------         | --------- | ----------- | -----------
+**recording_key** | string    | Recording key | true
 
 ### Error Status Codes
 
@@ -43,17 +58,12 @@ HTTP Status Code | Description
 ## Update Recording Object
 <!--===================================================================-->
 
+Update a Recording
+
 > Request TODO
 
 ```shell
 ```
-
-> Json Response TODO
-
-```json
-```
-
-Update a Recording
 
 ### HTTP Request
 
@@ -63,6 +73,20 @@ Parameter         | Data Type | Description | Is Required
 ---------         | --------- | ----------- | -----------
 **recording_key** | string    | Unique identifier (within an account) of a recording | true
 meta              | object    | Meta data. This is meant to be a generic object that can store any data that is needed, so the properties are not predefined
+
+> Json Response TODO
+
+```json
+```
+
+<details hidden>
+### HTTP Response (Json Attributes)
+
+Parameter | Data Type | Description
+--------- | --------- | -----------
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
+</details>
+
 
 ### Error Status Codes
 

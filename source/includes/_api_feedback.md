@@ -4,19 +4,19 @@
 ## Overview
 <!--===================================================================-->
 
-This service allows users to send feedback to support
+This service allows users to send Feedback to support
 
 <!--===================================================================-->
 ## Send Feedback
 <!--===================================================================-->
+
+Send feedback to support
 
 > Request
 
 ```shell
 curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/feedback --data "subject=[SUBJECT]&message=[MESSAGE]"
 ```
-
-Send feedback to support
 
 ### HTTP Request
 
