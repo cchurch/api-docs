@@ -6,11 +6,11 @@
 
 Layouts contain panes, which is a group of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a camera gain access to all cameras included in layouts shared with them
 
-Several important information about access to layouts:  
+Important information on accessing layouts:  
 
-  - new user without layout permissions obtains the 'R' letter in the permission string to all existent layouts
-  - user without layout permissions do not has access to newly created layouts
-  - user with permissions e.g account super user has full access to all layouts      
+  - freshly created user gets read-only permissions ('R' letter in the layout's permission string) to all layouts existing for the acount prior to the user creation moment
+  - a user will not have any access to newly created layouts. Permissions must be assigned to them explicitly. *Exception: users with is_layout_admin flag have unconstrained access to all layouts existing or new*
+  - super users and account super users have unconstrained access to layouts, which cannot be limited by layout permissions
 
 
 The ordering of the panes is determined by the order of the configuration -> panes array returned by the API. Each pane will have a size of 1, 2, or 3. A size of 1 is the smallest and fills up 1x1 on the layout grid. A size of 3 is the largest and fills up 3x3 on the layout grid. If the grid does not have enough columns to fit the pane, then the size of the pane is decreased until it is able to fit on the grid
@@ -162,7 +162,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| Layout matching the ID was not found
+404	| Layout ID not found
 200	| Request succeeded
 
 <!--===================================================================-->
@@ -255,7 +255,7 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| Layout matching the ID was not found
+404	| Layout ID not found
 200	| Request succeeded
 
 <!--===================================================================-->
