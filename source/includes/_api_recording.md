@@ -2,70 +2,97 @@
 
 <!--===================================================================-->
 ## Overview
+<!--===================================================================-->
 
-This service is used to retrieve and update recording info for recordings that were started/stopped using the "action/recordnow" and "action/recordoff" services.
+This service is used to retrieve and update Recording Information for Recordings that were started/stopped using the `'action/recordnow'` and `'action/recordoff'` endpoints
+
+<aside class="success">This service will continually be extended</aside>
+
+<!--===================================================================-->
+## Recording Model
+<!--===================================================================-->
+
+> Recording Model TODO
+
+```json
+```
+
+### Recording (Attributes)
+
+<details hidden>
+Parameter | Data Type | Description
+--------- | --------- | -----------
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
+</details>
+
 
 <!--===================================================================-->
 ## Get Recording Object
+<!--===================================================================-->
+
+Returns a Recording object by recording_key
 
 > Request TODO
 
 ```shell
 ```
-
-> Json Response TODO
-
-```json
-```
-
-Returns recording object by recording_key.
 
 ### HTTP Request
 
 `GET https://login.eagleeyenetworks.com/g/recording`
 
-Parameter       	| Data Type   	| Description
----------       	| ----------- 	| -----------
-**recording_key**   | string      	| Recording Key
+Parameter         | Data Type | Description | Is Required
+---------         | --------- | ----------- | -----------
+**recording_key** | string    | Recording key | true
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | ----------- 
-200 | Request succeeded
+HTTP Status Code | Description
+---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
 
 <!--===================================================================-->
 ## Update Recording Object
+<!--===================================================================-->
+
+Update a Recording
 
 > Request TODO
 
 ```shell
 ```
 
+### HTTP Request
+
+`POST https://login.eagleeyenetworks.com/g/recording`
+
+Parameter         | Data Type | Description | Is Required
+---------         | --------- | ----------- | -----------
+**recording_key** | string    | Unique identifier (within an account) of a recording | true
+meta              | object    | Meta data. This is meant to be a generic object that can store any data that is needed, so the properties are not predefined
+
 > Json Response TODO
 
 ```json
 ```
 
-Update a Recording
+<details hidden>
+### HTTP Response (Json Attributes)
 
-### HTTP Request
+Parameter | Data Type | Description
+--------- | --------- | -----------
+<p hidden>???</p> | <p hidden>???</p> | <p hidden>???</p>
+</details>
 
-`POST https://login.eagleeyenetworks.com/g/recording`
-
-Parameter       	| Data Type   	| Description
----------       	| ----------- 	| -----------
-**recording_key**   | string      	| Unique identifier (within an account) of a recording
-meta 				| object 		| Meta data. This is meant to be a generic object that can store any data that is needed, so the properties are not predefined.
 
 ### Error Status Codes
 
-HTTP Status Code    | Data Type   
-------------------- | ----------- 
-200 | Request succeeded
+HTTP Status Code | Description
+---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded

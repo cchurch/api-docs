@@ -2,44 +2,90 @@
 
 <!--===================================================================-->
 ## Making API Calls With Curl
-In this section, we will walk you through the process of making API requests using the ‘curl’ command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android, and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server, using a wide range of supported protocols, including HTTP/HTTPS, which is what we are interested in. Curl can be installed by going to this site. http://curl.haxx.se/.
+<!--===================================================================-->
 
-With curl installed, the next step is to log in and have a valid session, so that we can freely use any of the APIs. Logging in, is a two step process consisting of authentication and authorization. The authentication API takes in 2 parameters. Our curl common will look like this. The [USERNAME] and [PASSWORD] need to be valid for the API request to return successfully.
+---
 
-`
-curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data 'username=[USERNAME]&password=[PASSWORD]'
-`
+### cURL
 
-The ‘–request’ flag specifies the type of request and can be set to GET, POST, PUT, and DELETE. The ‘data’ flag species the parameters of the API query. Upon running this command with valid credentials, we receive a Json formatted response, containing a key/value pair for ‘token’, which will look something like this.
+> Authenticate Request
 
-`
-{ “token”: “YrZF/8jf7W0rKcqNTugqidq…………4dZWeNOcNsuenTXc9fQVtvp2vI75g==” }
-`
+```shell
+curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data "username=[USERNAME]&password=[PASSWORD]"
+```
 
-This token is a required parameter for making the Authorize API request. Copy the value of the token in order to have it on hand when creating the Authorize API request. Now we make the authorization API request using this curl command.
+In this section we will walk You through the process of making API requests using the **cURL** command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server using a wide range of supported protocols including HTTP/HTTPS, which is what we are interested in
 
-`
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode token=[TOKEN]
-`
+**cURL** can be installed by visiting [this site](http://curl.haxx.se)
 
-The output are the headers of the API request followed by the response body. The ‘-D’ flag is used to write the protocol headers. Here is the description from the man pages.
+With cURL installed the next step is to log in and have a valid session (visit the [cURL cheat sheet](https://ec.haxx.se/http-cheatsheet.html#curl-cheat-sheet) for basic HTTP commands), so that we can freely use any of the APIs. Logging in is a two step process consisting of authentication and authorization. The authentication API takes in 2 parameters. Our cURL common will look like the example (Authenticate Request) code to the right
 
-`
--D, –dump-header <file> Write the protocol headers to the specified file. This option is handy to use when you want to store the headers that a HTTP site sends to you. Cookies from the headers could then be read in a second curl invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies.
-`
+<aside class="notice">The <small>[USERNAME]</small> and <small>[PASSWORD]</small> need to be valid for the API request to return successfully</aside>
 
-Note that the ‘-‘ after the ‘-D’ indicates that the output “file” is stdout. One of the header elements will be “Set-Cookie: auth_key=[AUTH_KEY]“. Copy ‘auth_key=[AUTH_KEY]‘ into the clipboard as this cookie will need to be set for all other API requests. The curl request for getting a list of devices will look as such.
+The `'--request'` flag specifies the type of request and can be set to *GET*, *POST*, *PUT* and/or *DELETE*
 
-`
-curl --cookie "auth_key=[AUTH_KEY]" --request GET https://login.eagleeyenetworks.com/g/list/devices
-`
+The `'--data'` (or `'-d'`) flag specifies the parameters of the API query
 
-The ‘auth_key’ cookie will need to be set for any other Eagle Eye API that requires a valid session.
+---
+
+### Token
+
+> Json Response
+
+```json
+{
+  "token": "YrZF/8jf7W0rKcqNTugqidq…………4dZWeNOcNsuenTXc9fQVtvp2vI75g=="
+}
+```
+
+Upon running this command with valid credentials, we receive a Json-formatted response containing a key/value pair for `'token'`, which will look like the example (Json Response) on the right side
+
+This token is a required parameter for making the authorize API request
+<br>(Copy the value of the token in order to have it on hand when creating the authorize API request)
+
+<br><br><br><br>
+
+---
+
+### Authorization
+
+> Authorize Request
+
+```shell
+curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode "token=[TOKEN]"
+```
+
+We can make the authorization API request using the example cURL command
+
+The output are headers of the API request followed by the response body. The `'-D'` flag is used to write the protocol headers. Here is the description from the man pages:
+
+Argument | Description
+-------- | -----------
+**-D**, –dump-header <file> | Write the protocol headers to the specified file. This option is handy to use when You want to store the headers that a HTTP site sends to You. Cookies from the headers could then be read in a second cURL invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies
+
+---
+
+> Get List of Devices Request (Authorized)
+
+```shell
+curl --request GET https://login.eagleeyenetworks.com/g/list/devices --cookie "auth_key=[AUTH_KEY]"
+```
+
+Note that the `'-'` after the `'-D'` indicates that the output *file* is stdout. One of the header elements will be `'Set-Cookie: auth_key=[AUTH_KEY]'`. Copy `'auth_key=[AUTH_KEY]'` into the clipboard as this cookie will need to be set for all other API requests. The cURL request for getting a list of devices will look like in the example to the right
+
+<aside class="notice">The 'auth_key' cookie will need to be set for any other Eagle Eye API that requires a valid session</aside>
 
 <!--===================================================================-->
 ## Constructing Layouts
+<!--===================================================================-->
 
-> Get /layout/list
+> Get List of Layouts (Request)
+
+```shell
+curl --request GET https://login.eagleeyenetworks.com/g/layout/list --cookie "auth_key=[AUTH_KEY]"
+```
+
+> Get List of Layouts (Json Response)
 
 ```json
 [
@@ -70,21 +116,27 @@ The ‘auth_key’ cookie will need to be set for any other Eagle Eye API that r
 ]
 ```
 
-When a user logs onto the Eagle Eye system, they are greeted with a grid of cameras, with each cell representing a camera pane. These panes can be of varying size so that the user can customize the layout to their liking. In this tutorial, we will demonstrate how to use the APIs to build these layouts so they are consistent on all platforms.
+### HTTP Request
 
-Upon being logged in, we make a request to the GET /layout/list API. This returns an array of Layout objects. Do note that this is not the same model as what is returned by the GET /layout API request. The one returned by the /layout/list API is an abridged version with only the most important attributes. The response of the request will look like this.
+`GET /layout/list`
+`GET /layout`
 
-`
-Get /layout/list
-`
+When a user logs onto the Eagle Eye system, they are greeted with a grid of cameras, with each cell representing a camera pane. These panes can be of varying size so that the user can customize the layout to their liking. In this tutorial, we will demonstrate how to use the APIs to build these layouts so they are consistent on all platforms
 
-We take the layout id attribute for each layout of interest and pass it to the Get /layout API request. This will contain the information we need to construct the layout.
+While logged in, we make a request to the GET /layout/list API. This returns an array of Layout objects. Do note that this is not the same model as what is returned by the GET /layout API request. The one returned by the /layout/list API is an abridged version with only the most important attributes. The response of the request will look like this
 
-`
-Get /layout
-`
+We take the layout ID attribute for each layout of interest and pass it to the GET /layout API request. This will contain the information we need to construct the layout
 
-> Get /layout
+> Get Layout (Request)
+
+```shell
+curl -G https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" --cookie "auth_key=[AUTH_KEY]"
+```
+
+
+
+
+> Get Layout (Json Response)
 
 ```json
 {
@@ -133,31 +185,32 @@ Get /layout
 }
 ```
 
-We get a wealth of good information, but the information specific to setting up the pane layout is in the ‘configuration’ json. Within that json, there is an attribute called ‘panes’ which is an array of individual pane objects. Each pane specifies the camera_id and the size of the pane. The size represents the width and height in number of cells. A size of 2 means that the pane is 2 cells in width and height, so it occupies a total of 4 cells. A size of 3 would occupy 9 cells.
+We get a wealth of good information, but the information specific to setting up the pane layout is in the `'configuration'` Json. Within that Json is an attribute called `'panes'`, which is an array of individual pane objects. Each pane specifies the \<camera_id\> and the size of the pane. The size represents the width and height in number of cells. A size of 2 means that the pane is 2 cells in width and height, so it occupies a total of 4 cells. A size of 3 would occupy 9 cells
 
-The other important factor to know is the size of grid holding the panes, specifically the number of columns. For the Eagle Eye web client, a browser can be resized to be a narrow strip or the full width of the screen. The layout will dynamically adjust the number of columns based on the width of the window. Mobile devices have fixed screen sizes, so for the iOS and Android smartphone clients, we set the number of columns to three.
+The other important factor to know is the size of grid holding the panes, specifically the number of columns. For the Eagle Eye web client a browser can be resized to be a narrow strip or the full width of the screen. The layout will dynamically adjust the number of columns based on the width of the window. Mobile devices have fixed screen sizes, so for the iOS and Android smartphone clients the number of columns is set to three
 
-Now that we have the order of the panes, the size of each pane, and the size of the grid, we can construct our layout. This proved to be of varying difficulty depending on the platform. The web client uses a robust packing library, Packery, which is based on a bin packing algorithm. http://metafizzy.co/blog/packery-released/. This library minimizes empty space while preserving the order as best as possible. Using Packery reduced the development time for this feature significantly.
+Now that we have the order of panes, the size of each pane and the size of the grid, we can construct our layout. This proved to be of varying difficulty depending on the platform. The web client uses a robust packing library [Packery](http://metafizzy.co/blog/packery-released), which is based on a bin packing algorithm. This library minimizes empty space while preserving the order as best as possible. Using Packery reduced the development time for this feature significantly
 
-At the time of this writing, Android does not have a robust library for packing the panes so the algorithm to do so was written from scratch. The goal was to mimic the Packery library as best as possible. The Android algorithm works as such:
+At this time Android does not have a robust library for packing the panes so the algorithm to do so was written from scratch. The goal was to mimic the Packery library as best as possible. The Android algorithm works as such:
 
+  1. Remove the next image from the `'panes'` array and place it in the `'panes_for_analysis'` list
+  2. Analyze the panes in `'panes_for_analysis'`. If there is a fully packed block, remove those panes and add them to the layout
+  3. If the `'panes'` array is not empty, GOTO 1, else GOTO 4
+  4. Add the remaining panes from `'panes_for_analysis'` to the layout
 
- 1. Remove the next image from the ‘panes’ array and place it in the ‘panes_for_analysis’ list.
- 2. Analyze the panes in ‘panes_for_analysis’. If there is a fully packed block, remove those panes and add them to the layout
- 3. If the ‘panes’ array is not empty, GOTO 1, else GOTO 4
- 4. Add the remaining panes from ‘panes_for_analysis’ to the layout.
+This is the algorithm at a high level, though the specifics can get a little more complex, such as determining whether a fully packed block exists. The state of a fully packed block is also dependent on the number of columns for the grid
 
-This is the algorithm at a high level, though the specifics can get a little more complex, such as determining whether a fully packed block exists. The state of a fully packed block is also dependent on the number of columns for the grid.
-
-The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home grown packing algorithm.
+The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home grown packing algorithm
 
 <!--===================================================================-->
 ## Playing Live Video
-Video playback functionality can be accessed through the ‘/asset/play/video.{video_format}’ API. We will show you how to use this API to play live video, though the same API can also be used to play historic video.
+<!--===================================================================-->
 
-Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on this site to generate the URL string. http://writecodeonline.com/javascript/.
+Video playback functionality can be accessed through the `'/asset/play/video.{video_format}'` API. We will show You how to use this API to play live video, though the same API can also be used to play historic video
 
-The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [AUTH_KEY]. The [DEVICE_ID] represents the id of the camera of interest. The [AUTH_KEY] is used for authentication and can be found in the response header of the /aaa/authorization API.
+Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on [this site](https://js.do) to generate the URL string
+
+The caller of the API need to supply 2 parameters. which are [DEVICE_ID] and [AUTH_KEY]. The [DEVICE_ID] represents the ID of the camera of interest. The [AUTH_KEY] is used for authentication and can be found in the response header of the `'/aaa/authorization'` API
 
 `
 eagleEyeLiveVideoApiUrl = "https://login.eagleeyenetworks.com/asset/play/video.flv" +
@@ -167,7 +220,7 @@ eagleEyeLiveVideoApiUrl = "https://login.eagleeyenetworks.com/asset/play/video.f
     "&A=[AUTH_KEY]";
 `
 
-`     
+`
 htmlFlashVideoPlayerUrl = "https://login.eagleeyenetworks.com/strobe/embed.html?src="+encodeURIComponent(eagleEyeLiveVideoApiUrl)+"&autoPlay=true&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5";
 `
 
@@ -175,7 +228,7 @@ htmlFlashVideoPlayerUrl = "https://login.eagleeyenetworks.com/strobe/embed.html?
 document.write(htmlFlashVideoPlayerUrl);
 `
 
-Notice that we have 2 variables; ‘eagleEyeLiveVideoApiUrl’ and ‘htmlFlashVideoPlayerUrl’. The ‘htmlFlashVideoPlayerUrl’ variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking, and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application.
+Note that we have 2 variables: `'eagleEyeLiveVideoApiUrl'` and `'htmlFlashVideoPlayerUrl'`. The `'htmlFlashVideoPlayerUrl'` variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into Your application:
 
 `
 https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[AUTH_KEY]&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5
@@ -183,8 +236,9 @@ https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%
 
 <!--===================================================================-->
 ## Long Polling
+<!--===================================================================-->
 
-> Json Request for Post /poll
+> Json Request for POST /poll
 
 ```json
 {
@@ -245,54 +299,52 @@ https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%
                  "ESEE"
              ]
          }
+     }
 }
 ```
 
-Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial, we will walk you through the steps to set up the poll stream for long polling using the /poll API.
+Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial we will walk You through the steps to set up the poll stream for long polling using the /poll API
 
-Long polling is used in the mobile clients. The process is to first register to the poll stream using the POST /poll API followed by constant API requests for GET /poll.
+Long polling is used in the mobile clients. The process is to first register to the poll stream using the POST /poll API followed by constant API requests for GET /poll
 
-The POST /poll API is used to initialize the poll stream and to register the events we want to listen for. For the mobile clients, we are listening to resource type ‘pre’ and ‘status’, which are the preview images and status bits. Since the data we are sending to the server is a json, the content-type of this request will be application/json. Here is an example of what the the data may look like.
+The POST /poll API is used to initialize the poll stream and to register the events we want to listen for. For the mobile clients, we are listening to resource type `'pre'` and `'status'`, which are the preview images and status bits. Since the data we are sending to the server is a Json, the content-type of this request will be `'application/json'`
 
-Once the POST /poll request has been made successfully, a token is returned to the user. This token can be used to successfully make all subsequent GET /poll requests. If the token is not desired, the same requests can be made if you have the ‘ee-poll-ses’ cookie from the POST /poll request.
-
-The GET /poll request should be called frequently so that new data can arrive as soon as possible. The response may be empty or it may look something like this.
-
-> Response for Get /poll
+> Response for GET /poll
 
 ```json
-
 {
-    "cameras": {
-        "10003254": {
-            "event": {
-                "PRFR": {
-                    "cameraid": "10003254",
-                    "timestamp": "20140528224954.312",
-                    "file_offset": 17804500,
-                    "frame_size": 6152,
-                    "previewid": 1401314400
-                }
-            }
-        },
-        "100a9541": {
-            "event": {
-                "PRFR": {
-                    "cameraid": "100a9541",
-                    "timestamp": "20140528224955.507",
-                    "file_offset": 12004385,
-                    "frame_size": 3706,
-                    "previewid": 1401314400
-                }
-            },
-            "pre": "20140528224955.507"
+  "cameras": {
+    "10003254": {
+      "event": {
+        "PRFR": {
+          "cameraid": "10003254",
+          "timestamp": "20180528224954.312",
+          "file_offset": 17804500,
+          "frame_size": 6152,
+          "previewid": 1401314400
         }
+      }
+    },
+    "100a9541": {
+      "event": {
+        "PRFR": {
+          "cameraid": "100a9541",
+          "timestamp": "20180528224955.507",
+          "file_offset": 12004385,
+          "frame_size": 3706,
+          "previewid": 1401314400
+        }
+      },
+      "pre": "20180528224955.507"
     }
+  }
 }
 ```
 
-Only attributes with updated information will be returned in the response payload. For the mobile apps, we monitor the ‘pre’ attribute for new timestamps, and when a new timestamp does come in, we make the appropriate API call to retrieve the camera image.
+Once the POST /poll request has been made successfully, a token is returned to the user. This token can be used to successfully make all subsequent GET /poll requests. If the token is not desired, the same requests can be made with the `'ee-poll-ses'` cookie from the POST /poll request
 
-The power of this API lies in the ability of being able to control what events and resource types to listen to. This allows updates to the camera to be known in real time.
+The GET /poll request should be called frequently so that new data can arrive as soon as possible. The response may be empty or it may look something like the example to the right
 
+Only attributes with updated information will be returned in the response payload. For the mobile apps, we monitor the `'pre'` attribute for new timestamps and when a new timestamp does come in, we make the appropriate API call to retrieve the camera image
 
+The power of this API lies in the ability of being able to control what events and resource types to listen to. This allows updates to the camera to be known in real time
