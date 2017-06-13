@@ -1,12 +1,11 @@
 # Managed Switch
 
-<!--===================================================================-->
 ## Overview
-<!--===================================================================-->
 
-The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. The GET method is available to any user with Camera `'R'` (Read) permission. Methods POST, DELETE are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. PUT method is only available to account superusers
+To simplify camera troubleshooting Eagle Eye Networks provides managed Ethernet switches to be used in the camera LAN. The managed switch uses PoE (Power over Ethernet) to provide power to cameras connected to its LAN ports like a typical PoE switch, but it can also switch the power in individual ports in response to commands delivered via Eagle Eye Network API. Thus it can force a hard reset of a camera by simply cycling its power suppy.
 
-When adding a new Camera, the name and settings parameters are required. The settings parameter should contain the ID of the bridge and the GUID of the Camera
+<aside class="notice">Manged switches may be standalone or built into EEN bridges, as in the case of model 305</aside>
+
 
 ### Camera Settings Overview
 
