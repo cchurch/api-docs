@@ -171,7 +171,7 @@ This API call allows for retrieval of detailed information behind the managed sw
 > Request
 
 ```shell
-curl --request GET https://c001.eagleeyenetworks.com/g/managed_switch?guid=cb407e63-99f8-5dac-86a6-d1d78ac6ffb0   --cookie "auth_key=c001~54f392bccef3dde7ffde3d93369cd64e"
+curl --request GET https://c001.eagleeyenetworks.com/g/managed_switch?guid=cb407e63-99f8-5dac-86a6-d1d78ac6ffb0   --cookie "auth_key=[*auth_key_value*]"
 ```
 
 ### HTTP Request
