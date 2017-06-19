@@ -16,6 +16,7 @@ includes:
   - api_user
   - api_camera
   - api_bridge
+  - api_managed_switch
   - api_asset
   - api_poll
   - api_layout
@@ -34,4 +35,3 @@ includes:
 
 search: true
 ---
-
