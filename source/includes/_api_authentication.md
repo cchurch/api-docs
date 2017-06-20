@@ -21,7 +21,7 @@ Once the `'auth_key'` cookie is obtained from the Authorize call, there are 2 me
 All status codes are listed in order of precedence, meaning the first one listed is the one returned if its respective conditions are met and the last one listed is the one that will be returned if none of the preceding codes' conditions are met
 
 <!--===================================================================-->
-## Step 1: Authenticate
+## Authenticate
 <!--===================================================================-->
 
 Login is a two-step process when using Simple Authentication and a three-step process using TFA
@@ -114,7 +114,7 @@ HTTP Status Code | Description
 <!-- TODO: verify whether the list above is complete==-->
 
 <!--===================================================================-->
-## Step 2: Send TFA Code (only if using TFA scheme)
+## Send TFA Code
 <!--===================================================================-->
 
 This step is only to be executed when TFA scheme is used for the user log in (i.e. if the Authenticate call returned `'two_factor_authentication_code'` key in response)
@@ -157,7 +157,7 @@ HTTP Status Code | Description
 200	| Request succeeded (TFA code has been sent to the user)
 
 <!--===================================================================-->
-## Step 3: Authorize
+## Authorize
 <!--===================================================================-->
 
 Authorize is the final step of the Login process, by using the token from the first step (Authenticate) and - if TFA scheme is used - the TFA code delivered to the user by e-mail or SMS.
@@ -298,16 +298,13 @@ The account superuser enforces TFA scheme in the account by setting the `is_two_
 ## TFA Update
 <!--===================================================================-->
 
-Data present in the User record that affects the TFA scheme is security-sensitive and therefore may only be altered using a dedicated endpoint, whose operation is itself TFA protected
-This data includes three fields in the User model:
+Some fields in the [User record](#user-model) that affect the TFA scheme is security-sensitive and therefore may only be altered using a dedicated endpoint, whose operation is itself TFA protected:  
 
-Field | Description | Remarks | Is Required
------ | ----------- | ------- | -----------
-**sms_phone** | Phone number to which text messages (SMS) containing TFA code will be delivered | Can only be changed when using SMS for TFA code delivery <br/> Code will be delivered to the new phone number | &check;
-**email** | E-mail address to which messages containing TFA code will be delivered | Can only be changed when using e-mail for TFA code delivery <br/> Code will be delivered to the new e-mail address | &check;
-**is_two_factor_authentication_enabled** | 1 - user will be required to authenticate with TFA <br/> 0 - user will authenticate with a simple scheme | Can be updated with either SMS or e-mail delivery of TFA code | &check;
+- **sms_phone** - Can only be updated when using SMS for TFA code delivery. Note: the TFA code will be delivered to the new phone number
+- **email** - Can only be updated when using e-mail for TFA code delivery Note: the TFA code will be delivered to the new e-mail address
+- **is_two_factor_authentication_enabled** - Can be updated with either SMS or e-mail delivery of TFA code
 
-The fields described above may only be changed one at a time
+These fields may only be changed one at a time
 
 TFA Update is a two-step process:
 
@@ -315,17 +312,17 @@ TFA Update is a two-step process:
 
 This step initiates the TFA data update process
 
-#### HTTP Request
+### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/update`
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**two_factor_authentication_type** | `'sms'` or `'email'` | Defines which method to use for TFA code delivery to verify this update request | true
-**password** | string | The user's password | true
-**update_json** | Json structure containing the name of the updated field and its new value. <br/>Only one field can be updated at a time | Example: <br/>`{` <br/>&nbsp;&nbsp;&nbsp;&nbsp;`'sms_phone':'+123456789'`<br/>`}` | &check;
+**two_factor_authentication_type** | `'sms'` or `'email'` | Defines which method to use for TFA code delivery to verify this update request | **&check;**
+**password** | string | The user's password | **&check;**
+**update_json** | Json structure containing the name of the updated field and its new value. <br/>Only one field can be updated at a time | Example: <br/>`{` <br/>&nbsp;&nbsp;&nbsp;&nbsp;`'sms_phone':'+123456789'`<br/>`}` | **&check;** 
 
-#### HTTP Response
+### HTTP Response
 
 This API call returns no data
 
@@ -338,7 +335,7 @@ HTTP Status Code | Description
 
 ### 2. Verify update request with TFA
 
-#### HTTP Request
+### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/verify`
 
@@ -346,7 +343,7 @@ Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
 **two_factor_authentication_code** | string    | The 4-digit code received via sms or e-mail | &check;
 
-#### HTTP Response
+### HTTP Response
 
 This API call returns no data
 
@@ -363,11 +360,10 @@ HTTP Status Code | Description
 In order to make the log-in process as convenient as possible for the user,
 the system will allow for use of the Simple Authentication scheme on devices
 used previously by that user for a successful TFA-based log in.  
-Upon a successful TFA-based log in, the **Authorize** API call sets a cookie `'tfa_key'` in the browser
-Subsequent execution of **Authenicate** API Call with the correct username and password will start
-of a Simple Authentication scheme, which can be told by absence of `'two_factor_authentication_code'` field in
-the response of **Authenicate**. In such case one can skip the **Send TFA Code** API call and proceed immediately
-to execute **Authorize** API Call, as is the process for a non-TFA-enabled user login
+Upon a successful TFA-based log in, the [Authorize](#authorize) API call sets a cookie `'tfa_key'` in the browser
+Subsequent execution of [Authenicate](#authenticate) API Call with the correct username and password will initiate
+of a Simple Authentication scheme, which is indicated by the absence of `'two_factor_authentication_code'` field in
+the response to [Authenicate](#authenticate). In such case the step [Send TFA Code](#send-tfa-code) may be skipped and one can proceed to execute [Authorize](#authorize) API Call immediately after.
 
 ***NOTE 1:***
 
@@ -375,4 +371,4 @@ The same `'tfa_key'` value may be used for multiple users, who have successfully
 
 ***NOTE 2:***
 
-The list of authorized devices for any user is stored in the field `'user_authenticated_clients'` in the User record. See [User Model](#user-model) for details
+The list of authorized devices for any user is stored in the field `'user_authenticated_clients'` in the [User record](#user-model).
