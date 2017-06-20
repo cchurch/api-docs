@@ -128,15 +128,15 @@ ports             | integer       | Number of controllable POE ports available o
 ip                | string        | IP address of managed switch
 version           | string        | Version information
 comment           | string        | Comment stored on switch
-port_details      | array[obj]    | List of *Port Details* objects. See table below
+[port_details](#managed-switch-port_details) | array[obj]    | List of *Port Details* objects
 available_bridges | array[string] | List of available bridge ESN's, i.e. bridges that this switch can be attached to
 name              | string        | Name of the switch
 
-**Port Details Object**
+### Managed Switch - port_details
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-index       | integer   | Port index in the form of `'port_N'`, where N gets substituted for integer (starting from 1)
+index       | string    | Port index in the form of `'port_N'`, where N gets substituted for integer (starting from 1)
 enabled     | string    | Indicates whether the port is on (true) or off (false)
 mac         | string    | MAC address behind the port. A null is returned for none and string "Multiple(N)" for N number of MAC addresses found behind this port
 ip          | string    | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port (Or null for none)
@@ -248,20 +248,8 @@ ports     | integer       | Number of controllable POE ports available on the sw
 ip        | string        | IP address of managed switch
 version   | string        | Version information
 comment   | string        | Comment stored on switch
-[port_details](#managed-switch-port-details) | array[obj]    | List of *Port Details* objects
+[port_details](#managed-switch-port_details) | array[obj]    | List of *Port Details* objects
 name      | string        | Name of the switch
-
-### Managed Switch - port_details
-
-Parameter   | Data Type | Description
----------   | --------- | -----------
-index       | string    | Port index in the form of `'port_N'`, where N gets substituted for integer (starting from 1)
-enabled     | string    | Indicates whether the port is on (true) or off (false)
-mac         | string    | MAC address behind the port. A null is returned for none and string "Multiple(N)" for N number of MAC addresses found behind this port
-ip          | string    | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port (Or null for none)
-power       | float     | Power in Watts that this port is drawing
-camera_guid | string    | GUID of the camera that is tied to the MAC / IP address (Or null for none)
-esn         | string    | ESN of the camera that is tied to the MAC / IP address (Or null for none)
 
 ### Error Status Codes
 
