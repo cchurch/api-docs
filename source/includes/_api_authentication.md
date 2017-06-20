@@ -82,7 +82,7 @@ two_factor_authentication_code | Json object with two keys:**sms** and **email**
 
 ***NOTE 1:***  
 Token expiration:  
-* 30 seconds for Simple Authentication 
+* 30 seconds for Simple Authentication  
 * 15 minutes for TFA scheme 
 
 ***NOTE 2:***  
@@ -90,8 +90,7 @@ For TFA scheme, the system uses the parameter `'sms_phone'` from the [User Model
 If SMS-based authentication is to be used, that parameter MUST be specified at the user's creation time (see [Create User](#create-user))
 If user's parameter `'sms_phone'` has not been set, the value of the **sms** key will be `'No sms phone found'`
 
-***NOTE 3:***
-
+***NOTE 3:***  
 The TFA-related user's data (i.e. SMS Phone or e-mail), once set at the time of user's account creation can only be modified by that user alone. Any such modification will also be TFA authenticated. Account superuser may not change such data for security reasons
 
 ### Error Status Codes
