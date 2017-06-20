@@ -1,4 +1,4 @@
-# Camera
+w# Camera
 
 <!--===================================================================-->
 ## Overview
@@ -1002,7 +1002,7 @@ latitude              | float     | Latitude of the camera's location
 longitude             | float     | Longitude of the camera's location
 street_address        | string    | Street address of the camera's location
 azimuth               | float     | Direction which the camera faces. Possible values: `0.0`-`360.0` (North=`0.0`)
-range                 | int       | Effective distance the camera can *see* in feet
+range                 | float     | Effective distance the camera can *see* in feet
 floor                 | int       | The floor of the building given that it is a multi-storey building
 share_email           | string    | Comma-delimited list of emails to share this device with
 local_retention_days  | json      | Json object of total retention days defined in the following way: <br><br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'max'`: `10000`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'min'`: `1`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'d'`: `14`, <br>&nbsp;&nbsp;&nbsp;&nbsp;`'v'`: `14` <br>`}` <br><br>'d' - default value <br>'v' - currently set value
@@ -1378,7 +1378,7 @@ Array Index | Attribute           | Data Type     | Description
 17          | is_upnp             | boolean       | Indicates whether the camera is a UPNP device. Note that this property is different then all the other `'is_*'` properties in the API, which normally are integers (0 or 1). Currently this property only applies to cameras that haven’t yet been attached to the account, in which they could have been detected via ONVIF or UPNP
 18          | video_input         | string        | For analog cameras only, this indicates the video input channel of the camera
 19          | video_status        | string        | For analog cameras only, this indicates the video status of the camera
-20          | location            | array         | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(int/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
+20          | location            | array         | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
 21          | parent_camera_id    | string        | Parent camera ID
 22          | child_camera_view   | string        | Child camera view
 23          | is_hidden           | int           | GUI control to not show device
