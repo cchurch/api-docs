@@ -28,11 +28,14 @@ Login is a two-step process when using Simple Authentication and a three-step pr
 
 ***Simple scheme:***
 
-Authenticate, then Authorize with the token returned by Authenticate
+1. Authenticate with the login / password
+2. Authorize with the token returned by Authenticate
 
 ***TFA scheme:***
 
-Authenticate, Instruct the system to send TFA Code to the user, Authorize with the token received from step 1 and the TFA code received from step 2
+1. Authenticate with login / password
+2. Instruct the system to send TFA Code to the user
+3. Authorize with the token received from step 1 and the TFA code received from step 2
 
 > Request
 
@@ -75,17 +78,14 @@ Parameter    | Data Type | Is Required
 Returned parameters            | Data Type |  Description
 -------------------            | --------- | ------------
 token                          | string    | Token to be used in Authorize
-two_factor_authentication_code | Json object with two keys:**sms** and **email** <br/> (present in response only if TFA scheme is being used). | Lists available methods for TFA and the e-mail address and phone number to be used for each method. E-mail address and phone number are scrubbed for security and can be safely displayed to the user on screen when prompting them to select the method of TFA code delivery.
+two_factor_authentication_code | Json object with two keys:**sms** and **email** | Lists available methods for TFA and the e-mail address and phone number to be used for each method. E-mail address and phone number are scrubbed for security and can be safely displayed to the user on screen when prompting them to select the method of TFA code delivery. <br/> This field is present in response only if TFA scheme is being used.
 
-***NOTE 1:***
+***NOTE 1:***  
+Token expiration:  
+* 30 seconds for Simple Authentication 
+* 15 minutes for TFA scheme 
 
-Token expiration:
-
-  - *30 seconds* for Simple Authentication
-  - *15 minutes* for TFA scheme
-
-***NOTE 2:***
-
+***NOTE 2:***  
 For TFA scheme, the system uses the parameter `'sms_phone'` from the [User Model](#user-model).  
 If SMS-based authentication is to be used, that parameter MUST be specified at the user's creation time (see [Create User](#create-user))
 If user's parameter `'sms_phone'` has not been set, the value of the **sms** key will be `'No sms phone found'`
