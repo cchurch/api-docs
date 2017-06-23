@@ -43,13 +43,13 @@ Rendered Layouts on Web and Mobile:
             "ca0c7d2c",
             "R"
         ],
-        [...],
-        [...],
-        [...],
         [
             "ca05e8c2",
             "R"
-        ]
+        ],
+        [...],
+        [...],
+        [...]
     ],
     "configuration": {
         "panes": [
@@ -71,9 +71,6 @@ Rendered Layouts on Web and Mobile:
                 "name": "",
                 "size": 1
             },
-            {...},
-            {...},
-            {...},
             {
                 "cameras": [
                     "100891b7"
@@ -82,7 +79,10 @@ Rendered Layouts on Web and Mobile:
                 "pane_id": 0,
                 "name": "",
                 "size": 1
-            }
+            },
+            {...},
+            {...},
+            {...}
         ],
         "settings": {
             "camera_row_limit": 3,
@@ -143,7 +143,7 @@ Returns a Layout object by ID
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/layout -d "A=[AUTH_KEY]&id=[LAYOUT_ID]"
+curl -X GET https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -216,9 +216,10 @@ HTTP Status Code | Description
 
 Update Layout information
 
-> Request TODO
+> Request
 
 ```shell
+curl -X POST https://login/eagleeyenetworks.com/g/layout -d '{"id": "[LAYOUT_ID]", "name": "[LAYOUT_NAME]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -266,7 +267,7 @@ Delete a Layout
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -296,7 +297,7 @@ Returns an array of arrays with each sub-array representing a Layout available t
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/layout/list --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/layout/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request

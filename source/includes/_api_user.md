@@ -15,12 +15,12 @@ The User service allows managing Users to a degree outlined by the permission le
 ```json
 {
     "id": "ca0e1cf2",
-    "first_name": "Firstname",
-    "last_name": "Lastname",
-    "email": "john.doe@fakeemail.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@nodomain.com",
     "owner_account_id": "00004206",
     "active_account_id": "00004206",
-    "uid": " ",
+    "uid": "",
     "is_superuser": 0,
     "is_account_superuser": 1,
     "is_staff": 0,
@@ -30,47 +30,52 @@ The User service allows managing Users to a degree outlined by the permission le
     "is_user_admin": 1,
     "is_layout_admin": 1,
     "is_live_video": 1,
-    "is_device_admin": 1,
     "is_export_video": 1,
     "is_recorded_video": 1,
-    "is_edit_cameras": 1,
-    "is_edit_all_users": 1,
-    "is_edit_account": 1,
-    "is_system_notifications_disabled": 0,
-    "is_edit_ptz_stations": 1,
     "is_view_preview_video": 1,
+    "is_edit_admin_users": 1,
+    "is_edit_all_users": 1,
+    "is_edit_users": 1,
+    "is_edit_account": 1,
+    "is_device_admin": 1,
+    "is_edit_cameras": 1,
     "is_edit_camera_on_off": 1,
     "is_edit_camera_less_billing": 1,
+    "is_edit_ptz_stations": 1,
     "is_edit_all_and_add": 1,
-    "is_edit_sharing": 1,
-    "is_mobile_branded": 0,
-    "is_edit_admin_users": 1,
-    "is_view_contract": 1,
-    "is_ptz_live": 1,
-    "is_view_audit_trail": 1,
-    "is_edit_users": 1,
     "is_edit_motion_areas": 1,
+    "is_edit_sharing": 1,
+    "is_ptz_live": 1,
+    "is_mobile_branded": 0,
+    "is_view_contract": 1,
+    "is_view_audit_trail": 1,
     "is_two_factor_authentication_enabled": 0,
     "user_authenticated_clients": null,
-    "account_utc_offset": -21600,
+    "account_utc_offset": -25200,
     "account_work_days": "1111100",
-    "account_work_hours": ["0800", "1730"],
+    "account_work_hours": [
+        "0900",
+        "1700"
+    ],
     "language": "en-us",
     "inactive_session_timeout": 15,
-    "street": ["address line 1", "address line 2"],
+    "street": [
+        "address line 1",
+        "address line 2"
+    ],
     "city": "New York",
     "state": "Alaska",
     "country": "US",
     "postal_code": "9980-999",
     "phone": "111111111",
     "mobile_phone": "000000000",
-    "utc_offset": -21600,
+    "utc_offset": -25200,
     "timezone": "US/Pacific",
     "last_login": "20181006173752.672",
-    "alternate_email": "alternate.email@fakeemail.com",
+    "alternate_email": "alternate.email@nodomain.com",
     "sms_phone": "222111222",
     "is_sms_include_picture": 0,
-    "json": "{}",
+    "json": "{\"een\":{\"notify_levels\":[], \"permissions\":{}}}",
     "camera_access": [
         [
             "1005f2ed",
@@ -98,7 +103,7 @@ The User service allows managing Users to a degree outlined by the permission le
         "one-email-0"
     ],
     "is_branded": 1,
-    "active_brand_subdomain": "login",
+    "active_brand_subdomain": "c001",
     "account_map_lines": null,
     "access_period": [
         "0-0000-2359",
@@ -109,7 +114,11 @@ The User service allows managing Users to a degree outlined by the permission le
         "5-0000-2359",
         "6-0000-2359"
     ],
-    "is_terms_noncompliant": 1
+    "user_log_level": 0,
+    "saved_filters": [],
+    "temp_account_access": [],
+    "is_terms_noncompliant": 1,
+    "is_system_notifications_disabled": 0
 }
 ```
 
@@ -199,7 +208,7 @@ show_AMPM               | boolean    | Indicates whether times should be shown w
 milliseconds_display    | boolean    | Indicates whether times should be shown with milliseconds (True) or not (False)
 layout_rotation_seconds | int        | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
 motion_boxes            | boolean    | Indicates whether motion boxes should be shown (True) or not (False)
-notify_levels           | array[int] | Array of integers indicating what level of notification should be set for the user <br><br>Notify level: <br>1 - `'Low'` - low alert notification setting <br>2 - `'High'` - high alert notification setting <br>3 - `'System'` - not a user-defined notification setting (encompasses camera status changes: online / offline / off / internet offline / ...) <br><br>When creating motion alerts for a camera, `'High'` or `'Low'` can be assigned to the motion box trigger. When a camera changes status, any user who has chosen to receive `'System'` alert notifications will get notified of the camera status changes in their account. When an event triggers a motion alert within a motion box set to `'High'`, all users with notify levels `'High'` will be notified of the occurrence
+notify_levels           | array[int] | Array of integers indicating what level of notification should be set for the user <br><br>Notify level: <br>1 - `'Low'` - low alert notification setting <br>2 - `'High'` - high alert notification setting <br>3 - `'System'` - not a user-defined notification setting (encompasses camera status changes: online/offline/off/internet offline/...) <br><br>When creating motion alerts for a camera, `'High'` or `'Low'` can be assigned to the motion box trigger. When a camera changes status, any user who has chosen to receive `'System'` alert notifications will get notified of the camera status changes in their account. When an event triggers a motion alert within a motion box set to `'High'`, all users with notify levels `'High'` will be notified of the occurrence
 permissions             | json       | This is for backwards compatibility <small>**(DEPRECATED)**</small>
 employee_id             | string     | Identifier which a user with the necessary permissions can set for other users
 layouts                 | json       | Json-formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
@@ -359,11 +368,11 @@ Returns a User object by ID
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/user -d "A=[AUTH_KEY]"
+curl -G https://login.eagleeyenetworks.com/g/user -d "A=[AUTH_KEY]" -H "Authentication: [API_KEY]:"
 
 or
 
-curl -G https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" --cookie "auth_key=[AUTH_KEY]"
+curl -G https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -563,7 +572,7 @@ Returns array of arrays with each sub-array representing a User available to the
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/user/list --cookie "auth_key=[AUTH_KEY]"
+curl --request GET https://login.eagleeyenetworks.com/g/user/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request

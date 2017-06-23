@@ -152,11 +152,11 @@ contact_postal_code                   | string               | Zip/postal code o
 contact_country                       | string               | Country code of primary contact for account                                          | **&check;** |
 contact_phone                         | string               | Phone number of primary contact for account                                          | **&check;** |
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account                                   | **&check;** |
-owner_account_id                      | string               | ID of the parent account. Defaults to the account of the creating user               | **&cross;** |
-timezone                              | string               | Timezone of the account. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...                                                  | **&check;** |
+owner_account_id                      | string               | ID of the parent account (defaults to the account of the creating user)              | **&cross;** |
+timezone                              | string               | Timezone of the account (defaults to `'US/Pacific'`) <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...                                                  | **&check;** |
 status                                | array[string]        | Account status. This can only be edited by superusers and account superusers from the parent/owner account <br><br>Possible values: <br>`'active'` - normal working state <br>`'inactive'` - logins are not allowed <br>`'suspended'` - effectively no longer operational <br>`'pending_validation'` - default state after account creation (before the user has validated the account)                                       | **&check;** |
 utc_offset                            | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | **&cross;** |
-access_restriction                    | array[string]        | Array of strings containing access restrictions. Possible values: `'enable_mobile'` = If present this account has access to mobile clients. `'enable_ip_restrictions'` = if present and if `'allowable_ip_address_range'` has been specified, limits logins to the address ranges specified                                                                                                                                           | **&cross;** |
+access_restriction                    | array[string]        | Array of strings containing access restrictions <br><br>Possible values: <br>`'enable_mobile'` - has access to mobile clients <br>`'enable_ip_restrictions'` - if present and if `'allowable_ip_address_range'` has been specified, limits logins to the address ranges specified                                                                                                                                           | **&cross;** |
 allowable_ip_address_range            | array[string]        | Each entry in the array specifies one address range. Entries use the `'/'` format. For example, to limit access to `'192.168.123.0-192.168.123.255'`, the entry would be `'192.168.123.0/24'`. If no entries are present, `'0.0.0.0/0'` is implied           | **&cross;** |
 session_duration                      | int                  | Session duration in minutes. Session duration of 0 means *stay logged in forever*    | **&check;** |
 holiday                               | array[string]        | Array of strings containing dates during which holidays are observed. Format for dates is YYYYMMDD                                                                                                                                            | **&check;** |
@@ -182,7 +182,7 @@ brand_corp_url                        | string               | Corporate website
 brand_name                            | string               | Branded company name                                                                 | **&check;** |
 brand_saml_publickey_cert             | string               | Public certificate which Eagle Eye Networks will use to decrypt the SAML for SSO     | **&check;** |
 brand_saml_nameid_path                | string               | The path within the SAML xml to find the users email address                         | **&check;** |
-is_without_initial_user               | string               | Indicates whether to create the new account without an initial user (1) or not (0). Defaults to 0, meaning an initial user with `'is_account_superuser=1'` will be created using the arguments `'contact_first_name/contact_last_name/contact_email'` specified upon account creation                                                                                                                                            | **&check;** |
+is_without_initial_user               | string               | Indicates whether to create the new account without an initial user (1) or not (0) (defaults to 0) <br><br>An initial user with `'is_account_superuser=1'` will be created using the arguments `'contact_first_name/contact_last_name/contact_email'` specified upon account creation                                                                                                                                            | **&check;** |
 customer_id                           | string               | Arbitrary ID assigned to a sub-account by a master account                           | **&check;** |
 is_master_video_disabled_allowed      | int                  | Indicates whether a sub-account can block video access to reseller (1) or not (0)    | **&check;** |
 is_master_video_disabled              | int                  | Indicates whether video access is blocked to reseller (1) or not (0)                 | **&check;** |
@@ -207,7 +207,7 @@ contact_utc_offset                    | int                  | This field is no 
 
 <aside class="notice">Camera-related flags can only be modified or set from within the account housing the cameras and only for valid cameras</aside>
 
-<aside class="notice">The status flag can only be set for sub-accounts from the master account</aside>
+<aside class="notice">The 'status' flag can only be set for sub-accounts from the master account</aside>
 
 <!--===================================================================-->
 ## Get Account
@@ -218,7 +218,7 @@ Returns an Account object by ID
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/account -d "id=[ID]&A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -266,10 +266,10 @@ contact_city                          | string        | City of primary contact 
 contact_state                         | string        | State/province of primary contact for account
 contact_postal_code                   | string        | Zip/postal code of primary contact for account
 contact_country                       | string        | Country code of primary contact for account
-owner_account_id                      | string        | ID of the parent account. Defaults to the account of the creating user
-timezone                              | string        | Timezone of the account. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...
+owner_account_id                      | string        | ID of the parent account (defaults to the account of the creating user)
+timezone                              | string        | Timezone of the account (defaults to `'US/Pacific'`) <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...
 status                                | array[string] | Account status. This can only be edited by superusers and account superusers from the parent/owner account <br><br>Possible values: <br>`'active'` - normal working state <br>`'inactive'` - logins are not allowed <br>`'suspended'` - effectively no longer operational <br>`'pending_validation'` - default state after account creation (before the user has validated the account)
-access_restriction                    | array[string] | Array of strings containing access restrictions. Possible values: `'enable_mobile'` = If present this account has access to mobile clients. `'enable_ip_restrictions'` = if present and if `'allowable_ip_address_range'` has been specified, limits logins to the address ranges specified
+access_restriction                    | array[string] | Array of strings containing access restrictions <br><br>Possible values: <br>`'enable_mobile'` - has access to mobile clients <br>`'enable_ip_restrictions'` - if present and if `'allowable_ip_address_range'` has been specified, limits logins to the address ranges specified
 allowable_ip_address_range            | array[string] | Each entry in the array specifies one address range. Entries use the `'/'` format. For example, to limit access to `'192.168.123.0-192.168.123.255'`, the entry would be `'192.168.123.0/24'`. If no entries are present, `'0.0.0.0/0'` is implied
 session_duration                      | int           | Session duration in minutes. Session duration of 0 means *stay logged in forever*
 holiday                               | array[string] | Array of strings containing dates during which holidays are observed. Format for dates is YYYYMMDD
@@ -278,7 +278,7 @@ work_hours                            | array[string] | Two entries. Each entry 
 alert_mode                            | array[string] | Array of strings containing possible alert modes as defined for this account. Accepts an array of any number of strings of varying length. This controls what values are able to be chosen for the `'active_alert_mode field'`
 active_alert_mode                     | string        | A string chosen from values in the account `'alert_mode'` array. Must be blank or one of the values defined in the alert_mode array. This is used to determine when to send motion alert notifications (defined by camera settings in the device model). If a motion alert is defined with an alert mode from one of the strings in the account 'alert_mode' array, then the notifications triggered from that motion alert will only be sent when the account `'active_alert_mode'` is also set to that same alert mode string defined for that motion alert
 default_camera_passwords              | string        | Comma-delimited string of default camera passwords
-is_without_initial_user               | int           | Indicates whether to create the new account without an initial user (1) or not (0). Defaults to 0, meaning an initial user with `'is_account_superuser=1'` will be created using the arguments `'contact_first_name/contact_last_name/contact_email'` specified upon account creation
+is_without_initial_user               | int           | Indicates whether to create the new account without an initial user (1) or not (0) (defaults to 0) <br><br>An initial user with `'is_account_superuser=1'` will be created using the arguments `'contact_first_name/contact_last_name/contact_email'` specified upon account creation
 is_initial_user_not_admin             | int           | Indicates whether the initial user is an admin (0) or not (1)
 
 > Json Response
@@ -331,9 +331,9 @@ contact_postal_code                   | string               | Zip/postal code o
 contact_country                       | string               | Country code of primary contact for account
 contact_phone                         | string               | Phone number of primary contact for account
 contact_mobile_phone                  | string               | Mobile phone number of primary contact for account
-timezone                              | string               | Timezone of the account. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...
+timezone                              | string               | Timezone of the account (defaults to `'US/Pacific'`) <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...
 status                                | array[string]        | Account status. This can only be edited by superusers and account superusers from the parent/owner account <br><br>Possible values: <br>`'active'` - normal working state <br>`'inactive'` - logins are not allowed <br>`'suspended'` - effectively no longer operational <br>`'pending_validation'` - default state after account creation (before the user has validated the account)
-access_restriction                    | array[string]        | Array of strings containing access restrictions. Possible values: `'enable_mobile'` = If present this account has access to mobile clients. `'enable_ip_restrictions'` = if present and if `'allowable_ip_address_range'` has been specified, limits logins to the address ranges specified
+access_restriction                    | array[string]        | Array of strings containing access restrictions <br><br>Possible values: <br>`'enable_mobile'` - has access to mobile clients <br>`'enable_ip_restrictions'` - if present and if `'allowable_ip_address_range'` has been specified, limits logins to the address ranges specified
 allowable_ip_address_range            | array[string]        | Each entry in the array specifies one address range. Entries use the `'/'` format. For example, to limit access to `'192.168.123.0-192.168.123.255'`, the entry would be `'192.168.123.0/24'`. If no entries are present, `'0.0.0.0/0'` is implied
 session_duration                      | int                  | Session duration in minutes. Session duration of 0 means *stay logged in forever*
 holiday                               | array[string]        | Array of strings containing dates during which holidays are observed. Format for dates is YYYYMMDD
@@ -374,7 +374,7 @@ contact_utc_offset                    | int                  | This field is no 
 
 <aside class="notice">Camera-related flags can only be modified or set from within the account housing the cameras and only for valid cameras</aside>
 
-<aside class="notice">The status flag can only be set for sub-accounts from the master account</aside>
+<aside class="notice">The 'status' flag can only be set for sub-accounts from the master account</aside>
 
 > Json Response
 
@@ -409,7 +409,7 @@ Delete an Account
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -419,10 +419,6 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]"
 Parameter | Data Type | Description
 --------- | --------- | -----------
 **id**    | string    | Account ID
-
-
-
-<!--TODO: Verify the curl request for delete-->
 
 ### Error Status Codes
 
@@ -443,7 +439,7 @@ Returns an array of arrays with each sub-array representing an Account available
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/account/list --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/account/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request

@@ -102,13 +102,13 @@ Each camera make/model/version is different, thus not every setting is supported
       - `'motion_noise_filter'` - as for main screen. If < 0.001 will not be applied
       - `'motion_sensitivity'` - as for main screen. If < 0.001 will not be applied
       - `'motion_hold_interval'` - as for main screen. If < 0.001 will not be applied
-      - `'priority'` - float (bigger wins), control settings overlay. Defaults to 0.0
-      - `'motion_threshold'` - (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event. Defaults to motion_size_ratio from main screen
+      - `'priority'` - float (bigger wins), control settings overlay (defaults to 0.0)
+      - `'motion_threshold'` - (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event (defaults to motion_size_ratio from main screen)
       - `'name'` - string used for the display name of the ROI in a GUI. Not to be confused with the `'<roiname>'` as the key of this ROI object
       - `'ignore_motion'` - boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set `'motion_sensitivity'` to `'0.001'` and `'motion_noise_filter'` to `'0.99'`
       - `'roiid'` - (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
       - `'hold_off_ms'` - (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
-      - `'hold_on_ms'` - (int) ms of idle before stopping an ROI motion event. Defaults to motion_event_holdon_ms from main settings
+      - `'hold_on_ms'` - (int) ms of idle before stopping an ROI motion event (defaults to motion_event_holdon_ms from main settings)
   - `'scene_type'` - string indicating the type of scene the camera is viewing
   - `'video_transmit_mode'` - string indicating when video is transmitted to the cloud
   - `'video_capture_mode'` - string indicating when video will being recorded
@@ -972,7 +972,7 @@ Parameter                     | Data Type     | Description                     
 **name**                      | string        | Device name                                                                                        | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
 **[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.)                                  | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
 camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404)               | **&cross;** |
-timezone                      | string        | Indicates the timezone of the camera. Defaults to the cameras’s bridge timezone. Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                                    | **&check;** |
+timezone                      | string        | Indicates the timezone of the camera (defaults to the cameras’s bridge timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                    | **&check;** |
 utcOffset                     | int           | Signed UTC offset in seconds of the timezone in which this device is installed                     | **&cross;** |
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
 permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                                                              | **&cross;** |
@@ -1085,7 +1085,7 @@ Returns a Camera object by ID
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[CAMERA_ID]"
+curl -X GET https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -1215,7 +1215,7 @@ Delete a Camera from the bridge (effectively unassigning it, the camera can then
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[CAMERA_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -1246,7 +1246,7 @@ Returns an array of arrays with each sub-array representing a Camera available t
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/device/list --cookie "auth_key=[AUTH_KEY]"
+curl --request GET https://login.eagleeyenetworks.com/g/device/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request

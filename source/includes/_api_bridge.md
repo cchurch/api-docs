@@ -174,7 +174,7 @@ Parameter                     | Data Type     | Description                     
 **id**                        | string        | Unique identifier automatically generated and assigned while adding a device                        | **&cross;** | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
 **name**                      | string        | Name of the bridge                                                                                  | **&check;** | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                             | **&cross;** |
-timezone                      | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                     | **&check;** |
+timezone                      | string        | Indicates the timezone of where the device is installed (defaults to the account timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                     | **&check;** |
 utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | **&cross;** |
 tags                          | array[string] | Array of strings each representing a tag name                                                       | **&check;** |
 permissions                   | string        | String of characters each defining a permission level of the current user                           | **&cross;** |
@@ -252,7 +252,7 @@ Returns a Bridge object by ID
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/device -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
+curl -X GET https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -341,7 +341,7 @@ Parameter                | Data Type     | Description | Is Required
 ---------                | ---------     | ----------- | -----------
 **id**                   | string        | Bridge ID   | true
 name                     | string        | Bridge name
-timezone                 | string        | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`
+timezone                 | string        | Indicates the timezone of where the device is installed (defaults to the account timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`
 tags                     | array[string] | Array of strings each representing a tag name
 [settings](#bridge-settings) | json          | Json object of basic settings (location, etc.)
 camera_parameters_add    | json          | Json object of camera settings to add/update
@@ -381,7 +381,7 @@ Delete a Bridge from the Eagle Eye Video Bank
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -412,7 +412,7 @@ Returns array of arrays with each sub-array representing a Bridge available to t
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/device/list --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/device/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -573,7 +573,7 @@ Array Index | Attribute           | Data Type            | Description
 8           | guid                | string               | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process
 9           | serial_number       | string               | Serial number of the device
 10          | [device_status](#status-bitmask) | int                  | The device status bitmask
-11          | timezone            | string               | Indicates the timezone of where the device is installed. Defaults to the account timezone. Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`
+11          | timezone            | string               | Indicates the timezone of where the device is installed (defaults to the account timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`
 12          | timezone_utc_offset | int                  | The signed integer offset in seconds of a timezone from UTC
 13          | is_unsupported      | int                  | Indicates whether the device is NOT supported (1) or is supported (0)
 14          | ip_address          | string               | IP address assigned to the device

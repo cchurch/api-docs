@@ -4,18 +4,18 @@
 ## Overview
 <!--===================================================================-->
 
-This service defines metrics that can be queried from the system
+This service defines Metrics that can be queried from the system
 
 <!--===================================================================-->
 ## Camera Bandwidth
 <!--===================================================================-->
 
-Used to query the bandwidth usage for a particular camera device
+Used to query the Camera Bandwidth usage for a particular device
 
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[AUTH_KEY]&id=[CAMERA_ID]"
+curl -X GET https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "id=[CAMERA_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -25,10 +25,10 @@ curl -G https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "A=[AUTH_
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
 **id**          | string       | Camera ID   | true
-start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
+start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to 7 days ago)
+end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*)
 group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
-motion_interval | int          | Motion Interval used for Motion Activity metric, in milliseconds. Defaults to 15000
+motion_interval | int          | Motion Interval used for Motion Activity metric, in milliseconds (defaults to 15000)
 metrics         | string, enum | String delimited list used to filter which metrics get returned. Setting this parameter to `'core,motion'` will return data only for core and motion <br><br>enum: core, packets, motion
 
 > Json Response
@@ -38,34 +38,34 @@ metrics         | string, enum | String delimited list used to filter which metr
     "core": [
         [
             "20181002190000.000",
-            0.0,
-            0.0,
-            215910545.0,
-            76733036.0,
-            32049659.0,
-            52716510.0
+            0,
+            0,
+            215910545,
+            76733036,
+            32049659,
+            52716510
         ],
         [
             "20181002200000.000",
-            0.0,
-            0.0,
-            252051927.0,
-            164214711.0,
-            36128066.0,
-            223484133.0
+            0,
+            0,
+            252051927,
+            164214711,
+            36128066,
+            223484133
+        ],
+        [
+            "20181009190000.000",
+            0,
+            0,
+            41425890,
+            10373660,
+            5029677,
+            78599812
         ],
         [...],
         [...],
-        [...],
-        [
-            "20181009190000.000",
-            0.0,
-            0.0,
-            41425890.0,
-            10373660.0,
-            5029677.0,
-            78599812.0
-        ]
+        [...]
     ],
     "packets": [
         [
@@ -74,15 +74,15 @@ metrics         | string, enum | String delimited list used to filter which metr
         ],
         [
             "20181002200000.000",
-            0.0018439999999999999
+            0.001844
+        ],
+        [
+            "20181009190000.000",
+            0
         ],
         [...],
         [...],
-        [...],
-        [
-            "20181009190000.000",
-            0.0
-        ]
+        [...]
     ],
     "motion": []
 }
@@ -90,13 +90,13 @@ metrics         | string, enum | String delimited list used to filter which metr
 
 ### HTTP Response (Json Attributes)
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-core      | array[[CameraCore](#cameracore-json-array-elements)]       | Array of core metrics
-packets   | array[[CameraPackets](#camerapackets-json-array-elements)] | Array of packet metrics
-motion    | array[[CameraMotion](#cameramotion-json-array-elements)]   | Array of motion metrics
+Parameter                  | Data Type  | Description
+---------                  | ---------  | -----------
+[core](#camera-core)       | array[obj] | Array of core metrics
+[packets](#camera-packets) | array[obj] | Array of packet metrics
+[motion](#camera-motion)   | array[obj] | Array of motion metrics
 
-### CameraCore Json Array Elements
+### Camera - core
 
 Index     | Data Type | Description
 -----     | --------- | -----------
@@ -108,14 +108,14 @@ Index     | Data Type | Description
 5         | float     | Bytes streamed
 6         | float     | Bytes freed
 
-### CameraPackets Json Array Elements
+### Camera - packets
 
 Index     | Data Type | Description
 -----     | --------- | -----------
 0         | string    | EEN Timestamp: YYYYMMDDHHMMSS.NNN
 1         | float     | Packet loss percentage (decimal)
 
-### CameraMotion Json Array Elements
+### Camera - motion
 
 Index     | Data Type | Description
 -----     | --------  | -----------
@@ -133,15 +133,16 @@ HTTP Status Code | Description
 200 | Request succeeded
 
 <!--===================================================================-->
-## Bridge Bandwidth
+<!-- ## Bridge Bandwidth -->
+<h2 id=bridge-bandwidth-h2>Bridge Bandwidth</h2>
 <!--===================================================================-->
 
-Used to query the bandwidth usage for a particular bridge device
+Used to query the Bridge Bandwidth usage for a particular device
 
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[AUTH_KEY]&id=[BRIDGE_ID]"
+curl -X GET https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "id=[BRIDGE_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -151,8 +152,8 @@ curl -G https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "A=[AUTH_
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
 **id**          | string       | Bridge ID   | true
-start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to 7 days ago
-end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN. Defaults to *now*
+start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to 7 days ago)
+end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*)
 group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
 
 > Json Response
@@ -162,51 +163,51 @@ group_by        | string, enum | Hour or day indicating how the results should b
     "core": [
         [
             "20181002170000.000",
-            711610368.0,
-            673860608.0,
-            21533380.0,
-            10299.0,
-            10064282.0,
-            9903.0
+            711610368,
+            673860608,
+            21533380,
+            10299,
+            10064282,
+            9903
         ],
         [
             "20181002180000.000",
-            711610368.0,
-            673802922.66666698,
-            139693604.0,
-            16579176.0,
-            30849223.0,
-            70446106.0
+            711610368,
+            673802922.666667,
+            139693604,
+            16579176,
+            30849223,
+            70446106
+        ],
+        [
+            "20181009170000.000",
+            711610368,
+            674052608,
+            20663486,
+            8637204,
+            18879693,
+            19383808
         ],
         [...],
         [...],
-        [...],
-        [
-            "20181009170000.000",
-            711610368.0,
-            674052608.0,
-            20663486.0,
-            8637204.0,
-            18879693.0,
-            19383808.0
-        ]
+        [...]
     ],
     "bandwidth": [
         [
             "20181002180000.000",
-            253117.37089200001
+            253117.370892
         ],
         [
             "20181002220000.000",
-            240255.52353499999
+            240255.523535
+        ],
+        [
+            "20181009150000.000",
+            232692.093023
         ],
         [...],
         [...],
-        [...],
-        [
-            "20181009150000.000",
-            232692.09302299999
-        ]
+        [...]
     ],
     "storage": [
         [
@@ -217,26 +218,26 @@ group_by        | string, enum | Hour or day indicating how the results should b
             "20181002180000.000",
             69247498
         ],
-        [...],
-        [...],
-        [...],
         [
             "20181009170000.000",
             1279678
-        ]
+        ],
+        [...],
+        [...],
+        [...]
     ]
 }
 ```
 
 ### HTTP Response (Json Attributes)
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-core      | array[[BridgeCore](#bridgecore-json-array-elements)]           | Array of core metrics
-bandwith  | array[[BridgeBandwidth](#bridgebandwidth-json-array-elements)] | Array of bandwidth metrics
-storage   | array[[BridgeStorage](#bridgestorage-json-array-elements)]     | Array of storage metrics
+Parameter                     | Data Type  | Description
+---------                     | ---------  | -----------
+[core](#bridge-core)          | array[obj] | Array of core metrics
+[bandwith](#bridge-bandwidth) | array[obj] | Array of bandwidth metrics
+[storage](#bridge-storage)    | array[obj] | Array of storage metrics
 
-### BridgeCore Json Array Elements
+### Bridge - core
 
 Index     | Data Type | Description
 -----     | --------- | -----------
@@ -248,14 +249,14 @@ Index     | Data Type | Description
 5         | float     | Bytes streamed
 6         | float     | Bytes freed
 
-### BridgeBandwidth Json Array Elements
+### Bridge - bandwidth
 
 Index     | Data Type | Description
 -----     | --------- | -----------
 0         | string    | EEN Timestamp: YYYYMMDDHHMMSS.NNN
 1         | float     | Bytes per second
 
-### BridgeStorage Json Array Elements
+### Bridge - storage
 
 Index     | Data Type | Description
 -----     | --------- | -----------
