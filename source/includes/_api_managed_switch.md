@@ -4,29 +4,31 @@
 ## Overview
 <!--===================================================================-->
 
-To simplify camera troubleshooting Eagle Eye Networks provides managed Ethernet switches to be used in the camera LAN. The managed switch uses PoE (Power over Ethernet) to provide power to cameras connected to its LAN ports like a typical PoE switch, but it can also switch the power in individual ports in response to commands delivered via Eagle Eye Network API. Thus it can force a hard reset of a camera by simply cycling its power supply
+To simplify camera troubleshooting Eagle Eye Networks provides managed Ethernet switches to be used in the camera LAN. The managed switch uses PoE (Power over Ethernet) to provide power to cameras connected to its LAN ports the same way a typical PoE switch would, but it can additionally switch the power in individual ports on or off in response to commands delivered via Eagle Eye Network API (Thus forcing a camera *hard reset* by simply cycling its power supply)
 
-<aside class="notice">Manged switches may be standalone or built into EEN bridges, as in the case of model 305</aside>
+<aside class="notice">Managed Switches can only be controlled or listed from within the account, where the device resides</aside>
 
-<aside class="notice">In this section when reference is made to port being 'on', 'off', 'enabled' or 'disabled', only the PoE power delivery function is meant. Communication function of the ports is not affected by this API. </aside>
+For each reference in this section to port being 'on', 'off', 'enabled' or 'disabled', **only the PoE power delivery function is meant**. Communication function of the ports is not affected by this API
+
+Manged Switches may be standalone or built into EEN bridges (e.g. model 305)
 
 <!--===================================================================-->
 ## Get List of Managed Switches
 <!--===================================================================-->
 
-Returns a list of managed switches available to the current user
+Returns a list of Managed Switches available to the current user
 
-> Request (no details)
+> Request (basic)
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/managed_switch/list --cookie "auh_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/managed_switch/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 
 ```
 
-> Request (with details)
+> Request (detailed)
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/managed_switch/list?is_detailed=true --cookie "auh_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/managed_switch/list -d "is_detailed=true" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 
 ```
 
@@ -38,40 +40,39 @@ Parameter   | Data Type | Description                                           
 ---------   | --------- | -----------                                                                                                                        |:-----------:|
 is_detailed | boolean   | Whether to include detailed data in the response (true) or not (false) <br><br>(Default value: false)                              | **&cross;** |
 
-> Json Response (no details)
+> Json Response (basic)
 
 ```json
 [
     {
         "bridges": [
-            "10104f40"
+            "10107f40"
         ],
         "state": "REDY",
-        "guid": "cb407e63-99f8-5dac-86a6-d1d78ac6ffb0",
+        "guid": "cb407e63-99f8-5dbx-86a6-d1d78ac6ffb0",
         "available_bridges": [],
         "ports": 4
     }
-
 ]
 ```
 
-> Json Response (with details)
+> Json Response (detailed)
 
 ```json
 [
     {
         "comment": "switch",
         "bridges": [
-            "10104f40"
+            "10107f40"
         ],
         "available_bridges": [],
         "name": null,
-        "ip": "10.143.70.38",
-        "state": "REDY",
+        "ip": "10.143.70.77",
+        "state": "PROB",
         "port_details": [
             {
                 "index": "port_2",
-                "power": 0.0,
+                "power": 0,
                 "ip": "null",
                 "enabled": "true",
                 "mac": "null",
@@ -80,8 +81,8 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
             },
             {
                 "index": "port_3",
-                "power": 0.0,
-                "ip": "10.143.176.231",
+                "power": 0,
+                "ip": "10.143.176.211",
                 "enabled": "true",
                 "mac": "00:FC:14:18:08:05",
                 "camera_guid": "(null)",
@@ -89,7 +90,7 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
             },
             {
                 "index": "port_1",
-                "power": 0.0,
+                "power": 0,
                 "ip": "null",
                 "enabled": "true",
                 "mac": "null",
@@ -98,16 +99,16 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
             },
             {
                 "index": "port_4",
-                "power": 2.4,
+                "power": 2.3,
                 "ip": "10.143.63.240",
                 "enabled": "true",
                 "mac": "00:1C:27:09:B1:9E",
-                "camera_guid": "36e3acd0-15c5-11e6-a8c2-e9134ac9c158",
+                "camera_guid": "36e3dbx0-15c5-11e6-a8c2-e9134ac9c158",
                 "esn": "1007fdae"
             }
         ],
         "version": "IM-V122.1",
-        "guid": "cb407e63-99f8-5dac-86a6-d1d78ac6ffb0",
+        "guid": "cb407e63-99f8-5dbx-86a6-d1d78ac6ffb0",
         "ports": 4
     }
 ]
@@ -115,16 +116,16 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
 
 ### HTTP Response
 
-The response body will be in EEN JSON-RPC format. The payload body will return a list of switch objects containing the GUID, state, bridges, and ports keys. If request detailed is true then it will contain all information below
+The response body will be in EEN JSON-RPC format. The payload body will return a list of switch objects containing the `'guid'`, `'state'`, `'bridges'` and `'ports'` keys. If `'is_detailed=true'`, the response will contain all of the below information
 
-Each switch object has the following structure:
+Each switch object has the following (detailed) structure:
 
 Parameter         | Data Type     | Description
 ---------         | ---------     | -----------
 guid              | string        | Globally Unique Identifier of the switch
-state             | string        | State of the managed switch: <br><br>`'REDY'` - Idle and ready to control <br>`'PROB'` - Probing for the data behind ports like mac/voltage/enabled etc. <br>`'CTRL'` - Busy actively changing settings
+state             | string        | State of the managed switch: <br>`'REDY'` - idle and ready to control <br>`'PROB'` - probing for the data behind ports like mac/voltage/enabled etc. <br>`'CTRL'` - busy actively changing settings
 bridges           | array[string] | List of bridge ESN's this managed switch was found on
-ports             | integer       | Number of controllable POE ports available on the switch
+ports             | integer       | Number of controllable PoE ports available on the switch
 ip                | string        | IP address of managed switch
 version           | string        | Version information
 comment           | string        | Comment stored on switch
@@ -136,13 +137,13 @@ name              | string        | Name of the switch
 
 Parameter   | Data Type | Description
 ---------   | --------- | -----------
-index       | string    | Port index in the form of `'port_N'`, where N gets substituted for integer (starting from 1)
+index       | string    | Port index in the form of `'port_N'`, where N gets substituted by an integer (starting from 1)
 enabled     | string    | Indicates whether the port is on (true) or off (false)
-mac         | string    | MAC address behind the port. A null is returned for none and string "Multiple(N)" for N number of MAC addresses found behind this port
-ip          | string    | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port (Or null for none)
+mac         | string <br>*(or&nbsp;`'null'`)* | MAC address behind the port, string "Multiple(N)" for N number of MAC addresses found behind this port
+ip          | string <br>*(or&nbsp;`'null'`)* | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port
 power       | float     | Power in Watts that this port is drawing
-camera_guid | string    | GUID of the camera that is tied to the MAC / IP address (Or null for none)
-esn         | string    | ESN of the camera that is tied to the MAC / IP address (Or null for none)
+camera_guid | string <br>*(or&nbsp;`'null'`)* | GUID of the camera that is tied to the MAC/IP address
+esn         | string <br>*(or&nbsp;`'null'`)* | ESN of the camera that is tied to the MAC/IP address
 
 ### Error Status Codes
 
@@ -153,24 +154,16 @@ HTTP Status Code | Description
 403	| Forbidden due to the user missing the necessary privileges
 200	| Request succeeded
 
-<!---=============================================================================================
-   ______     __     __  ___                                 __   _____         _ __       __
-  / ____/__  / /_   /  |/  /___ _____  ____ _____ ____  ____/ /  / ___/      __(_) /______/ /_
- / / __/ _ \/ __/  / /|_/ / __ `/ __ \/ __ `/ __ `/ _ \/ __  /   \__ \ | /| / / / __/ ___/ __ \
-/ /_/ /  __/ /_   / /  / / /_/ / / / / /_/ / /_/ /  __/ /_/ /   ___/ / |/ |/ / / /_/ /__/ / / /
-\____/\___/\__/  /_/  /_/\__,_/_/ /_/\__,_/\__, /\___/\__,_/   /____/|__/|__/_/\__/\___/_/ /_/
-=================================================================================================-->
-
 <!--===================================================================-->
 ## Get Managed Switch
 <!--===================================================================-->
 
-This API call allows for retrieval of detailed information behind the managed switch
+This API call allows for retrieval of detailed information behind the Managed Switch
 
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/managed_switch?guid=[GUID]   --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/managed_switch -d "guid=[SWITCH_GUID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -187,12 +180,12 @@ Parameter | Data Type | Description                                             
 {
     "comment": "switch",
     "name": null,
-    "ip": "10.143.70.38",
+    "ip": "10.143.70.77",
     "state": "REDY",
     "port_details": [
         {
             "index": "port_2",
-            "power": 0.0,
+            "power": 0,
             "ip": "null",
             "enabled": "true",
             "mac": "null",
@@ -201,8 +194,8 @@ Parameter | Data Type | Description                                             
         },
         {
             "index": "port_3",
-            "power": 0.0,
-            "ip": "10.143.176.231",
+            "power": 0,
+            "ip": "10.143.176.211",
             "enabled": "true",
             "mac": "00:FC:14:18:08:05",
             "camera_guid": "(null)",
@@ -210,7 +203,7 @@ Parameter | Data Type | Description                                             
         },
         {
             "index": "port_1",
-            "power": 0.0,
+            "power": 0,
             "ip": "null",
             "enabled": "true",
             "mac": "null",
@@ -219,32 +212,28 @@ Parameter | Data Type | Description                                             
         },
         {
             "index": "port_4",
-            "power": 2.6,
-            "ip": "",
+            "power": 2.3,
+            "ip": "10.143.63.240",
             "enabled": "true",
-            "mac": "Multiple(2)",
-            "camera_guid": "36e3acd0-15c5-11e6-a8c2-e9134ac9c158",
+            "mac": "00:1C:27:09:B1:9E",
+            "camera_guid": "36e3dbx0-15c5-11e6-a8c2-e9134ac9c158",
             "esn": "1007fdae"
         }
     ],
     "version": "IM-V122.1",
-    "guid": "cb407e63-99f8-5dac-86a6-d1d78ac6ffb0",
+    "guid": "cb407e63-99f8-5dbx-86a6-d1d78ac6ffb0",
     "ports": 4
 }
 ```
 
 ### HTTP Response
 
-The response for the request always comes back with the EEN JSON-RPC format. If everything goes well a 200 is returned. There can be multiple errors that happen during the process. The full description of the error is always returned in the EEN JSON-RPC formatted body. For simpler verification of errors we also use HTTP status codes within the HTTP header. The response will contain a UUID that is associated with the Managed Switch Object
-
-The switch object has the following structure:
-
 Parameter | Data Type     | Description
 --------- | ---------     | -----------
 guid      | string        | Globally Unique Identifier
-state     | string        | State of the managed switch: <br><br>`'REDY'` - Idle and ready to control <br>`'PROB'` - Probing for the data behind ports like mac/voltage/enabled etc. <br>`'CTRL'` - Busy actively changing settings
+state     | string        | State of the managed switch: <br>`'REDY'` - idle and ready to control <br>`'PROB'` - probing for the data behind ports like mac/voltage/enabled etc. <br>`'CTRL'` - busy actively changing settings
 bridges   | array[string] | List of bridge esns this managed switch was found on
-ports     | integer       | Number of controllable POE ports available on the switch
+ports     | integer       | Number of controllable PoE ports available on the switch
 ip        | string        | IP address of managed switch
 version   | string        | Version information
 comment   | string        | Comment stored on switch
@@ -261,25 +250,16 @@ HTTP Status Code | Description
 404	| Bridge or managed switch not found
 200	| Request succeeded
 
-<!---=============================================================================================
-      ___            _             _                                           _   __          _ _       _
-     / __\___  _ __ | |_ _ __ ___ | |   /\/\   __ _ _ __   __ _  __ _  ___  __| | / _\_      _(_) |_ ___| |__
-    / /  / _ \| '_ \| __| '__/ _ \| |  /    \ / _` | '_ \ / _` |/ _` |/ _ \/ _` | \ \\ \ /\ / / | __/ __| '_ \
-   / /__| (_) | | | | |_| | | (_) | | / /\/\ \ (_| | | | | (_| | (_| |  __/ (_| | _\ \\ V  V /| | || (__| | | |
-   \____/\___/|_| |_|\__|_|  \___/|_| \/    \/\__,_|_| |_|\__,_|\__, |\___|\__,_| \__/ \_/\_/ |_|\__\___|_| |_|
-                                                                |___/
-=================================================================================================-->
-
 <!--===================================================================-->
 ## Control Managed Switch
 <!--===================================================================-->
 
-This API call allows for controlling the managed switch, i.e. for turning ports on or off
+This API call enables control of the Managed Switch (i.e. for turning ports on or off)
 
 > Request
 
 ```shell
-curl -H "Content-type: application/json" --cookie "auth_key=[AUTH_KEY]" -X POST -d '{"switch_guid": "[GUID]", "ports": ["port_1", "port_2"], "command": "reboot"}' https://login.eagleeyenetworks.com/g/managed_switch/control
+curl -X POST https://login.eagleeyenetworks.com/g/managed_switch/control -d '{"switch_guid": "[SWITCH_GUID]", "ports": ["port_1", "port_2"], "command": "reboot"}'  -H "Content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -289,7 +269,7 @@ curl -H "Content-type: application/json" --cookie "auth_key=[AUTH_KEY]" -X POST 
 Parameter       | Data Type     | Description                                                                                                                | Required    |
 ---------       | ---------     | -----------                                                                                                                |:-----------:|
 **switch_guid** | string        | Globally Unique Identifier of the switch                                                                                   | **&check;** |
-**command**     | string        | `'enable'` - Turn port on <br/>  `'disable'` - Turn port off <br/> `'reboot'` - Cycle ports' power                         | **&check;** |
+**command**     | string        | Control commands: <br>`'enable'` - turn port on <br>`'disable'` - turn port off <br>`'reboot'` - cycle ports' power        | **&check;** |
 **ports**       | array[string] | Ports to be affected by the command                                                                                        | **&check;** |
 
 > Json Response
@@ -302,10 +282,6 @@ Parameter       | Data Type     | Description                                   
 ```
 
 ### HTTP Response
-
-The response for the request always comes back with the EEN JSON-RPC format. If everything goes well a 200 is returned. There can be multiple errors that happen during the process. The full description of the error is always returned in the EEN JSON-RPC formatted body. For simpler verification of errors also HTTP status codes are used within the HTTP header
-
-The response object has the following structure:
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
@@ -324,24 +300,16 @@ HTTP Status Code | Description
 415	| Invalid command supplied
 200	| Request succeeded
 
-<!---=============================================================================================
- .--.         .          .    .--.                            .--.
-:            _|_         |   :                                |   )
-|    .-. .--. |  .--..-. |   |    .-.  .--.--. .-. .--..-.    |--'.-..  .    ._.-. .--.
-:   (   )|  | |  |  (   )|   :   (   ) |  |  |(.-' |  (   )   |  (   )\  \  / (.-' |
- `--'`-' '  `-`-''   `-' `-   `--'`-'`-'  '  `-`--''   `-'`-  '   `-'  `' `'   `--''
-=================================================================================================-->
-
 <!--===================================================================-->
 ## Control Camera Power
 <!--===================================================================-->
 
-This API call allows for control of camera power using camera identifier, rather than port number of the switch
+This API call enables control of camera power using the camera identifier rather than port number of the switch
 
 > Request
 
 ```shell
-curl -H "Content-type: application/json" --cookie "auth_key=[AUTH_KEY]" -X POST -d '{"identifier": "[ESN]"}' https://login.eagleeyenetworks.com/g/camera/power_cycle
+curl -X POST https://login.eagleeyenetworks.com/g/camera/power_cycle -d '{"identifier": "[ESN]"}' -H "Content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -350,7 +318,7 @@ curl -H "Content-type: application/json" --cookie "auth_key=[AUTH_KEY]" -X POST 
 
 Parameter      | Data Type | Description                                                                                                                     | Required    |
 ---------      | --------- | -----------                                                                                                                     |:-----------:|
-**identifier** | string    | One of the three: GUID, ESN or MAC of the camera to control                                                                     | **&check;** |
+**identifier** | string    | Device identifier: <br>`<GUID>` - Global Unique Identifier of the camera <br>`<ESN>` - ID of the camera <br>`<MAC>` - MAC address of the camera                                                                                                                                                       | **&check;** |
 
 > Json Response
 
@@ -365,10 +333,6 @@ Parameter      | Data Type | Description                                        
 ```
 
 ### HTTP Response
-
-The response for the request always comes back with the EEN JSON-RPC format. If everything goes well a 200 is returned. There can be multiple errors that happen during the process. The full description of the error is always returned in the EEN JSON-RPC formatted body. For simpler verification of errors also HTTP status codes are used within the HTTP header
-
-The response object has the following structure:
 
 Parameter | Data Type | Description
 --------- | --------- | -----------

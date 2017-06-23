@@ -99,15 +99,15 @@ Cache control headers to allow asset caching if not `'now'`-relative:
 Header            | Data Type      | Description
 ------            | ---------      | -----------
 x-ee-timestamp    | type-timestamp | Specifies asset type and timestamp of the provided image <br><br>Type: video, preview, thumb, event
-x-ee-prev         | type-timestamp <br>*(or `'unknown'`)* | Specifies asset type of the previous image matching the class filter or `'unknown'` if the previous image was too complex to figure out
-x-ee-next         | type-timestamp <br>*(or `'unknown'`)* | Specifies asset type of the following image matching the class filter or `'unknown'` if the following image was too complex to figure out
+x-ee-prev         | type-timestamp <br>*(or&nbsp;`'unknown'`)* | Specifies asset type of the previous image matching the class filter or `'unknown'` if the previous image was too complex to figure out
+x-ee-next         | type-timestamp <br>*(or&nbsp;`'unknown'`)* | Specifies asset type of the following image matching the class filter or `'unknown'` if the following image was too complex to figure out
 content-type      | `'image/jpeg'` | Specifies the content type
 location          | `'/asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb'` | Identifies actual asset time of the image in response
 
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -164,7 +164,7 @@ HTTP Status Code | Description
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_ID];start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/play/video.flv -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -211,7 +211,7 @@ This API call will ensure the image is in the cloud. If the image is not in the 
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/cloud/image.jpg -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "webhook_url=[WEBHOOK_URL]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -223,6 +223,8 @@ Parameter           | Data Type | Description   | Is Required
 **id**              | string    | Camera ID     | true
 **start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
+
+<!-- TODO: When a webhook will be available, check the endpoint .jpg and verify if it shouldn't be .jpeg as in Get Image -->
 
 > Webhook Json POST Response
 
@@ -257,7 +259,7 @@ This API call will ensure the video is in the cloud. If the video is not in the 
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/cloud/video.flv -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "webhook_url=[WEBHOOK_URL]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -306,7 +308,7 @@ Get a list of objects, where each object contains the type of event delivering t
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/list/image -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -317,8 +319,8 @@ Parameter           | Data Type    | Description   | Is Required
 ---------           | ---------    | -----------   | -----------
 **id**              | string       | Camera ID     | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**     | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
-end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
 count               | int          | Used instead or with an `'end_timestamp'` argument. If used with an `'end_timestamp'` argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the `'end_timestamp'` argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
 
 > Json Response
@@ -390,7 +392,7 @@ If the option `'o=coalesce'` has been added, the videos with overlapping start a
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/list/video -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "o=coalesce" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request

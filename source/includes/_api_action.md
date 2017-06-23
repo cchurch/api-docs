@@ -17,7 +17,7 @@ Used to turn on all cameras in the caller user’s account. Caller must be an ac
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/allon
+curl -X POST https://login.eagleeyenetworks.com/g/action/allon -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -42,7 +42,7 @@ Used to turn off all cameras in the caller user’s account. Caller must be an a
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/alloff
+curl -X POST https://login.eagleeyenetworks.com/g/action/alloff -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -67,7 +67,7 @@ Used to turn on recording for all cameras, cameras in a specific layout, or a si
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/recordnow
+curl -X POST https://login.eagleeyenetworks.com/g/action/recordnow -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -98,7 +98,7 @@ Used to turn off recording for all cameras, cameras in a specific layout, or a s
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/action/recordoff
+curl -X POST https://login.eagleeyenetworks.com/g/action/recordoff -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request

@@ -26,7 +26,7 @@ If the user agrees to the terms, a PUT call should be placed containing an array
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/g/user/terms?id=cafe81f5 --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/user/terms -d "id=cafe81f5" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -86,7 +86,7 @@ This service is used to record Acceptance of the Terms of Service
 > Request
 
 ```shell
-curl -X PUT https://login.eagleeyenetworks.com/g/user/terms -d '{"urls": ["/een-terms-of-service/00013377/Test_Terms_of_Service~1~20180523100004.txt", "/een-terms-of-service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt"]}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X PUT https://login.eagleeyenetworks.com/g/user/terms -d '{"urls": ["/een-terms-of-service/00013377/Test_Terms_of_Service~1~20180523100004.txt", "/een-terms-of-service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt"]}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -141,7 +141,7 @@ Resellers are limited to 5 Terms of Service titles and each title will only have
 > Request
 
 ```shell
-curl -X PUT https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 1, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "1", "id": "00013377"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X PUT https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 1, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "1", "id": "00013377"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -212,7 +212,7 @@ Users are not required to accept terms of the same version again, to force users
 > Request
 
 ```shell
-curl -X POST https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 0, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "2", "id": "00013377"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X POST https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 0, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "2", "id": "00013377"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -350,7 +350,7 @@ Returns the Terms of Service for an account
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/g/account/terms?id=00013377 --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/account/terms -d "id=00013377" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request

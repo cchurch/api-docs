@@ -100,7 +100,7 @@ Parameter     | Data Type | Description                                         
 **c**         | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
 **ns**        | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&check;** |
 **\<data\>**  | json      | Json object representing the data to be used as the annotation content (can include HTML elements)                               | **&check;** |
-ts            | string    | Timestamp associated with the annotation (optional - if left out the system will automatically provide a timestamp)              | **&cross;** |
+ts            | string    | Timestamp associated with the annotation (If left out the system will automatically provide a timestamp)                         | **&cross;** |
 
 > Json Response
 
@@ -156,7 +156,7 @@ Parameter     | Data Type    | Description                                      
 **ns**        | int          | The numerical namespace value assigned by Eagle Eye Networks (can be omitted for heartbeat events `'type=hb'`)                | **&check;** |
 **type**      | string       | If `'type=mod'`, then this must be the timestamp associated with the annotation when originally created. If `'type'` is `'hb'` or `'end'`, this timestamp can be a different timestamp than the original                                                                                                | **&check;** |
 **\<data\>**  | json         | Json object representing the data to be used as the annotation content (can include HTML elements)                            | **&check;** |
-type          | string, enum | The type of annotation update to make (Defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and updates the annotation if changes have been specified, no `'hb'` with a later timestamp will be accepted <br><br>enum: end, hb, mod                                                    | **&cross;** |
+type          | string, enum | The type of annotation update to make (defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and updates the annotation if changes have been specified, no `'hb'` with a later timestamp will be accepted <br><br>enum: end, hb, mod                                                    | **&cross;** |
 
 > Json Response
 
