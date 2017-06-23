@@ -34,7 +34,7 @@ Login is a two-step process when using Simple Authentication and a three-step pr
 
 ### Simple Authentication
 
-  1. Authenticate
+  1. Authenticate with username and password
   2. Authorize with the token returned by Authenticate
 
 ### Two-Factor Authentication
