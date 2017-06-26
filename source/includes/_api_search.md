@@ -32,14 +32,15 @@ Parameter | Data Type | Description
 
 Returns an array of recording objects that match a search value
 
-> Request TODO
+> Request
 
 ```shell
+curl -X GET https://login.eagleeyenetworks.com/g/search/recordings -d "value=[SEARCH_VALUE]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
 
-`GET https://login.eagleeyenetworks.com/g/search/recordings`
+`TODO`
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------

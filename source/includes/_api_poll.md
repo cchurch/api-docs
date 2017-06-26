@@ -327,7 +327,7 @@ Response includes 2 session cookies and a returned token (which are identical). 
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' https://c001.eagleeyenetworks.com/poll -d '{"cameras":{"111st658":{"resource":["event","status"],"event":["VREE","PRFR","CPRG"]}}}'
+curl -X POST https://login.eagleeyenetworks.com/poll -d '{"cameras":{"[ID]":{"resource":["event","pre"],"event":["VREE","PRFR","CPRG"]}}}' -H 'Content-Type: application/json' -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -v
 ```
 
 > Request Json
@@ -451,7 +451,7 @@ HTTP Status Code | Description
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c001.eagleeyenetworks.com/poll
+curl -X GET https://login.eagleeyenetworks.com/poll -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" -G
 ```
 
 ### HTTP Request
