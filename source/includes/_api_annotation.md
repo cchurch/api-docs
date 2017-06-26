@@ -56,7 +56,7 @@ Returns an Annotation object by ID/UUID
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/annt/annt/get -d "id=[ID]" -d "uuid=[UUID1],[UUID2],[UUID3]" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/get -d "id=[DEVICE_ID]" -d "uuid=[UUID1],[UUID2],[UUID3]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -88,7 +88,7 @@ Create an Annotation for a device with a specific timestamp and data describing 
 > Request
 
 ```shell
-curl -X PUT "https://login.eagleeyenetworks.com/annt/set?c=[ID]&ts=[TIMESTAMP]&ns=[NAMESPACE]" -d '{"[KEY_NAME]": "[ANNOTATION_DATA]"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X PUT "https://login.eagleeyenetworks.com/annt/set?c=[DEVICE_ID]&ts=[TIMESTAMP]&ns=[NAMESPACE]" -d '{"[KEY_NAME]": "[ANNOTATION_DATA]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -142,7 +142,7 @@ The Annotation can be ended at any given time by specifying an end event (`'type
 > Request
 
 ```shell
-curl -X POST "https://login.eagleeyenetworks.com/annt/set?u=[UUID]&c=[ID]&ns=[NAMESPACE]&ts=[TIMESTAMP]" -d '{"[KEY_NAME]": "[ANNOTATION_DATA]"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X POST "https://login.eagleeyenetworks.com/annt/set?u=[UUID];c=[DEVICE_ID];ns=[NAMESPACE];ts=[TIMESTAMP]" -d '{"[KEY_NAME]": "[ANNOTATION_DATA]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -153,10 +153,10 @@ Parameter     | Data Type    | Description                                      
 ---------     | ---------    | -----------                                                                                                                   |:-----------:|
 **u**         | string       | Unique identifier (UUID) of the annotation being updated returned during Create Annotation                                    | **&check;** |
 **c**         | string       | Unique identifier of the device associated with the annotation being updated                                                  | **&check;** |
+**ts**        | string       | Timestamp associated with the annotation when originally created in EEN format: YYYYMMDDHHMMSS.NNN                            | **&check;** |
 **ns**        | int          | The numerical namespace value assigned by Eagle Eye Networks (can be omitted for heartbeat events `'type=hb'`)                | **&check;** |
-**type**      | string       | If `'type=mod'`, then this must be the timestamp associated with the annotation when originally created. If `'type'` is `'hb'` or `'end'`, this timestamp can be a different timestamp than the original                                                                                                | **&check;** |
 **\<data\>**  | json         | Json object representing the data to be used as the annotation content (can include HTML elements)                            | **&check;** |
-type          | string, enum | The type of annotation update to make (defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and updates the annotation if changes have been specified, no `'hb'` with a later timestamp will be accepted <br><br>enum: end, hb, mod                                                    | **&cross;** |
+type          | string, enum | The type of annotation update to make (defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and updates the annotation if changes have been specified, no `'hb'` with a later timestamp will be accepted <br><br>enum: mod, hb, end                                                    | **&cross;** |
 
 > Json Response
 
@@ -196,7 +196,7 @@ Returns an object populated by Annotations occurring *around* the defined timest
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/annt/annt/next -d "c=[ID]" -d "st=[START_TIMESTAMP]" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/next -d "c=[DEVICE_ID]" -d "st=[START_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -259,7 +259,7 @@ Returns an object populated by Annotations occurring *around* the defined timest
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/annt/annt/prev -d "c=[ID]" -d "et=[END_TIMESTAMP]" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/prev -d "c=[DEVICE_ID]" -d "et=[END_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -322,7 +322,7 @@ Return an object populated by active annotations as a point in time (optionally 
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/annt/annt/window  -d "c=[ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/window  -d "c=[DEVICE_ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -387,7 +387,7 @@ Returns an array of Annotations by count or time range
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/annt/annt/list -d "id=[ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" -H 'Content-type: application/json' --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/annt/annt/list -d "id=[DEVICE_ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" -H 'Content-type: application/json' -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request

@@ -3,7 +3,7 @@
 ## Overview
 <!--===================================================================-->
 
-Gaining access to the Eagle Eye API is a two-stage process. Clients first present their credentials and Realm to obtain a single-use *Authentication Token*. This single use token is valid for a pre-defined duration or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the `'auth_key'` cookie) that provides access to resources. This two-phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over a HTTPS connection
+Gaining access to the Eagle Eye API is a two-stage process. Clients first present their credentials and Realm to obtain a single-use *Authentication Token*. This single use token is valid for a predefined duration or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the `'auth_key'` cookie) that provides access to resources. This two-phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over a HTTPS connection
 
 In addition to the Simple Authentication described above, a more *secure* Authentication method known as **Two-Factor Authentication** (**TFA**) may be used. TFA is a method of confirming the user's identity by utilizing a combination of two different components. The first component is a user's password and the second is a one-time TFA code delivered to the user via another communication channel - email or a text message sent to the user's mobile phone
 
@@ -11,7 +11,7 @@ Whether Simple or Two-Factor Authentication is used for a particular user's logi
 
 If TFA is enforced, the Authorize call will expect the TFA code to be passed in addition to the token obtained from the Authenticate call
 
-There are several methods to use the `'auth_key'` cookie (obtained from the Authorize call HTTP headers) to authenticate subsequent API calls:
+There are several methods to use the `'auth_key'` cookie (obtained from the Authorize call) to authenticate subsequent API calls:
 
   - The first is to simply pass the `'auth_key'` *cookie* with all API requests
   - The second is to take the value of the `'auth_key'` cookie and pass it in the request as the `'A'` *parameter* <br><small>(The `'A=[AUTH_KEY]'` parameter can be used with any method (*GET*, *PUT*, *POST*, *DELETE*))</small>
@@ -162,13 +162,13 @@ HTTP Status Code | Description
 ## 3. Authorize
 <!--===================================================================-->
 
-Authorize is the final step of the Login process, performed by utilizing the token from Authenticate and (if TFA is used) the TFA code delivered to the user by SMS or email. A Successful Authorize call returns an authorized user object and sets the `'auth_key'` cookie. For all subsequent API calls either the *cookie* can be sent or the value of it can be sent as the `'A'` *parameter*. When TFA is used, this call will also set the `'tfa_key'` cookie (See [Authorized devices](#authorized-devices) for more details)
+Authorize is the final step of the login process performed by utilizing the token from Authenticate and (if TFA is enabled) the TFA code delivered to the user by SMS or email. A successful Authorize call returns an authorized user object and sets the `'auth_key'` cookie. For all subsequent API calls either the *cookie* can be set or the value of it can be sent as the `'A'` *parameter*. When TFA is used, this call will also set the `'tfa_key'` cookie (See [Authorized devices](#authorized-devices) for more details)
 
-API calls can initially be done against `'https://login.eagleeyenetworks.com'` (The host url), but after authorization response is returned, the API should then use the **branded subdomain**. At this stage the branded host url will become `'https://[active_brand_subdomain].eagleeyenetworks.com'` where the `'active_brand_subdomain'` field is returned in the authorization response
+API calls can initially be done against `'https://login.eagleeyenetworks.com'` (The host url), but after the authorization response is returned, API calls should then use the **branded subdomain**. At this stage the branded host url will become `'https://[active_brand_subdomain].eagleeyenetworks.com'`, where the `'active_brand_subdomain'` field is returned in the authorization response
 
-Following the authorization in the example on the right, the host url should be changed to `'https://c001.eagleyenetworks.com'`
+Following the authorization in the example on the right, the host url should be changed to for example: `'https://c001.eagleyenetworks.com'`
 
-Each account will consistently have the same **branded subdomain** and as such will not change throughout the life of the session. Caching the subdomain is safe as long as the client software validates against the *active_brand_subdomain* after authorization.  Using the **branded subdomain** is important for speed and robustness
+Each account will consistently have the same *branded subdomain* and as such will not change throughout the life of the session. Caching the subdomain is safe as long as the client software validates against `'the active_brand_subdomain'` after authorization. Using the *branded subdomain* is important for speed and robustness
 
 > Request (Simple Authentication)  
 
@@ -190,7 +190,7 @@ curl -D - -X POST https://login.eagleeyenetworks.com/g/aaa/authorize -d "token=[
 
 Parameter | Data Type | Description                                                                                                                            | Is Required
 --------- | --------- | -----------                                                                                                                            | -----------
-**token** | string    | Token received in *Step 1*                                                                                                             | true
+**token** | string    | Token received in *Authenticate*                                                                                                       | true
 two_factor_authentication_code | string    | 4 decimal digits <br>Used only for TFA (Not during Simple Authentication)
 
 ***NOTE 1:***
@@ -336,12 +336,13 @@ HTTP Status Code | Description
 ## Forced vs. Optional TFA
 <!--===================================================================-->
 
-Depending whether the account to which the user belongs enforces TFA or not, the user may be able to select Simple Authentication for their future log-ins rather than TFA  
-In order to find out whether the account enforces TFA, examine the `'is_two_factor_authentication_forced'` flag in the account record returned by the [Get Account](#get-account) API Call
-This flag can be set or cleared by the account superuser with the [Update Account](#update-account) API call  
-If the `'is_two_factor_authentication_forced'` is set to 0 the user may switch to Simple Authentication. That is achieved by clearing `'is_two_factor_authentication_enabled'` flag in the user record
-This can only be achieved by the user themselves (not by an account superuser)
-Update of any TFA-related field in the user record is performed through a dedicated TFA update endpoint `'/g/aaa/two_factor_authenticate/update'`
+Depending whether the account to which the user belongs enforces TFA or not, the user may be able to select Simple Authentication for their future logins rather than TFA
+
+In order to find out whether the account enforces TFA examine the `'is_two_factor_authentication_forced'` flag in the account record returned by the [Get Account](#get-account) API Call. This flag can be set or cleared by the account superuser with the [Update Account](#update-account) API call
+
+If the account TFA flag is set as follows `'is_two_factor_authentication_forced=0'`, the user is allowed switch to Simple Authentication. That is achieved by clearing `'is_two_factor_authentication_enabled=1'` flag in the user record. This action can only be done by the user themselves (not by an account superuser)
+
+Update of any TFA-related field in the user record is performed through a dedicated TFA update endpoint: `'/g/aaa/two_factor_authenticate/update'`
 
 <!--===================================================================-->
 ## TFA Update
@@ -410,7 +411,7 @@ HTTP Status Code | Description
 
 In order to make the log-in process as convenient as possible for the user, the system will allow Simple Authentication on devices previously used by that user for a successful TFA-based log in
 
-Upon a successful TFA-based log in, the **Authorize** API call sets a cookie `'tfa_key'` in the browser. Subsequent execution of the **Authenticate** API Call with the correct username and password will initiate the Simple Authentication process, which can be differentiated from TFA by absence of the `'two_factor_authentication_code'` field in the response of Authenticate. In this scenario the **Send TFA Code** API call can be skipped and the Authorize API call can be executed directly, as is the process for a non-TFA-enabled user login
+Upon a successful TFA-based log in, the **Authorize** API call sets a cookie `'tfa_key'` in the browser. Subsequent execution of the **Authenticate** API Call with the correct username and password will initiate the Simple Authentication process, which can be differentiated from TFA by absence of the `'two_factor_authentication_code'` field in the response of Authenticate. In this scenario the **Send TFA Code** API call can be skipped and the Authorize API call can be executed directly as via the non-TFA-enabled login
 
 ***NOTE 1:***
 
