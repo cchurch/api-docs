@@ -1,5 +1,4 @@
 # Authentication
-
 <!--===================================================================-->
 ## Overview
 <!--===================================================================-->
@@ -55,8 +54,8 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/authenticate -d "username=
 
 Parameter    | Data Type | Is Required
 ---------    | --------- | -----------
-**username** | string    | true
-**password** | string    | true
+**username** | string    | &check;
+**password** | string    | &check;
 
 > Json Response (Simple Authentication)
 
@@ -171,7 +170,7 @@ Following the authorization in the example on the right, the host url should be 
 
 Each account will consistently have the same *branded subdomain* and as such will not change throughout the life of the session. Caching the subdomain is safe as long as the client software validates against `'the active_brand_subdomain'` after authorization. Using the *branded subdomain* is important for speed and robustness
 
-> Request (Simple Authentication)
+> Request (Simple Authentication)  
 
 ```shell
 curl -D - -X POST https://login.eagleeyenetworks.com/g/aaa/authorize -d "token=[TOKEN]" -H "Authentication: [API_KEY]:"
@@ -285,9 +284,7 @@ When the user's account has been locked the user is notified of this fact by ema
         "1-0000-2359",
         "2-0000-2359",
         "3-0000-2359",
-        "4-0000-2359",
-        "5-0000-2359",
-        "6-0000-2359"
+        "4-0000-2359Authorized devices"
     ],
     "notify_rule": [
         "one-email-0"
@@ -311,7 +308,6 @@ When the user's account has been locked the user is notified of this fact by ema
     "is_system_notifications_disabled": 0
 }
 ```
-
 ### HTTP Response (Json Attributes)
 
 When successful, this API call returns Json data structure following the [User Model](#user-model) with the additional `'user_id'` field, which is present during Authorize and is identical to `'id'`
@@ -368,7 +364,7 @@ Field | Description | Remarks                                                   
 
 This step initiates the TFA data update process
 
-#### HTTP Request
+### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/update`
 
@@ -378,7 +374,7 @@ Parameter                          | Data Type | Description                    
 **password**                       | string    | The user's password                                                                                           | true
 **update_json**                    | json      | Json structure containing the name of the updated field and its new value <br><br>(Only one field can be updated at a time) <br><br>Example: <br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'sms_phone':'+123456789'`<br>`}`                                                                   | true
 
-#### HTTP Response
+### HTTP Response
 
 This API call returns no data
 
@@ -391,7 +387,7 @@ HTTP Status Code | Description
 
 ### 2. Verify update request with TFA
 
-#### HTTP Request
+### HTTP Request
 
 `POST https://login.eagleeyenetworks.com/g/aaa/two_factor_authenticate/verify`
 
@@ -399,7 +395,7 @@ Parameter                          | Data Type | Description                    
 ---------                          | --------- | -----------                                                                                                   | -----------
 **two_factor_authentication_code** | string    | The 4-digit code received via SMS or email                                                                    | true
 
-#### HTTP Response
+### HTTP Response
 
 This API call returns no data
 
