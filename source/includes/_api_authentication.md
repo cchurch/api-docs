@@ -1,4 +1,5 @@
 # Authentication
+
 <!--===================================================================-->
 ## Overview
 <!--===================================================================-->
@@ -170,7 +171,7 @@ Following the authorization in the example on the right, the host url should be 
 
 Each account will consistently have the same *branded subdomain* and as such will not change throughout the life of the session. Caching the subdomain is safe as long as the client software validates against `'the active_brand_subdomain'` after authorization. Using the *branded subdomain* is important for speed and robustness
 
-> Request (Simple Authentication)  
+> Request (Simple Authentication)
 
 ```shell
 curl -D - -X POST https://login.eagleeyenetworks.com/g/aaa/authorize -d "token=[TOKEN]" -H "Authentication: [API_KEY]:"
@@ -284,7 +285,9 @@ When the user's account has been locked the user is notified of this fact by ema
         "1-0000-2359",
         "2-0000-2359",
         "3-0000-2359",
-        "4-0000-2359Authorized devices"
+        "4-0000-2359",
+        "5-0000-2359",
+        "6-0000-2359"
     ],
     "notify_rule": [
         "one-email-0"
@@ -308,6 +311,7 @@ When the user's account has been locked the user is notified of this fact by ema
     "is_system_notifications_disabled": 0
 }
 ```
+
 ### HTTP Response (Json Attributes)
 
 When successful, this API call returns Json data structure following the [User Model](#user-model) with the additional `'user_id'` field, which is present during Authorize and is identical to `'id'`

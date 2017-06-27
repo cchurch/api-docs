@@ -201,9 +201,8 @@ brand_support_phone                   | string               | Branded support p
 default_cluster                       | string               | Indicates the data center cluster the account is assigned to                         | **&check;** |
 is_system_notification_images_enabled | int                  | Indicates whether email notifications about online/offlice status should contain images from those cameras (1) or not (0)                                                                                                                                      | **&check;** |
 map_lines                             | json                 | This is used by the front end to overlay lines over a map of the cameras for the account | **&check;** |
-is_two_factor_authentication_forced  | int                   | 1 - TFA authentication scheme is forced for all users in the account, 0 - users are feee to choose between simple authentication and TFA.    | **&check;**|  
+is_two_factor_authentication_forced   | int                  | Indicates whether Two-Factor Authentication is forced for all users in the account (1) or not and users are able to choose between Simple Authentication and TFA (0)                                                                                            | **&check;** |  
 contact_utc_offset                    | int                  | This field is no longer being used <small>**(DEPRECATED)**</small>                   | **&check;** |
-
 
 <aside class="notice">Camera-related flags can only be modified or set from within the account housing the cameras and only for valid cameras</aside>
 
