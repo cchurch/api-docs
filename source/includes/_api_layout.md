@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-Layouts contain panes, which is a group of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a camera gain access to all cameras included in layouts shared with them
+Layouts contain panes, which are groups of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a camera gain access to all cameras included in layouts shared with them
 
 Important information on accessing layouts:
 
@@ -12,8 +12,9 @@ Important information on accessing layouts:
   - A user will not have any access to newly created layouts. Permissions must be assigned to them explicitly (Exception: users with `'is_layout_admin=1'` have unrestricted access to all layouts existing or new)
   - Superusers and account superusers have unrestricted access to layouts, which cannot be limited by layout permissions
 
+<aside class="notice">Layouts can only be created, listed or modified from within the account for which the layout should be visible</aside>
 
-The ordering of the panes is determined by the order of the configuration -> panes array returned by the API. Each pane will have a size of 1, 2, or 3. A size of 1 is the smallest and fills up 1x1 on the layout grid. A size of 3 is the largest and fills up 3x3 on the layout grid. If the grid does not have enough columns to fit the pane, then the size of the pane is decreased until it is able to fit on the grid
+The ordering of the panes is determined by the order of the [configuration panes](#layout-configuration-panes) returned by the API. Each pane will have a size of 1, 2, or 3. A size of 1 is the smallest and fills up 1x1 on the layout grid. A size of 3 is the largest and fills up 3x3 on the layout grid. If the grid does not have enough columns to fit the pane, then the size of the pane is decreased until it is able to fit on the grid
 
 Rendered Layouts on Web and Mobile:
 <img src="images/api_layout/example_1.png" alt="Example 1" width="1000">
@@ -102,16 +103,16 @@ Property              | Data Type            | Description                      
 **name**              | string               | Name of the layout                                                                                   | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 **types**             | array[string]        | Specifies target(s) for layout. Multiple values are allowed                                          | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 **[configuration](#layout-configuration)** | json             | Json object of layout configuration                                                 | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
-json                  | string               | Json encoded string. The same content as the 'configuration' field <small>**(DEPRECATED)**</small>
+json                  | string               | Json encoded string. The same content as the `'configuration'` field <small>**(DEPRECATED)**</small> | **&cross;** |
 permissions           | string               | String of zero or more characters. Each character defines a permission that the current user has for the layout  <br><br>Permissions include: <br>`'R'` - user can view this layout <br>`'W'` - user can modify this layout <br>`'D'` - user can delete this layout <br>`'S'` - user can share this layout                                                                                                                                   | **&cross;** |
 current_recording_key | string               | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service                                                                                                                            | **&cross;** |
-shares                | array[array[string]] | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user id and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array                                                                                                                                               | **&check;** |
+shares                | array[array[string]] | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array                                                                                                                                               | **&check;** |
 
 ### Layout - configuration
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**[panes](#layout-configuration-panes)** | array[json] | Array of Json objects with each object representing a pane structure | true
+**[panes](#layout-configuration-panes)** | array[obj] | Array of Json objects with each object representing a pane structure | true
 [settings](#layout-configuration-settings) | json       | Json object of layout settings
 
 ### Layout - configuration - panes
@@ -173,7 +174,7 @@ Create a new Layout
 > Request
 
 ```shell
-curl -X PUT https://login.eagleeyenetworks.com/g/layout -d '{"name": "[NAME]", "json":"{\"panes\":[ {} ] }", "types":[""]}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X PUT https://login.eagleeyenetworks.com/g/layout -d '{"name": "[LAYOUT_NAME]", "types": [""], "configuration": {"panes": [{}] }}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -185,7 +186,7 @@ Parameter         | Data Type     | Description | Is Required
 **name**          | string        | Layout name | true
 **types**         | array[string] | Specifies target(s) for layout. Multiple values are allowed | true
 **[configuration](#layout-configuration)** | json          | Json object of layout configuration | true
-shares            | array[array]  | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user id and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
+shares            | array[array]  | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 
@@ -219,7 +220,7 @@ Update Layout information
 > Request
 
 ```shell
-curl -X POST https://login/eagleeyenetworks.com/g/layout -d '{"id": "[LAYOUT_ID]", "name": "[LAYOUT_NAME]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X POST https://login.eagleeyenetworks.com/g/layout -d '{"id": "[LAYOUT_ID]", "name": "[LAYOUT_NAME]", "types": [""], "configuration": {"panes": [{}] }}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -228,11 +229,11 @@ curl -X POST https://login/eagleeyenetworks.com/g/layout -d '{"id": "[LAYOUT_ID]
 
 Parameter     | Data Type     | Description | Is Required
 ---------     | ---------     | ----------- | -----------
-**id**        | string        |  Unique identifier of layout | true
+**id**        | string        | Unique identifier of layout | true
 name          | string        | Layout name
 types         | array[string] | Specifies target(s) for layout. Multiple values are allowed
 [configuration](#layout-configuration) | json          | Json object of layout configuration
-shares        | array[array]  | Array of arrays, one per user account for whom sharing is enabled for this layout. Each string contains two field separated by comma. The first field is a user id and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
+shares        | array[array]  | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. `'account'` specifies that the layout is shared with all users of the account. Second field contains permissions for users in the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] = user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] = user can view this layout and change this layout <br>[`'1005f2ed'`, `'R'`] = All users of the account can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 
@@ -267,7 +268,7 @@ Delete a Layout
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X DELETE https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request

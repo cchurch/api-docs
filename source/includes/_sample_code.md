@@ -44,7 +44,7 @@ curl --request GET "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=
 <br><small>(certain request types require data to be sent via *parameters*, other types require the data to be delivered via *data* - as HTTP body)</small>
 
   - **Parameters** by providing the parameters following the request url with a `?` and injecting them into it (i.e. `id=[CAMERA_ID];timestamp=[TIMESTAMP]` in `https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP]`)
-  - **HTTP request <i>body</i>** via `--data` or `-d` (i.e. `-d "id=[CAMERA_ID]&timestamp=[TIMESTAMP]"`)
+  - **HTTP request body** via `--data` or `-d` (i.e. `-d "id=[CAMERA_ID]&timestamp=[TIMESTAMP]"`)
     - Example: data in a standard PUT/POST request including **Json-formatted data**, which can be explicitly specified by adding the appropriate header `-H 'Content-type: application/json'` in the following way during a Create User call:
       - `-d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}' -H "content-type: application/json"` <br>Alternatively the same data could be provided without specifying the data type in the following ways:
       - `-d "first_name=[FIRST_NAME]" -d "last_name=[LAST_NAME]" -d "email=[EMAIL]"`
