@@ -538,7 +538,7 @@ Delete a User
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
