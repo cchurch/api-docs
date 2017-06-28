@@ -50,31 +50,33 @@ PNG images can be retrieved for supporting metric visualization. PNG types inclu
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/pngspan/span.png -d "start_timestamp=[START_TIMESTAMP]&end_timestamp=[END_TIMESTAMP]&width=[WIDTH]&id=[CAMERA_ID]&foreground_color=[FOREGROUND_COLOR]&background_color=[BACKGROUND_COLOR]&table=[TABLE]&A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/pngspan/etag.png -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "width=[WIDTH]" -d "id=[CAMERA_ID]" -d "foreground_color=[COLOR_CODE]" -d "background_color=[COLOR_CODE]" -d "etag=[FOUR_CC]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
 
-`GET https://login.eagleeyenetworks.com/pngspan/{png_type}.png`
+`GET https://login.eagleeyenetworks.com/pngspan/{pngspan_type}.png`
 
-Parameter            | Data Type    | Description | Is Required
----------            | ---------    | ----------- | -----------
-**start_timestamp**  | string       | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**end_timestamp**    | string       | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**width**            | int          | Width in pixels of resulting PNG. Must be an integer greater than 0 | true
-**id**               | string       | Camera ID | true
-**foreground_color** | string       | Color of foreground (active). If both fg and bg have 0 for alpha, assumed fully opaque (0xff). 32 bit ARGB color | true
-**background_color** | string       | Color of background (inactive). 32 bit ARGB color | true
-table                | string, enum | If provided, specifies name of table to be rendered. Required for type `'span'` and `'event'` <br><br>enum: stream, onoff, video, register
-etag                 | string       | Identifies etag to be rendered, using the 4 character string identifier ([Four CC](#event-objects)). Will utilize matching event tables where possible. Ignored for type `'span'` and `'event'`
-flval                | string       | Identified value of the filter field from the starting etag. Only applicable for type `'span'`
-flname               | string       | Name of field within span start etag to match to flval. Interesting fields are roiid in roim table and videoid for video. Only applicable for type `'span'`
-flflags              | string       | Limits span rendering to spans with the flag asserted. ALERTS is asserted for roim and motion spans when an alert is active
+Parameter           | Data Type    | Description | Is Required
+---------           | ---------    | ----------- | -----------
+**id**              | string       | Camera ID | true
+**width**           | int          | Width in pixels of resulting PNG. Must be an integer greater than 0 | true
+**start_timestamp** | string       | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**   | string       | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+foreground_color    | string       | Color of foreground (active). If both foreground and background have 0 for alpha, assumed fully opaque (0xff) <br><br>Example (32 bit ARGB color): `'0xf0000000'`
+background_color    | string       | Color of background (inactive) <br><br>Example (32 bit ARGB color): `'0xffffffff'`
+table               | string, enum | If provided, specifies name of table to be rendered. Required for type `'span'` and `'event'` <br><br>enum: stream, onoff, video, register
+etag                | string       | Identifies etag to be rendered, using the 4 character string identifier ([Four CC](#event-objects)). Will utilize matching event tables where possible. Ignored for type `'span'` and `'event'`
+flval               | string       | Identified value of the filter field from the starting etag. Only applicable for type `'span'`
+flname              | string       | Name of field within span start etag to match to flval. Interesting fields are roiid in roim table and videoid for video. Only applicable for type `'span'`
+flflags             | string       | Limits span rendering to spans with the flag asserted. ALERTS is asserted for roim and motion spans when an alert is active
 
 HTTP Status Code | Description
 ---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session
 404	| Not found if camera, etag or table cannot be found
-408	| Required arguments are missing or invalid
 500	| Problem occurred during data processing or rendering
 200	| Request succeeded
+
+<!-- TODO: Confirm a scenario where the error code is applicable: 408	| Required arguments are missing or invalid -->
