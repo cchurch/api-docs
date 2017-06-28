@@ -226,7 +226,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -H
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Unique identifier of the account | true
+**id**    | string    | Account ID  | true
 
 ### Error Status Codes
 

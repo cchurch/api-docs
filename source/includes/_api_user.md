@@ -377,7 +377,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "Auth
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-id        | string    | Unique identifier of the user | false
+id        | string    | User ID     | false
 
 ### Error Status Codes
 
@@ -547,7 +547,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "A
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Unique identifier of the user | true
+**id**    | string    | User ID     | true
 
 ### Error Status Codes
 
