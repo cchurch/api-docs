@@ -14,7 +14,7 @@
 curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data "username=[USERNAME]&password=[PASSWORD]" -H "Authentication: [API_KEY]:"
 ```
 
-In this section we will walk You through the process of making API requests using the **cURL** command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server using a wide range of supported protocols including HTTP/HTTPS, which is what we are interested in
+In this section we will walk you through the process of making API requests using the **cURL** command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server using a wide range of supported protocols including HTTP/HTTPS, which is what we are interested in
 
 **cURL** can be installed by visiting [this site](http://curl.haxx.se) (present on most linux systems by default)
 
@@ -27,6 +27,8 @@ With cURL installed the next step is to log in and have a valid session (visit t
   - The `-H` flag specifies the *headers* of the API query
   - The `--cookie` flag specifies the *cookies* of the API query
   - Optionally provide the `-v` flag for a *verbose output* (more detailed output including HTTP headers, cookies and full server response)
+  - Optionally provide the `-O` flag at the very end of the request for *file output* (displays download progress and saves the file with the name retrieved from the url to the current directory)
+    - Alternatively provide `'-o "/<file_path/<filename>.<extension>"'` to specify output name and path <br>(path has to exist, can be relative `'./cam_01_recording.mp4'`)
 
 > A certain degree of variation is possible within cURL for formulating HTTP requests:
 
@@ -103,7 +105,7 @@ The output are headers of the API request followed by the response body. The `-D
 
 Argument | Description
 -------- | -----------
-**-D**, –dump-header <file> | Write the protocol headers to the specified file. This option is handy to use when You want to store the headers that a HTTP site sends to You. Cookies from the headers could then be read in a second cURL invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies
+**-D**, –dump-header <file> | Write the protocol headers to the specified file. This option is handy to use when you want to store the headers that a HTTP site sends to you. Cookies from the headers could then be read in a second cURL invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies
 
 ---
 
@@ -245,7 +247,7 @@ The ease of constructing layouts is highly dependent on the robustness of the 3r
 ## Playing Live Video
 <!--===================================================================-->
 
-Video playback functionality can be accessed through the `'/asset/play/video.{video_format}'` API. We will show You how to use this API to play live video, though the same API can also be used to play historic video
+Video playback functionality can be accessed through the `'/asset/play/video.{video_format}'` API. We will show you how to use this API to play live video, though the same API can also be used to play historic video
 
 Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on [this site](https://js.do) to generate the URL string
 
@@ -267,7 +269,7 @@ htmlFlashVideoPlayerUrl = "https://login.eagleeyenetworks.com/strobe/embed.html?
 document.write(htmlFlashVideoPlayerUrl);
 `
 
-Note that we have 2 variables: `'eagleEyeLiveVideoApiUrl'` and `'htmlFlashVideoPlayerUrl'`. The `'htmlFlashVideoPlayerUrl'` variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into Your application:
+Note that we have 2 variables: `'eagleEyeLiveVideoApiUrl'` and `'htmlFlashVideoPlayerUrl'`. The `'htmlFlashVideoPlayerUrl'` variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application:
 
 `
 https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[AUTH_KEY]&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5
@@ -342,7 +344,7 @@ https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%
 }
 ```
 
-Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial we will walk You through the steps to set up the poll stream for long polling using the /poll API
+Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial we will walk you through the steps to set up the poll stream for long polling using the /poll API
 
 Long polling is used in the mobile clients. The process is to first register to the poll stream using the POST /poll API followed by constant API requests for GET /poll
 

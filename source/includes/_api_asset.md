@@ -92,9 +92,9 @@ All assets have an EEN timestamp attached. Timestamps are always in UTC and main
 ## Get Image
 <!--===================================================================-->
 
-<aside class="notice">Get a JPEG image based on the specified timestamp. This will return binary image data in JPEG format</aside>
+Get a JPEG image based on the specified timestamp. This will return binary image data in JPEG format
 
-Cache control headers to allow asset caching if not `'now'`-relative:
+### Cache control headers to allow asset caching if not `'now'`-relative:
 
 Header            | Data Type      | Description
 ------            | ---------      | -----------
@@ -107,8 +107,12 @@ location          | `'/asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G -v
 ```
+
+> <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory</small>
+
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify filename, path and extension</small>
 
 ### HTTP Request
 
@@ -156,7 +160,9 @@ HTTP Status Code | Description
 ## Get Video
 <!--===================================================================-->
 
-<aside class="notice">Get a video stream in the requested format based on the specified timestamps. Returns binary video data in the requested format:</aside>
+Get a video stream in the requested format based on the specified timestamps. Returns binary video data in the requested format
+
+### Video formats:
 
   - **FLV** *(The recommended format for web streaming)*
   - **MP4**
@@ -164,8 +170,12 @@ HTTP Status Code | Description
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/asset/play/video.flv -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/asset/play/video.flv -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G -v
 ```
+
+> <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory (timestamps must coincide with existing video)</small>
+
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify filename, path and extension (timestamps must coincide with existing video)</small>
 
 ### HTTP Request
 

@@ -8,15 +8,20 @@ This service offers native PNG span rendering to support metric visualization. F
 
 ### Response Headers
 
-content-location: resource actually rendered. absolute start/end ts and either table/etag depending on whether an index was used
+`'content-location'`: resource actually rendered, absolute start/end ts and either table/etag depending on whether an index was used
 
-### Discussion
+### Use Cases
 
 The PNG span is a very efficient mechanism for visualizing where metrics and spans are active. Scale the image vertically as needed. PNG are extremely compact - a day of spans will be a few hundred bytes
 
-Tile the PNGs for fast, infinite scrolling. Render a width/timespan that represents a rational chunk of the current screen - say 4 hours in a day view. Fill the screen with tiles, fetch offscreen at the same size in preparation to scroll. Change origin of each entity to accomplish fast smooth scrolling. Fetch successive offscreen buffers as they come on screen
+The following description provides a typical usage model:
 
-Hit detection (for rollover) can be done in a browser by rendering opaque colors and reading pixels values from a one pixel high offscreen image. If an active pixel is detected, fetch the window of events around the timestamp estimate (since the pixel resolution is usually much less than the ms resolution needed for a timestamp) and use the response to determine what metric/span to display (i.e. the closest one)
+  - Tile the PNGs for fast, infinite scrolling. Render a width/timespan that represents a rational chunk of the current screen (for example 4 hours in a day view)
+    - Fill the screen with tiles, fetch offscreen at the same size in preparation to scroll
+    - Change origin of each entity to accomplish fast smooth scrolling
+    - Fetch successive offscreen buffers as they come on screen
+  - Hit detection (for rollover) can be done in a browser by rendering opaque colors and reading pixels values from a one pixel high offscreen image
+    - If an active pixel is detected, fetch the window of events around the timestamp estimate (since the pixel resolution is usually much less than the ms resolution needed for a timestamp) and use the response to determine what metric/span to display (i.e. the closest one)
 
 ### PNG Types
 
@@ -50,8 +55,13 @@ PNG images can be retrieved for supporting metric visualization. PNG types inclu
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/pngspan/etag.png -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "width=[WIDTH]" -d "id=[CAMERA_ID]" -d "foreground_color=[COLOR_CODE]" -d "background_color=[COLOR_CODE]" -d "etag=[FOUR_CC]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+curl -X GET https://login.eagleeyenetworks.com/pngspan/etag.png -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "width=[WIDTH]" -d "id=[CAMERA_ID]" -d "foreground_color=[COLOR_CODE]" -d "background_color=[COLOR_CODE]" -d "etag=[FOUR_CC]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G -v
 ```
+
+> <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory</small>
+
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify filename, path and extension</small>
+
 
 ### HTTP Request
 
