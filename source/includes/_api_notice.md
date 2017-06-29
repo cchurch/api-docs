@@ -1,5 +1,9 @@
 # Terms of Service
 
+<!--===================================================================-->
+## Overview
+<!--===================================================================-->
+
 The following API endpoints facilitate presenting and accepting the Terms of Service. Eagle Eye Networks uses independent Terms of Service which will be presented through [Get Terms of Service for User](#get-terms-of-service-for-user). Additionally resellers can add their own Terms of Service through [Create Terms of Service for Account](#create-terms-of-service-for-account), which will then be presented with Eagle Eye Network's terms
 
 Resellers can assign their own terms at the master account level or give each sub-account custom terms at the sub-account level
