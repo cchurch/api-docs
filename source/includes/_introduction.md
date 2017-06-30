@@ -16,7 +16,7 @@ The Eagle Eye Video API allows you to securely record, manage and play video bac
 
 Since the API is based on REST principles, it’s very easy to write and test applications. You can use your browser to access URLs and you can use many different HTTP clients in nearly any programming language
 
-### Requirements:
+### Requirements
 
   - TLS 1.1 or greater
 
