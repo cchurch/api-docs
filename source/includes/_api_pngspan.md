@@ -14,16 +14,16 @@ This service offers native PNG span rendering to support metric visualization. F
 
 The PNG span is a very efficient mechanism for visualizing where metrics and spans are active. Scale the image vertically as needed. PNG are extremely compact - a day of spans will be a few hundred bytes
 
-The following description provides a typical usage model:
+The following description provides a typical use model:
 
-  - Tile the PNGs for fast, infinite scrolling. Render a width/timespan that represents a rational chunk of the current screen (for example 4 hours in a day view)
+  - Tile the PNGs for fast, infinite scrolling. Render a width/timespan that represents a rational chunk of the current screen (i.e. 4h in a day view)
     - Fill the screen with tiles, fetch offscreen at the same size in preparation to scroll
     - Change origin of each entity to accomplish fast smooth scrolling
     - Fetch successive offscreen buffers as they come on screen
   - Hit detection (for rollover) can be done in a browser by rendering opaque colors and reading pixels values from a one pixel high offscreen image
-    - If an active pixel is detected, fetch the window of events around the timestamp estimate (since the pixel resolution is usually much less than the ms resolution needed for a timestamp) and use the response to determine what metric/span to display (i.e. the closest one)
+    - If an active pixel is detected, fetch the window of events around the timestamp estimate (since the pixel resolution is usually much less than the millisecond resolution needed for a timestamp) and use the response to determine what metric/span to display (i.e. the closest one)
 
-### PNG Types
+### PNG Type List
 
   - `'setting'`
     - `'table=onoff'` - `'camera_on'` setting, the inverse of which represents camera *off*
@@ -44,7 +44,9 @@ The following description provides a typical usage model:
 ## Get Png Span
 <!--===================================================================-->
 
-PNG images can be retrieved for supporting metric visualization. PNG types include:
+PNG images can be retrieved for supporting metric visualization
+
+### PNG Types
 
   - `'span'`
   - `'etag'`
@@ -60,7 +62,7 @@ curl -X GET https://login.eagleeyenetworks.com/pngspan/etag.png -d "start_timest
 
 > <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory</small>
 
-> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify filename, path and extension</small>
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify output filename, path and extension</small>
 
 
 ### HTTP Request
@@ -69,7 +71,7 @@ curl -X GET https://login.eagleeyenetworks.com/pngspan/etag.png -d "start_timest
 
 Parameter           | Data Type    | Description | Is Required
 ---------           | ---------    | ----------- | -----------
-**id**              | string       | Camera ID | true
+**id**              | string       | Camera ID   | true
 **width**           | int          | Width in pixels of resulting PNG. Must be an integer greater than 0 | true
 **start_timestamp** | string       | Start Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string       | End Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true

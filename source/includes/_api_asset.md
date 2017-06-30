@@ -4,11 +4,17 @@
 ## Overview
 <!--===================================================================-->
 
-Asset services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify [Assets](#DOT-Asset)
+Asset services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify [Assets](#DOT-Asset). All assets are tagged with and can be identified by the EEN Timestamp
 
-<aside class="notice">Assets are identified by a tuple of timestamp, cameraid, quality and format</aside>
+### EEN Timestamp
 
-  - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time)
+Type          | Meaning
+----          | -------
+**EEN Timestamp** | **Format:**&nbsp;&nbsp;YYYYMMDDhhmmss.xxx <small>(string)</small> <br>**System:**&nbsp;Coordinated Universal Time (UTC) <br><small>Synchronized time zone: Greenwich Mean Time (GMT)</small> <br><br>**Example:**&nbsp;*Jan 2, 2018 08:30:20.00* == *20180102083020.000*
+
+### Assets Identifiers
+
+  - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time, +/- offsets from `'now'` are valid in milliseconds)
   - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit ID associated with a specific camera (CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
   - **Quality*****(Future Feature)*****:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. Additional quality levels will be supported in time
     - **low:** around 100 KB/s
@@ -81,14 +87,6 @@ The H264 codec has the concept of profiles and levels to convey whether a playba
     This means that the video is currently being transcoded within our system and therefore couldn't be found. Assuming the data actually exists (check against the video list call), the video will eventually be ready for you to fetch in the desired format, but for the time being, you will have to wait and refetch until the requested video is ready -->
 
 <!--===================================================================-->
-## EEN Timestamp
-<!--===================================================================-->
-
-All assets have an EEN timestamp attached. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.xxx
-
-+/- offsets from `'now'` are valid in ms
-
-<!--===================================================================-->
 ## Get Image
 <!--===================================================================-->
 
@@ -112,7 +110,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAM
 
 > <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory</small>
 
-> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify filename, path and extension</small>
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify output filename, path and extension</small>
 
 ### HTTP Request
 
@@ -175,7 +173,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/play/video.flv -d "id=[CAME
 
 > <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory (timestamps must coincide with existing video)</small>
 
-> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify filename, path and extension (timestamps must coincide with existing video)</small>
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify output filename, path and extension (timestamps must coincide with existing video)</small>
 
 ### HTTP Request
 

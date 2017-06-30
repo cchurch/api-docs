@@ -9,25 +9,25 @@ toc_footers:
 
 includes:
   - introduction
-  - api_types
+#  - api_types
   - api_authentication
   - api_aaa
   - api_account
   - api_user
-  - api_camera
   - api_bridge
   - api_managed_switch
+  - api_camera
+  - api_action
   - api_asset
+  - api_metric
   - api_poll
+  - api_annotation
+  - api_pngspan
   - api_layout
   - api_notice
-  - api_action
   - api_feedback
-  - api_metric
-  - api_pngspan
-  - api_recording
-  - api_annotation
-  - api_search
+#  - api_recording
+#  - api_search
   - errors
   - faq
   - sample_code
