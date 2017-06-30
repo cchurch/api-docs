@@ -20,7 +20,7 @@ Poll is a stateful request for updates any time a matching event occurs within t
 
 Each object consists of an ID element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
-### Event sources
+### Event Sources
 
   - Camera or device - camera alerts, start and stop recording, etc.
   - System - maintenance, server changes, etc.
