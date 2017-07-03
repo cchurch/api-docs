@@ -191,7 +191,7 @@ HTTP Status Code | Description
 ## Next Annotation
 <!--===================================================================-->
 
-Returns an object populated by Annotations occurring *around* the defined timestamp by searching for the next event in the indicated direction
+Returns an object populated by Annotation events occurring *around* the defined timestamp by searching for the next event in the indicated direction (across create, update, hb, end events)
 
 > Request
 
@@ -206,7 +206,11 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/next -d "c=[DEVICE_ID]"
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
 **c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
-**st**    | string    | Timestamp to get annotation(s) for in EEN format: YYYYMMDDHHMMSS.NNN                                                                 | **&check;** |
+**st**    | string    | Timestamp as a point in time to get annotation event(s) after in EEN format: YYYYMMDDHHMMSS.NNN                                      | **&check;** |
+et        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*). Matches events with identical start timestamps as the specified `'et'`                                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
 
 > Json Response
 
@@ -241,6 +245,8 @@ ts        | string            | Closest matching timestamp to the requested (to 
 new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
 active    | array[string]     | Array of all annotation UUIDs active around the specified `'st'` (or within the defined time window)
 
+<aside class="notice">If the search criteria has not been matched by any events, the return will be <i>null</i></aside>
+
 ### Error Status Codes
 
 HTTP Status Code | Description
@@ -254,7 +260,7 @@ HTTP Status Code | Description
 ## Previous Annotation
 <!--===================================================================-->
 
-Returns an object populated by Annotations occurring *around* the defined timestamp by searching for the previous event in the indicated direction
+Returns an object populated by Annotation events occurring *around* the defined timestamp by searching for the previous event in the indicated direction (across create, update, hb, end events)
 
 > Request
 
@@ -269,7 +275,11 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/prev -d "c=[DEVICE_ID]"
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
 **c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
-**et**    | string    | Timestamp to get annotation(s) for in EEN format: YYYYMMDDHHMMSS.NNN                                                                 | **&check;** |
+**et**    | string    | Timestamp as a point in time to get annotation event(s) before in EEN format: YYYYMMDDHHMMSS.NNN                                     | **&check;** |
+st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
 
 > Json Response
 
@@ -304,6 +314,8 @@ ts        | string            | Closest matching timestamp to the requested (to 
 new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
 active    | array[string]     | Array of all annotation UUIDs active around the specified `'et'` (or within the defined time window)
 
+<aside class="notice">If the search criteria has not been matched by any events, the return will be <i>null</i></aside>
+
 ### Error Status Codes
 
 HTTP Status Code | Description
@@ -317,7 +329,7 @@ HTTP Status Code | Description
 ## Window of Annotations
 <!--===================================================================-->
 
-Return an object populated by active annotations as a point in time (optionally including annotations that have recently ended). The result can be filtered by passing UUIDs to be excluded from the list. By specifying `'st'` the result will include any documents ended between `'st'` and `'et'` (specifying `'st'` does not change the search interval)
+Return an object populated by active annotation events as a point in time (optionally including annotations that have recently ended). The result can be filtered (across create, update, hb, end events) by passing UUIDs to be excluded from the list. By specifying `'st'` the result will include any documents ended between `'st'` and `'et'` (specifying `'st'` does not change the search interval)
 
 > Request
 
@@ -329,12 +341,18 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/window  -d "c=[DEVICE_I
 
 `GET https://login.eagleeyenetworks.com/annt/annt/window`
 
-Parameter | Data Type     | Description                                                                                                                      | Required    |
---------- | ---------     | -----------                                                                                                                      |:-----------:|
-**c**     | string        | ID of the device the annotation is associated with                                                                               | **&check;** |
-**et**    | string        | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                         | **&check;** |
-st        | string        | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                       | **&cross;** |
-uuid      | array[string] | Array of UUIDs to exclude from results                                                                                           | **&cross;** |
+Parameter | Data Type | Description                                                                                                                          | Required    |
+--------- | --------- | -----------                                                                                                                          |:-----------:|
+**c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
+**et**    | string    | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                             | **&check;** |
+st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
+
+<aside class="notice">If the search criteria has not been matched by any events, the return will be a Json object with an empty array in 'new' and 'active'</aside>
+
+<aside class="warning">Adding the parameter 'flat' currently removes the heartbeat annotation level altogether, leaving only the original annotation preserved</aside>
 
 > Json Response
 
