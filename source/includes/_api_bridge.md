@@ -14,59 +14,110 @@ The Bridge is a product of Eagle Eye that is deployed at the customer location a
 
 ```json
 {
+    "id": "1002d096",
+    "name": "Kitchen Bridge",
+    "utcOffset": -18000,
+    "timezone": "US/Central",
+    "guid": "835b391f-6554-4e0a-902d-e989b3b46dba",
+    "permissions": "A@FIMLNSUTZcgfhmpsruwz",
+    "tags": [],
     "bridges": null,
-    "camera_info_status_code": 404,
-    "name": "Main",
-    "settings": {
-        "bridge": null,
-        "is_logically_deleted": false
-    },
     "camera_settings_status_code": 200,
-    "camera_info": null,
-    "utcOffset": -25200,
+    "camera_settings": "{}",
+    "settings": {
+        "local_display_layout_ids": [
+            "default"
+        ],
+        "bridge": null
+    },
+    "camera_info_status_code": 200,
+    "camera_info": {
+        "ssn": "EEN-BR305-15721",
+        "esn": "1002d096",
+        "class": "bridge",
+        "run_mode": "normal",
+        "no_video": 1,
+        "camera_property_model": "305%2Faa",
+        "camera_property_make": "een",
+        "model": "305%2Faa",
+        "make": "een",
+        "uuid": "835b391f-6554-4e0a-902d-e989b3b46dba",
+        "service": "ATTD",
+        "status": "1179649",
+        "status_hex": "00120001",
+        "ipaddr": "192.168.8.100",
+        "proxy": "secondary",
+        "camera_state_version": 1,
+        "tagmap_status_state": 2,
+        "version": "0.3.38",
+        "camera_property_version": "0.3.38",
+        "register_id": 4224224322,
+        "camera_retention_asset": 1209600000,
+        "camera_newest": "20180704112818.435",
+        "camera_oldest": "20180627000000.000",
+        "camera_retention_etag": 1209600000,
+        "now": "20180704120834.922",
+        "camera_property_analog": false,
+        "camera_retention_interval": 1209600000,
+        "camera_now": "20180704120834.448",
+        "camera_abs_newest": "20180704112818.435",
+        "camera_abs_oldest": "20180620000000.000",
+        "camera_valid_ts": "20180627000000.000"
+    },
     "camera_parameters_status_code": 200,
-    "id": "100d88a8",
-    "timezone": "US/Pacific",
-    "guid": "bceb04ec-8b24-4aee-a09a-8479d856e81c",
     "camera_parameters": {
         "active_settings": {
-            "max_disk_usage": {
-                "max": 0.97999999999999998,
-                "min": 0.050000000000000003,
-                "d": 0.80000000000000004,
-                "v": 0.80000000000000004
-            },
-            "display_layouts": {
-                "d": {},
-                "v": {}
-            },
-            "local_display_enable": {
+            "pos_interface_enable": {
                 "max": 1,
                 "min": 0,
                 "d": 0,
                 "v": 0
             },
-            "bandwidth_background": {
-                "max": 10000000000.0,
-                "min": -1000.0,
-                "d": 100000.0,
-                "v": 100000.0
-            },
-            "bandwidth_recover": {
-                "max": 10000000000.0,
-                "min": 100000.0,
-                "d": 5000000.0,
-                "v": 5000000.0
-            },
-            "stream_stats_present_only": {
+            "bandwidth_auto_measure": {
                 "max": 1,
                 "min": 0,
                 "d": 1,
                 "v": 1
             },
+            "display_layouts": {
+                "d": {},
+                "v": {}
+            },
+            "rtp_streaming": {
+                "min": [
+                    "udp",
+                    "tcp"
+                ],
+                "d": "tcp",
+                "v": "tcp"
+            },
+            "esn_logs": {
+                "d": {},
+                "v": {}
+            },
+            "preview_aggregate_bandwidth": {
+                "max": 10000000000,
+                "min": 0,
+                "d": 0,
+                "v": 100000
+            },
+            "health_report_disable": {
+                "max": 1,
+                "min": 0,
+                "d": 0,
+                "v": 0
+            },
+            "uuid_logs": {
+                "d": {},
+                "v": {}
+            },
+            "analog_channel_map": {
+                "d": {},
+                "v": {}
+            },
             "retention_days": {
                 "max": 10000,
-                "min": 1,
+                "min": 0,
                 "d": 14,
                 "v": 14
             },
@@ -80,23 +131,260 @@ The Bridge is a product of Eagle Eye that is deployed at the customer location a
                 "d": "none",
                 "v": "none"
             },
+            "display_default_enabled": {
+                "max": 1,
+                "min": 0,
+                "d": 1,
+                "v": 1
+            },
+            "purge_non_retention_days": {
+                "max": true,
+                "min": false,
+                "d": false,
+                "v": false
+            },
+            "http_local_enable": {
+                "max": 1,
+                "min": 0,
+                "d": 0,
+                "v": 0
+            },
+            "encryption_type": {
+                "max": 1,
+                "min": 0,
+                "d": 1,
+                "v": 1
+            },
+            "bandwidth_recover": {
+                "max": 10000000000,
+                "min": 100000,
+                "d": 5000000,
+                "v": 5000000
+            },
             "upnp_enable": {
                 "max": 1,
                 "min": -1,
                 "d": 0,
                 "v": 0
             },
-            "bandwidth_demand": {
-                "max": 10000000000.0,
-                "min": 100000.0,
-                "d": 10000000.0,
-                "v": 10000000.0
-            },
             "bandwidth_upload": {
-                "max": 10000000000.0,
-                "min": 100000.0,
-                "d": 1000000.0,
-                "v": 1000000.0
+                "max": 10000000000,
+                "min": 100000,
+                "d": 1000000,
+                "v": 1033591.7312661498
+            },
+            "interface_info": {
+                "d": {},
+                "v": {
+                    "eth1": {
+                        "type": "ethernet",
+                        "state": 10,
+                        "carrier": true,
+                        "speed": 1000,
+                        "settings": {}
+                    },
+                    "eth0": {
+                        "type": "ethernet",
+                        "state": 100,
+                        "carrier": true,
+                        "speed": 100,
+                        "settings": {}
+                    }
+                }
+            },
+            "uplink_bw_bps": {
+                "max": 10000000000,
+                "min": 1000,
+                "d": 1000000,
+                "v": 3445305.7708871663
+            },
+            "uplink_measured_bw_bps": {
+                "max": 10000000000,
+                "min": 0,
+                "d": 0,
+                "v": 3445305.7708871663
+            },
+            "config_feature_local": {
+                "max": 1,
+                "min": 0,
+                "d": 1,
+                "v": 1
+            },
+            "local_display_enable": {
+                "max": 1,
+                "min": 0,
+                "d": 0,
+                "v": 0
+            },
+            "local_audio_device": {
+                "d": "none",
+                "v": "none"
+            },
+            "stream_stats_present_only": {
+                "max": 1,
+                "min": 0,
+                "d": 1,
+                "v": 1
+            },
+            "uuid_base_log": {
+                "max": 4294967295,
+                "min": 0,
+                "d": 256,
+                "v": 256
+            },
+            "applications": {
+                "d": {
+                    "eenivi": {
+                        "version": 3,
+                        "features": {
+                            "tamper": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            },
+                            "object": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            },
+                            "intrusion": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            },
+                            "linecross": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            }
+                        },
+                        "settings": {
+                            "name": "eenivi",
+                            "stream": "metadata"
+                        }
+                    }
+                },
+                "v": {
+                    "eenivi": {
+                        "version": 3,
+                        "features": {
+                            "tamper": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            },
+                            "object": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            },
+                            "intrusion": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            },
+                            "linecross": {
+                                "minh": 200,
+                                "version": 1,
+                                "minw": 300,
+                                "cpu": 0.1,
+                                "minrate": 4
+                            }
+                        },
+                        "settings": {
+                            "name": "eenivi",
+                            "stream": "metadata"
+                        }
+                    }
+                }
+            },
+            "bandwidth_demand": {
+                "max": 10000000000,
+                "min": 100000,
+                "d": 10000000,
+                "v": 10000000
+            },
+            "preview_aggregate_default_bandwidth": {
+                "max": 10000000000,
+                "min": 0,
+                "d": 0,
+                "v": 100000
+            },
+            "pos_device_config": {
+                "d": {},
+                "v": {}
+            },
+            "audio_status": {
+                "d": {},
+                "v": {}
+            },
+            "uplink_shaping_ratio": {
+                "max": 1,
+                "min": 0,
+                "d": 0.3,
+                "v": 0.3
+            },
+            "max_disk_usage": {
+                "max": 0.98,
+                "min": 0.05,
+                "d": 0.8,
+                "v": 0.8
+            },
+            "min_bw_settings": {
+                "d": {
+                    "log_disable": 1,
+                    "bandwidth_auto_measure": 0,
+                    "bandwidth_background": 0,
+                    "bandwidth_upload": 0
+                },
+                "v": {
+                    "log_disable": 1,
+                    "bandwidth_auto_measure": 0,
+                    "bandwidth_background": 0,
+                    "bandwidth_upload": 0
+                }
+            },
+            "bandwidth_background": {
+                "max": 10000000000,
+                "min": -1000,
+                "d": 100000,
+                "v": 1033591.7312661498
+            },
+            "pos_device_status": {
+                "d": {},
+                "v": {}
+            },
+            "monitor_class": {
+                "min": [
+                    "critical",
+                    "prod",
+                    "friend",
+                    "beta",
+                    "dev",
+                    "ignore"
+                ],
+                "d": "prod",
+                "v": "prod"
+            },
+            "min_bandwidth_mode": {
+                "max": 1,
+                "min": 0,
+                "d": 0,
+                "v": 0
             },
             "retention_priority": {
                 "max": 10000,
@@ -104,22 +392,64 @@ The Bridge is a product of Eagle Eye that is deployed at the customer location a
                 "d": 100,
                 "v": 100
             },
-            "display_default_enabled": {
+            "log_disable": {
                 "max": 1,
                 "min": 0,
-                "d": 1,
-                "v": 1
+                "d": 0,
+                "v": 0
+            },
+            "esn_base_log": {
+                "max": 4294967295,
+                "min": 0,
+                "d": 16782719,
+                "v": 16782719
+            },
+            "video_standard": {
+                "min": [
+                    "ntsc",
+                    "pal"
+                ],
+                "d": "ntsc",
+                "v": "ntsc"
             }
         },
         "active_filters": [
-            "schedule_bandwidth_background",
-            "user_user"
+            "user_user",
+            "bridge_filter",
+            "bridge_aggregate"
         ],
         "user_settings": {
             "versions": {},
-            "settings": {
-                "upnp_enable": "0",
-                "bandwidth_background": 50000
+            "settings": {},
+            "filters": {
+                "bridge_filter": {
+                    "priority": 50,
+                    "persistent": true,
+                    "name": "bridge_filter",
+                    "settings": {
+                        "bandwidth_background": 1033591.7312661498,
+                        "audio_status": {},
+                        "bandwidth_upload": 1033591.7312661498,
+                        "interface_info": {
+                            "eth1": {
+                                "type": "ethernet",
+                                "state": 10,
+                                "carrier": true,
+                                "speed": 1000,
+                                "settings": {}
+                            },
+                            "eth0": {
+                                "type": "ethernet",
+                                "state": 100,
+                                "carrier": true,
+                                "speed": 100,
+                                "settings": {}
+                            }
+                        },
+                        "uplink_bw_bps": 3445305.7708871663,
+                        "uplink_measured_bw_bps": 3445305.7708871663
+                    }
+                }
             },
             "schedules": {
                 "bandwidth_background": {
@@ -161,47 +491,46 @@ The Bridge is a product of Eagle Eye that is deployed at the customer location a
                 }
             }
         }
-    },
-    "tags": [],
-    "permissions": "swr"
-  }
+    }
+}
 ```
 
 ### Bridge (Attributes)
 
-Parameter                     | Data Type     | Description                                                                                         | Editable    | Required
----------                     | ---------     | -----------                                                                                         |:-----------:| --------
-**id**                        | string        | Unique identifier automatically generated and assigned while adding a device                        | **&cross;** | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
-**name**                      | string        | Name of the bridge                                                                                  | **&check;** | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
-guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                             | **&cross;** |
-timezone                      | string        | Indicates the timezone of where the device is installed (defaults to the account timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                     | **&check;** |
-utcOffset                     | int           | The signed integer offset in seconds of a timezone from UTC. Automatically generated based on the timezone field                                                                                                                                               | **&cross;** |
-tags                          | array[string] | Array of strings each representing a tag name                                                       | **&check;** |
-permissions                   | string        | String of characters each defining a permission level of the current user                           | **&cross;** |
-[bridges](#camera-bridges)    | json          | <small>**(APPLIES ONLY TO CAMERAS)**</small>                                                        | **&cross;** |
-[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)                                                      | **&check;** |
-[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                            | **&cross;** |
-camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)       | **&cross;** |
-camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                         | **&check;** |
-camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)           | **&cross;** |
-camera_settings               | string        | This is for backwards compatibility <small>**(DEPRECATED)**</small>                                 | **&cross;** |
-camera_settings_status_code   | int           | This is for backwards compatibility <small>**(DEPRECATED)**</small>                                 | **&cross;** |
+Parameter                     | Data Type     | Description                                                                                        | Editable    | Required
+---------                     | ---------     | -----------                                                                                        |:-----------:| --------
+**id**                        | string        | Unique identifier automatically generated and assigned while adding a device                       | **&cross;** | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
+**name**                      | string        | Name of the bridge                                                                                 | **&check;** | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
+[settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)                                                     | **&check;** |
+camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404) <small>**(DEPRECATED)**</small> | **&cross;** |
+camera_settings               | string        | Miscellaneous device settings <small>**(DEPRECATED)**</small>                                      | **&cross;** |
+utcOffset                     | int           | Signed UTC offset in seconds of the set `'timezone'`                                               | **&cross;** |
+timezone                      | string        | Indicates the timezone of where the device is installed (defaults to the account timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                    | **&check;** |
+guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
+permissions                   | string        | String of characters each defining a permission level of the current user                          | **&cross;** |
+tags                          | array[string] | Array of strings each representing a tag name                                                      | **&check;** |
+[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by <small>**(APPLIES ONLY TO CAMERAS)**</small>  | **&cross;** |
+camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)          | **&cross;** |
+camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                        | **&check;** |
+camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)      | **&cross;** |
+[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                           | **&cross;** |
 
 ### Bridge - settings
 
 Parameter                     | Data Type     | Description
 ---------                     | ---------     | -----------
 analog_inputs_ignored         | array[string] | An array of numbers of analog inputs which the user wants to ignore
-event_data_start_timestamp    | string        | <p hidden>???</p>
 local_display_layout_ids      | array[string] | An array of available layouts on a local display
-bridge                        | null          | <small>**(APPLIES ONLY TO CAMERAS)**</small>
+bridge                        | null          | Device ID of bridge the device is currently attached to <small>**(APPLIES ONLY TO CAMERAS)**</small>
+street_address                | string        | Street address of the bridge location
 site_name                     | string        | User-defined bridge location name
 floor                         | int           | The floor of the building given that it is a multi-storey
 retention_days                | int           | Total amount of days the bridge should store data. Data exceeding this threshold will gradually be deleted
 local_retention_days          | int           | Total amount of days the bridge should store data locally. Normally data is not being stored and the value is set to `'-1'`, meaning the bridge should directly upload any and all data during the specified times. Data exceeding this threshold will gradually be deleted
-longitude                     | float         | Longitude of the bridge location
 latitude                      | float         | Latitude of the bridge location
-street_address                | string        | Street address of the bridge location
+longitude                     | float         | Longitude of the bridge location
+
+<aside class="success">The listed settings are most common examples because the model differs from device to device</aside>
 
 <aside class="notice">local_retention_days and cloud_retention_days are unpurposed in CMVR mode</aside>
 
@@ -215,10 +544,8 @@ camera_property_version       | string    | <p hidden>???</p>
 version                       | string    | <p hidden>???</p>
 camera_property_make          | string    | <p hidden>???</p>
 make                          | string    | <p hidden>???</p>
-camera_abs_newest             | string    | <p hidden>???</p>
-camera_newest                 | string    | <p hidden>???</p>
-camera_abs_oldest             | string    | <p hidden>???</p>
-camera_oldest                 | string    | <p hidden>???</p>
+camera_newest                 | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_oldest                 | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
 uuid                          | string    | Identical to `'guid'` from the [bridge attributes](#bridge-model) section
 ipaddr                        | string    | IP addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk (\*)
 esn                           | string    | Identical to `'id'` from the [bridge attributes](#bridge-model) section
@@ -233,12 +560,14 @@ camera_retention_etag         | int       | <p hidden>???</p>
 run_mode                      | string    | <p hidden>???</p>
 register_id                   | int       | <p hidden>???</p>
 camera_now                    | string    | <p hidden>???</p>
+camera_abs_newest             | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_oldest             | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
 ssn                           | string    | The serial number of a bridge
 proxy                         | string    | <p hidden>???</p>
 now                           | string    | The current time of when the request has been completed in EEN format: YYYYMMDDHHMMSS.NNN
 camera_property_analog        | boolean   | <p hidden>???</p>
 [status_hex](#status-bitmask) | string    | The device status bitmask as a hexadecimal value
-camera_retention_interval     | int       | <p hidden>???</p>
+camera_retention_interval     | int       | Retention interval in milliseconds
 camera_valid_ts               | string    | <p hidden>???</p>
 
 <!--TODO: Add the full bridge model bridge attributes table-->
@@ -431,112 +760,28 @@ s         | string    | Device service status
 ```json
 [
     [
-        "00004206",
-        "100d88a8",
-        "Main",
-        "bridge",
-        [
-            [
-                "100f2fa1",
-                "ATTD"
-            ],
-            [
-                "100c339a",
-                "ATTD"
-            ]
-        ],
-        "ATTD",
-        "swr",
-        [],
-        "bceb04ec-8b24-4aee-a09a-8479d856e81c",
-        "EEN-BR300-08480",
-        1048576,
-        "US/Pacific",
-        -25200,
-        1,
-        "",
-        0,
-        "Greater Good",
-        false,
-        null,
-        null,
-        [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        null,
-        null,
-        0,
-        [],
-        0
-    ],
-    [
-        "00004206",
-        "100c339a",
-        "New Camera 1",
+        "00014750",
+        "1000f60d",
+        "Kitchen Camera",
         "camera",
         [
             [
-                "100d88a8",
+                "1002d096",
                 "ATTD"
             ]
         ],
         "ATTD",
-        "swr",
+        "A@FIMLNSUTZcgfhmpsruwz",
         [],
-        "1e574020-4e33-11e3-9b40-2504532f70b4",
-        "4242325013460008",
+        "c6d11f36-9e63-11e1-a5b0-00408cdf9191",
+        "20180224143453844",
         1441847,
-        "US/Pacific",
-        -25200,
+        "US/Central",
+        -18000,
         0,
-        "*10.143.14.254",
+        "*10.143.55.140",
         0,
-        "Greater Good",
-        false,
-        null,
-        null,
-        [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        null,
-        null,
-        0,
-        [],
-        0
-    ],
-    [
-        "00004206",
-        "100f2fa1",
-        "Dome",
-        "camera",
-        [
-            [
-                "100d88a8",
-                "ATTD"
-            ]
-        ],
-        "ATTD",
-        "swr",
-        [],
-        "3b3efd60-432d-11e3-b19b-11ac28dbc101",
-        "4016825013440034",
-        1441847,
-        "US/Pacific",
-        -25200,
-        0,
-        "*10.143.217.117",
-        0,
-        "Greater Good",
+        "Panucci's Account",
         false,
         null,
         null,
@@ -546,16 +791,62 @@ s         | string    | Device service status
             null,
             null,
             "",
+            null,
+            ""
+        ],
+        null,
+        null,
+        0,
+        [],
+        0,
+        {}
+    ],
+    [
+        "00014750",
+        "1002d096",
+        "Kitchen Bridge",
+        "bridge",
+        [
+            [
+                "10053bf6",
+                "ATTD"
+            ]
+        ],
+        "ATTD",
+        "A@FIMLNSUTZcgfhmpsruwz",
+        [],
+        "835b391f-6554-4e0a-902d-e989b3b46dba",
+        "EEN-BR305-15721",
+        1179649,
+        "US/Central",
+        -18000,
+        0,
+        "192.168.8.100",
+        0,
+        "Panucci's Account",
+        false,
+        null,
+        null,
+        [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
             null
         ],
         null,
         null,
         0,
         [],
-        0
-    ]
+        0,
+        {}
+    ],
+    [...],
+    [...],
+    [...]
 ]
-
 ```
 
 ### HTTP Response (Array Attributes)
