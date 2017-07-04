@@ -22,6 +22,18 @@ The Annotation service allows to push data (including HTML elements) into the ev
         2,
         {
             "data": "{\"info\":\"Annotation1\";}"
+            "_hb": [
+                [
+                    "20180526095350.742",
+                    {
+                        "field1": "Heartbeat",
+                        "field2": "for",
+                        "field3": "cafedead"
+                    }
+                ],
+                [...],
+                [...]
+            ]
         }
     ],
     [
@@ -30,6 +42,7 @@ The Annotation service allows to push data (including HTML elements) into the ev
         11,
         {
             "info": "Annotation by cafedead"
+            "_end": "20180526095440.831"
         }
     ],
     [...]
@@ -98,9 +111,9 @@ curl -X PUT "https://login.eagleeyenetworks.com/annt/set?c=[DEVICE_ID]&ts=[TIMES
 Parameter     | Data Type | Description                                                                                                                      | Required    |
 ---------     | --------- | -----------                                                                                                                      |:-----------:|
 **c**         | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
-**ns**        | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&check;** |
 **\<data\>**  | json      | Json object representing the data to be used as the annotation content (can include HTML elements)                               | **&check;** |
 ts            | string    | Timestamp associated with the annotation (If left out the system will automatically provide a timestamp)                         | **&cross;** |
+ns            | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&cross;** |
 
 > Json Response
 
@@ -207,10 +220,10 @@ Parameter | Data Type | Description                                             
 --------- | --------- | -----------                                                                                                                          |:-----------:|
 **c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
 **st**    | string    | Timestamp as a point in time to get annotation event(s) after in EEN format: YYYYMMDDHHMMSS.NNN                                      | **&check;** |
-et        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*). Matches events with identical start timestamps as the specified `'et'`                                                                                                                           | **&cross;** |
-ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
-uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
-flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
+et        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*). Matches events with identical start timestamps as the specified `'et'`                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                     | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                      | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                          | **&cross;** |
 
 > Json Response
 
@@ -224,6 +237,7 @@ flat      | string    | Flatten the search results to merge heartbeats into the 
             11,
             {
                 "info": "Annotation by cafedead"
+                "_end": "20180526095440.831"
             }
         ],
         [...],
@@ -242,7 +256,7 @@ flat      | string    | Flatten the search results to merge heartbeats into the 
 Parameter | Data Type         | Description
 --------- | ---------         | -----------
 ts        | string            | Closest matching timestamp to the requested (to get annotations after) in EEN format: YYYYMMDDHHMMSS.NNN
-new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
+new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Annotation Model](#annotation-model) for the returned annotation array structure)
 active    | array[string]     | Array of all annotation UUIDs active around the specified `'st'` (or within the defined time window)
 
 <aside class="notice">If the search criteria has not been matched by any events, the return will be <i>null</i></aside>
@@ -276,10 +290,10 @@ Parameter | Data Type | Description                                             
 --------- | --------- | -----------                                                                                                                          |:-----------:|
 **c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
 **et**    | string    | Timestamp as a point in time to get annotation event(s) before in EEN format: YYYYMMDDHHMMSS.NNN                                     | **&check;** |
-st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                                           | **&cross;** |
-ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
-uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
-flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
+st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                               | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                     | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                      | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                          | **&cross;** |
 
 > Json Response
 
@@ -293,6 +307,7 @@ flat      | string    | Flatten the search results to merge heartbeats into the 
             11,
             {
                 "info": "Annotation by cafedead"
+                "_end": "20180526095440.831"
             }
         ],
         [...],
@@ -311,7 +326,7 @@ flat      | string    | Flatten the search results to merge heartbeats into the 
 Parameter | Data Type         | Description
 --------- | ---------         | -----------
 ts        | string            | Closest matching timestamp to the requested (to get annotations before) in EEN format: YYYYMMDDHHMMSS.NNN
-new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
+new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Annotation Model](#annotation-model) for the returned annotation array structure)
 active    | array[string]     | Array of all annotation UUIDs active around the specified `'et'` (or within the defined time window)
 
 <aside class="notice">If the search criteria has not been matched by any events, the return will be <i>null</i></aside>
@@ -343,12 +358,12 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/window  -d "c=[DEVICE_I
 
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
-**c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
+**c**     | string    | ID of the device the event is associated with                                                                                        | **&check;** |
 **et**    | string    | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                             | **&check;** |
-st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                                           | **&cross;** |
-ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
-uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
-flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
+st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                               | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                     | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                      | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                          | **&cross;** |
 
 <aside class="notice">If the search criteria has not been matched by any events, the return will be a Json object with an empty array in 'new' and 'active'</aside>
 
@@ -366,6 +381,7 @@ flat      | string    | Flatten the search results to merge heartbeats into the 
             11,
             {
                 "info": "Annotation by cafedead"
+                "_end": "20180526095440.831"
             }
         ],
         [...],
@@ -384,7 +400,7 @@ flat      | string    | Flatten the search results to merge heartbeats into the 
 Parameter | Data Type         | Description
 --------- | ---------         | -----------
 ts        | string            | Closest matching timestamp to the requested (to get annotations for) in EEN format: YYYYMMDDHHMMSS.NNN
-new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Get Annotation](#get-annotation) for the returned annotation array structure)
+new       | array[array[obj]] | Array of arrays with each returned element being an annotation object with Json-formatted data <br>(See [Annotation Model](#annotation-model) for the returned annotation array structure)
 active    | array[string]     | Array of all annotation UUIDs returned based on the specified criteria
 
 ### Error Status Codes
@@ -418,9 +434,10 @@ Parameter           | Data Type     | Description                               
 **start_timestamp** | string        | Start timestamp of the annotations to return                                                                           | **&check;** |
 **end_timestamp**   | string        | End timestamp of the annotations to return                                                                             | **&check;** |
 count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                       | **&cross;** |
-uuid                | array[string] | Array of comma-delimited UUIDs to list                                                                                 | **&cross;** |
-namespace           | array[int]    | Array of 1 to N comma-delimited namespaces to list                                                                     | **&cross;** |
-exclusive           | boolean       | Whether to include annotations that span start or end (0) or not (1)                                                   | **&cross;** |
+uuid                | array[string] | Array of comma-separated UUIDs to list                                                                                 | **&cross;** |
+namespace           | array[int]    | Array of 1 to N comma-separated namespaces to list                                                                     | **&cross;** |
+exclusive           | boolean       | Whether to exclude annotations that are active during, but have not started within the specified span (1) or not (0)   | **&cross;** |
+jsonp               | string        | JSONP (JSON with padding) is a convention used to invoke cross-domain scripts by generating script tags in the current request data. The result is returned wrapped in a specified callback function                                                                                              | **&cross;** |
 
 > Json Response
 
@@ -432,6 +449,18 @@ exclusive           | boolean       | Whether to include annotations that span s
         2,
         {
             "data": "{\"info\":\"Annotation1\";}"
+            "_hb": [
+                [
+                    "20180526095350.742",
+                    {
+                        "field1": "Heartbeat",
+                        "field2": "for",
+                        "field3": "cafedead"
+                    }
+                ],
+                [...],
+                [...]
+            ]
         }
     ],
     [
@@ -440,22 +469,108 @@ exclusive           | boolean       | Whether to include annotations that span s
         11,
         {
             "info": "Annotation by cafedead"
+            "_end": "20180526095440.831"
         }
     ],
-    [...],
-    [...],
     [...]
 ]
 ```
 
 ### HTTP Response (Array Attributes)
 
-Array Index | Attribute              | Data Type | Description
------------ | ---------              | --------- | -----------
-0           | uuid                   | string    | Unique identifier for the annotation assigned to it during creation
-1           | timestamp              | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-2           | namespace              | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
-3           | \<data\>               | json      | Content of the annotation
+Array Index | Attribute | Data Type | Description
+----------- | --------- | --------- | -----------
+0           | uuid      | string    | Unique identifier for the annotation assigned to it during creation
+1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+2           | namespace | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
+3           | \<data\>  | json      | Content of the annotation
+
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+200	| Request succeeded
+
+<!--===================================================================-->
+## Get List of Events
+<!--===================================================================-->
+
+Returns an array of Events by count or time range
+
+> Request
+
+```shell
+curl -X GET https://login.eagleeyenetworks.com/annt/event/list -d "id=[DEVICE_ID]" -d "st=[START_TIMESTAMP]" -d "et=[END_TIMESTAMP]" -H 'Content-type: application/json' -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/annt/event/list`
+
+Parameter           | Data Type     | Description                                                                                                            | Required    |
+---------           | ---------     | -----------                                                                                                            |:-----------:|
+**id**              | string        | ID of the device the annotation should be associated with                                                              | **&check;** |
+**start_timestamp** | string        | Start timestamp of the annotations to return                                                                           | **&check;** |
+**end_timestamp**   | string        | End timestamp of the annotations to return                                                                             | **&check;** |
+count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                       | **&cross;** |
+uuid                | array[string] | Array of comma-separated UUIDs to list                                                                                 | **&cross;** |
+namespace           | array[int]    | Array of 1 to N comma-separated namespaces to list                                                                     | **&cross;** |
+exclusive           | boolean       | Whether to exclude annotations that are active during, but have not started within the specified span (1) or not (0)   | **&cross;** |
+jsonp               | string        | JSONP (Json with padding) is a convention used to invoke cross-domain scripts by generating script tags in the current request data. The result is returned wrapped in a specified callback function                                                                                              | **&cross;** |
+
+> Json Response
+
+```json
+[
+    [
+        "3f06b432-41f9-11e7-aaf2-1c1b0daef2f5",
+        "20180526095347.742",
+        2,
+        4,
+        {
+            "data": "{\"info\":\"Annotation1\";}"
+            "_hb": [
+                [
+                    "20180526095350.742",
+                    {
+                        "field1": "Heartbeat",
+                        "field2": "for",
+                        "field3": "cafedead"
+                    }
+                ],
+                [...],
+                [...]
+            ]
+        }
+    ],
+    [
+        "595e4b9c-41f9-11e7-aaf2-0d5g1hafj2z6",
+        "20180526095435.831",
+        11,
+        5,
+        {
+            "info": "Annotation by cafedead"
+            "_end": "20180526095440.831"
+        }
+    ],
+    [...]
+]
+```
+
+### HTTP Response (Array Attributes)
+
+Array Index | Attribute | Data Type | Description
+----------- | --------- | --------- | -----------
+0           | uuid      | string    | Unique identifier for the annotation assigned to it during creation
+1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+2           | namespace | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
+3           | type      | int       | An additional array element is present in the event list, describing the event type <br><br>Event type: <br>1 - Create <br>2 - Update <br>3 - *Reserved* <br>4 - Heartbeat <br>5 - End
+4           | \<data\>  | json      | Content of the annotation
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
