@@ -157,7 +157,7 @@ ROME
 ```json
 {
     "id": "1000f60d",
-    "name": "Kitchen",
+    "name": "Kitchen Camera",
     "utcOffset": -18000,
     "timezone": "US/Central",
     "guid": "c6d11f36-9e63-11e1-a5b0-00408cdf9191",
@@ -194,7 +194,7 @@ ROME
         "range": null,
         "azimuth": null,
         "audio_clone_targets": [],
-        "notes": "Explodes on impact, records pizzas as squares"
+        "notes": "Previously used for laser eye surgery. Records pizzas as squares"
     },
     "camera_info_status_code": 200,
     "camera_info": {
@@ -1307,9 +1307,9 @@ Parameter                     | Data Type     | Description                     
 **id**                        | string        | Unique identifier for the device (automatically generated and assigned while adding the camera to a bridge)                                                                                                                                            | **&cross;** | **<sub><form action="#get-camera"><button>GET</button></form></sub>** <br>**<sub><form action="#update-camera"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-camera"><button>DELETE</button></form></sub>**
 **name**                      | string        | Device name                                                                                        | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
 **[settings](#camera-settings)** | json          | Json object of basic settings (location, motion regions, etc.)                                  | **&check;** | **<sub><form action="#add-camera-to-bridge"><button>PUT</button></form></sub>**
-camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404)               | **&cross;** |
-camera_settings               | string        | Miscellaneous camera settings <small>**(DEPRECATED)**</small>                                      | **&cross;** |
-utcOffset                     | int           | Signed UTC offset in seconds of the timezone in which this device is installed                     | **&cross;** |
+camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404) <small>**(DEPRECATED)**</small> | **&cross;** |
+camera_settings               | string        | Miscellaneous device settings <small>**(DEPRECATED)**</small>                                      | **&cross;** |
+utcOffset                     | int           | Signed UTC offset in seconds of the set `'timezone'` (defaults to the cameras’s bridge offset)     | **&cross;** |
 timezone                      | string        | Indicates the timezone of the camera (defaults to the cameras’s bridge timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`                                                    | **&check;** |
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
 permissions                   | string        | String of characters each defining a permission level of the current user <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                                                              | **&cross;** |
@@ -1387,34 +1387,54 @@ Parameter     | Data Type | Description
 
 ### Camera - camera_info
 
-Parameter           | Data Type   | Description
----------           | ---------   | -----------
-bridge              | string      | GUID of the bridge the camera is attached to
-camera_retention    | int         | Retention period in milliseconds
-camera_newest       | string      | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_oldest       | string      | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_info_version | int         | Camera info version
-connect             | string      | Camera connect status
-camera_min_time     | string      | Minimum timestamp available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-uuid                | string      | UUID uniquely identifying the device
-service             | string      | Service status
-make                | string      | Make of the device
-ipaddr              | string      | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)
-ts                  | string      | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-version             | string      | Firmware version
-[status](#status-bitmask) | string      | Status bitmask
-mac                 | string      | MAC address
-proxy               | string      | Proxy
-bridgeid            | string      | Device of bridge this device is attached to
-now                 | string      | Current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-class               | string      | Camera or bridge, etc.
-camera_now          | string      | Camera's current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_newest   | string      | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_oldest   | string      | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-model               | string      | Device model
-esn                 | string      | Electronic Serial Number
-admin_user          | string      | Web username
-admin_password      | string      | Web password
+Parameter           | Data Type | Description
+---------           | --------- | -----------
+esn                 | string    | Electronic Serial Number of the device
+class               | string    | Camera or bridge, etc.
+camtype             | string    | Type of device: <br>`'ONVIF'` - onvif-compliant device
+model               | string    | Model of the device
+make                | string    | Make of the device
+uuid                | string    | UUID uniquely identifying the device
+bridgeid            | string    | ID of the bridge this device is attached to
+bridge              | string    | GUID of the bridge the device is attached to
+service             | string    | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br>`'IDLE'` - camera will register but will not operate (unregistered bridges) <br>`'ERSE'` - one shot, all camera data will be erased <br><br>enum: ATTD, IGND, IDLE, ERSE
+connect             | string    | Device connect status: <br>`'STRM'` - camera is connected and streaming
+[status](#overall-status) | string    | Decimal status of the device
+[status_hex](#status-bitmask) | string    | Status bitmask
+intf                | string    | Interface of the device (not present for analog): <br>`'Camera LAN'` - camera is connected via LAN
+mac                 | string    | MAC address of the device
+ipaddr              | string    | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)
+proxy               | string    | Proxy
+camera_state_version | int       | Camera state version
+tagmap_status_state | int       | Tag map status state
+admin_user          | string    | Web username
+admin_password      | string    | Web password
+subclass            | string    | Firmware/driver type of the device
+version             | string    | Firmware/driver version of the device
+register_id         | int       | Camera register ID
+camera_retention    | int       | Retention period in milliseconds
+camera_retention_etag | int       | Retention period in milliseconds
+camera_retention_asset | int       | Retention period in milliseconds
+camera_retention_interval | int       | Retention interval in milliseconds
+camera_newest       | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_oldest       | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+now                 | string    | Current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+ts                  | string    | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_property_analog | boolean   | Whether the device is connected via analog input (1) or not (0)
+camera_info_version | int       | Device info version
+camera_min_time     | string    | Minimum timestamp available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_now          | string    | Device's current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_newest   | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_oldest   | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_property_model | string    | <small>Model of the device <br>**(DEPRECATED)**</small>
+camera_property_make | string    | <small>Make of the device <br>**(DEPRECATED)**</small>
+camera_property_version | string    | <small>Driver version of the device <br>**(DEPRECATED)**</small>
+camera_valid_ts     | string    | <small>Timestamp of oldest event available <br>**(DEPRECATED)**</small>
+r_model             | string    | <small>Model of the device <br>**(DEPRECATED)**</small>
+r_make              | string    | <small>Make of the device <br>**(DEPRECATED)**</small>
+r_version           | string    | <small>Firmware/driver version of the device <br>**(DEPRECATED)**</small>
+
+<!-- TODO: Determine which (max) retention flags are Deprecated -->
 
 <!--===================================================================-->
 ## Get Camera
@@ -1472,7 +1492,7 @@ tags      | array[string] | Array of strings each representing a tag name
 
 ```json
 {
-    "id": "100c339a"
+    "id": "1000f60d"
 }
 ```
 
@@ -1525,7 +1545,7 @@ camera_parameters_delete | json          | Json object of camera parameters/sett
 
 ```json
 {
-    "id": "100c339a"
+    "id": "1000f60d"
 }
 ```
 
@@ -1581,7 +1601,7 @@ HTTP Status Code | Description
 ## Get List of Cameras
 <!--===================================================================-->
 
-Returns an array of arrays with each sub-array representing a Camera available to the user. The `'service_status'` attribute is set either to `'ATTD'`, `'IGND'`, `'IDLE'` or `'ERSE'`. If the `'service_status'` is `'ATTD'`, the camera is attached to a bridge. If the `'service_status'` is `'IGND'`, the camera is unattached from any bridge and is available to be attached. If the `'service_status'` is `'IGND'`, the camera will register but will not operate (unregistered bridges). The `'ERSE'` status is used to erase all camera data from the bridge
+Returns an array of arrays with each sub-array representing a Camera available to the user. The `'service_status'` attribute is set either to `'ATTD'`, `'IGND'`, `'IDLE'` or `'ERSE'`. If the `'service_status'` is `'ATTD'`, the camera is attached to a bridge. If the `'service_status'` is `'IGND'`, the camera is unattached from any bridge and is available to be attached. If the `'service_status'` is `'IDLE'`, the camera will register but will not operate (unregistered bridges). The `'ERSE'` status is used to erase all camera data from the bridge
 
 > Request
 
@@ -1605,76 +1625,75 @@ s         | string    | Device Service Status
 ```json
 [
     [
-        "00004206",
-        "100d88a8",
-        "Main",
-        "bridge",
-        [
-            [
-                "100f2fa1",
-                "ATTD"
-            ],
-            [
-                "100c339a",
-                "ATTD"
-            ]
-        ],
-        "ATTD",
-        "swr",
-        [],
-        "bceb04ec-8b24-4aee-a09a-8479d856e81c",
-        "EEN-BR300-08480",
-        1048576,
-        "US/Pacific",
-        -25200,
-        1,
-        "",
-        0,
-        "Greater Good",
-        false,
-        null,
-        null,
-        [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        ],
-        null,
-        null,
-        0,
-        [],
-        0
-    ],
-    [
-        "00004206",
-        "100c339a",
-        "New Camera 1",
+        "00014750",
+        "1000f60d",
+        "Kitchen Camera",
         "camera",
         [
             [
-                "100d88a8",
+                "1002d096",
                 "ATTD"
             ]
         ],
         "ATTD",
-        "swr",
+        "A@FIMLNSUTZcgfhmpsruwz",
         [],
-        "1e574020-4e33-11e3-9b40-2504532f70b4",
-        "4242325013460008",
+        "c6d11f36-9e63-11e1-a5b0-00408cdf9191",
+        "20180224143453844",
         1441847,
-        "US/Pacific",
-        -25200,
+        "US/Central",
+        -18000,
         0,
-        "*10.143.14.254",
+        "*10.143.55.140",
         0,
-        "Greater Good",
+        "Panucci's Account",
         false,
         null,
         null,
         [
+            null,
+            null,
+            null,
+            null,
+            "",
+            null,
+            ""
+        ],
+        null,
+        null,
+        0,
+        [],
+        0,
+        {}
+    ],
+    [
+        "00014750",
+        "1002d096",
+        "Kitchen Bridge",
+        "bridge",
+        [
+            [
+                "10053bf6",
+                "ATTD"
+            ]
+        ],
+        "ATTD",
+        "A@FIMLNSUTZcgfhmpsruwz",
+        [],
+        "835b391f-6554-4e0a-902d-e989b3b46dba",
+        "EEN-BR305-15721",
+        1179649,
+        "US/Central",
+        -18000,
+        0,
+        "192.168.8.100",
+        0,
+        "Panucci's Account",
+        false,
+        null,
+        null,
+        [
+            null,
             null,
             null,
             null,
@@ -1686,7 +1705,8 @@ s         | string    | Device Service Status
         null,
         0,
         [],
-        0
+        0,
+        {}
     ],
     [...],
     [...],
