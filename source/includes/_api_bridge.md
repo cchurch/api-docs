@@ -519,16 +519,15 @@ camera_info_status_code       | int           | Indicates whether it was possibl
 
 Parameter                     | Data Type     | Description
 ---------                     | ---------     | -----------
-analog_inputs_ignored         | array[string] | An array of numbers of analog inputs which the user wants to ignore
-local_display_layout_ids      | array[string] | An array of available layouts on a local display
-bridge                        | null          | Device ID of bridge the device is currently attached to <small>**(APPLIES ONLY TO CAMERAS)**</small>
+latitude                      | float         | Latitude of the bridge location
+longitude                     | float         | Longitude of the bridge location
 street_address                | string        | Street address of the bridge location
 site_name                     | string        | User-defined bridge location name
 floor                         | int           | The floor of the building given that it is a multi-storey
 retention_days                | int           | Total amount of days the bridge should store data. Data exceeding this threshold will gradually be deleted
 local_retention_days          | int           | Total amount of days the bridge should store data locally. Normally data is not being stored and the value is set to `'-1'`, meaning the bridge should directly upload any and all data during the specified times. Data exceeding this threshold will gradually be deleted
-latitude                      | float         | Latitude of the bridge location
-longitude                     | float         | Longitude of the bridge location
+local_display_layout_ids      | array[string] | An array of available layouts on a local display
+analog_inputs_ignored         | array[string] | An array of numbers of analog inputs which the user wants to ignore
 
 <aside class="success">The listed settings are most common examples because the model differs from device to device</aside>
 
@@ -536,41 +535,51 @@ longitude                     | float         | Longitude of the bridge location
 
 ### Bridge - camera_info
 
-Parameter                     | Data Type | Description
----------                     | --------- | -----------
-camera_property_model         | string    | <p hidden>???</p>
-model                         | string    | <p hidden>???</p>
-camera_property_version       | string    | <p hidden>???</p>
-version                       | string    | <p hidden>???</p>
-camera_property_make          | string    | <p hidden>???</p>
-make                          | string    | <p hidden>???</p>
-camera_newest                 | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_oldest                 | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-uuid                          | string    | Identical to `'guid'` from the [bridge attributes](#bridge-model) section
-ipaddr                        | string    | IP addresses assigned to the device, comma delimited, with the one in use prefixed by an asterisk (\*)
-esn                           | string    | Identical to `'id'` from the [bridge attributes](#bridge-model) section
-class                         | string    | Determines the type of a device (`'bridge'` or `'camera'`)
-service                       | string    | <p hidden>???</p>
-[status](#status-bitmask)     | string    | The device status bitmask
-camera_state_version          | int       | <p hidden>???</p>
-no_video                      | int       | <p hidden>???</p>
-tagmap_status_state           | int       | <p hidden>???</p>
-camera_retention_asset        | int       | <p hidden>???</p>
-camera_retention_etag         | int       | <p hidden>???</p>
-run_mode                      | string    | <p hidden>???</p>
-register_id                   | int       | <p hidden>???</p>
-camera_now                    | string    | <p hidden>???</p>
-camera_abs_newest             | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_oldest             | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-ssn                           | string    | The serial number of a bridge
-proxy                         | string    | <p hidden>???</p>
-now                           | string    | The current time of when the request has been completed in EEN format: YYYYMMDDHHMMSS.NNN
-camera_property_analog        | boolean   | <p hidden>???</p>
-[status_hex](#status-bitmask) | string    | The device status bitmask as a hexadecimal value
-camera_retention_interval     | int       | Retention interval in milliseconds
-camera_valid_ts               | string    | <p hidden>???</p>
+Parameter           | Data Type | Description
+---------           | --------- | -----------
+ssn                 | string    | <p hidden>???</p>Serial Number of the device
+esn                 | string    | Electronic Serial Number of the device
+class               | string    | Camera or bridge, etc.
+run_mode            | string    | <p hidden>???</p>Run mode of the device
+no_video            | int       | <p hidden>???</p>Whether the device is delivering video locally (0) or not (1)
+model               | string    | Model of the device
+make                | string    | Make of the device
+uuid                | string    | UUID uniquely identifying the device
+service             | string    | Device service status. For bridges this field will always be `'ATTD'` for regular functionality
+[status](#overall-status) | string    | Decimal status of the device
+[status_hex](#status-bitmask) | string    | Status bitmask
+ipaddr              | string    | IP addresses assigned to the device (comma-delimited) with the one in use prefixed by an asterisk (\*)
+proxy               | string    | Proxy
+camera_state_version | int       | <p hidden>???</p>Bridge state version
+tagmap_status_state | int       | <p hidden>???</p>Tag map status state
+admin_user          | string    | Web username
+admin_password      | string    | Web password
+subclass            | string    | Firmware/driver type of the device
+version             | string    | Firmware/driver version of the device
+register_id         | int       | <p hidden>???</p>Bridge register ID
+camera_retention    | int       | Retention period in milliseconds
+camera_retention_etag | int       | <p hidden>???</p>Retention period in milliseconds
+camera_retention_asset | int       | <p hidden>???</p>Retention period in milliseconds
+camera_retention_interval | int       | <p hidden>???</p>Retention interval in milliseconds
+camera_newest       | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_oldest       | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+now                 | string    | Current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+ts                  | string    | <p hidden>???</p>Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_property_analog | boolean   | <p hidden>???</p>Whether there are devices connected via analog input (1) or not (0)
+camera_info_version | int       | <p hidden>???</p>Device info version
+camera_min_time     | string    | <p hidden>???</p>Minimum timestamp available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_now          | string    | <p hidden>???</p>Device's current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_newest   | string    | <p hidden>???</p>Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_abs_oldest   | string    | <p hidden>???</p>Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_property_model | string    | <small>Model of the device <br>**(DEPRECATED)**</small>
+camera_property_make | string    | <small>Make of the device <br>**(DEPRECATED)**</small>
+camera_property_version | string    | <small>Driver version of the device <br>**(DEPRECATED)**</small>
+camera_valid_ts     | string    | <small>Timestamp of oldest event available <br>**(DEPRECATED)**</small>
+r_model             | string    | <small>Model of the device <br>**(DEPRECATED)**</small>
+r_make              | string    | <small>Make of the device <br>**(DEPRECATED)**</small>
+r_version           | string    | <small>Firmware/driver version of the device <br>**(DEPRECATED)**</small>
 
-<!--TODO: Add the full bridge model bridge attributes table-->
+<!--TODO: Verify descriptions for the full bridge model attributes table-->
 
 <!--===================================================================-->
 ## Get Bridge
