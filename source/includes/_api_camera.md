@@ -1416,16 +1416,16 @@ camera_retention    | int       | Retention period in milliseconds
 camera_retention_etag | int       | Retention period in milliseconds
 camera_retention_asset | int       | Retention period in milliseconds
 camera_retention_interval | int       | Retention interval in milliseconds
-camera_newest       | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_oldest       | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-now                 | string    | Current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-ts                  | string    | Timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_newest       | string    | Timestamp of newest event available in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
+camera_oldest       | string    | Timestamp of oldest event available in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
+now                 | string    | Current timestamp in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
+ts                  | string    | Timestamp in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
 camera_property_analog | boolean   | Whether the device is connected via analog input (1) or not (0)
 camera_info_version | int       | Device info version
-camera_min_time     | string    | Minimum timestamp available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_now          | string    | Device's current timestamp in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_newest   | string    | Timestamp of newest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
-camera_abs_oldest   | string    | Timestamp of oldest event available in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+camera_min_time     | string    | Minimum timestamp available in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
+camera_now          | string    | Device's current timestamp in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
+camera_abs_newest   | string    | Timestamp of newest event available in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
+camera_abs_oldest   | string    | Timestamp of oldest event available in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
 camera_property_model | string    | <small>Model of the device <br>**(DEPRECATED)**</small>
 camera_property_make | string    | <small>Make of the device <br>**(DEPRECATED)**</small>
 camera_property_version | string    | <small>Driver version of the device <br>**(DEPRECATED)**</small>

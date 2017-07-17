@@ -268,7 +268,7 @@ The table below shows which user management actions a user can execute depending
 
 <table style="margin-top:30px;">
   <tr>
-    <td style="background-color:#EAF2F6;" rowspan="3" colspan="3" ></td>
+    <td style="background-color:transparent;" rowspan="3" colspan="3" ></td>
     <th colspan="4" style="text-align:center; border:solid 1px;background-color:#F3F7FA;">Who I am</td>
   </tr>
   <tr>
