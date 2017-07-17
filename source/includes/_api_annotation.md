@@ -54,8 +54,8 @@ The Annotation service allows to push data (including HTML elements) into the ev
 Array Index | Attribute    | Data Type | Description                                                                                               | Editable    | Required
 ----------- | ---------    | --------- | -----------                                                                                               |:-----------:| --------
 **0**       | **uuid**     | string    | Unique identifier for the annotation assigned to it during creation                                       | **&cross;** | **<sub><form action="#get-annotation"><button>GET</button></form></sub>**
-  1         | timestamp    | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)                              | **&cross;** |
-**2**       | **ns**       | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations) <br><br>**Note:** Can only be defined during Create Annotation                                                                                     | **&check;** | **<sub><form action="#create-annotation"><button>PUT</button></form></sub>** <br>**<sub><form action="#update-annotation"><button>POST</button></form></sub>**
+  1         | timestamp    | string    | Time of the annotation creation in EEN Timestamp format: YYYYMMDDHHMMSS.NNN                               | **&cross;** |
+**2**       | **ns**       | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations) <br><br>**Note:** Can only be defined during Create Annotation                                                                                                                | **&check;** | **<sub><form action="#create-annotation"><button>PUT</button></form></sub>** <br>**<sub><form action="#update-annotation"><button>POST</button></form></sub>**
 **3**       | **\<data\>** | json      | Content of the annotation                                                                                 | **&check;** | **<sub><form action="#create-annotation"><button>PUT</button></form></sub>** <br>**<sub><form action="#update-annotation"><button>POST</button></form></sub>**
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
@@ -481,7 +481,7 @@ jsonp               | string        | JSONP (JSON with padding) is a convention 
 Array Index | Attribute | Data Type | Description
 ----------- | --------- | --------- | -----------
 0           | uuid      | string    | Unique identifier for the annotation assigned to it during creation
-1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
 2           | namespace | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
 3           | \<data\>  | json      | Content of the annotation
 
@@ -567,7 +567,7 @@ jsonp               | string        | JSONP (Json with padding) is a convention 
 Array Index | Attribute | Data Type | Description
 ----------- | --------- | --------- | -----------
 0           | uuid      | string    | Unique identifier for the annotation assigned to it during creation
-1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format (YYYYMMDDHHMMSS.NNN)
+1           | timestamp | string    | Time of the annotation creation in EEN Timestamp format: YYYYMMDDHHMMSS.NNN
 2           | namespace | int       | Namespace *grouping* assigned to the annotation (in the EEN structure namespaces can describe a specific category of annotations)
 3           | type      | int       | An additional array element is present in the event list, describing the event type <br><br>Event type: <br>1 - Create <br>2 - Update <br>3 - *Reserved* <br>4 - Heartbeat <br>5 - End
 4           | \<data\>  | json      | Content of the annotation
