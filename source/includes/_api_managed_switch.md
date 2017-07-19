@@ -73,11 +73,11 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
             {
                 "index": "port_2",
                 "power": 0,
-                "ip": "null",
+                "ip": null,
                 "enabled": "true",
-                "mac": "null",
-                "camera_guid": "null",
-                "esn": "null"
+                "mac": null,
+                "camera_guid": null,
+                "esn": null
             },
             {
                 "index": "port_3",
@@ -86,16 +86,16 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
                 "enabled": "true",
                 "mac": "00:FC:14:18:08:05",
                 "camera_guid": "(null)",
-                "esn": "null"
+                "esn": null
             },
             {
                 "index": "port_1",
                 "power": 0,
-                "ip": "null",
+                "ip": null,
                 "enabled": "true",
-                "mac": "null",
-                "camera_guid": "null",
-                "esn": "null"
+                "mac": null,
+                "camera_guid": null,
+                "esn": null
             },
             {
                 "index": "port_4",
@@ -139,11 +139,11 @@ Parameter   | Data Type | Description
 ---------   | --------- | -----------
 index       | string    | Port index in the form of `'port_N'`, where N gets substituted by an integer (starting from 1)
 enabled     | string    | Indicates whether the port is on (true) or off (false)
-mac         | string <br>*(or&nbsp;`'null'`)* | MAC address behind the port, string "Multiple(N)" for N number of MAC addresses found behind this port
-ip          | string <br>*(or&nbsp;`'null'`)* | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port
+mac         | string    | MAC address behind the port, string "Multiple(N)" for N number of MAC addresses found behind this port
+ip          | string    | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port
 power       | float     | Power in Watts that this port is drawing
-camera_guid | string <br>*(or&nbsp;`'null'`)* | GUID of the camera that is tied to the MAC/IP address
-esn         | string <br>*(or&nbsp;`'null'`)* | ESN of the camera that is tied to the MAC/IP address
+camera_guid | string    | GUID of the camera that is tied to the MAC/IP address
+esn         | string    | ESN of the camera that is tied to the MAC/IP address
 
 ### Error Status Codes
 
@@ -186,11 +186,11 @@ Parameter | Data Type | Description                                             
         {
             "index": "port_2",
             "power": 0,
-            "ip": "null",
+            "ip": null,
             "enabled": "true",
-            "mac": "null",
-            "camera_guid": "null",
-            "esn": "null"
+            "mac": null,
+            "camera_guid": null,
+            "esn": null
         },
         {
             "index": "port_3",
@@ -199,16 +199,16 @@ Parameter | Data Type | Description                                             
             "enabled": "true",
             "mac": "00:FC:14:18:08:05",
             "camera_guid": "(null)",
-            "esn": "null"
+            "esn": null
         },
         {
             "index": "port_1",
             "power": 0,
-            "ip": "null",
+            "ip": null,
             "enabled": "true",
-            "mac": "null",
-            "camera_guid": "null",
-            "esn": "null"
+            "mac": null,
+            "camera_guid": null,
+            "esn": null
         },
         {
             "index": "port_4",
