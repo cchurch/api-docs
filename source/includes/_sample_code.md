@@ -156,7 +156,8 @@ curl -X GET https://login.eagleeyenetworks.com/g/layout/list -H "Authentication:
             "desktop"
         ],
         "SWRD"
-    ]
+    ],
+    [...]
 ]
 ```
 

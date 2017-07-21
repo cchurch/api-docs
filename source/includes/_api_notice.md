@@ -51,7 +51,8 @@ id        | string    | User ID
         "/een-terms-of-service/00013377/Terms_and_Conditions~2~20180523094504.txt",
         "2",
         0
-    ]
+    ],
+    [...]
 ]
 ```
 
@@ -195,7 +196,10 @@ Parameter | Data Type | Description | Is Required
         "20180426191610",
         "/een-terms-of-service/00000001/Terms_and_Conditions~1.2~20170523094504.txt",
         "active"
-    ]
+    ],
+    [...],
+    [...],
+    [...]
 ]
 ```
 

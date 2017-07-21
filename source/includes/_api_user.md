@@ -84,7 +84,8 @@ The User service allows managing Users to a degree outlined by the permission le
         [
             "100bd708",
             "r"
-        ]
+        ],
+        [...]
     ],
     "layouts": [
         "217f0fd4-450f-11e4-a983-ca8312ea370c"

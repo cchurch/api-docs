@@ -52,7 +52,8 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
         "guid": "cb407e63-99f8-5dbx-86a6-d1d78ac6ffb0",
         "available_bridges": [],
         "ports": 4
-    }
+    },
+    {...}
 ]
 ```
 
@@ -110,7 +111,8 @@ is_detailed | boolean   | Whether to include detailed data in the response (true
         "version": "IM-V122.1",
         "guid": "cb407e63-99f8-5dbx-86a6-d1d78ac6ffb0",
         "ports": 4
-    }
+    },
+    {...}
 ]
 ```
 
