@@ -274,7 +274,8 @@ When the user's account has been locked the user is notified of this fact by ema
         [
             "100bd708",
             "r"
-        ]
+        ],
+        [...]
     ],
     "layouts": [
         "217f0fd4-450f-11e4-a983-ca8312ea370c"
@@ -354,11 +355,11 @@ Update of any TFA-related field in the user record is performed through a dedica
 
 Data present in the user record that affects the TFA is security-sensitive and therefore may only be altered using a dedicated endpoint, whose operation is itself TFA protected. This data includes three fields in the user model:
 
-Field | Description | Remarks                                                                                                                                  | Is Required
------ | ----------- | -------                                                                                                                                  | -----------
-**sms_phone** | Phone number to which text messages (SMS) containing TFA code will be delivered | Can only be changed when using SMS for TFA code delivery <br>Code will be delivered to the new phone number                                                                                                                              | true
-**email** | E-mail address to which messages containing TFA code will be delivered | Can only be changed when using email for TFA code delivery <br> Code will be delivered to the new email address                                                                                                                                       | true
-**is_two_factor_authentication_enabled** | 1 - required to authenticate via TFA <br>0 - authenticate via Simple Authentication | Can be updated with either SMS or email delivery of TFA code                                                                                                                                           | true
+Field         | Description | Remarks                                                                                                                          | Is Required
+-----         | ----------- | -------                                                                                                                          | -----------
+**sms_phone** | Phone number to which text messages (SMS) containing TFA code will be delivered | Can only be changed when using SMS for TFA code delivery <br>Code will be delivered to the new phone number                                                                                                                                        | true
+**email**     | E-mail address to which messages containing TFA code will be delivered | Can only be changed when using email for TFA code delivery <br> Code will be delivered to the new email address                                                                                                                                              | true
+**is_two_factor_authentication_enabled** | 1 - required to authenticate via TFA <br>0 - authenticate via Simple Authentication | Can be updated with either SMS or email delivery of TFA code                                                                                                                                                       | true
 
 <aside class="notice">The fields above can only be changed one at a time</aside>
 
@@ -374,9 +375,9 @@ This step initiates the TFA data update process
 
 Parameter                          | Data Type | Description                                                                                                   | Is Required
 ---------                          | --------- | -----------                                                                                                   | -----------
-**two_factor_authentication_type** | string    | Defines which method to use for TFA code delivery to verify this update request: <br>`'sms'` - TFA code will be sent via SMS <br>`'email'` - TFA code will be sent via email                                                                                                            | true
+**two_factor_authentication_type** | string    | Defines which method to use for TFA code delivery to verify this update request: <br>`'sms'` - TFA code will be sent via SMS <br>`'email'` - TFA code will be sent via email                                                                                                                | true
 **password**                       | string    | The user's password                                                                                           | true
-**update_json**                    | json      | Json structure containing the name of the updated field and its new value <br><br>(Only one field can be updated at a time) <br><br>Example: <br>`{` <br>&nbsp;&nbsp;&nbsp;&nbsp;`'sms_phone':'+123456789'`<br>`}`                                                                   | true
+**update_json**                    | json      | Json structure containing the name of the updated field and its new value <br><br>(Only one field can be updated at a time) <br><br>Example: <br>`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;`'sms_phone'`: `'+123456789'`<br>`}`                                                                          | true
 
 ### HTTP Response
 
