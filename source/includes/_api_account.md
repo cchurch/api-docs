@@ -227,7 +227,7 @@ Parameter      | Data Type     | Description
 
 Parameter      | Data Type     | Description
 ---------      | ---------     | -----------
-\<permission\> | array[string] | Array of strings each representing a recipient, containing their set of predefined permissions <br><br>Permissions: <br>`'edit_motion_areas'` - user can edit camera motion areas <br>`'ptz_live'` - user can control pan, tilt and zoom for a PTZ camera, recall PTZ stations <br>`'edit_ptz_stations'` - user can edit PTZ stations and control PTZ cameras <br><br>Example: <br>`[`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'edit_motion_areas'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'ptz_live'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'edit_ptz_stations'`<br>`]`
+\<permission\> | array[string] | Array of strings each representing a recipient containing their set of predefined permissions <br><br>Permissions: <br>`'edit_motion_areas'` - user can edit camera motion areas <br>`'ptz_live'` - user can control pan, tilt and zoom for a PTZ camera, recall PTZ stations <br>`'edit_ptz_stations'` - user can edit PTZ stations and control PTZ cameras <br><br>Example: <br>`[`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'edit_motion_areas'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'ptz_live'`<br>`]`
 
 <aside class="notice">Camera-related flags can only be modified or set from within the account housing the cameras and only for valid cameras</aside>
 
