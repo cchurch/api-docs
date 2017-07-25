@@ -186,7 +186,7 @@ Parameter         | Data Type     | Description | Is Required
 **name**          | string        | Layout name | true
 **types**         | array[string] | Specifies target(s) for layout. Multiple values are allowed | true
 **[configuration](#layout-configuration)** | json          | Json object of layout configuration | true
-shares            | array[array]  | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. Setting the first field to `'account'` specifies that the layout is shared with all users of the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] - user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] - user can view and change this layout <br>[`'1005f2ed'`, `'R'`] - user can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
+shares            | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. Setting the first field to `'account'` specifies that the layout is shared with all users of the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] - user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] - user can view and change this layout <br>[`'1005f2ed'`, `'R'`] - user can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 
@@ -233,7 +233,7 @@ Parameter     | Data Type     | Description | Is Required
 name          | string        | Layout name
 types         | array[string] | Specifies target(s) for layout. Multiple values are allowed
 [configuration](#layout-configuration) | json          | Json object of layout configuration
-shares        | array[array]  | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. Setting the first field to `'account'` specifies that the layout is shared with all users of the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] - user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] - user can view and change this layout <br>[`'1005f2ed'`, `'R'`] - user can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
+shares        | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. Setting the first field to `'account'` specifies that the layout is shared with all users of the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] - user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] - user can view and change this layout <br>[`'1005f2ed'`, `'R'`] - user can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array
 
 > Json Response
 

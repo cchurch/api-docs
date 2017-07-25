@@ -87,7 +87,7 @@ Upon running this command with valid credentials, we receive a Json-formatted re
 This token is a required parameter for making the authorize API request
 <br><small>(Copy the value of the token in order to have it on hand when creating the authorize API request)</small>
 
-<br><br><br><br>
+<br><br><br><br><br><br><br>
 
 ---
 
