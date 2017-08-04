@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The User service allows managing Users to a degree outlined by the permission level
+The <a class="definition" onclick="openModal('DOT-User')">User</a> service allows managing Users to a degree outlined by the permission level
 
 <!--===================================================================-->
 ## User Model

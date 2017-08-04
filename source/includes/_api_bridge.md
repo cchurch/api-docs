@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Bridge is a product of Eagle Eye that is deployed at the customer location and communicates with industry standard cameras. It converts the cameras to be compatible with the EEVB and record [assets](#images-and-video). The Bridge is configured and controlled via a cloud-based user interface (has no built-in user interface). The Bridge may serve local assets directly to local clients. The Bridge will also store assets until they are transferred to the EEVB. The Bridge can be configured via DHCP or have a static IP address
+The <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> is a product of Eagle Eye that is deployed at the customer location and communicates with industry standard cameras. It converts the cameras to be compatible with the EEVB and record <a class="definition" onclick="openModal('DOT-Asset')" href="#images-and-video">assets</a>. The Bridge is configured and controlled via a cloud-based user interface (has no built-in user interface). The Bridge may serve local assets directly to local clients. The Bridge will also store assets until they are transferred to the EEVB. The Bridge can be configured via DHCP or have a static IP address
 
 <!--===================================================================-->
 ## Bridge Model

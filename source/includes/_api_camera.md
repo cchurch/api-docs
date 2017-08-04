@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Device service allows access to create new logical devices (Cameras or Bridges) and establish a relationship between logical and physical devices. The GET method is available to any user with Camera `'R'` (Read) permission. Methods POST, DELETE are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. PUT method is only available to account superusers
+The <a class="definition" onclick="openModal('DOT-Device')">Device</a> service allows access to create new logical devices (<a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> or <a class="definition" onclick="openModal('DOT-Bridge')">Bridges</a>) and establish a relationship between logical and <a class="definition" onclick="openModal('DOT-Physical-Camera')">physical devices</a>. The GET method is available to any user with Camera `'R'` (Read) permission. Methods POST, DELETE are available to account superusers and users with Camera `'W'` (Write) permissions for the indicated camera. PUT method is only available to account superusers
 
 When adding a new Camera, the name and settings parameters are required. The settings parameter should contain the ID of the bridge and the GUID of the Camera
 
