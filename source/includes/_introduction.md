@@ -63,3 +63,27 @@ Please see the section on [Single Sign On](#single-sign-on) for alternatives to 
 ![alt text](introduction/apikey_3.png "Step 3")
 ![alt text](introduction/apikey_4.png "Step 4")
 ![alt text](introduction/apikey_5.png "Step 5")
+
+<!--===================================================================-->
+## Content Features
+<!--===================================================================-->
+
+### Fully control the information flow:
+
+### Content
+
+Press <key>F8</key> to enable / disable <a class="definition" onclick="openModal('DOT-Hover-Modals')">Hover Modals</a><br>
+<small>(onclick behavior will remain)</small><br><br>
+
+To close the Modal definition:
+
+  - Click outside of the Modal area
+  - Press the close (**&times;**) button
+  - Press <key>Esc</key>
+
+### Appearance
+
+Press <a class="definition" onclick="customModal(colorTitle, colorMsg)"><key>Alt</key> + <key>C</key></a> to change the Modal color<br>
+<small>(the color will not be changed now)</small><br><br>
+
+Press <key>F9</key> to enable / disable an additional feature

@@ -143,3 +143,8 @@ The architectural element that communicates with the Cameras and stores all the 
 The EE Locator has a fixed IP address that does not change. Camera and Bridges when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it and directs it to the appropriate Archiver and other connections it will need to communicate with the EEVB. If the Locator goes down, the only function that will stop working is adding new Cameras
 
 <!--TODO: Consider including abbreviations: GUID, ESN-->
+
+<!-- HIDDEN DEFINITION SECTION -->
+
+**Hover Modals**<def style="display: none" id=DOT-Hover-Modals>
+Hover Modals refer to the `onmouseover` open Modal behavior activated when the cursor enters a highlighted Term
