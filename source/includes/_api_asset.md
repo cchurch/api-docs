@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-Asset services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify [Assets](#DOT-Asset). All assets are tagged with and can be identified by the EEN Timestamp
+<a class="definition" onclick="openModal('DOT-Asset')">Asset</a> services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify Assets. All assets are tagged with and can be identified by the EEN Timestamp
 
 ### EEN Timestamp
 

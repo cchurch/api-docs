@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Account service allows managing Accounts by superusers and account superusers
+The <a class="definition" onclick="openModal('DOT-Account')">Account</a> service allows managing Accounts by superusers and account superusers
 
 <!--===================================================================-->
 ## Account Model
