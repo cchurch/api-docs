@@ -26,5 +26,9 @@ doc/
 ._.DS_Store
 .idea
 
+# Built content
 build_*
 build_*/
+
+# Gemfile.lock
+Gemfile.lock
