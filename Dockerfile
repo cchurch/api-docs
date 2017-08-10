@@ -5,5 +5,5 @@ COPY Gemfile ./
 RUN bundle install
 
 ADD . .
-EXPOSE 4567
-
+EXPOSE 4567-4568
+CMD ["bundle", "exec", "middleman", "server"]
