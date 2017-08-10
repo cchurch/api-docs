@@ -12,3 +12,6 @@ gem 'redcarpet', '~> 3.4.0'
 gem 'execjs', '~> 2.7.0'
 gem 'therubyracer', '~> 0.12.3'
 gem 'activesupport', '= 5.0.5'
+
+# Middleman-Livereload
+gem 'middleman-livereload', '~> 3.4.6'

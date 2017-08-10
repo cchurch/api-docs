@@ -9,11 +9,13 @@ set :markdown,
     with_toc_data: true,
     no_intra_emphasis: true
 
+
 # Assets
 set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 set :fonts_dir, 'fonts'
+
 
 # Activate the syntax highlighter
 activate :syntax
@@ -21,17 +23,48 @@ ready do
   require './lib/multilang.rb'
 end
 
+
+# Livereload
+activate :livereload,
+  :ignore => [/\.html$/],    # Ignore changes to .html
+  :livereload_css_pattern => Regexp.new('.+\.scss$'),
+  :livereload_css_target => nil,
+  :host => 'localhost',
+  :port => 4568
+
+
+# Ignore listed files
+set :file_watcher_ignore, [
+        /^\.bundle\//,
+        /^\.sass-cache\//,
+        /^\.git\//,
+        /^\.gitignore$/,
+        /\.DS_Store/,
+        /^build\//,
+        /^\.rbenv-.*$/,
+        /^Gemfile$/,
+        /^Gemfile\.lock$/,
+        /~$/,
+        /(^|\/)\.?#/
+    ]
+
+
+# Sprockets
 activate :sprockets
 
+
+# Autoprefixer
 activate :autoprefixer do |config|
   config.browsers = ['last 2 version', 'Firefox ESR']
   config.cascade  = false
   config.inline   = true
 end
 
+
 # Github pages require relative links
 activate :relative_assets
 set :relative_links, true
+
 
 # Build Configuration
 configure :build do
@@ -44,6 +77,6 @@ configure :build do
   # activate :gzip
 end
 
-# Deploy Configuration
-# If you want Middleman to listen on a different port, you can set that below
+
+# Middleman Configuration
 set :port, 4567

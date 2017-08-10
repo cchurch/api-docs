@@ -27,8 +27,8 @@ doc/
 .idea
 
 # Built content
-build_*
-build_*/
+build*
+build*/
 
 # Gemfile.lock
 Gemfile.lock
