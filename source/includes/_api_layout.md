@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-Layouts contain panes, which are groups of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a camera gain access to all cameras included in layouts shared with them
+<a class="definition" onclick="openModal('DOT-Layout')">Layouts</a> contain panes, which are groups of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a camera gain access to all cameras included in layouts shared with them
 
 Important information on accessing layouts:
 

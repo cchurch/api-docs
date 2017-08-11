@@ -1,102 +1,122 @@
 # Definition of Terms
 
+
+### Content
+
+Press <key>F8</key> to enable / disable <a class="definition" onclick="openModal('DOT-Hover-Modals')">Hover Modals</a><br>
+<small>(onclick behavior will remain)</small><br><br>
+
+To close the Modal definition:
+
+  - Click outside of the Modal area
+  - Press the close (**&times;**) button
+  - Press <key>Esc</key>
+
+
+### Definitions
+
+
+The section content aims to define all unique Terms being used across the document<br><br>
+
+
 **Eagle Eye Video Bank (EEVB)**<def id=DOT-EEVB>
 The service that Eagle Eye provides that safely, securely and easily stores video from surveillance and other cameras, allows access via the world wide web and provides a comprehensive control and management platform for multi camera surveillance
 
 **Eagle Eye Video Bank Services (EEVBS)**<def id=DOT-EEVBS>
-This is the exposed WWW RESTful services that are used internally as well as externally for the interface of Cameras, User Interfaces, Mobile Applications and Image Analysis applications. This is described in this document
+This is the exposed WWW RESTful services that are used internally as well as externally for the interface of <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a>, User Interfaces, Mobile Applications and Image Analysis applications. This is described in this document
 
 **ESN**<def id=DOT-ESN>
-Electronic Serial Number. It can represent an Account, Bridge, Camera or User
+Electronic Serial Number. It can represent an <a class="definition" onclick="openModal('DOT-Account')">Account</a>, <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a>, <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> or <a class="definition" onclick="openModal('DOT-User')">User</a>
 
 **Client**<def id=DOT-Client>
-A client is a software application that interfaces with the EEVBS to display assets, make changes, or do analysis
+A client is a software application that interfaces with the <a class="definition" onclick="openModal('DOT-EEVBS')">EEVBS</a> to display assets, make changes or do analysis
 
 **Device**<def id=DOT-Device>
-This is either a Physical Camera or a Bridge
+This is either a <a class="definition" onclick="openModal('DOT-Physical-Camera')">Physical Camera</a> or a <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a>
 
 **DeviceID**<def id=DOT-DeviceID>
-This is either a CameraID or the equivalent ID for a Bridge. In the case of the Bridge there is no video stream associated with it
+This is either a CameraID or the equivalent ID for a <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a>. In the case of the Bridge there is no video stream associated with it
 
 **Bridge**<def id=DOT-Bridge>
-The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the Cameras to be compatible with the EEVB and record the Assets. The Bridge is setup and controlled via a cloud based user inteface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address
+The Bridge is a product of Eagle Eye that sits at the customer location and talks to industry standard cameras. It converts the <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> to be compatible with the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> and record the Assets. The Bridge is setup and controlled via a cloud based user interface. There is no user interface on the Bridge. The Bridge may serve local Assets directly to local Clients. The Bridge will also store Assets until they are transferred to the EEVB. The Bridge may be configured via DHCP or with a static IP address
 
 **Camera**<def id=DOT-Camera>
-A camera is a source of video data streams that are being delivered to the Eagle Eye Video Bank. Cameras produce streams of <a class="definition" onclick="openModal('DOT-Asset')">Assets</a> over periods of time. These Assets are stored in the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a>
+A camera is a source of video data streams that are being delivered to the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a>. Cameras produce streams of <a class="definition" onclick="openModal('DOT-Asset')">Assets</a> over periods of time. These Assets are stored in the EEVB
 
 **CameraID**<def id=DOT-CameraID>
 A unique ID which is a 32 bit hex number. This unique ID is used to identify the camera and all of its assets. This ID is not the hardware ID of the physical camera. It is the logical ID of the data stream that has been or is being recorded from a conceptual camera location. If a camera is replaced it can therefore be connected to the same CameraID so the Asset streams can be continuous
 
 **Camera Name**<def id=DOT-Camera-Name>
-This is a non-unique name that the Administrator attaches to a Camera ID for easy reference in identifying the Assets generated by the Camera
+This is a non-unique name that the Administrator attaches to a Camera ID for easy reference in identifying the Assets generated by the <a class="definition" onclick="openModal('DOT-Camera')">Camera</a>
 
 **Camera Tags**<def id=DOT-Camera-Tags>
-Cameras are labeled using Camera Tags for basic configuration management. Any Camera can have any number of Camera Tags. Tags are Global to the account
+<a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> are labeled using Camera Tags for basic configuration management. A Camera can have any number of Camera Tags. Tags are Global to the account
 
 **Physical Camera**<def id=DOT-Physical-Camera>
-The actual physical Camera - different to the *logical Camera* which is referred to as the *Camera*
+The actual physical Camera - different to the *logical Camera* which is referred to as the *<a class="definition" onclick="openModal('DOT-Camera')">Camera</a>*
 
 **Connect ID**<def id=DOT-Connect-ID>
-This is 16 digit mixed numeric and alpha string broken into 4 sets of 4 digits. Cameras and Bridges (Devices) have a Connect ID printed on a sticker attached to them and on the inside of the cardboard box (not the outside). If the Device is preconfigured it will automatically attach to the User’s Account. However, if the Device is not pre-configured the Connect ID is entered by the Administrator User to attach the Device to his Account. This will typically create one or more Cameras that correspond to the physical cameras and attach them to an Account. Connect ID is always displayed in UPPER CASE only. On entry it is case insensitive. There are no `'0'`s (zero’s) or `'O'`s (letter Os) in the Connect ID to eliminate any possible confusion
+This is 16 digit mixed numeric and alpha string broken into 4 sets of 4 digits. <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> and <a class="definition" onclick="openModal('DOT-Bridge')">Bridges</a> (<a class="definition" onclick="openModal('DOT-Device')">Devices</a>) have a Connect ID printed on a sticker attached to them and on the inside of the cardboard box (not the outside). If the Device is preconfigured it will automatically attach to the <a class="definition" onclick="openModal('DOT-User')">User</a>’s <a class="definition" onclick="openModal('DOT-Account')">Account</a>. However, if the Device is not pre-configured the Connect ID is entered by the <a class="definition" onclick="openModal('DOT-Administrator-User')">Administrator User</a> to attach the Device to his Account. This will typically create one or more Cameras that correspond to the physical cameras and attach them to an Account. Connect ID is always displayed in UPPER CASE only. On entry it is case insensitive. There are no `'0'`s (zero’s) or `'O'`s (letter Os) in the Connect ID to eliminate any possible confusion
 
 **Hardware ID**<def id=DOT-Hardware-ID>
-This is the unique ID of the hardware of the Device. This ID varies based on the type of camera and other parameters. It is basically a string of up to 128 characters. A Hardware ID is mapped to a CameraID by the EEVB when the Assets are stored. When physical cameras are attached to a Bridge we use the ONVIF GUID as the Hardware ID
+This is the unique ID of the hardware of the <a class="definition" onclick="openModal('DOT-Device')">Device</a>. This ID varies based on the type of camera and other parameters. It is basically a string of up to 128 characters. A Hardware ID is mapped to a CameraID by the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> when the Assets are stored. When <a class="definition" onclick="openModal('DOT-Physical-Camera')">Physical Cameras</a> are attached to a <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> we use the ONVIF GUID as the Hardware ID
 
 **Account**<def id=DOT-Account>
-An Account is the billing entity and the master control entity in the EEVB. All Cameras, Assets, Users and other items are associated with an Account. Accounts are identified by an Account Number. An Account has Users which are identified by email addresses (which is also their User Login)
+An Account is the billing entity and the master control entity in the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a>. All <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a>, Assets, <a class="definition" onclick="openModal('DOT-User')">Users</a> and other items are associated with an Account. Accounts are identified by an Account Number. An Account has Users which are identified by email addresses (which is also their User Login)
 
 **Sub-Account**<def id=DOT-Sub-Account>
-A Sub-Account is an Account that is under another Account (called the Master Account) A Sub-Account is primarily a billing relationship and for most intents and purposes appears as a complete separate account. There is only 1 level of Sub-Accounts. An Administrator of a Master Account can get Administrator Access to a Sub-Account via a method still TBD. A Sub-Account has an indicator with regards to billing. A Sub-Account can either be billed via the Master Account or can be billed separately. If Billed separately the Sub-Account operates like any other account. If not billed separately then billing for a Master Account will show all the items of any Sub-Account broken out by Sub-Account and the Sub-Account will have NO billing of any kind (no permissions, no bill display, no credit card entry - nothing). There must be Eagle Eye administrator functionality to change the billing indicator, change Sub-Accounts to Accounts and move Sub-Accounts to other Master Accounts. Basically Sub-Accounts are used by Resellers; We can keep track of which Accounts are associated with which Reseller, Resellers can get administrator access and we can either bill to the Reseller or bill the customer directly. Sub-Accounts are also used by large companies who want separate billing by division
+A Sub-Account is an <a class="definition" onclick="openModal('DOT-Account')">Account</a> that is under another Account (called the Master Account) A Sub-Account is primarily a billing relationship and for most intents and purposes appears as a complete separate account. There is only 1 level of Sub-Accounts. An Administrator of a Master Account can get Administrator Access to a Sub-Account via a method still TBD. A Sub-Account has an indicator with regards to billing. A Sub-Account can either be billed via the Master Account or can be billed separately. If Billed separately the Sub-Account operates like any other account. If not billed separately then billing for a Master Account will show all the items of any Sub-Account broken out by Sub-Account and the Sub-Account will have NO billing of any kind (no permissions, no bill display, no credit card entry - nothing). There must be Eagle Eye administrator functionality to change the billing indicator, change Sub-Accounts to Accounts and move Sub-Accounts to other Master Accounts. Basically Sub-Accounts are used by Resellers; We can keep track of which Accounts are associated with which Reseller, Resellers can get administrator access and we can either bill to the Reseller or bill the customer directly. Sub-Accounts are also used by large companies who want separate billing by division
 
 **AccountID**<def id=DOT-AccountID>
-A 64 bit decimal number that uniquely identifies an Account. This is a numeric number that is assigned by the EEVB when a new Account is created. The Administrator User is made aware of his Account Number, but does not need to know it for logging in. He may need it when calling in for billing questions. This Account Number is used to tie into the Eagle Eye accounting systems. All billing is based on an Account
+A 64 bit decimal number that uniquely identifies an <a class="definition" onclick="openModal('DOT-Account')">Account</a>. This is a numeric number that is assigned by the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> when a new Account is created. The <a class="definition" onclick="openModal('DOT-Administrator-User')">Administrator User</a> is made aware of his Account Number, but does not need to know it for logging in. He may need it when calling in for billing questions. This Account Number is used to tie into the Eagle Eye accounting systems. All billing is based on an Account
 
 **Account Level**<def id=DOT-Account-Level>
-This is a numeric code that identifies the type of Account. Currently we have 4 Account Levels; 1=Eval, 2=Basic, 3=Premium, 4=Enterprise. Different features are available on each of these Account Levels. Different Billing is performed on each of these Account Levels (per Camera costs are different). Each of these Account Levels has a different Default Retention Policy. There will likely be additional Account Levels in the future
+This is a numeric code that identifies the type of <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Currently we have 4 Account Levels; 1=Eval, 2=Basic, 3=Premium, 4=Enterprise. Different features are available on each of these Account Levels. Different Billing is performed on each of these Account Levels (per <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> costs are different). Each of these Account Levels has a different Default Retention Policy. There will likely be additional Account Levels in the future
 
 **User**<def id=DOT-User>
-Every Account has Users. A User corresponds to a single person or a single station that requires access to the Eagle Eye Video Bank. Users can have different permissions and access. Access control may limit cameras that are visible or actions that can be taken on cameras. Can Users belong to multiple Accounts??
+Every <a class="definition" onclick="openModal('DOT-Account')">Account</a> has Users. A User corresponds to a single person or a single station that requires access to the Eagle Eye Video Bank. Users can have different permissions and access. Access control may limit cameras that are visible or actions that can be taken on cameras
 
 **UserID**<def id=DOT-UserID>
-A UserID is a 32 bit hex number that uniquely identifies a User. This UserID is assigned by the EEVB when the User is created and is attached to a User
+A UserID is a 32 bit hex number that uniquely identifies a User. This UserID is assigned by the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> when the User is created and is attached to a User
 
 **User Login**<def id=DOT-User-Login>
-A User’s Login is his email address. This uniquely identifies the user and provides for password recovery. EEVB only supports only email based User Logins. Each User is associated with one and only one Account. Each User will have only one UserID assigned by the system. Can Users belong to multiple Accounts??
+A <a class="definition" onclick="openModal('DOT-User')">User</a>’s Login is his email address. This uniquely identifies the user and provides for password recovery. <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> only supports only email based User Logins. Each User is associated with one and only one <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Each User will have only one UserID assigned by the system
 
 **Administrator User**<def id=DOT-Administrator-User>
-An Account must have at least one Administrator User. The last Administrator User cannot be deleted. An Account may have multiple Administrator Users. The Administrator User can add and delete other users, can change permissions, add and delete Cameras and view all Assets. The Administrator Users will be notified if there are any billing issues and can view the billing history. Administrator Users can change billing and purchase additional services
+An <a class="definition" onclick="openModal('DOT-Account')">Account</a> must have at least one Administrator User. The last Administrator User cannot be deleted. An Account may have multiple Administrator Users. The Administrator User can add and delete other users, can change permissions, add and delete <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> and view all Assets. The Administrator Users will be notified if there are any billing issues and can view the billing history. Administrator Users can change billing and purchase additional services
 
 **Layout**<def id=DOT-Layout>
-A collection of cameras, the position and size on the screen, the setting associated with the display of the cameras on the screen stored and named. Layouts are used to display cameras on monitor screens and to assist with research work. Layouts are created by Users and named by them. Layouts can be either User specific or global in nature. Account Layouts are visible to all Users of an account. Each Camera Group has an associated implied Layout with it. Layouts have permissions for each User
+A collection of <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a>, the position and size on the screen, the setting associated with the display of the cameras on the screen stored and named. Layouts are used to display camera feeds on monitor screens and to assist with research work. Layouts are created by <a class="definition" onclick="openModal('DOT-User')">Users</a> and named by them. Layouts can be either User specific or global in nature. Account Layouts are visible to all Users of an <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Each Camera Group has an associated implied Layout with it. Layouts have permissions for each User
 
 **Activation**<def id=DOT-Activation>
-Process when a new camera or bridge comes online and the User acknowledges it, names it and brings into his system. Billing starts at the Activation time. Any terms and conditions might have to be agreed at activation time as well
+Process when a new <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> or <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> comes online and the <a class="definition" onclick="openModal('DOT-User')">User</a> acknowledges it, names it and brings into his system. Billing starts at the Activation time. Any terms and conditions might have to be agreed at activation time as well
 
 **Camera TagID**<def id=DOT-Camera-TagID>
-Token assigned by EEVB to identify a Camera Tag
+Token assigned by <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> to identify a Camera Tag
 
 **Asset**<def id=DOT-Asset>
-Assets are the items stored in the EEVB which have been captured or created by Cameras and Analysis Systems. All Assets are associated with a Camera which in turn is associated to an Account. Normally Assets are previews and video
+Assets are the items stored in the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> which have been captured or created by <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> and Analysis Systems. All Assets are associated with a Camera which in turn is associated to an <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Normally Assets are previews and video
 
 **Asset Class**<def id=DOT-Asset-Class>
-There are Asset Classes: 1) Video, 2) Preview, 3) Meta Data. These are produced by the Cameras. The MetaData can also be produced by Analysis Systems
+There are Asset Classes: 1) Video, 2) Preview, 3) Meta Data. These are produced by the <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a>. The Meta Data can also be produced by Analysis Systems
 
 **Saved Assets**<def id=DOT-Saved-Assets>
-Normally Assets are rotated in and rotated out. For example the EEVB might keep the last 14 days of video Assets from a Camera. Saved Assets are those Assets and associated data that a User has indicated need to be saved for a longer period of time. These Assets are copied from the normal rotation (Retention period) so that they are not deleted
+Normally Assets are rotated in and rotated out. For example the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> might keep the last 14 days of video Assets from a <a class="definition" onclick="openModal('DOT-Camera')">Camera</a>. Saved Assets are those Assets and associated data that a User has indicated need to be saved for a longer period of time. These Assets are copied from the normal rotation (Retention period) so that they are not deleted
 
 **Video Assets**<def id=DOT-Video-Assets>
-Video assets are recorded streams of video and include audio
-Shared Assets
-Shared Assets are Assets that a User has indicated should be shared to the public, other Users, or other potential locations. These Assets are a subset of Saved Assets
+Video <a class="definition" onclick="openModal('DOT-Asset')">Assets</a> are recorded streams of video that include audio
+
+**Shared Assets**<def id=DOT-Shared-Assets>
+Shared Assets are <a class="definition" onclick="openModal('DOT-Asset')">Assets</a> that a <a class="definition" onclick="openModal('DOT-User')">User</a> has indicated should be shared to the public, other Users or other potential locations. These Assets are a subset of Saved Assets
 
 **Retention Policy**<def id=DOT-Retention-Policy>
-Every Camera has associated with it a retention policy. The retention policy indicates how much and how long the Assets (the video) from the Camera should be retained. The Account has a Default Retention Policy which is used for all Cameras in that account. This Policy can be overridden on a per Camera basis
+Every <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> has associated with it a retention policy. The retention policy indicates how much and how long the Assets (the video) from the Camera should be retained. The <a class="definition" onclick="openModal('DOT-Account')">Account</a> has a Default Retention Policy which is used for all Cameras in that account. This Policy can be overridden on a per Camera basis
 
 **Timestamps**<def id=DOT-Timestamps>
 All Assets have a Timestamp attached. The Timestamp records when the Asset happened. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.xxx. Timestamps are represented numerically as milliseconds from the epoch (Jan 1 1970... same as time(), gettimeofday, etc. on Linux, timestamps in Javascript, etc.)
 
 **Events**<def id=DOT-Events>
-An Event is a span of time that is indicated as *interesting*. Events are meta data that adds value to Assets. Cameras generate Events based on detection - motion detection, audio detection, etc. Cameras may or may not provide Preview Assets or Video Assets when Events are generated. Many events trigger recording or saving of Assets. Events can also be User generated (A recording is scheduled, Video is streamed, tagged or saved). Events may be generated by Analysis systems (identification of license plates). Events have Meta Data which indicate additional information about them (why they were recorded, specific details for each detection type, etc.). Events all start at a specific time and for a specific cameras. Events normally have length, but the length can also be zero. Data can be attached to an event when its created or later (Users can add comments to an event, an Analysis System can associate names with faces.) Events are a primary element of the Eagle Eye UI
+An Event is a span of time that is indicated as *interesting*. Events are meta data that adds value to Assets. <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> generate Events based on detection - motion detection, audio detection, etc. Cameras may or may not provide Preview Assets or <a class="definition" onclick="openModal('DOT-Video-Assets')">Video Assets</a> when Events are generated. Many events trigger recording or saving of Assets. Events can also be User generated (A recording is scheduled, Video is streamed, tagged or saved). Events may be generated by Analysis systems (identification of license plates). Events have Meta Data which indicate additional information about them (why they were recorded, specific details for each detection type, etc.). Events all start at a specific time and for a specific cameras. Events normally have length, but the length can also be zero. Data can be attached to an event when its created or later (Users can add comments to an event, an Analysis System can associate names with faces.) Events are a primary element of the Eagle Eye UI
 
 **Incomplete Event**<def id=DOT-Incomplete-Event>
 Events have a beginning and an end. Events may be received or obtained before they are completed. In this case they are considered an Incomplete Event. This is most common when using the [Poll](#poll) interface and receiving events in real time. In the Polling interface if an Incomplete Event is received, then when the event completes, it will be received again
@@ -108,13 +128,13 @@ A span is a duration of time between two events that compliment each other
 Image that is the representative image of an Event. Generally selected from the middle of a motion segment
 
 **Analysis Systems**<def id=DOT-Analysis-Systems>
-Analysis Systems use the EEVBS to analyze existing or incoming Assets and attach meta data to the Assets in the form of Meta Data Assets. The Meta Data can identify people, places and things in the Asset Streams. This Meta Data can then be searched, organized, analyzed and alerted upon
+Analysis Systems use the <a class="definition" onclick="openModal('DOT-EEVBS')">EEVBS</a> to analyze existing or incoming Assets and attach meta data to the Assets in the form of Meta Data Assets. The Meta Data can identify people, places and things in the Asset Streams. This Meta Data can then be searched, organized, analyzed and alerted upon
 
 **Alert Events**<def id=DOT-Alert-Events>
 Alert Events are Events that are known to generate an Alert
 
-**Alerts/Notifications**<def id=DOT-Alerts/Notifications>
-Alerts or Notifications are generated from Events when the User has created criteria to create them. Alerts may be given in any number of methods (on screen, email, text message, etc.). Alerts may have to be acknowledged by the User. The EEVBS will collapse alerts into a single alert to avoid creating too many that would be annoying. Alerts are almost always generated from Events. Alerts are commonly generated when Cameras are turned off, go offline, or when motion is detected in areas where there should not be any motion. The Alert may or may not include the video or other Assets of interest. Alerts sent to Users automatically create a Save to provide organized access to the related image, video and meta-data. The URL to the save is provided within the Alert for immediate access
+**Alerts/Notifications**<def id=DOT-Alerts-Notifications>
+Alerts or Notifications are generated from Events when the User has created criteria to create them. Alerts may be given in any number of methods (on screen, email, text message, etc.). Alerts may have to be acknowledged by the User. The <a class="definition" onclick="openModal('DOT-EEVBS')">EEVBS</a> will collapse alerts into a single alert to avoid creating too many that would be annoying. Alerts are almost always generated from Events. Alerts are commonly generated when <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> are turned off, go offline or when motion is detected in areas where there should not be any motion. The Alert may or may not include the video or other Assets of interest. Alerts sent to Users automatically create a Save to provide organized access to the related image, video and meta-data. The URL to the save is provided within the Alert for immediate access
 
 **Motion Detection Region**<def id=DOT-Motion-Detection-Region>
 Each camera can have 1 or more Motion Detection Regions. These are areas where motion detection will be performed. Normally if there is motion in ANY Motion Detection Region video recording will be enabled. Motion Detection in any region will always generate an Event. The Events will generate Alerts if the User has configured it to generate Alerts on that Motion Detection Region
@@ -122,29 +142,29 @@ Each camera can have 1 or more Motion Detection Regions. These are areas where m
 <!--TODO: Check if those are ROIs and rename the above if necessary-->
 
 **Privacy Region**<def id=DOT-Privacy-Region>
-A Camera may have 1 or more Privacy Regions defined. This is a mask where all Asset images and video are blanked out
+A <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> may have 1 or more Privacy Regions defined. This is a mask where all Asset images and video are blanked out
 
 **Meta Data Asset**<def id=DOT-Meta-Data-Asset>
-This is data that identifies items in the Video Assets. Used to identify faces, license plates, activity, motion and other items that are happening in the video Assets
+This is data that identifies items in the <a class="definition" onclick="openModal('DOT-Video-Assets')">Video Assets</a>. Used to identify faces, license plates, activity, motion and other items that are happening in the video Assets
 
 **Audit Trail**<def id=DOT-Audit-Trail>
 All changes and activities by each user are recorded for audit trail. These items are stored on a per user basis. Things stored included: all configuration changes, all camera configuration changes (PTZ), all video’s viewed, all camera adds and deletes, all manual recordings, all changes to schedule, all changes to alerts
 
 **EE Director**<def id=DOT-EE-Director>
-The Director is the URL first contacted when a camera is connecting with the EEVBS. The Director performs verification of access, provides account information and lists of Cameras in an Account. Given a Camera ID it provides the URL of the appropriate EE Archiver(s) that have the Assets of the requested Camera so the application in question can get them for display. http://d.eagleeyenetworks.com. Cameras also contact the EE Director to determine where they should send their Assets
+The Director is the URL first contacted when a <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> is connecting with the <a class="definition" onclick="openModal('DOT-EEVB')">EEVBS</a>. The Director performs verification of access, provides account information and lists of Cameras in an <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Given a CameraID it provides the URL of the appropriate EE Archiver(s) that have the Assets of the requested Camera so the application in question can get them for display. http://d.eagleeyenetworks.com. Cameras also contact the EE Director to determine where they should send their Assets
 
 **EE GUI**<def id=DOT-EE-GUI>
-Eagle Eye Graphical User Interface (built on HTTP Java script) to control and view Cameras. The [EEN user interface](http://eagleeyenetworks.com) is built on the EEVB API
+Eagle Eye Graphical User Interface (built on HTTP Java script) to control and view <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a>. The [EEN user interface](http://eagleeyenetworks.com) is built on the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> API
 
 **EE Archiver**<def id=DOT-EE-Archiver>
-The architectural element that communicates with the Cameras and stores all the Assets. It serves up the Assets to the EE GUI as well as the iOS App and Android App. EE Archivers are accessed via IP address
+The architectural element that communicates with the <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> and stores all the Assets. It serves up the Assets to the EE GUI as well as the iOS App and Android App. EE Archivers are accessed via IP address
 
 **EE Locator**<def id=DOT-EE-Locator>
-The EE Locator has a fixed IP address that does not change. Camera and Bridges when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it and directs it to the appropriate Archiver and other connections it will need to communicate with the EEVB. If the Locator goes down, the only function that will stop working is adding new Cameras
+The EE Locator has a fixed IP address that does not change. <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> and <a class="definition" onclick="openModal('DOT-Bridge')">Bridges</a> when they first installed attempt to contact the EE Locater using DNS at first, but then a fixed IP address if DNS does not work. The EE Locator provides the camera its Camera ID, authenticates it and directs it to the appropriate Archiver and other connections it will need to communicate with the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a>. If the Locator goes down, the only function that will stop working is adding new Cameras
 
-<!--TODO: Consider including abbreviations: GUID, ESN-->
-
-<!-- HIDDEN DEFINITION SECTION -->
+<!--===================================================================-->
+<!--                     HIDDEN DEFINITION SECTION                     -->
+<!--===================================================================-->
 
 **Hover Modals**<def style="display: none" id=DOT-Hover-Modals>
 Hover Modals refer to the `onmouseover` open Modal behavior activated when the cursor enters a highlighted Term
