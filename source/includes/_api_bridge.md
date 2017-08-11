@@ -630,7 +630,7 @@ curl -X PUT https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","co
 Parameter     | Data Type | Description | Is Required
 ---------     | --------- | ----------- | -----------
 **name**      | string    | Bridge name | true
-**connectid** | string    | Connect ID is the code delivered with a bridge and assigned to it (All non-alphanumeric characters will be stripped) | true
+**connectID** | string    | Connect ID is the code delivered with a bridge and assigned to it (All non-alphanumeric characters will be stripped) | true
 
 > Json Response
 
