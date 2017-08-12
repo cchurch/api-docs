@@ -2,3 +2,6 @@
  services:
    apidoc:
      build: .
+     ports:
+       - "8000:4567"
+
