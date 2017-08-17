@@ -1,9 +1,9 @@
-FROM ruby:2
+FROM ruby:2.3.1
 
 WORKDIR /usr/src/app
 COPY Gemfile ./
 RUN bundle install
 
 ADD . .
-EXPOSE 4567
+EXPOSE 4567-4568
 CMD ["bundle", "exec", "middleman", "server"]

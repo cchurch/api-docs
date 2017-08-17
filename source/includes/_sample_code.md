@@ -11,20 +11,64 @@
 > Authenticate Request
 
 ```shell
-curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data "username=[USERNAME]&password=[PASSWORD]"
+curl --request POST https://login.eagleeyenetworks.com/g/aaa/authenticate --data "username=[USERNAME]&password=[PASSWORD]" -H "Authentication: [API_KEY]:"
 ```
 
-In this section we will walk You through the process of making API requests using the **cURL** command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server using a wide range of supported protocols including HTTP/HTTPS, which is what we are interested in
+In this section we will walk you through the process of making API requests using the **cURL** command line tool. The Eagle Eye APIs are platform agnostic and we use them to create the web, Android and iOS Eagle Eye clients. Curl is a tool for transferring data to and from a server using a wide range of supported protocols including HTTP/HTTPS, which is what we are interested in
 
-**cURL** can be installed by visiting [this site](http://curl.haxx.se)
+**cURL** can be installed by visiting [this site](http://curl.haxx.se) (present on most linux systems by default)
 
 With cURL installed the next step is to log in and have a valid session (visit the [cURL cheat sheet](https://ec.haxx.se/http-cheatsheet.html#curl-cheat-sheet) for basic HTTP commands), so that we can freely use any of the APIs. Logging in is a two step process consisting of authentication and authorization. The authentication API takes in 2 parameters. Our cURL common will look like the example (Authenticate Request) code to the right
 
 <aside class="notice">The <small>[USERNAME]</small> and <small>[PASSWORD]</small> need to be valid for the API request to return successfully</aside>
 
-The `'--request'` flag specifies the type of request and can be set to *GET*, *POST*, *PUT* and/or *DELETE*
+  - The `--request` (or `-X`) flag specifies the *type of request* and can be set to *GET*, *POST*, *PUT* and/or *DELETE*
+  - The `--data` (or `-d`) flag specifies the *data* (or in special cases *parameters*) of the API query
+  - The `-H` flag specifies the *headers* of the API query
+  - The `--cookie` flag specifies the *cookies* of the API query
+  - Optionally provide the `-v` flag for a *verbose output* (more detailed output including HTTP headers, cookies and full server response)
+  - Optionally provide the `-O` flag at the very end of the request for *file output* (displays download progress and saves the file with the name retrieved from the url to the current directory)
+    - Alternatively provide `'-o "/<file_path/<filename>.<extension>"'` to specify output name and path <br>(path has to exist, can be relative `'./cam_01_recording.mp4'`)
 
-The `'--data'` (or `'-d'`) flag specifies the parameters of the API query
+> A certain degree of variation is possible within cURL for formulating HTTP requests:
+
+```shell
+curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+```
+
+> Alternatively, the above request could be formulated as:
+
+```shell
+curl --request GET "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]" -H "Authentication: [API_KEY]:"
+```
+
+**It is important to disassociate the types of request *data* from one another:**
+<br><small>(certain request types require data to be sent via *parameters*, other types require the data to be delivered via *data* - as HTTP body)</small>
+
+  - **Parameters** by providing the parameters following the request url with a `?` and injecting them into it (i.e. `id=[CAMERA_ID];timestamp=[TIMESTAMP]` in `https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP]`)
+  - **HTTP request body** via `--data` or `-d` (i.e. `-d "id=[CAMERA_ID]&timestamp=[TIMESTAMP]"`)
+    - Example: data in a standard PUT/POST request including **Json-formatted data**, which can be explicitly specified by adding the appropriate header `-H 'Content-type: application/json'` in the following way during a Create User call:
+      - `-d '{"first_name": "[FIRST_NAME]", "last_name": "[LAST_NAME]", "email": "[EMAIL]"}' -H "content-type: application/json"` <br>Alternatively the same data could be provided without specifying the data type in the following ways:
+      - `-d "first_name=[FIRST_NAME]" -d "last_name=[LAST_NAME]" -d "email=[EMAIL]"`
+      - `-d "first_name=[FIRST_NAME]&last_name=[LAST_NAME]&email=[EMAIL]"`
+  - **HTTP headers or cookies** (`-H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"`)
+
+The same request can frequently be mimicked using all 3 methods like with the *authentication key* in the following examples:
+
+**Parameter (A=[AUTH_KEY])**
+
+`curl -X GET "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"`
+
+**Request body (-d "A=[AUTH_KEY]")**
+<br><small>(sneaky way of forcing GET to accept parameters via the data field, in this case data is still pushed as parameters and not in the request body)</small>
+
+`curl -G https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -d "A=[AUTH_KEY]" -H "Authentication: [API_KEY]:"`
+<br><small>or</small></br>
+`curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]&timestamp=[TIMESTAMP]&asset_class=[ASSET_CLASS]&A=[AUTH_KEY]" -H "Authentication: [API_KEY]:" -G`
+
+**Cookie (--cookie "auth_key=[AUTH_KEY]")**
+
+`curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G`
 
 ---
 
@@ -34,16 +78,16 @@ The `'--data'` (or `'-d'`) flag specifies the parameters of the API query
 
 ```json
 {
-  "token": "YrZF/8jf7W0rKcqNTugqidq…………4dZWeNOcNsuenTXc9fQVtvp2vI75g=="
+    "token": "MiDUwMQqwP1JsfKqbqT1DQ8hJFHEOZfROEUtBvnuqv0ICxvcOybkS1n9/awjrJ9YKijb60GqdUDPP8TW4o8Ei8iI8OXC/dj74KC2cLMxJ2vs/hmYPfbW8OpCwf0k683a2LfIbjcC3Uy/SmDpOsxVdPMTXQEGJHXD3ItmAvoQ5MOoRKfHBNOu7OJBWQjPUjeP0fkHSrx8JgAHSqT5SwRM0mLysFmiFHF0h7/5Apt81dDhZwLBDwwSrl+kTqgn+wnw6rJ432liESdK+yp3Qefk1wAtytoTJkkBE2srqsHJdW4ryVYKk9SKA62Cz7pO3VUaD8Yxx9Ff2Os9ez6TdfBmqg=="
 }
 ```
 
 Upon running this command with valid credentials, we receive a Json-formatted response containing a key/value pair for `'token'`, which will look like the example (Json Response) on the right side
 
 This token is a required parameter for making the authorize API request
-<br>(Copy the value of the token in order to have it on hand when creating the authorize API request)
+<br><small>(Copy the value of the token in order to have it on hand when creating the authorize API request)</small>
 
-<br><br><br><br>
+<br><br><br><br><br><br><br>
 
 ---
 
@@ -52,26 +96,26 @@ This token is a required parameter for making the authorize API request
 > Authorize Request
 
 ```shell
-curl -D - --request POST https://login.eagleeyenetworks.com/g/aaa/authorize --data-urlencode "token=[TOKEN]"
+curl -D - -X POST https://login.eagleeyenetworks.com/g/aaa/authorize -d "token=[TOKEN]"
 ```
 
 We can make the authorization API request using the example cURL command
 
-The output are headers of the API request followed by the response body. The `'-D'` flag is used to write the protocol headers. Here is the description from the man pages:
+The output are headers of the API request followed by the response body. The `-D` flag is used to write the protocol headers. Here is the description from the man pages:
 
 Argument | Description
 -------- | -----------
-**-D**, –dump-header <file> | Write the protocol headers to the specified file. This option is handy to use when You want to store the headers that a HTTP site sends to You. Cookies from the headers could then be read in a second cURL invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies
+**-D**, –dump-header <file> | Write the protocol headers to the specified file. This option is handy to use when you want to store the headers that a HTTP site sends to you. Cookies from the headers could then be read in a second cURL invocation by using the -b, –cookie option! The -c, –cookie-jar option is however a better way to store cookies
 
 ---
 
 > Get List of Devices Request (Authorized)
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/list/devices --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/list/devices -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
-Note that the `'-'` after the `'-D'` indicates that the output *file* is stdout. One of the header elements will be `'Set-Cookie: auth_key=[AUTH_KEY]'`. Copy `'auth_key=[AUTH_KEY]'` into the clipboard as this cookie will need to be set for all other API requests. The cURL request for getting a list of devices will look like in the example to the right
+Note that `'-'` after the `-D` indicates that the output *file* is stdout. One of the header elements will be `'Set-Cookie: auth_key=[AUTH_KEY]'`. Copy `'auth_key=[AUTH_KEY]'` into the clipboard as this cookie will need to be set for all other API requests. The cURL request for getting a list of devices will look like in the example to the right
 
 <aside class="notice">The 'auth_key' cookie will need to be set for any other Eagle Eye API that requires a valid session</aside>
 
@@ -82,7 +126,7 @@ Note that the `'-'` after the `'-D'` indicates that the output *file* is stdout.
 > Get List of Layouts (Request)
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/layout/list --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/layout/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 > Get List of Layouts (Json Response)
@@ -112,14 +156,15 @@ curl --request GET https://login.eagleeyenetworks.com/g/layout/list --cookie "au
             "desktop"
         ],
         "SWRD"
-    ]
+    ],
+    [...]
 ]
 ```
 
 ### HTTP Request
 
 `GET /layout/list`
-`GET /layout`
+<br>`GET /layout`
 
 When a user logs onto the Eagle Eye system, they are greeted with a grid of cameras, with each cell representing a camera pane. These panes can be of varying size so that the user can customize the layout to their liking. In this tutorial, we will demonstrate how to use the APIs to build these layouts so they are consistent on all platforms
 
@@ -130,11 +175,8 @@ We take the layout ID attribute for each layout of interest and pass it to the G
 > Get Layout (Request)
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -G -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
-
-
-
 
 > Get Layout (Json Response)
 
@@ -200,13 +242,13 @@ At this time Android does not have a robust library for packing the panes so the
 
 This is the algorithm at a high level, though the specifics can get a little more complex, such as determining whether a fully packed block exists. The state of a fully packed block is also dependent on the number of columns for the grid
 
-The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home grown packing algorithm
+The ease of constructing layouts is highly dependent on the robustness of the 3rd party library. In the case that one does not exist, we fall back to our home-grown packing algorithm
 
 <!--===================================================================-->
 ## Playing Live Video
 <!--===================================================================-->
 
-Video playback functionality can be accessed through the `'/asset/play/video.{video_format}'` API. We will show You how to use this API to play live video, though the same API can also be used to play historic video
+Video playback functionality can be accessed through the `'/asset/play/video.{video_format}'` API. We will show you how to use this API to play live video, though the same API can also be used to play historic video
 
 Below is the Javascript code that creates the URL for playing live video footage with a HTML flash video player. You can run the javascript code on [this site](https://js.do) to generate the URL string
 
@@ -228,7 +270,7 @@ htmlFlashVideoPlayerUrl = "https://login.eagleeyenetworks.com/strobe/embed.html?
 document.write(htmlFlashVideoPlayerUrl);
 `
 
-Note that we have 2 variables: `'eagleEyeLiveVideoApiUrl'` and `'htmlFlashVideoPlayerUrl'`. The `'htmlFlashVideoPlayerUrl'` variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into Your application:
+Note that we have 2 variables: `'eagleEyeLiveVideoApiUrl'` and `'htmlFlashVideoPlayerUrl'`. The `'htmlFlashVideoPlayerUrl'` variable contains the video player being used to play the Flash Player. Users are free to use any video player of this liking and the one referenced in the code is just an example video player we are using. The output of this JS code is a URL that looks like this. Use this to embed live video into your application:
 
 `
 https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%2F%2Flogin.eagleeyenetworks.com%2Fasset%2Fplay%2Fvideo.flv%3Fc%3D[DEVICE_ID]%3Bt%3Dstream_1401291315740%3Be%3D%2B300000%3BA%3D[AUTH_KEY]&bufferingOverlay=false&streamType=live&bufferTime=1&initialBufferTime=1&expandedBufferTime=5&liveBufferTime=2&liveDynamicStreamingBufferTime=4&minContinuousPlaybackTime=5
@@ -303,7 +345,7 @@ https://login.eagleeyenetworks.com/strobe/embed.html?autoPlay=true&src=https%3A%
 }
 ```
 
-Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial we will walk You through the steps to set up the poll stream for long polling using the /poll API
+Upon entering the Eagle Eye system, the user is presented with a grid of cameras. These cameras are retrieving images in real time through a poll stream. In this tutorial we will walk you through the steps to set up the poll stream for long polling using the /poll API
 
 Long polling is used in the mobile clients. The process is to first register to the poll stream using the POST /poll API followed by constant API requests for GET /poll
 
@@ -313,31 +355,31 @@ The POST /poll API is used to initialize the poll stream and to register the eve
 
 ```json
 {
-  "cameras": {
-    "10003254": {
-      "event": {
-        "PRFR": {
-          "cameraid": "10003254",
-          "timestamp": "20180528224954.312",
-          "file_offset": 17804500,
-          "frame_size": 6152,
-          "previewid": 1401314400
+    "cameras": {
+        "10003254": {
+            "event": {
+                "PRFR": {
+                    "cameraid": "10003254",
+                    "timestamp": "20180528224954.312",
+                    "file_offset": 17804500,
+                    "frame_size": 6152,
+                    "previewid": 1401314400
+                }
+            }
+        },
+        "100a9541": {
+            "event": {
+                "PRFR": {
+                    "cameraid": "100a9541",
+                    "timestamp": "20180528224955.507",
+                    "file_offset": 12004385,
+                    "frame_size": 3706,
+                    "previewid": 1401314400
+                }
+            },
+            "pre": "20180528224955.507"
         }
-      }
-    },
-    "100a9541": {
-      "event": {
-        "PRFR": {
-          "cameraid": "100a9541",
-          "timestamp": "20180528224955.507",
-          "file_offset": 12004385,
-          "frame_size": 3706,
-          "previewid": 1401314400
-        }
-      },
-      "pre": "20180528224955.507"
     }
-  }
 }
 ```
 

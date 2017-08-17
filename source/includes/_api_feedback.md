@@ -15,7 +15,7 @@ Send feedback to support
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetworks.com/g/feedback --data "subject=[SUBJECT]&message=[MESSAGE]"
+curl -X POST https://login.eagleeyenetworks.com/g/feedback -d "subject=[SUBJECT]" -d "message=[MESSAGE]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -v
 ```
 
 ### HTTP Request
@@ -25,7 +25,7 @@ curl --cookie "auth_key=[AUTH_KEY]" --request POST https://login.eagleeyenetwork
 Parameter   | Data Type | Description | Is Required
 ---------   | --------- | ----------- | -----------
 **subject** | string    | Subject of the feedback | true
-**message** | string    | Feedback message | true
+**message** | string    | Feedback message content | true
 
 ### Error Status Codes
 

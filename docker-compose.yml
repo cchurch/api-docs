@@ -2,7 +2,6 @@
  services:
    apidoc:
      build: .
-     volumes:
-       - .:/usr/src/app
      ports:
        - "8000:4567"
+

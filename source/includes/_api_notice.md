@@ -1,5 +1,9 @@
 # Terms of Service
 
+<!--===================================================================-->
+## Overview
+<!--===================================================================-->
+
 The following API endpoints facilitate presenting and accepting the Terms of Service. Eagle Eye Networks uses independent Terms of Service which will be presented through [Get Terms of Service for User](#get-terms-of-service-for-user). Additionally resellers can add their own Terms of Service through [Create Terms of Service for Account](#create-terms-of-service-for-account), which will then be presented with Eagle Eye Network's terms
 
 Resellers can assign their own terms at the master account level or give each sub-account custom terms at the sub-account level
@@ -26,7 +30,7 @@ If the user agrees to the terms, a PUT call should be placed containing an array
 > Request
 
 ```shell
-curl -X GET https://login.eagleeyenetworks.com/g/user/terms?id=cafe81f5 --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/user/terms -d "id=[USER_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -47,7 +51,8 @@ id        | string    | User ID
         "/een-terms-of-service/00013377/Terms_and_Conditions~2~20180523094504.txt",
         "2",
         0
-    ]
+    ],
+    [...]
 ]
 ```
 
@@ -55,7 +60,7 @@ id        | string    | User ID
 
 Array Index | Attribute    | Data Type | Description
 ----------- | ---------    | --------- | -----------
-0           | user_id      | string    | Unique identifier of the user  
+0           | user_id      | string    | Unique identifier of the user requesting the notice
 1           | title        | string    | Title of the term of service
 2           | url          | string    | URL of a file with the text of the terms of service
 3           | version      | string    | Version string for the title of the terms of service
@@ -86,7 +91,7 @@ This service is used to record Acceptance of the Terms of Service
 > Request
 
 ```shell
-curl -X PUT https://login.eagleeyenetworks.com/g/user/terms -d '{"urls": ["/een-terms-of-service/00013377/Test_Terms_of_Service~1~20180523100004.txt", "/een-terms-of-service/00000001/EEN_Terms_of_Service~1.2~20180626191610.txt"]}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X PUT https://login.eagleeyenetworks.com/g/user/terms -d '{"urls": ["/een-terms-of-service/[USER_ID]/Test_Terms_of_Service~1~20180523100004.txt", "/een-terms-of-service/[USER_ID]/EEN_Terms_of_Service~1.2~20180626191610.txt"]}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -125,6 +130,108 @@ HTTP Status Code | Description
 200	| User has been authorized for access to the realm
 
 <!--===================================================================-->
+## Get Terms of Service for Account
+<!--===================================================================-->
+
+Returns the Terms of Service for an account
+
+> Request
+
+```shell
+curl -X GET https://login.eagleeyenetworks.com/g/account/terms -d "id=[ACCOUNT_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/account/terms`
+
+Parameter | Data Type | Description | Is Required
+--------- | --------- | ----------- | -----------
+**id**    | string    | Account ID  | true
+
+> Json Response
+
+```json
+[
+    [
+        "00013377",
+        "UNIT_TEST_SUB_ACCOUNT",
+        "Test_Terms_of_Service2",
+        "2",
+        1,
+        0,
+        "20180523094136",
+        "/een-terms-of-service/00013377/Terms_and_Conditions~2~20170523094136.txt",
+        "active"
+    ],
+    [
+        "00013377",
+        "UNIT_TEST_SUB_ACCOUNT",
+        "Test_Terms_of_Service",
+        "1",
+        1,
+        1,
+        "20180222115243",
+        "/een-terms-of-service/00013377/Terms_and_Conditions~1~20170222115243.txt",
+        "retired"
+    ],
+    [
+        "00013377",
+        "UNIT_TEST_SUB_ACCOUNT",
+        "Test_Terms_of_Service",
+        "2",
+        0,
+        1,
+        "20180523094504",
+        "/een-terms-of-service/00013377/Terms_and_Conditions~2~20170523094504.txt",
+        "active"
+    ],
+    [
+        "00000001",
+        "UNIT_TEST_SUB_ACCOUNT",
+        "EEN_Terms_of_Service",
+        "1.2",
+        1,
+        1,
+        "20180426191610",
+        "/een-terms-of-service/00000001/Terms_and_Conditions~1.2~20170523094504.txt",
+        "active"
+    ],
+    [...],
+    [...],
+    [...]
+]
+```
+
+### HTTP Response (Array Attributes)
+
+Array Index | Attribute         | Data Type | Description
+----------- | ---------         | --------- | -----------
+0           | account_id        | string    | Unique identifier of the account requesting the notice
+1           | account_name      | string    | Name of the account requesting this notice
+2           | title             | string    | Title of the notice
+3           | version           | string    | Version number for the notice title, a larger version number will retire other versions
+4           | is_admin_required | int       | Whether administrators have to accept (1) or not (0)
+5           | is_user_required  | int       | Whether users have to accept (1) or not (0)
+6           | timestamp         | string    | Date of the term of service
+7           | url               | string    | URL of the file containing the text for the notice
+8           | status            | string    | Status of the term of service (`'active'`, `'retired'`)
+
+<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+406	| Information supplied could not be verified
+402	| Account is suspended
+460	| Account is inactive
+409	| Account has already been activated
+412	| User is disabled
+200	| User has been authorized for access to the realm
+
+<!--===================================================================-->
 ## Create Terms of Service for Account
 <!--===================================================================-->
 
@@ -141,7 +248,7 @@ Resellers are limited to 5 Terms of Service titles and each title will only have
 > Request
 
 ```shell
-curl -X PUT https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 1, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "1", "id": "00013377"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X PUT https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 1, "is_user_required": 1, "title": "[TERMS_TITLE]", "text": "[TERMS_TEXT]", "version": "[TERMS_VERSION]", "id": "[ACCOUNT_ID]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -151,7 +258,7 @@ curl -X PUT https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_re
 Parameter         | Data Type | Description                                          | Required    | Default                  | Limitation
 ---------         | --------- | -----------                                          |:-----------:| -------                  | ----------
 **text**          | string    | Text of the term of service to accept                | **&check;** |                          | Use single LF character for line break
-id                | string    | Unique ID of the account                             | **&cross;** | requester's account
+id                | string    | Unique identifier of the account                     | **&cross;** | requester's account
 title             | string    | Title of the term of service to accept               | **&cross;** | 'Terms and Conditions'   | 32 bytes of alpha numeric characters
 version           | string    | Version of the title, which should be unique         | **&cross;** | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required | int       | Whether administrators have to accept (1) or not (0) | **&cross;** | not updating
@@ -212,7 +319,7 @@ Users are not required to accept terms of the same version again, to force users
 > Request
 
 ```shell
-curl -X POST https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 0, "is_user_required": 1, "title": "Test Terms of Service", "text": "This is a test terms and service from resellers", "version": "2", "id": "00013377"}' -H "content-type: application/json" --cookie "auth_key=[AUTH_KEY]"
+curl -X POST https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_required": 0, "is_user_required": 1, "title": "[TERMS_TITLE]", "text": "[TERMS_TEXT]", "version": "[TERMS_VERSION]", "id": "[ACCOUNT_ID]"}' -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -222,7 +329,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_r
 Parameter         | Data Type | Description                                          | Required    | Default                  | Limitation
 ---------         | --------- | -----------                                          |:-----------:| -------                  | ----------
 text              | string    | Text of the term of service to accept                | **&cross;** |                          |  use single LF character for line break
-id                | string    | Unique ID of the account                             | **&cross;** | requester's account
+id                | string    | Unique identifier of the account                     | **&cross;** | requester's account
 title             | string    | Title of the term of service to accept               | **&cross;** | 'Terms and Conditions'   | 32 bytes of alpha numeric characters
 version           | string    | Version of the title, which should be unique         | **&cross;** | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required | int       | Whether administrators have to accept (1) or not (0) | **&cross;** | not updating
@@ -282,8 +389,10 @@ Delete an account’s Terms of Service
 
 <aside class="notice">Only master accounts can delete an account's Terms of Service</aside>
 
+> Request
+
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/account/terms?id=00013377 --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/account/terms -d "id=[ACCOUNT_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -318,8 +427,8 @@ title     | string    | Title of the term of service
 
 Parameter          | Data Type | Description
 ---------          | --------- | -----------
-account_id         | string    | Unique ID of the account that is requesting this term of service
-account_name       | string    | Name of the account that is requesting this term of service
+account_id         | string    | Unique identifier of the account requesting the removal
+account_name       | string    | Name of the account requesting the removal
 title              | string    | Title of the term of service
 version            | string    | Version number for the term title
 is_admin_required  | int       | Whether administrators have to accept (1) or not (0)
@@ -336,105 +445,6 @@ HTTP Status Code | Description
 402	| Account is suspended
 404	| Notice title was not found
 406	| Information supplied could not be verified
-460	| Account is inactive
-409	| Account has already been activated
-412	| User is disabled
-200	| User has been authorized for access to the realm
-
-<!--===================================================================-->
-## Get Terms of Service for Account
-<!--===================================================================-->
-
-Returns the Terms of Service for an account
-
-> Request
-
-```shell
-curl -X GET https://login.eagleeyenetworks.com/g/account/terms?id=00013377 --cookie "auth_key=[AUTH_KEY]"
-```
-
-### HTTP Request
-
-`GET https://login.eagleeyenetworks.com/g/account/terms`
-
-Parameter | Data Type | Description | Is Required
---------- | --------- | ----------- | -----------
-**id**    | string    | Account ID  | true
-
-> Json Response
-
-```json
-[
-    [
-        "00013377",
-        "UNIT_TEST_SUB_ACCOUNT",
-        "Test_Terms_of_Service2",
-        "2",
-        1,
-        0,
-        "20180523094136",
-        "/een-terms-of-service/00013377/Terms_and_Conditions~2~20170523094136.txt",
-        "active"
-    ],
-    [
-        "00013377",
-        "UNIT_TEST_SUB_ACCOUNT",
-        "Test_Terms_of_Service",
-        "1",
-        1,
-        1,
-        "20180222115243",
-        "/een-terms-of-service/00013377/Terms_and_Conditions~1~20170222115243.txt",
-        "retired"
-    ],
-    [
-        "00013377",
-        "UNIT_TEST_SUB_ACCOUNT",
-        "Test_Terms_of_Service",
-        "2",
-        0,
-        1,
-        "20180523094504",
-        "/een-terms-of-service/00013377/Terms_and_Conditions~2~20170523094504.txt",
-        "active"
-    ],
-    [
-        "00000001",
-        "UNIT_TEST_SUB_ACCOUNT",
-        "EEN_Terms_of_Service",
-        "1.2",
-        1,
-        1,
-        "20180426191610",
-        "/een-terms-of-service/00000001/Terms_and_Conditions~1.2~20170523094504.txt",
-        "active"
-    ]
-]
-```
-
-### HTTP Response (Array Attributes)
-
-Array Index | Attribute         | Data Type | Description
------------ | ---------         | --------- | -----------
-0           | account_id        | string    | Unique ID of the account that is requesting this notice
-1           | account_name      | string    | Name of the account that is requesting this notice
-2           | title             | string    | Title of the notice
-3           | version           | string    | Version number for the notice title, a larger version number will retire other versions
-4           | is_admin_required | int       | Whether administrators have to accept (1) or not (0)
-5           | is_user_required  | int       | Whether users have to accept (1) or not (0)
-6           | timestamp         | string    | Date of the term of service
-7           | url               | string    | URL of the file containing the text for the notice
-8           | status            | string    | Status of the term of service (`'active'`, `'retired'`)
-
-<aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
-
-### Error Status Codes
-
-HTTP Status Code | Description
----------------- | -----------
-400	| Unexpected or non-identifiable arguments are supplied
-406	| Information supplied could not be verified
-402	| Account is suspended
 460	| Account is inactive
 409	| Account has already been activated
 412	| User is disabled

@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The User service allows managing Users to a degree outlined by the permission level
+The <a class="definition" onclick="openModal('DOT-User')">User</a> service allows managing Users to a degree outlined by the permission level
 
 <!--===================================================================-->
 ## User Model
@@ -15,12 +15,12 @@ The User service allows managing Users to a degree outlined by the permission le
 ```json
 {
     "id": "ca0e1cf2",
-    "first_name": "Firstname",
-    "last_name": "Lastname",
-    "email": "john.doe@fakeemail.com",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doe@nodomain.com",
     "owner_account_id": "00004206",
     "active_account_id": "00004206",
-    "uid": " ",
+    "uid": "",
     "is_superuser": 0,
     "is_account_superuser": 1,
     "is_staff": 0,
@@ -30,47 +30,52 @@ The User service allows managing Users to a degree outlined by the permission le
     "is_user_admin": 1,
     "is_layout_admin": 1,
     "is_live_video": 1,
-    "is_device_admin": 1,
     "is_export_video": 1,
     "is_recorded_video": 1,
-    "is_edit_cameras": 1,
-    "is_edit_all_users": 1,
-    "is_edit_account": 1,
-    "is_system_notifications_disabled": 0,
-    "is_edit_ptz_stations": 1,
     "is_view_preview_video": 1,
+    "is_edit_admin_users": 1,
+    "is_edit_all_users": 1,
+    "is_edit_users": 1,
+    "is_edit_account": 1,
+    "is_device_admin": 1,
+    "is_edit_cameras": 1,
     "is_edit_camera_on_off": 1,
     "is_edit_camera_less_billing": 1,
+    "is_edit_ptz_stations": 1,
     "is_edit_all_and_add": 1,
-    "is_edit_sharing": 1,
-    "is_mobile_branded": 0,
-    "is_edit_admin_users": 1,
-    "is_view_contract": 1,
-    "is_ptz_live": 1,
-    "is_view_audit_trail": 1,
-    "is_edit_users": 1,
     "is_edit_motion_areas": 1,
+    "is_edit_sharing": 1,
+    "is_ptz_live": 1,
+    "is_mobile_branded": 0,
+    "is_view_contract": 1,
+    "is_view_audit_trail": 1,
     "is_two_factor_authentication_enabled": 0,
     "user_authenticated_clients": null,
-    "account_utc_offset": -21600,
+    "account_utc_offset": -25200,
     "account_work_days": "1111100",
-    "account_work_hours": ["0800", "1730"],
+    "account_work_hours": [
+        "0900",
+        "1700"
+    ],
     "language": "en-us",
     "inactive_session_timeout": 15,
-    "street": ["address line 1", "address line 2"],
+    "street": [
+        "address line 1",
+        "address line 2"
+    ],
     "city": "New York",
     "state": "Alaska",
     "country": "US",
     "postal_code": "9980-999",
     "phone": "111111111",
     "mobile_phone": "000000000",
-    "utc_offset": -21600,
+    "utc_offset": -25200,
     "timezone": "US/Pacific",
     "last_login": "20181006173752.672",
-    "alternate_email": "alternate.email@fakeemail.com",
+    "alternate_email": "alternate.email@nodomain.com",
     "sms_phone": "222111222",
     "is_sms_include_picture": 0,
-    "json": "{}",
+    "json": "{\"een\":{\"notify_levels\":[], \"permissions\":{}}}",
     "camera_access": [
         [
             "1005f2ed",
@@ -79,7 +84,8 @@ The User service allows managing Users to a degree outlined by the permission le
         [
             "100bd708",
             "r"
-        ]
+        ],
+        [...]
     ],
     "layouts": [
         "217f0fd4-450f-11e4-a983-ca8312ea370c"
@@ -98,7 +104,7 @@ The User service allows managing Users to a degree outlined by the permission le
         "one-email-0"
     ],
     "is_branded": 1,
-    "active_brand_subdomain": "login",
+    "active_brand_subdomain": "c001",
     "account_map_lines": null,
     "access_period": [
         "0-0000-2359",
@@ -109,7 +115,11 @@ The User service allows managing Users to a degree outlined by the permission le
         "5-0000-2359",
         "6-0000-2359"
     ],
-    "is_terms_noncompliant": 1
+    "user_log_level": 0,
+    "saved_filters": [],
+    "temp_account_access": [],
+    "is_terms_noncompliant": 1,
+    "is_system_notifications_disabled": 0
 }
 ```
 
@@ -120,10 +130,17 @@ Parameter                            | Data Type            | Description       
 **id**                               | string               | Unique identifier of the user                                                        | **&cross;** | **<sub><form action="#update-user"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-user"><button>DELETE</button></form></sub>**
 **first_name**                       | string               | First name of the user                                                               | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
 **last_name**                        | string               | Last name of the user                                                                | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
-**email**                            | string               | Email address of the user (must contain only ASCII characters)                       | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
+**email**                            | string               | Email address of the user (must contain only ASCII characters) <br><br> For TFA: address to which messages containing TFA code will be delivered                                                                                                              | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
+uid                                  | string               | Identifier of the user <small>**(INTERNAL USE ONLY)**</small>                        | **&cross;** |
+phone                                | string               | Phone number                                                                         | **&check;** |
+mobile_phone                         | string               | Mobile phone number                                                                  | **&check;** |
+street                               | array[string]        | Array of strings containing street addresses [`'address line 1'`, `'address line 2'`] | **&check;** |
+city                                 | string               | City                                                                                 | **&check;** |
+state                                | string               | State/province                                                                       | **&check;** |
+country                              | string               | Two letter country code                                                              | **&check;** |
+postal_code                          | string               | Zip/postal code                                                                      | **&check;** |
 owner_account_id                     | string               | Unique identifier of the account that the user belongs to                            | **&cross;** |
 active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the `'active_account_id'` of that user in their session becomes the unique identifier of the sub-account that was switched into                                                 | **&cross;** |
-uid                                  | string               | Identifier of the user <small>**(INTERNAL USE ONLY)**</small>                        | **&cross;** |
 is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0) <small>**(INTERNAL USE ONLY)**</small>                                                                                                                                    | **&check;** |
 is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this <small>**(INTERNAL USE ONLY)**</small>                                                                                                                                    | **&check;** |
 is_account_superuser                 | int                  | Indicates whether the user is an account superuser (1) or not (0)                    | **&check;** |
@@ -153,45 +170,38 @@ is_ptz_live                          | int                  | Indicates whether 
 is_view_audit_trail                  | int                  | Indicates whether the user is authorized to view the audit trail feature (1) or not (0)                                                                                                                                                | **&cross;** |
 is_edit_users                        | int                  | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)                                                                                                                                            | **&check;** |
 is_edit_motion_areas                 | int                  | Indicates whether the user is authorized to view and edit the *Motion* tab under camera settings (1) or not (0)                                                                                                                                                | **&check;** |
-is_two_factor_authentication_enabled | int                  | <p hidden>???</p>                                                                    | <p hidden>???</p> |
-user_authenticated_clients           | <p hidden>???</p>    | <p hidden>???</p>                                                                    | <p hidden>???</p> |
+is_two_factor_authentication_enabled | int                  | Indicates whether [Two-Factor Authentication](#1-authenticate) is enabled for the user (1) or not (0)                                                                                                                                                | **&check;** |
+user_authenticated_clients           | array[string]        | Array of strings containing trusted client devices that have been used for successful authorization of this user in the past (See [Authorized Devices](#authorized-devices))                                                                                   | **&check;** |
 account_utc_offset                   | int                  | Signed integer offset in seconds of the timezone from UTC. This is the `'utc_offset'` value from the user's associated account model                                                                                                                           | **&cross;** |
 account_work_days                    | string               | The `'work_days'` value from the user's associated account model. Indicates which day is a work day                                                                                                                                                | **&cross;** |
 account_work_hours                   | array[string]        | The `'work_hours'` value from the user's associated account model. Indicates work hours for the account                                                                                                                                            | **&cross;** |
 language                             | string               | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages                                      | **&check;** |
 inactive_session_timeout             | int                  | Maximum time period in seconds without activity before web session expires. Defined in the settings of the account which the user belongs to                                                                                                                  | **&cross;** |
-street                               | array[string]        | Array of strings containing street addresses [`'address line 1'`, `'address line 2'`] | **&check;** |
-city                                 | string               | City                                                                                 | **&check;** |
-state                                | string               | State/province                                                                       | **&check;** |
-country                              | string               | Two letter country code                                                              | **&check;** |
-postal_code                          | string               | Zip/postal code                                                                      | **&check;** |
-phone                                | string               | Phone number                                                                         | **&check;** |
-mobile_phone                         | string               | Mobile phone number                                                                  | **&check;** |
 utc_offset                           | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                              | **&cross;** |
 timezone                             | string               | Timezone of the user. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...                                                                 | **&check;** |
 last_login                           | string               | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN              | **&cross;** |
 alternate_email                      | string               | Alternate email address                                                              | **&check;** |
-sms_phone                            | string               | Phone number to be used for SMS notifications                                        | **&check;** |
+sms_phone | string | Phone number to be used for SMS notifications<br><br> For TFA: address to which text messages (SMS) containing TFA code will be delivered                                                                                                                                          | **&check;** |
 is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)                                                                                                                                         | **&check;** |
-json                                 | string               | Misc settings of the user as a Json string ([UserJson](#userjson-attributes))        | **&check;** |
-camera_access                        | array[array[string]] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[`'1005f2ed'`,`'RWS'`] = user can view, change and delete this device <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share               | **&check;** |
-layouts                              | array[string]        | List of layout unique identifiers the user has access to                             | **&check;** |
+[json](#user-json)                   | string               | Miscellaneous settings of the user as a Json-formatted string                        | **&check;** |
+camera_access                        | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[`'1005f2ed'`,`'RWS'`] = user can view, change and delete this device <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                        | **&check;** |
+layouts                              | array[string]        | Array of strings each representing a layout unique identifier the user has access to | **&cross;** |
 is_notify_enable                     | int                  | Indicates whether notifications are enabled for the user (1) or not (0)              | **&check;** |
 notify_period                        | array[string]        | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM              | **&check;** |
-notify_rule                          | array[string]        | Alert notification rules. Each rule contains three fields separated by dashes in the form: `'Alert_Label-Notification_Method-Delay'` <br><br>`'Alert_Label'` - name defined by the user <br>`'Notification_Method'` - `'email'`, `'SMS'` or `'GUI'` <br>`'Delay'` - amount of time in minutes between notifications                                                                                                    | **&check;** |
+notify_rule                          | array[string]        | Alert notification rules. Each rule contains three fields separated by dashes in the form of: `'<alert_label>-<notification_method>-<delay>'` <br><br>`'<alert_label>'` - name defined by the user <br>`'<notification_method>'` - either `'email'`, `'sms'` or `'gui'` <br>`'<delay>'` - amount of time in minutes between notifications                                                                                  | **&check;** |
 is_branded                           | int                  | Indicates whether the user is associated with an account that currently has branding enabled (1) or not (0)                                                                                                                                                | **&cross;** |
 active_brand_subdomain               | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists                                                                                                                                         | **&cross;** |
 account_map_lines                    | json                 | Automatically retrieved from the user's current account setting `'map_lines'`        | **&cross;** |
 access_period                        | array[string]        | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM                                                                                                                                               | **&check;** |
 is_terms_noncompliant                | int                  | Indicates whether the terms of service have been accepted by the user (0) or not (1) | **&cross;** |
 
-### UserJson Attributes
+### User - json
 
-Parameter | Data Type | Description
---------- | --------- | -----------
-een       | string    | EEN Object ([UserJsonEEN](#userjsoneen-attributes))
+Parameter             | Data Type | Description
+---------             | --------- | -----------
+[een](#user-json-een) | string    | EEN Object containing miscellaneous user settings
 
-### UserJsonEEN Attributes
+### User - json - een
 
 Parameter               | Data Type  | Description
 ---------               | ---------  | -----------
@@ -199,7 +209,7 @@ show_AMPM               | boolean    | Indicates whether times should be shown w
 milliseconds_display    | boolean    | Indicates whether times should be shown with milliseconds (True) or not (False)
 layout_rotation_seconds | int        | If set, indicates how long to wait between layout changes during auto-rotation. If not set or set to 0, then no auto-rotation will occur
 motion_boxes            | boolean    | Indicates whether motion boxes should be shown (True) or not (False)
-notify_levels           | array[int] | Array of integers indicating what level of notification should be set for the user <br><br>Notify level: <br>1 - `'Low'` - low alert notification setting <br>2 - `'High'` - high alert notification setting <br>3 - `'System'` - not a user-defined notification setting (encompasses camera status changes: online / offline / off / internet offline / ...) <br><br>When creating motion alerts for a camera, `'High'` or `'Low'` can be assigned to the motion box trigger. When a camera changes status, any user who has chosen to receive `'System'` alert notifications will get notified of the camera status changes in their account. When an event triggers a motion alert within a motion box set to `'High'`, all users with notify levels `'High'` will be notified of the occurrence
+notify_levels           | array[int] | Array of integers indicating what level of notification should be set for the user <br><br>Notify level: <br>1 - `'Low'` - low alert notification setting <br>2 - `'High'` - high alert notification setting <br>3 - `'System'` - not a user-defined notification setting (encompasses camera status changes: online/offline/off/internet offline/...) <br><br>When creating motion alerts for a camera, `'High'` or `'Low'` can be assigned to the motion box trigger. When a camera changes status, any user who has chosen to receive `'System'` alert notifications will get notified of the camera status changes in their account. When an event triggers a motion alert within a motion box set to `'High'`, all users with notify levels `'High'` will be notified of the occurrence
 permissions             | json       | This is for backwards compatibility <small>**(DEPRECATED)**</small>
 employee_id             | string     | Identifier which a user with the necessary permissions can set for other users
 layouts                 | json       | Json-formatted data keyed by the account unique identifier, where each value is an array of globally unique identifiers of layouts in the account, ordered by how the user wants to see them in their graphical user interface
@@ -259,7 +269,7 @@ The table below shows which user management actions a user can execute depending
 
 <table style="margin-top:30px;">
   <tr>
-    <td style="background-color:#EAF2F6;" rowspan="3" colspan="3" ></td>
+    <td style="background-color:transparent;" rowspan="3" colspan="3" ></td>
     <th colspan="4" style="text-align:center; border:solid 1px;background-color:#F3F7FA;">Who I am</td>
   </tr>
   <tr>
@@ -359,11 +369,7 @@ Returns a User object by ID
 > Request
 
 ```shell
-curl -G https://login.eagleeyenetworks.com/g/user -d "A=[AUTH_KEY]"
-
-or
-
-curl -G https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" --cookie "auth_key=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -372,7 +378,7 @@ curl -G https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" --cookie "au
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-id        | string    | Unique identifier of the user | false
+id        | string    | User ID     | false
 
 ### Error Status Codes
 
@@ -455,15 +461,14 @@ Parameter                   | Data Type     | Description                       
 first_name                  | string        | First name of the user
 last_name                   | string        | Last name of the user
 email                       | string        | Email address of the user (email must only contain ASCII characters)
+uid                         | string        | Identifier of the user. Only superusers can set this <small>**(INTERNAL USE ONLY)**</small>
 phone                       | string        | Phone number
 mobile_phone                | string        | Mobile phone number
-uid                         | string        | Identifier of the user. Only superusers can set this <small>**(INTERNAL USE ONLY)**</small>
 street                      | array[string] | Array of strings containing street addresses [`'address line 1'`, `'address line 2'`]
 city                        | string        | City
 state                       | string        | State/province
 country                     | string        | Two letter country code
 postal_code                 | string        | Zip/postal code
-json                        | string        | Json-formatted data representing various user settings ([UserJson](#userjson-attributes))
 is_staff                    | int           | Indicates whether the user is a staff member (1) or not (0). Only superusers can set this <small>**(INTERNAL USE ONLY)**</small>
 is_superuser                | int           | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this <small>**(INTERNAL USE ONLY)**</small>
 is_account_superuser        | int           | Indicates whether the user is an account superuser (1) or not (0). Only superusers and account superusers can set this
@@ -487,16 +492,17 @@ is_view_contract            | int           | Indicates whether the user is auth
 is_ptz_live                 | int           | Indicates whether the user is authorized to control pan, tilt, zoom and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)
 is_edit_users               | int           | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)
 is_edit_motion_areas        | int           | Indicates whether the user is authorized to view and edit the *Motion* tab under camera settings (1) or not (0)
-camera_access               | array         | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). The first field is the command `'M'` - modify or `'D'` - delete (clears all permissions, no arguments follow the camera ID in the request), the second field is the device unique identifier and the third field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[`'M'`,`'1005f2ed'`,`'RWS'`] = user can view, change and delete this device <br>[`'D'`,`'1005f2ed'`] = clears user permissions for the device <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share
+language                    | string        | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages
+timezone                    | string        | Timezone of the user. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...
+alternate_email             | string        | Alternate email address
 sms_phone                   | string        | Phone number to be used for SMS notifications
 is_sms_include_picture      | int           | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)
-alternate_email             | string        | Alternate email address
-timezone                    | string        | Timezone of the user. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...
-access_period               | array         | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM
-notify_period               | array         | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM
+[json](#user-json)          | string        | Miscellaneous settings of the user as a Json-formatted string
+camera_access               | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). The first field is the command `'M'` - modify or `'D'` - delete (clears all permissions, no arguments follow the camera ID in the request), the second field is the device unique identifier and the third field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[`'M'`,`'1005f2ed'`,`'RWS'`] = user can view, change and delete this device <br>[`'D'`,`'1005f2ed'`] = clears user permissions for the device <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share
 is_notify_enable            | int           | Indicates whether notifications are enabled for the user (1) or not (0)
-notify_rule                 | array         | Alert notification rules. Each rule contains three fields separated by dashes in the form: `'Alert_Label-Notification_Method-Delay'` <br><br>`'Alert_Label'` - name defined by the user <br>`'Notification_Method'` - `'email'`, `'SMS'` or `'GUI'` <br>`'Delay'` - amount of time in minutes between notifications
-language                    | string        | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages
+notify_period               | array[string] | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM
+notify_rule                 | array[string] | Alert notification rules. Each rule contains three fields separated by dashes in the form of: `'<alert_label>-<notification_method>-<delay>'` <br><br>`'<alert_label>'` - name defined by the user <br>`'<notification_method>'` - either `'email'`, `'sms'` or `'gui'` <br>`'<delay>'` - amount of time in minutes between notifications
+access_period               | array[string] | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM
 
 <aside class="warning">If previously set, 'camera_access' can only be modified via command 'M' after clearing the permissions using command 'D'</aside>
 
@@ -533,7 +539,7 @@ Delete a User
 > Request
 
 ```shell
-curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -G -H "content-type: application/json" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -542,7 +548,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -G -H
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Unique identifier of the user | true
+**id**    | string    | User ID     | true
 
 ### Error Status Codes
 
@@ -563,7 +569,7 @@ Returns array of arrays with each sub-array representing a User available to the
 > Request
 
 ```shell
-curl --request GET https://login.eagleeyenetworks.com/g/user/list --cookie "auth_key=[AUTH_KEY]"
+curl --request GET https://login.eagleeyenetworks.com/g/user/list -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
 ```
 
 ### HTTP Request
@@ -618,7 +624,7 @@ Array Index | Attribute   | Data Type     | Description
 1           | first_name  | string        | First name of the user
 2           | last_name   | string        | Last name of the user
 3           | email       | string        | Email address of the user
-4           | permissions | array[string] | List of user permissions
+4           | permissions | array[string] | Array of strings representing user permissions
 5           | last_login  | string        | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>

@@ -4,11 +4,17 @@
 ## Overview
 <!--===================================================================-->
 
-Asset services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify [Assets](#DOT-Asset)
+<a class="definition" onclick="openModal('DOT-Asset')">Asset</a> services provide access to Media Assets - previews and video in appropriate formats. Asset services are used in conjunction with list transactions to enumerate and identify Assets. All assets are tagged with and can be identified by the EEN Timestamp
 
-<aside class="notice">Assets are identified by a tuple of timestamp, cameraid, quality and format</aside>
+### EEN Timestamp
 
-  - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time)
+Type          | Meaning
+----          | -------
+**EEN Timestamp** | **Format:**&nbsp;&nbsp;YYYYMMDDhhmmss.xxx <small>(string)</small> <br>**System:**&nbsp;Coordinated Universal Time (UTC) <br><small>Synchronized time zone: Greenwich Mean Time (GMT)</small> <br><br>**Example:**&nbsp;*Jan 2, 2018 08:30:20.00* == *20180102083020.000*
+
+### Assets Identifiers
+
+  - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time, +/- offsets from `'now'` are valid in milliseconds)
   - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit ID associated with a specific camera (CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
   - **Quality*****(Future Feature)*****:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. Additional quality levels will be supported in time
     - **low:** around 100 KB/s
@@ -81,34 +87,30 @@ The H264 codec has the concept of profiles and levels to convey whether a playba
     This means that the video is currently being transcoded within our system and therefore couldn't be found. Assuming the data actually exists (check against the video list call), the video will eventually be ready for you to fetch in the desired format, but for the time being, you will have to wait and refetch until the requested video is ready -->
 
 <!--===================================================================-->
-## EEN Timestamp
-<!--===================================================================-->
-
-All assets have an EEN timestamp attached. Timestamps are always in UTC and maintained to the nearest millisecond. Timestamps are rendered in text as YYYYMMDDhhmmss.xxx
-
-+/- offsets from `'now'` are valid in ms
-
-<!--===================================================================-->
 ## Get Image
 <!--===================================================================-->
 
-<aside class="notice">Get a JPEG image based on the specified timestamp. This will return binary image data in JPEG format</aside>
+Get a JPEG image based on the specified timestamp. This will return binary image data in JPEG format
 
-Cache control headers to allow asset caching if not `'now'`-relative:
+### Cache control headers to allow asset caching if not `'now'`-relative:
 
 Header            | Data Type      | Description
 ------            | ---------      | -----------
 x-ee-timestamp    | type-timestamp | Specifies asset type and timestamp of the provided image <br><br>Type: video, preview, thumb, event
-x-ee-prev         | type-timestamp <br>*(or `'unknown'`)* | Specifies asset type of the previous image matching the class filter or `'unknown'` if the previous image was too complex to figure out
-x-ee-next         | type-timestamp <br>*(or `'unknown'`)* | Specifies asset type of the following image matching the class filter or `'unknown'` if the following image was too complex to figure out
+x-ee-prev         | type-timestamp <br>*(or&nbsp;`'unknown'`)* | Specifies asset type of the previous image matching the class filter or `'unknown'` if the previous image was too complex to figure out
+x-ee-next         | type-timestamp <br>*(or&nbsp;`'unknown'`)* | Specifies asset type of the following image matching the class filter or `'unknown'` if the following image was too complex to figure out
 content-type      | `'image/jpeg'` | Specifies the content type
 location          | `'/asset/asset/image.jpeg?t=20180917213405.700;q=low;c=thumb'` | Identifies actual asset time of the image in response
 
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/prev/image.jpeg?id=[CAMERA_ID];timestamp=[TIMESTAMP];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAMERA_ID]" -d "timestamp=[TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G -v
 ```
+
+> <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory</small>
+
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify output filename, path and extension</small>
 
 ### HTTP Request
 
@@ -156,7 +158,9 @@ HTTP Status Code | Description
 ## Get Video
 <!--===================================================================-->
 
-<aside class="notice">Get a video stream in the requested format based on the specified timestamps. Returns binary video data in the requested format:</aside>
+Get a video stream in the requested format based on the specified timestamps. Returns binary video data in the requested format
+
+### Video formats:
 
   - **FLV** *(The recommended format for web streaming)*
   - **MP4**
@@ -164,8 +168,12 @@ HTTP Status Code | Description
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/play/video.flv?id=[CAMERA_ID];start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/play/video.flv -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G -v
 ```
+
+> <small>Provide the '<b>-O</b>' option at the end of the request for file output to the current directory (timestamps must coincide with existing video)</small>
+
+> <small>Provide the '<b>-o "/\<file_path/\<filename\>\.\<extension\>"</b>' option to specify output filename, path and extension (timestamps must coincide with existing video)</small>
 
 ### HTTP Request
 
@@ -211,7 +219,7 @@ This API call will ensure the image is in the cloud. If the image is not in the 
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/image.jpg?start_timestamp=[START_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/cloud/image.jpg -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "webhook_url=[WEBHOOK_URL]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -223,6 +231,8 @@ Parameter           | Data Type | Description   | Is Required
 **id**              | string    | Camera ID     | true
 **start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
+
+<!-- TODO: When a webhook will be available, check the endpoint .jpg and verify if it shouldn't be .jpeg as in Get Image -->
 
 > Webhook Json POST Response
 
@@ -257,7 +267,7 @@ This API call will ensure the video is in the cloud. If the video is not in the 
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/cloud/video.flv?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];webhook_url=[WEBHOOK_URL]A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/cloud/video.flv -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "webhook_url=[WEBHOOK_URL]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -306,7 +316,7 @@ Get a list of objects, where each object contains the type of event delivering t
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/image?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];asset_class=[ASSET_CLASS];A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/list/image -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "asset_class=[ASSET_CLASS]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -317,8 +327,8 @@ Parameter           | Data Type    | Description   | Is Required
 ---------           | ---------    | -----------   | -----------
 **id**              | string       | Camera ID     | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
+**end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**     | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
-end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
 count               | int          | Used instead or with an `'end_timestamp'` argument. If used with an `'end_timestamp'` argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the `'end_timestamp'` argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
 
 > Json Response
@@ -345,18 +355,7 @@ count               | int          | Used instead or with an `'end_timestamp'` a
         "t":"PRFR",
         "s":"20181001000004.064"
     },
-    {
-        "t":"PRFR",
-        "s":"20181001000005.063"
-    },
-    {
-        "t":"PRFR",
-        "s":"20181001000006.063"
-    },
-    {
-        "t":"PRFR",
-        "s":"20181001000007.096"
-    }
+    {...}
 ]
 ```
 
@@ -390,7 +389,7 @@ If the option `'o=coalesce'` has been added, the videos with overlapping start a
 > Request
 
 ```shell
-curl -v -G "https://login.eagleeyenetworks.com/asset/list/video?start_timestamp=[START_TIMESTAMP];end_timestamp=[END_TIMESTAMP];id=[CAMERA_ID];o=coalesce;A=[AUTH_KEY]"
+curl -X GET https://login.eagleeyenetworks.com/asset/list/video -d "id=[CAMERA_ID]" -d "start_timestamp=[START_TIMESTAMP]" -d "end_timestamp=[END_TIMESTAMP]" -d "o=coalesce" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -G
 ```
 
 ### HTTP Request
@@ -434,21 +433,7 @@ o                   | string, enum | Additional modifier options <br><br>enum: c
         "e":"20181001000632.829",
         "id":4177007014
     },
-    {
-        "s":"20181001000746.836",
-        "e":"20181001000834.757",
-        "id":4177007035
-    },
-    {
-        "s":"20181001000904.749",
-        "e":"20181001000932.767",
-        "id":4177007047
-    },
-    {
-        "s":"20181001000934.766",
-        "e":"20181001001002.777",
-        "id":4177007072
-    }
+    {...}
 ]
 ```
 

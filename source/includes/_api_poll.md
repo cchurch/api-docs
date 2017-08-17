@@ -6,7 +6,9 @@
 
 The Poll service provides a mechanism for an application to receive notifications of events or spans from Eagle Eye Networks. These entities are grouped by resource
 
-Resources:
+<aside class="success">This service will continually be extended</aside>
+
+### Resources
 
   - pre - Timestamp for a preview image. The timestamp can later be used to retrieve the actual preview image
   - thumb - Timestamp for a thumbnail image. The timestamp can later be used to retrieve the actual thumbnail image
@@ -14,72 +16,17 @@ Resources:
   - [status](#status-bitmask) - Bitmask defining the state of a bridge or a camera
   - [event](#event-objects) - Full event information
 
-Event sources:
-
-  - Camera or device (camera alerts, start and stop recording, etc.)
-  - System (maintenance, server changes, etc.)
-  - Account (other user changes, account alerts, layout changes, etc.)
-
-Camera and device events include: on, off, online, offline, currently recording, currently sensing motion, start/stop schedule event, being controlled with PTZ, etc.)
-
-<aside class="success">This service will continually be extended</aside>
-
 Poll is a stateful request for updates any time a matching event occurs within the service. The initial Poll request is a POST (Default GET with [WebSocket](#websocket-polling)) with a Json-formatted body indicating the resources to track. Resources that are video, pre and thumbnail automatically register the API caller to their respective events. However, resource type `'event'` requires the API caller to tell the API what events to listen for
 
 Each object consists of an ID element and a list of resource types to be monitored. The POST transaction receives and immediately responds with a Json-formatted body indicating the current timestamp for all requested resources. The response also includes a cookie, which can be used to track changes to the indicated resources via GET transaction
 
-### Response Resource Types
+### Event Sources
 
-Each resource type has a specific object format in response:
+  - Camera or device - camera alerts, start and stop recording, etc.
+  - System - maintenance, server changes, etc.
+  - Account - other user changes, account alerts, layout changes, etc.
 
-Type                      | Response         | Description
-----                      | --------         | -----------
-pre                       | prets            | Timestamp of latest preview image
-thumb                     | thumbts          | Timestamp of latest thumbnail image
-video                     | [startts, endts] | List of start and end timestamps for a video segment. Updates at start and per key frame received until end
-[status](#status-bitmask) | bitmask          | A numerical bitmask defining the status. Bit position defines status
-[event](#event-objects)   | object           | Events are a key value pair, where the key is the Four CC of the event and event structure is the actual meta data for that specific event
-
-## Status Bitmask
-
-HEX Value | Status
---------- | ------
-0x000001  | Camera online <small>**(DEPRECATED)**</small>
-0x000002  | Stream attached (camera communicating with bridge) <small>**(DEPRECATED)**</small>
-0x000004  | Camera on (user setting) <small>**(DEPRECATED)**</small>
-0x000008  | Camera recording <small>**(DEPRECATED)**</small>
-0x000010  | Camera sending previews
-0x000020  | Camera located (bridge has found the camera)
-0x000040  | Camera not supported
-0x000080  | Camera configuration in process (bridge configuring camera)
-0x000100  | Camera needs ONVIF password
-0x000200  | Camera available but not yet attached
-0x000400  | *Internal status*
-0x000800  | Camera error
-0x001000  | *Internal status*
-0x002000  | *Internal status*
-0x004000  | *Reserved*
-0x008000  | *Reserved*
-0x010000  | Invalid state (unknown state)
-0x020000  | Camera on (user setting)
-0x040000  | Camera streaming video
-0x080000  | Camera recording
-0x100000  | Camera online
-
-This status bitmask is used to determine what the high-level/overall device status is
-
-<aside class="notice">Overall status uses the following logic:</aside>
-
-IF "Camera On" (**bit 17**)==0 THEN "Off" (orange forbidden icon)
-<br>ELSE IF "Registered" (**bit 20**)==0 THEN "Internet Offline" (red exclamation icon)
-<br>ELSE IF "Streaming" (**bit 18**)==1 THEN "Online" (green check icon)
-<br>ELSE IF "Password" (**bit 8**)==1 THEN "Password Needed" (effectively "Offline") (red padlock icon)
-<br>ELSE "Offline" (red X icon)
-
-<aside class="notice">Recording status uses the following logic:</aside>
-
-IF "Recording" (**bit 19**) THEN Recording (green circle icon)
-IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits were set previously)
+Camera and device events include: on, off, online, offline, currently recording, currently sensing motion, start/stop schedule event, being controlled with PTZ, etc.
 
 <!--===================================================================-->
 ## Event Objects
@@ -317,6 +264,49 @@ zoom_status      | <p hidden>???</p>
 </details>
 
 <!--===================================================================-->
+## Status Bitmask
+<!--===================================================================-->
+
+This status Bitmask is used to determine what the high-level/overall device status is
+
+HEX Value | Status
+--------- | ------
+0x100000  | Camera online
+0x020000  | Camera on (user setting)
+0x080000  | Camera recording
+0x000010  | Camera sending previews
+0x040000  | Camera streaming video
+0x000020  | Camera located (bridge has found the camera)
+0x000080  | Camera configuration in process (bridge configuring camera)
+0x000100  | Camera needs ONVIF password
+0x000200  | Camera available but not yet attached
+0x000040  | Camera not supported
+0x000800  | Camera error
+0x010000  | Invalid state (unknown state)
+0x000400  | *Internal status*
+0x001000  | *Internal status*
+0x002000  | *Internal status*
+0x004000  | *Reserved*
+0x008000  | *Reserved*
+0x000001  | <small>Camera online <br>**(DEPRECATED)**</small>
+0x000004  | <small>Camera on (user setting) <br>**(DEPRECATED)**</small>
+0x000008  | <small>Camera recording <br>**(DEPRECATED)**</small>
+0x000002  | <small>Stream attached (camera communicating with bridge) <br>**(DEPRECATED)**</small>
+
+### Overall status
+
+IF "Camera On" (**bit 17**)==0 THEN "Off" (orange forbidden icon)
+<br>ELSE IF "Registered" (**bit 20**)==0 THEN "Internet Offline" (red exclamation icon)
+<br>ELSE IF "Streaming" (**bit 18**)==1 THEN "Online" (green check icon)
+<br>ELSE IF "Password" (**bit 8**)==1 THEN "Password Needed" (effectively "Offline") (red padlock icon)
+<br>ELSE "Offline" (red X icon)
+
+### Recording status
+
+IF "Recording" (**bit 19**) THEN Recording (green circle icon)
+IF "Invalid" (**bit 16**)==1 THEN no status change (use whatever status bits were set previously)
+
+<!--===================================================================-->
 ## Initialize Poll
 <!--===================================================================-->
 
@@ -327,7 +317,7 @@ Response includes 2 session cookies and a returned token (which are identical). 
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' https://c001.eagleeyenetworks.com/poll -d '{"cameras":{"111st658":{"resource":["event","status"],"event":["VREE","PRFR","CPRG"]}}}'
+curl -X POST https://login.eagleeyenetworks.com/poll -d '{"cameras":{"[ID]":{"resource":["event","pre"],"event":["VREE","PRFR","CPRG"]}}}' -H 'Content-Type: application/json' -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]" -v
 ```
 
 > Request Json
@@ -368,6 +358,18 @@ curl --cookie "auth_key=[AUTH_KEY]" -X POST -H 'Content-Type: application/json' 
 
 `POST https://login.eagleeyenetworks.com/poll`
 
+### Resource Types
+
+Each resource type has a specific object format in response:
+
+Type                      | Response         | Description
+----                      | --------         | -----------
+pre                       | prets            | Timestamp of latest preview image
+thumb                     | thumbts          | Timestamp of latest thumbnail image
+video                     | [startts, endts] | List of start and end timestamps for a video segment. Updates at start and per key frame received until end
+[status](#status-bitmask) | bitmask          | A numerical bitmask defining the status. Bit position defines status
+[event](#event-objects)   | object           | Events are a key value pair, where the key is the Four CC of the event and event structure is the actual meta data for that specific event
+
 <aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by ID (camera, bridge or account ESN)</aside>
 
 Due to the progressing expansion of the event polling mechanic, the parameter `'cameras'` has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
@@ -386,7 +388,7 @@ The Json object allows to narrow down the polling scope by specifying which type
 
 Parameter    | Data Type     | Description | Is Required
 ---------    | ---------     | ----------- | -----------
-**resource** | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: [pre, thumb, video, status, event](#poll) | true
+**resource** | array[string] | Array of one or more string containing which type of data should be retrieved from the provided device/account<br><br>enum: pre, thumb, video, status, event | true
 event        | array[string] | Array of one or more string containing the event [Four CC](#event-objects) (if resource contains `'event'`, the array of events specified here will narrow down the scope of retrieved events)
 
 <!--TODO: Find out why the video as a feasible resource has been excluded from the above table-->
@@ -429,8 +431,6 @@ The amount of keys depends on the sent request inquiry (if the request entailed 
 
 If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
-The returned values are in accordance with the [returned resource types](#response-resource-types)
-
 <aside class="warning">The status parameter takes precedence (if multiple) and all others will become suppressed when polling over HTTP POST /poll</aside>
 
 ### Error Status Codes
@@ -451,7 +451,7 @@ HTTP Status Code | Description
 > Request
 
 ```shell
-curl --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" --request GET https://c001.eagleeyenetworks.com/poll
+curl -X GET https://login.eagleeyenetworks.com/poll -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY];ee-poll-ses=[TOKEN]" -G
 ```
 
 ### HTTP Request
@@ -531,7 +531,7 @@ The amount of keys depends on the sent POST request (if the request entailed `'p
 
 If a specified event has not been triggered on the device/account, it will not be listed by the poll service (no error will be reported)
 
-The returned values are in accordance with the [returned resource types](#response-resource-types)
+The returned values are in accordance with the [returned resource types](#resource-types)
 
 <aside class="warning">The status parameter will be omitted (if multiple), all others will be returned when polling over HTTP GET /poll</aside>
 
@@ -602,7 +602,7 @@ The WebSocket protocol has two parts:
   - Handshake (to establish the upgraded connection)
   - Data transfer
 
-<aside class="notice">The handshake process has to be initiated from the client side via a standard HTTP request (the HTTP version must be 1.1 or greater and the method must be GET)</aside>
+The handshake process has to be initiated from the client side via a standard HTTP request <br>(HTTP version must be 1.1 or greater and the method must be GET)
 
 <table>
     <tr>

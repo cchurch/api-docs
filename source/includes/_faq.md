@@ -17,4 +17,4 @@ For API specific questions, issues or feature requests, please submit a request
 The Eagle Eye Video API does not require any additional fees for use <br>The only fees are the per camera fees for the use of the Eagle Eye system
 
 **What can I do with the Eagle Eye API?**<br id=FAQ-005>
-The Eagle Eye Video API provides a robust set of storage, analytics, indexing and interfaces for quickly building or integrating applications with both live and recorded video. The applications can range from very simple to highly complex <br><br>See our **How To's and Example Code** page
+The Eagle Eye Video API provides a robust set of storage, analytics, indexing and interfaces for quickly building or integrating applications with both live and recorded video. The applications can range from very simple to highly complex
