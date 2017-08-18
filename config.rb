@@ -29,8 +29,14 @@ activate :livereload,
   :ignore => [/\.html$/],    # Ignore changes to .html
   :livereload_css_pattern => Regexp.new('.+\.scss$'),
   :livereload_css_target => nil,
+  :apply_css_live => true,
+  :apply_js_live => true,
   :host => 'localhost',
   :port => 4568
+
+
+# Middleman Watcher 
+# set :watcher_disable, true    # console notifications about filechanges
 
 
 # Ignore listed files
