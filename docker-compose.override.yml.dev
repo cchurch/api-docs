@@ -3,11 +3,8 @@
    apidoc:
      volumes:
        - .:/usr/src/app
-
      ports:
-       - "8000:4567"
        - "4567-4568:4567-4568"
-
      command: /bin/bash -c "echo ==================== B U I L D ====================;
                             pwd;
                             bundle exec middleman build --clean;
