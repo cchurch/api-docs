@@ -35,7 +35,7 @@ activate :livereload,
   :port => 4568
 
 
-# Middleman Watcher
+# Middleman Watcher 
 # set :watcher_disable, true    # console notifications about filechanges
 
 
