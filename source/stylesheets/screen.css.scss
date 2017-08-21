@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @import 'normalize';
+@import 'variables';
+@import 'icon-font';
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -16,76 +18,52 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations
 under the License.
 */
-.content h1, .content h2, .content h3, .content h4, .content h5, .content h6, html, body {
-  font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei","微软雅黑", STXihei, "华文细黑", sans-serif;
-  font-size: 13px; }
 
-.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
-  font-weight: bold; }
 
-.content code, .content pre {
-  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-  font-size: 12px;
-  line-height: 1.5; }
 
-.content code {
-  word-break: break-all;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto; }
 
-@font-face {
-  font-family: 'slate';
-  src: url(../fonts/slate.eot?-syv14m);
-  src: url(../fonts/slate.eot?#iefix-syv14m) format("embedded-opentype"), url(../fonts/slate.woff2?-syv14m) format("woff2"), url(../fonts/slate.woff?-syv14m) format("woff"), url(../fonts/slate.ttf?-syv14m) format("truetype"), url(../fonts/slate.svg?-syv14m#slate) format("svg");
-  font-weight: normal;
-  font-style: normal; }
-.content aside.warning:before, .content aside.notice:before, .content aside.success:before, .tocify-wrapper > .search:before {
-  font-family: 'slate';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1; }
+////////////////////////////////////////////////////////////////////////////////
+// <------------------------------------------------------------------------> //
+// 				MAIN | CSS
+// <------------------------------------------------------------------------> //
+////////////////////////////////////////////////////////////////////////////////
 
-.content aside.warning:before {
-  content: "\e600"; }
 
-.content aside.notice:before {
-  content: "\e602"; }
 
-.content aside.success:before {
-  content: "\e606"; }
 
-.tocify-wrapper > .search:before {
-  content: "\e607"; }
+////////////////////////////////////////////////////////////////////////////////
+// SELECTION
+////////////////////////////////////////////////////////////////////////////////
+// Defines the color of text and element selection
 
-/*
-Copyright 2008-2013 Concur Technologies, Inc.
+/*::selection {
+  background: $global-select-bg; / WebKit/Blink Browsers / }*/
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may
-not use this file except in compliance with the License. You may obtain
-a copy of the License at
+/*::-moz-selection {
+  background: $global-select-bg; / Gecko Browsers / }*/
 
-  http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-License for the specific language governing permissions and limitations
-under the License.
-*/
-html, body {
-  color: #333;
+////////////////////////////////////////////////////////////////////////////////
+// GENERAL STUFF
+////////////////////////////////////////////////////////////////////////////////
+
+html,
+body {
+  color: $main-text;
   padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #eaf2f6;
+  @extend %default-font;
+  background-color: $main-bg;
   height: 100%;
   -webkit-text-size-adjust: none;
   /* Never autoresize text */ }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// TABLE OF CONTENTS
+////////////////////////////////////////////////////////////////////////////////
 
 #toc > ul > li > a > span {
   float: right;
@@ -102,39 +80,49 @@ html, body {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 230px;
-  background-color: #393939;
+  width: $nav-width;
+  background-color: $nav-bg;
   font-size: 13px;
   font-weight: bold; }
+
+  // language selector for mobile devices
   .tocify-wrapper .lang-selector {
     display: none; }
+
     .tocify-wrapper .lang-selector a {
       padding-top: 0.5em;
       padding-bottom: 0.5em; }
+
+  // This is the logo at the top of the ToC
   .tocify-wrapper > img {
     display: block;
     max-width: 100%; }
+
   .tocify-wrapper > .search {
     position: relative; }
+
     .tocify-wrapper > .search input {
-      background: #393939;
+      background: $nav-bg;
       border-width: 0 0 1px 0;
-      border-color: #666;
+      border-color: $search-box-border-color;
       padding: 6px 0 6px 20px;
       box-sizing: border-box;
-      margin: 10px 15px;
-      width: 200px;
+      margin: $nav-v-padding $nav-padding;
+      width: $nav-width - 30;
       outline: none;
-      color: #fff;
-      border-radius: 0;
-      /* ios has a default border radius */ }
+      color: $nav-text;
+      border-radius: 0; /* ios has a default border radius */ }
+
     .tocify-wrapper > .search:before {
       position: absolute;
       top: 17px;
-      left: 15px;
-      color: #fff; }
-  .tocify-wrapper img + .tocify, .tocify-wrapper .lang-selector + .tocify {
-    margin-top: 20px; }
+      left: $nav-padding;
+      color: $nav-text; }
+
+  .tocify-wrapper img + .tocify,
+  .tocify-wrapper .lang-selector + .tocify {
+    margin-top: $logo-margin; }
+
   .tocify-wrapper .search-results {
     margin-top: 0;
     box-sizing: border-box;
@@ -144,64 +132,96 @@ html, body {
     transition-property: height, margin;
     transition-duration: 180ms;
     transition-timing-function: ease-in-out;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 8px), linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent 8px), linear-gradient(to bottom, black, transparent 1.5px), linear-gradient(to top, #939393, rgba(147, 147, 147, 0) 1.5px), #262626; }
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 8px),
+                linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent 8px),
+                linear-gradient(to bottom, black, transparent 1.5px),
+                linear-gradient(to top, #939393, rgba(147, 147, 147, 0) 1.5px), #262626; }
+
     .tocify-wrapper .search-results.visible {
       height: 30%;
       margin-bottom: 1em; }
+
     .tocify-wrapper .search-results li {
-      margin: 1em 15px;
+      margin: 1em $nav-padding;
       line-height: 1; }
+
     .tocify-wrapper .search-results a {
-      color: #fff;
+      color: $nav-text;
       text-decoration: none; }
+
       .tocify-wrapper .search-results a:hover {
         text-decoration: underline; }
-  .tocify-wrapper .tocify-item > a, .tocify-wrapper .toc-footer li {
-    padding: 0 15px 0 15px;
+
+  .tocify-wrapper .tocify-item > a,
+  .tocify-wrapper .toc-footer li {
+    padding: 0 $nav-padding 0 $nav-padding;
     display: block;
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; }
-  .tocify-wrapper ul, .tocify-wrapper li {
+
+  // The Table of Contents is composed of multiple nested
+  // unordered lists.  These styles remove the default
+  // styling of an unordered list because it is ugly.
+  .tocify-wrapper ul,
+  .tocify-wrapper li {
     list-style: none;
     margin: 0;
     padding: 0;
     line-height: 28px; }
+
   .tocify-wrapper li {
-    color: #fff;
+    color: $nav-text;
     transition-property: background;
     transition-timing-function: linear;
     transition-duration: 230ms; }
+
+  // This is the currently selected ToC entry
   .tocify-wrapper .tocify-focus {
-    box-shadow: 0px 1px 0px #000;
-    background-color: #2467af;
-    color: #fff; }
+    box-shadow: 0px 1px 0px $nav-active-shadow;
+    background-color: $nav-active-bg;
+    color: $nav-active-text; }
+
+  // Subheaders are the submenus that slide open
+  // in the table of contents.
   .tocify-wrapper .tocify-subheader {
-    display: none;
-    background-color: #262626;
+    display: none; /* tocify will override this when needed */
+    background-color: $nav-subitem-bg;
     font-weight: 500;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 8px), linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent 8px), linear-gradient(to bottom, black, transparent 1.5px), linear-gradient(to top, #939393, rgba(147, 147, 147, 0) 1.5px), #262626; }
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 8px),
+                linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent 8px),
+                linear-gradient(to bottom, black, transparent 1.5px),
+                linear-gradient(to top, #939393, rgba(147, 147, 147, 0) 1.5px), #262626; }
+
     .tocify-wrapper .tocify-subheader .tocify-item > a {
-      padding-left: 25px;
+      padding-left: $nav-padding + $nav-indent;
       font-size: 12px; }
+
+     // for embossed look
     .tocify-wrapper .tocify-subheader > li:last-child {
-      box-shadow: none; }
+      box-shadow: none; /* otherwise it'll overflow out of the subheader */ }
+
   .tocify-wrapper .toc-footer {
     padding: 1em 0;
     margin-top: 1em;
-    border-top: 1px dashed #666; }
-    .tocify-wrapper .toc-footer li, .tocify-wrapper .toc-footer a {
-      color: #fff;
+    border-top: 1px dashed $nav-footer-border-color; }
+
+    .tocify-wrapper .toc-footer li,
+    .tocify-wrapper .toc-footer a {
+      color: $nav-text;
       text-decoration: none; }
+
     .tocify-wrapper .toc-footer a:hover {
       text-decoration: underline; }
+
     .tocify-wrapper .toc-footer li {
       font-size: 0.8em;
       line-height: 1.7;
       text-decoration: none; }
 
+// button to show navigation on mobile devices
 #nav-button {
-  /* padding: 0 1.5em 5em 0; */
+  /* padding: 0 1.5em 5em 0; */ /* increase touch size area */
   display: none;
   position: fixed;
   top: 0;
@@ -213,168 +233,255 @@ html, body {
   opacity: 0.7;
   line-height: 16px;
   transition: left 0.3s ease-in-out; }
+
   #nav-button span {
     display: block;
-    padding: 6px 6px 6px;
-    background-color: rgba(234, 242, 246, 0.7);
+    padding: $side-pad $side-pad $side-pad;
+    background-color: rgba($main-bg, 0.7);
     transform-origin: 0 0;
     transform: rotate(-90deg) translate(-100%, 0);
     border-radius: 0 0 0 5px; }
+
   #nav-button img {
     height: 16px;
     vertical-align: bottom; }
+
   #nav-button:hover {
     opacity: 1; }
+
   #nav-button.open {
-    left: 230px; }
+    left: $nav-width; }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// PAGE LAYOUT AND CODE SAMPLE BACKGROUND
+////////////////////////////////////////////////////////////////////////////////
 
 .page-wrapper {
-  margin-left: 230px;
+  margin-left: $nav-width;
   position: relative;
   z-index: 10;
-  background-color: #eaf2f6;
+  background-color: $main-bg;
   min-height: 100%;
-  padding-bottom: 1px; }
+  padding-bottom: 1px; /* prevent margin overflow */ }
+
+  // The dark box is what gives the code samples their dark background.
+  // It sits essentially under the actual content block, which has a
+  // transparent background.
+  // I know, it's hackish, but it's the simplist way to make the left
+  // half of the content always this background color.
   .page-wrapper .dark-box {
-    width: 50%;
-    background-color: #393939;
+    width: $examples-width;
+    background-color: $examples-bg;
     position: absolute;
     right: 0;
     top: 0;
     bottom: 0; }
+
   .page-wrapper .lang-selector {
     position: fixed;
     z-index: 50;
-    border-bottom: 5px solid #393939; }
+    border-bottom: 5px solid $lang-select-active-bg; }
 
 .lang-selector {
-  background-color: #222;
+  background-color: $lang-select-bg;
   width: 100%;
   font-weight: bold; }
+
   .lang-selector a {
     display: block;
     float: left;
-    color: #fff;
+    color: $lang-select-text;
     text-decoration: none;
     padding: 0 10px;
     line-height: 30px;
     outline: 0; }
-    .lang-selector a:active, .lang-selector a:focus {
-      background-color: #111;
-      color: #fff; }
+
+    .lang-selector a:active,
+    .lang-selector a:focus {
+      background-color: $lang-select-pressed-bg;
+      color: $lang-select-pressed-text; }
+
     .lang-selector a.active {
-      background-color: #393939;
-      color: #fff; }
+      background-color: $lang-select-active-bg;
+      color: $lang-select-active-text; }
+
   .lang-selector:after {
     content: '';
     clear: both;
     display: block; }
 
+
+////////////////////////////////////////////////////////////////////////////////
+// CONTENT STYLES
+////////////////////////////////////////////////////////////////////////////////
+// This is all the stuff with the light background in the left half of the page
+
 .content {
-  position: relative;
-  z-index: 30;
-  /* This defines how the default text (code) appears in the right half of the page before other coloration is applied */ }
+  position: relative;   /* to place content above the dark box */
+  z-index: 30; /* This defines how the default text (code) appears in the right half of the page before other coloration is applied */ }
+
   .content:after {
     content: '';
     display: block;
     clear: both; }
-  .content > h1, .content > h2, .content > h3, .content > h4, .content > h5, .content > h6, .content > p, .content > table, .content > ul, .content > ol, .content > aside, .content > dl {
-    margin-right: 50%;
-    padding: 0 28px;
+
+  .content > h1,
+  .content > h2,
+  .content > h3,
+  .content > h4,
+  .content > h5,
+  .content > h6,
+  .content > p,
+  .content > table,
+  .content > ul,
+  .content > ol,
+  .content > aside,
+  .content > dl {
+    margin-right: $examples-width;
+    padding: 0 $main-padding;
     box-sizing: border-box;
     display: block;
-    text-shadow: 0px 1px 0px #fff; }
-  .content > ul, .content > ol {
-    padding-left: 43px; }
-  .content > h1, .content > h2, .content > div {
+    text-shadow: $main-embossed-text-shadow; }
+
+  .content > ul,
+  .content > ol {
+    padding-left: $main-padding + 15px; }
+
+  // the div is the tocify hidden div for placeholding stuff
+  .content > h1,
+  .content > h2,
+  .content > div {
     clear: both; }
+
   .content h1 {
+    @extend %header-font;
     font-size: 30px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     border-bottom: 1px solid #ccc;
-    margin-bottom: 21px;
+    margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
     border-top: 1px solid #ddd;
     background-image: linear-gradient(to bottom, #fff, #f9f9f9); }
-  .content h1:first-child, .content div:first-child + h1 {
+
+  .content h1:first-child,
+  .content div:first-child + h1 {
     border-top-width: 0;
     margin-top: 0; }
+
   .content h2 {
+    @extend %header-font;
     font-size: 20px;
-    /*! margin-top: 4em; */
     margin-bottom: 0;
     border-top: 1px solid #ccc;
     padding-top: 1.2em;
     padding-bottom: 1.2em;
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0)); }
-  .content h1 + h2, .content h1 + div + h2 {
-    margin-top: -21px;
+
+  // h2s right after h1s should bump right up
+  // against the h1s.
+  .content h1 + h2,
+  .content h1 + div + h2 {
+    margin-top: $h1-margin-bottom * -1;
     border-top: none; }
-  .content h3, .content h4, .content h5, .content h6 {
+
+  .content h3,
+  .content h4,
+  .content h5,
+  .content h6 {
+    @extend %header-font;
     font-size: 15px;
     margin-top: 2.5em;
     margin-bottom: 0.8em; }
-  .content h4, .content h5, .content h6 {
+
+  .content h4,
+  .content h5,
+  .content h6 {
     font-size: 10px; }
+
   .content hr {
     margin: 2em 0;
-    border-top: 2px solid #393939;
-    border-bottom: 2px solid #eaf2f6; }
+    border-top: 2px solid $examples-bg;
+    border-bottom: 2px solid $main-bg; }
+
   .content table {
     margin-bottom: 1em;
     overflow: auto; }
-    .content table th, .content table td {
+
+    .content table th,
+    .content table td {
       text-align: left;
       vertical-align: top;
       line-height: 1.6; }
+
     .content table th {
       padding: 5px 10px;
       border-bottom: 1px solid #ccc;
       vertical-align: bottom; }
+
     .content table td {
       padding: 10px; }
+
     .content table tr:last-child {
       border-bottom: 1px solid #ccc; }
+
     .content table tr:nth-child(odd) > td {
       background-color: #f9fbfc; }
+
     .content table tr:nth-child(even) > td {
       background-color: #f3f7fa; }
+
   .content dt {
     font-weight: bold; }
+
   .content dd {
     margin-left: 15px; }
-  .content p, .content li, .content dt, .content dd {
+
+  .content p,
+  .content li,
+  .content dt,
+  .content dd {
     line-height: 1.6;
     margin-top: 0; }
+
   .content img {
     max-width: 100%; }
+
   .content code {
     background-color: rgba(0, 0, 0, 0.05);
     padding: 3px;
-    border-radius: 3px; }
+    border-radius: 3px;
+    @extend %break-words;
+    @extend %code-font; }
+
   .content pre > code {
     background-color: transparent;
     color: #ccc;
     padding: 0; }
+
   .content aside {
     padding-top: 1em;
     padding-bottom: 1em;
-    text-shadow: 0 1px 0 #c6dde9;
+    text-shadow: 0 1px 0 lighten($aside-notice-bg, 15%);
     margin-top: 1.5em;
     margin-bottom: 1.5em;
-    background: #8fbcd4;
+    background: $aside-notice-bg;
     line-height: 1.6; }
+
     .content aside.warning {
-      background-color: #c97a7e;
-      text-shadow: 0 1px 0 #dfb0b3; }
+      background-color: $aside-warning-bg;
+      text-shadow: 0 1px 0 lighten($aside-warning-bg, 15%); }
+
     .content aside.success {
-      background-color: #6ac174;
-      text-shadow: 0 1px 0 #a0d7a6; }
+      background-color: $aside-success-bg;
+      text-shadow: 0 1px 0 lighten($aside-success-bg, 15%); }
+
   .content aside:before {
     vertical-align: middle;
     padding-right: 0.5em;
     font-size: 14px; }
+
   .content .search-highlight {
     padding: 2px;
     margin: -2px;
@@ -383,40 +490,49 @@ html, body {
     text-shadow: 1px 1px 0 #666;
     background: linear-gradient(to top left, #F7E633 0%, #F1D32F 100%); }
 
-.content pre, .content blockquote {
-  background-color: #292929;
+
+////////////////////////////////////////////////////////////////////////////////
+// CODE SAMPLE STYLES
+////////////////////////////////////////////////////////////////////////////////
+// This is all the stuff that appears in the right half of the page
+
+.content pre,
+.content blockquote {
+  background-color: $code-bg;
   color: #fff;
-  padding: 2em 28px;
+  padding: 2em $main-padding ;
   margin: 0;
-  width: 50%;
+  width: $examples-width;
   float: right;
   clear: right;
   box-sizing: border-box;
   text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4); }
-  .content pre > p, .content blockquote > p {
+
+  .content pre > p,
+  .content blockquote > p {
     margin: 0; }
-  .content pre a, .content blockquote a {
+
+  .content pre a,
+  .content blockquote a {
     color: #fff;
     text-decoration: none;
     border-bottom: dashed 1px #ccc; }
+
 .content pre {
-  white-space: pre-wrap;
-  word-wrap: break-word; }
+  @extend %code-font;
+  @extend %wrap-words; }
+
 .content blockquote > p {
-  background-color: #1c1c1c;
+  background-color: $code-annotation-bg;
   border-radius: 5px;
-  padding: 13px;
+  padding: $code-annotation-padding;
   color: #ccc;
   border-top: 1px solid #000;
   border-bottom: 1px solid #404040; }
 
 .content code {
-  -ms-word-break: break-all;
-  word-break: break-all;
-  word-break: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto; }
+  @extend %code-font;
+  @extend %break-code; }
 
 .highlight table td {
   padding: 5px; }
@@ -424,7 +540,8 @@ html, body {
 .highlight table pre {
   margin: 0; }
 
-.highlight, .highlight .w {
+.highlight,
+.highlight .w {
   color: #f8f8f2;
   background-color: #272822; }
 
@@ -433,7 +550,11 @@ html, body {
   background-color: #ac4142;
   border-radius: inherit; }
 
-.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
+.highlight .c,
+.highlight .cd,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs {
   color: #505050; }
 
 .highlight .cp {
@@ -442,10 +563,12 @@ html, body {
 .highlight .nt {
   color: #f4bf75; }
 
-.highlight .o, .highlight .ow {
+.highlight .o,
+.highlight .ow {
   color: #d0d0d0; }
 
-.highlight .p, .highlight .pi {
+.highlight .p,
+.highlight .pi {
   color: #d0d0d0; }
 
 .highlight .gi {
@@ -459,7 +582,11 @@ html, body {
   background-color: #151515;
   font-weight: bold; }
 
-.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
+.highlight .k,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kv {
   color: #aa759f; }
 
 .highlight .kc {
@@ -471,17 +598,24 @@ html, body {
 .highlight .kd {
   color: #d28445; }
 
-.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+.highlight .s,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .s2,
+.highlight .sh,
+.highlight .sx,
+.highlight .s1 {
   color: #90a959; }
 
 .highlight .sr {
   color: #75b5aa; }
 
 .highlight .si {
-  color: #00BFBF; }
+  color: #00bfbf; }
 
 .highlight .se {
-  color: #00BFBF; }
+  color: #00bfbf; }
 
 .highlight .nn {
   color: #f4bf75; }
@@ -495,26 +629,44 @@ html, body {
 .highlight .na {
   color: #6a9fb5; }
 
-.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
-  color: #957ACC; }
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .il,
+.highlight .mo,
+.highlight .mb,
+.highlight .mx {
+  color: #957acc; }
 
 .highlight .ss {
   color: #90a959; }
 
-.highlight .c, .highlight .cm, .highlight .c1, .highlight .cs {
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs {
   color: #909090; }
 
-.highlight, .highlight .w {
+.highlight,
+.highlight .w {
   background-color: #292929; }
 
-@media (max-width: 930px) {
+
+////////////////////////////////////////////////////////////////////////////////
+// RESPONSIVE DESIGN
+////////////////////////////////////////////////////////////////////////////////
+// These are the styles for phones and tablets as well as some other stuff
+
+@media (max-width: $tablet-width) {
   .tocify-wrapper {
-    left: -230px; }
+    left: -$nav-width; }
+
     .tocify-wrapper.open {
       left: 0; }
 
   .modal-content {
-    margin-left: -230px; }
+    margin-left: -$nav-width; }
 
   .page-wrapper {
     margin-left: 0; }
@@ -525,11 +677,23 @@ html, body {
   .tocify-wrapper .tocify-item > a {
     padding-top: 0.3em;
     padding-bottom: 0.3em; } }
-@media (max-width: 700px) {
+
+@media (max-width: $phone-width) {
   .dark-box {
     display: none; }
 
-  .content > h1, .content > h2, .content > h3, .content > h4, .content > h5, .content > h6, .content > p, .content > table, .content > ul, .content > ol, .content > aside, .content > dl {
+  .content > h1,
+  .content > h2,
+  .content > h3,
+  .content > h4,
+  .content > h5,
+  .content > h6,
+  .content > p,
+  .content > table,
+  .content > ul,
+  .content > ol,
+  .content > aside,
+  .content > dl {
     margin-right: 0; }
 
   .tocify-wrapper .lang-selector {
@@ -538,96 +702,153 @@ html, body {
   .page-wrapper .lang-selector {
     display: none; }
 
-  .content pre, .content blockquote {
+  .content pre,
+  .content blockquote {
     width: auto;
     float: none; }
 
-  .content > pre + h1, .content > blockquote + h1, .content > pre + h2, .content > blockquote + h2, .content > pre + h3, .content > blockquote + h3, .content > pre + h4, .content > blockquote + h4, .content > pre + h5, .content > blockquote + h5, .content > pre + h6, .content > blockquote + h6, .content > pre + p, .content > blockquote + p, .content > pre + table, .content > blockquote + table, .content > pre + ul, .content > blockquote + ul, .content > pre + ol, .content > blockquote + ol, .content > pre + aside, .content > blockquote + aside, .content > pre + dl, .content > blockquote + dl {
-    margin-top: 28px; } }
-.highlight .c, .highlight .cm, .highlight .c1, .highlight .cs {
+  .content > pre + h1,
+  .content > blockquote + h1,
+  .content > pre + h2,
+  .content > blockquote + h2,
+  .content > pre + h3,
+  .content > blockquote + h3,
+  .content > pre + h4,
+  .content > blockquote + h4,
+  .content > pre + h5,
+  .content > blockquote + h5,
+  .content > pre + h6,
+  .content > blockquote + h6,
+  .content > pre + p,
+  .content > blockquote + p,
+  .content > pre + table,
+  .content > blockquote + table,
+  .content > pre + ul,
+  .content > blockquote + ul,
+  .content > pre + ol,
+  .content > blockquote + ol,
+  .content > pre + aside,
+  .content > blockquote + aside,
+  .content > pre + dl,
+  .content > blockquote + dl {
+    margin-top: $main-padding ; } }
+
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs {
   color: #909090; }
 
-.highlight, .highlight .w {
+.highlight,
+.highlight .w {
   background-color: inherit; }
 
-/* The Definition Terms */
-.definition {
-  color: brown;
-}
 
-/* The Modal (background) */
-.modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 10;
-  /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: black;
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
-  -webkit-animation-name: fadeIn;
-  /* Fade in the background */
-  -webkit-animation-duration: 0.4s;
-  animation-name: fadeIn;
-  animation-duration: 0.4s;
-}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// <------------------------------------------------------------------------> //
+// 				MODAL DEFINITIONS
+// <------------------------------------------------------------------------> //
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// TERMS (MODAL TRIGGER)
+////////////////////////////////////////////////////////////////////////////////
+// This defines how the keywords should look like for bringing up a modal
+
+.definition {
+  color: $term-select-text; }
 
 .definition:hover,
 .definition:focus {
     color: black;
     text-decoration: none;
-    cursor: pointer;
-}
+    cursor: pointer; }
 
-/* Modal Content */
+
+////////////////////////////////////////////////////////////////////////////////
+// MODAL (BACKGROUND)
+////////////////////////////////////////////////////////////////////////////////
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;  /* Enable scroll if needed */
+  background-color: black;  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);  /* Black w/ opacity */ }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// MODAL (CONTENT)
+////////////////////////////////////////////////////////////////////////////////
+
 .modal-content {
   position: inherit;
   bottom: 0;
-  left: 230px;
+  left: $nav-width;
   right: 0;
   background-color: #fefefe;
-  width: -moz-available;
+  width: -moz-available; }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// MODAL (ANIMATION)
+////////////////////////////////////////////////////////////////////////////////
+// For animating the greyish, partly-transparent modal bit and also the modal content
+
+.modal {
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s; }
+
+.modal-content {
   -webkit-animation-name: slideIn;
   -webkit-animation-duration: 0.4s;
   animation-name: slideIn;
-  animation-duration: 0.4s; 
-}
+  animation-duration: 0.4s; }
 
-/* The Close Button */
-.modal-close {
-    padding: 7px 0px;
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
- 
-.modal-close:hover,
-.modal-close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes slideIn {
+  from {
+    bottom: -300px;
+    opacity: 0; }
+  to {
+    bottom: 0;
+    opacity: 1; } }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// MODAL (HEADER)
+////////////////////////////////////////////////////////////////////////////////
+// This also holds the modal - ever so important - coloring
 
 .modal-header {
   padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
+  background-color: $modal-header-bg;
+  color: white; }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// MODAL (BODY)
+////////////////////////////////////////////////////////////////////////////////
 
 .modal-body {
-  padding: 2px 16px;
-}
+  padding: 2px 16px; }
 
 .modal-body code {
   font-size: 12px;
@@ -635,36 +856,52 @@ html, body {
   hyphens: auto;
   word-break: break-all;
   background-color: rgba(0, 0, 0, 0.08);
-  border-radius: 3px;
-}
+  border-radius: 3px; }
 
-/* Add Animation */
-@keyframes slideIn {
-  from {
-    bottom: -300px;
-    opacity: 0; }
-  to {
-    bottom: 0;
-    opacity: 1; }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; }
-}
+////////////////////////////////////////////////////////////////////////////////
+// MODAL (CLOSE BUTTON)
+////////////////////////////////////////////////////////////////////////////////
+
+.modal-close {
+  padding: 7px 0px;
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold; }
+
+.modal-close:hover,
+.modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer; }
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// <------------------------------------------------------------------------> //
+// 				  KEYBOARD KEYS
+// <------------------------------------------------------------------------> //
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// KEY
+////////////////////////////////////////////////////////////////////////////////
+// This applies the look of a keyboard key to any text included in <key></key>
 
 key {
-    background-color: #f4f7f8;
-    border: 1px solid #b4b4b4;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 -1px 1px 1px rgba(230, 230, 230, 0.8) inset, 0 2px 0 0 rgba(255, 255, 255, 0.8) inset;
-    display: inline-block;
-    font-family: Consolas,"Liberation Mono",Courier,monospace;
-    font-size: 0.85em;
-    line-height: inherit;
-    padding: 2px 4px;
-    white-space: nowrap;
-}
+  background-color: #f4f7f8;
+  border: 1px solid #b4b4b4;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 -1px 1px 1px rgba(230, 230, 230, 0.8) inset, 0 2px 0 0 rgba(255, 255, 255, 0.8) inset;
+  display: inline-block;
+  font-family: Consolas,"Liberation Mono",Courier,monospace;
+  font-size: 0.85em;
+  line-height: inherit;
+  padding: 2px 4px;
+  white-space: nowrap; }
 

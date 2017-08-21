@@ -1,0 +1,14 @@
+server {
+    listen 80 default_server backlog=2048;
+
+    root /usr/src/app/build;
+    index index.html;
+
+    # Make site accessible from http://localhost/
+    server_name localhost;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+
