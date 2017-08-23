@@ -268,12 +268,20 @@ $(document).ready(
 // Convert RGB color code to HEX
 function RGB2HEX(code) {
 
-    if (code.indexOf('#') > -1) { return code; }    // Failsafe when supplied with HEX
+    if (code.indexOf("#") > -1) { return code; }    // Failsafe when supplied with HEX
 
-    else { return '#' + code.substr(4, code.indexOf(')') - 4).split(',').map((color) => String("0" + parseInt(color).toString(16)).slice(-2)).join(''); }
+    else { return "#" + code.substr(4, code.indexOf(")") - 4).split(",").map((color) => String("0" + parseInt(color).toString(16)).slice(-2)).join(""); }
 
 }
 
+// Get current Modal color (work in progress)
+function getModalColor() {
+
+    return RGB2HEX("#colorcode");
+    //return RGB2HEX($(".modal-header").css("background-color"));
+    //return RGB2HEX($(this).parents().find(".modal-header").css("background-color"));
+
+}
 
 //----------------------------------------------------------------------------------------
 // ADDITIONAL FUNCTIONALITY
@@ -329,7 +337,7 @@ var featureTitle =  'Modal Features',
                   + '<a class="definition" onclick="customModal(creditsTitle, creditsMsg)"><key>Alt</key> + <key>R</key></a> - Modal Author<br>';
 
 var colorTitle =    'Modal Colors',
-    colorMsg =      'Pressing <key>Alt</key> + <key>C</key> will each time generate a random color and apply it <key>#colorcode</key>' + ' | Alternatively press <a class="definition" onclick="resetModal()"><key>Reset</key></a>';
+    colorMsg =      'Pressing <key>Alt</key> + <key>C</key> will each time generate a random color and apply it <key>' + getModalColor() + '</key>' + ' | Alternatively press <a class="definition" onclick="resetModal()"><key>Reset</key></a>';
 
 
 // Press 'Alt + Key' to toggle any View

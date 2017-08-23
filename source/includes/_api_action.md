@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-This service defines several macro actions that can be attached to devices. These are convenience functions. The same functionality provided herein can also be accomplished via individual setting calls. Most actions can be scheduled to occur now or at some point in the future
+This service defines several macro actions that can be attached to <a class="definition" onclick="openModal('DOT-Device')">Devices</a>. These are convenience functions. The same functionality provided herein can also be accomplished via individual setting calls. Most actions can be scheduled to occur now or at some point in the future
 
 Given the macro nature and the number of devices and operations that may occur, as long as the arguments are correct, the service will return success status code regardless of the result on each individual device. The application should monitor the vent stream to determine success or failure of the action on a device to device basis
 
@@ -12,7 +12,7 @@ Given the macro nature and the number of devices and operations that may occur, 
 ## Turn All Cameras On
 <!--===================================================================-->
 
-Used to turn on all cameras in the caller user’s account. Caller must be an account superuser
+Used to turn on all cameras in the user’s account. User must be an account superuser
 
 > Request
 
@@ -37,7 +37,7 @@ HTTP Status Code | Description
 ## Turn All Cameras Off
 <!--===================================================================-->
 
-Used to turn off all cameras in the caller user’s account. Caller must be an account superuser
+Used to turn off all cameras in the user’s account. User must be an account superuser
 
 > Request
 

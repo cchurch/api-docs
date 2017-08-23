@@ -78,7 +78,7 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/get -d "id=[DEVICE_ID]"
 
 Parameter     | Data Type     | Description                                                                                                                  | Required    |
 ---------     | ---------     | -----------                                                                                                                  |:-----------:|
-**id**        | string        | ID of the device the annotation is associated with                                                                           | **&check;** |
+**id**        | string        | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation is associated with                   | **&check;** |
 **uuid**      | array[string] | Array of comma-separated annotation UUIDs to return                                                                          | **&check;** |
 
 ### Error Status Codes
@@ -110,7 +110,7 @@ curl -X PUT "https://login.eagleeyenetworks.com/annt/set?c=[DEVICE_ID]&ts=[TIMES
 
 Parameter     | Data Type | Description                                                                                                                      | Required    |
 ---------     | --------- | -----------                                                                                                                      |:-----------:|
-**c**         | string    | ID of the device the annotation should be associated with                                                                        | **&check;** |
+**c**         | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation should be associated with                | **&check;** |
 **\<data\>**  | json      | Json object representing the data to be used as the annotation content (can include HTML elements)                               | **&check;** |
 ts            | string    | Timestamp associated with the annotation (If left out the system will automatically provide a timestamp)                         | **&cross;** |
 ns            | int       | The numerical namespace value assigned by Eagle Eye Networks                                                                     | **&cross;** |
@@ -131,7 +131,7 @@ ns            | int       | The numerical namespace value assigned by Eagle Eye 
 Parameter | Data Type | Description
 --------- | --------- | -----------
 uuid      | string    | Unique identifier of the annotation
-cameraid  | string    | Unique identifier of the device
+cameraid  | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation has been associated with
 ts        | string    | Timestamp associated with the annotation
 ns        | string    | Namespace associated with the annotation
 
@@ -165,11 +165,11 @@ curl -X POST "https://login.eagleeyenetworks.com/annt/set?u=[UUID];c=[DEVICE_ID]
 Parameter     | Data Type    | Description                                                                                                                   | Required    |
 ---------     | ---------    | -----------                                                                                                                   |:-----------:|
 **u**         | string       | Unique identifier (UUID) of the annotation being updated returned during Create Annotation                                    | **&check;** |
-**c**         | string       | Unique identifier of the device associated with the annotation being updated                                                  | **&check;** |
+**c**         | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> associated with the annotation being updated         | **&check;** |
 **ts**        | string       | Timestamp associated with the annotation when originally created in EEN format: YYYYMMDDHHMMSS.NNN                            | **&check;** |
 **ns**        | int          | The numerical namespace value assigned by Eagle Eye Networks (can be omitted for heartbeat events `'type=hb'`)                | **&check;** |
 **\<data\>**  | json         | Json object representing the data to be used as the annotation content (can include HTML elements)                            | **&check;** |
-type          | string, enum | The type of annotation update to make (defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and updates the annotation if changes have been specified, no `'hb'` with a later timestamp will be accepted <br><br>enum: mod, hb, end                                                    | **&cross;** |
+type          | string, enum | The type of annotation update to make (defaults to `'mod'`): <br><br>`'mod'` - simple modification of the annotation <br>`'hb'` - indicates a heartbeat event, adding information on parameters that have changed and extending duration <br>`'end'` - indicates the end of the event and updates the annotation if changes have been specified, no `'hb'` with a later timestamp will be accepted <br><br>enum: mod, hb, end                                                                                 | **&cross;** |
 
 > Json Response
 
@@ -187,7 +187,7 @@ type          | string, enum | The type of annotation update to make (defaults t
 Parameter | Data Type | Description
 --------- | --------- | -----------
 uuid      | string    | Unique identifier of the annotation
-cameraid  | string    | Unique identifier of the device
+cameraid  | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation has been updated for
 ts        | string    | Timestamp associated with the annotation
 ns        | string    | Namespace associated with the annotation
 
@@ -218,12 +218,12 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/next -d "c=[DEVICE_ID]"
 
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
-**c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
+**c**     | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation is associated with                           | **&check;** |
 **st**    | string    | Timestamp as a point in time to get annotation event(s) after in EEN format: YYYYMMDDHHMMSS.NNN                                      | **&check;** |
-et        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*). Matches events with identical start timestamps as the specified `'et'`                                                                                                           | **&cross;** |
-ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                     | **&cross;** |
-uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                      | **&cross;** |
-flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                          | **&cross;** |
+et        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*). Matches events with identical start timestamps as the specified `'et'`                                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
 
 > Json Response
 
@@ -288,12 +288,12 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/prev -d "c=[DEVICE_ID]"
 
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
-**c**     | string    | ID of the device the annotation is associated with                                                                                   | **&check;** |
+**c**     | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation is associated with                           | **&check;** |
 **et**    | string    | Timestamp as a point in time to get annotation event(s) before in EEN format: YYYYMMDDHHMMSS.NNN                                     | **&check;** |
-st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                               | **&cross;** |
-ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                     | **&cross;** |
-uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                      | **&cross;** |
-flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                          | **&cross;** |
+st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
 
 > Json Response
 
@@ -358,12 +358,12 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/window  -d "c=[DEVICE_I
 
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
-**c**     | string    | ID of the device the event is associated with                                                                                        | **&check;** |
+**c**     | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the event is associated with                                | **&check;** |
 **et**    | string    | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN                                                                             | **&check;** |
-st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                               | **&cross;** |
-ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                     | **&cross;** |
-uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                      | **&cross;** |
-flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                          | **&cross;** |
+st        | string    | Timestamp as optional limiter for the searched annotation event(s) in EEN format: YYYYMMDDHHMMSS.NNN (defaults to maximum retention). Matches events with identical start timestamps as the specified `'st'`                                                                                                           | **&cross;** |
+ns        | string    | Namespace(s) as optional comma-separated limiter for the searched annotation event(s). Excludes all except for the specified namespace(s) by excluding results in both categories: `'new'` and `'active'` (defaults to *include all*)                                                                                       | **&cross;** |
+uuid      | string    | Unique identifier(s) as optional comma-separated limiter for the searched annotation event(s). Includes all except for the specified UUID(s) by excluding results from the `'new'` category (defaults to *include all*)                                                                                                | **&cross;** |
+flat      | string    | Flatten the search results to merge heartbeats into the main annotation level and produce one consistent prolonged searchable event. No value is required <br><br>Example: `'flat='`                                                                                                                                   | **&cross;** |
 
 <aside class="notice">If the search criteria has not been matched by any events, the return will be a Json object with an empty array in 'new' and 'active'</aside>
 
@@ -430,14 +430,14 @@ curl -X GET https://login.eagleeyenetworks.com/annt/annt/list -d "id=[DEVICE_ID]
 
 Parameter           | Data Type     | Description                                                                                                            | Required    |
 ---------           | ---------     | -----------                                                                                                            |:-----------:|
-**id**              | string        | ID of the device the annotation should be associated with                                                              | **&check;** |
+**id**              | string        | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation should be associated with      | **&check;** |
 **start_timestamp** | string        | Start timestamp of the annotations to return                                                                           | **&check;** |
 **end_timestamp**   | string        | End timestamp of the annotations to return                                                                             | **&check;** |
-count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                       | **&cross;** |
+count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                                         | **&cross;** |
 uuid                | array[string] | Array of comma-separated UUIDs to list                                                                                 | **&cross;** |
 namespace           | array[int]    | Array of 1 to N comma-separated namespaces to list                                                                     | **&cross;** |
 exclusive           | boolean       | Whether to exclude annotations that are active during, but have not started within the specified span (1) or not (0)   | **&cross;** |
-jsonp               | string        | JSONP (JSON with padding) is a convention used to invoke cross-domain scripts by generating script tags in the current request data. The result is returned wrapped in a specified callback function                                                                                              | **&cross;** |
+jsonp               | string        | JSONP (JSON with padding) is a convention used to invoke cross-domain scripts by generating script tags in the current request data. The result is returned wrapped in a specified callback function                                                                                                            | **&cross;** |
 
 > Json Response
 
@@ -514,14 +514,14 @@ curl -X GET https://login.eagleeyenetworks.com/annt/event/list -d "id=[DEVICE_ID
 
 Parameter           | Data Type     | Description                                                                                                            | Required    |
 ---------           | ---------     | -----------                                                                                                            |:-----------:|
-**id**              | string        | ID of the device the annotation should be associated with                                                              | **&check;** |
+**id**              | string        | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> the annotation should be associated with      | **&check;** |
 **start_timestamp** | string        | Start timestamp of the annotations to return                                                                           | **&check;** |
 **end_timestamp**   | string        | End timestamp of the annotations to return                                                                             | **&check;** |
-count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                       | **&cross;** |
+count               | int           | N number of annotations to return (can be used to replace the `'end_timestamp'`, in which case will return the first N number of annotations after `'start_timestamp'`)                                                                                                                                         | **&cross;** |
 uuid                | array[string] | Array of comma-separated UUIDs to list                                                                                 | **&cross;** |
 namespace           | array[int]    | Array of 1 to N comma-separated namespaces to list                                                                     | **&cross;** |
 exclusive           | boolean       | Whether to exclude annotations that are active during, but have not started within the specified span (1) or not (0)   | **&cross;** |
-jsonp               | string        | JSONP (Json with padding) is a convention used to invoke cross-domain scripts by generating script tags in the current request data. The result is returned wrapped in a specified callback function                                                                                              | **&cross;** |
+jsonp               | string        | JSONP (Json with padding) is a convention used to invoke cross-domain scripts by generating script tags in the current request data. The result is returned wrapped in a specified callback function                                                                                                            | **&cross;** |
 
 > Json Response
 

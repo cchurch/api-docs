@@ -152,7 +152,7 @@ The <a class="definition" onclick="openModal('DOT-Account')">Account</a> service
 
 Parameter                             | Data Type            | Description                                                                          | Editable    | Required
 ---------                             | ---------            | -----------                                                                          |:-----------:| --------
-**id**                                | string               | Unique identifier of the account                                                     | **&cross;** | **<sub><form action="#get-account"><button>GET</button></form></sub>** <br>**<sub><form action="#update-account"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-account"><button>DELETE</button></form></sub>**
+**id**                                | string               | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> automatically generated and assigned during creation                                                                                                                                            | **&cross;** | **<sub><form action="#get-account"><button>GET</button></form></sub>** <br>**<sub><form action="#update-account"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-account"><button>DELETE</button></form></sub>**
 **name**                              | string               | Name of the account                                                                  | **&check;** | **<sub><form action="#create-account"><button>PUT</button></form></sub>**
 **contact_first_name**                | string               | First name of primary contact for account                                            | **&check;** | **<sub><form action="#create-account"><button>PUT</button></form></sub>**
 **contact_last_name**                 | string               | Last name of primary contact for account                                             | **&check;** | **<sub><form action="#create-account"><button>PUT</button></form></sub>**
@@ -199,14 +199,14 @@ is_without_initial_user               | string               | Indicates whether
 customer_id                           | string               | Arbitrary ID assigned to a sub-account by a master account                           | **&check;** |
 is_master_video_disabled_allowed      | int                  | Indicates whether a sub-account can block video access to reseller (1) or not (0)    | **&check;** |
 is_master_video_disabled              | int                  | Indicates whether video access is blocked to reseller (1) or not (0)                 | **&check;** |
-is_contract_recording                 | int                  | Indicates whether the account is of type contract_recording. Controls whether contract recording features are enabled for the users in this account on the front-end GUI (1) or not (0)                                                                                   | **&check;** |
+is_contract_recording                 | int                  | Indicates whether the account is of type contract_recording. Controls whether contract recording features are enabled for the users in this account on the front-end GUI (1) or not (0)                                                                                       | **&check;** |
 is_advanced_disabled                  | int                  | Indicates whether the reseller has disabled advanced functionality (1) or not (0) If this is set for a sub-account, the users in the sub-account cannot change any settings related to bandwidth, billing (retention and resolution) and certain account settings. Master users switched in still can modify these things if their permissions allow it                                                                                                          | **&check;** |
 is_billing_disabled                   | int                  | Indicates whether the reseller has disabled editing settings in a sub-account that affect billing (1) or not (0). This controls whether users can change camera resolution/retention, add/delete cameras, etc                                                              | **&check;** |
 is_add_delete_disabled                | int                  | Indicates whether the reseller has disabled adding or deleting devices (1) or not (0)| **&check;** |
 is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing                                                                                                                          | **&check;** |
 first_responders                      | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays with each sub-array representing an emergency responder. Accounts can identify a list of email accounts that will serve as emergency responders. Emergency responders get access to the identified `'responder_cameras'` during an emergency (triggered by setting `'responder_active'`). A responder is identified by their email, first name, last name, company and their account <br><br>Example: <br>`[`<br>&nbsp;&nbsp;&nbsp;&nbsp;`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'mark@responders.com'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'Mark'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'O'Malley'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'Responders'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'Fake Account'`<br>&nbsp;&nbsp;&nbsp;&nbsp;`]`<br>`]`                                                                                                     | **&check;** |
 responder_active                      | <p hidden>???</p>    | Indicates whether the responder cameras can be seen by the users defined under `'first_responders'`                                                                                                                                | **&check;** |
-responder_cameras                     | array[string]        | Array of camera ESNs that are shared to first responders                             | **&check;** |
+responder_cameras                     | array[string]        | Array of camera <a class="definition" onclick="openModal('DOT-ESN')">ESNs</a> that are shared to first responders                                                                                                                                          | **&check;** |
 inactive_session_timeout              | int                  | Maximum time period in seconds without activity before web session expires           | **&check;** |
 login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked       | **&check;** |
 is_rtsp_cameras_enabled               | int                  | Indicates whether the account can have cameras attached over RTSP (instead of ONVIF) (1) or not (0)                                                                                                                                                 | **&check;** |
@@ -251,7 +251,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]" -H
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Account ID  | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> | true
 
 ### Error Status Codes
 
@@ -317,7 +317,7 @@ is_initial_user_not_admin             | int           | Indicates whether the in
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the account
+id        | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a>
 
 ### Error Status Codes
 
@@ -343,7 +343,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/account -d '{"id": "[ACCOUNT_I
 
 Parameter                             | Data Type            | Description                                                                                     | Is Required
 ---------                             | ---------            | -----------                                                                                     | -----------
-**id**                                | string               | Unique identifier of the account                                                                | true
+**id**                                | string               | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> generated during creation | true
 name                                  | string               | Name of the account
 contact_first_name                    | string               | First name of primary contact for account
 contact_last_name                     | string               | Last name of primary contact for account
@@ -386,7 +386,7 @@ is_add_delete_disabled                | int                  | Indicates whether
 is_disable_all_settings               | int                  | Indicates whether the reseller has disabled all device and most account settings (1) or not (0). Does not affect editing users, layouts, or sharing
 first_responders                      | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays with each sub-array representing an emergency responder. Accounts can identify a list of email accounts that will serve as emergency responders. Emergency responders get access to the identified `'responder_cameras'` during an emergency (triggered by setting `'responder_active'`). A responder is identified by their email, first name, last name, company and their account <br><br>Example: <br>`[`<br>&nbsp;&nbsp;&nbsp;&nbsp;`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'mark@responders.com'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'Mark'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'O'Malley'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'Responders'`,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`'Fake Account'`<br>&nbsp;&nbsp;&nbsp;&nbsp;`]`<br>`]`
 responder_active                      | <p hidden>???</p>    | Indicates whether the responder cameras can be seen by the users defined under `'first_responders'`
-responder_cameras                     | array[string]        | Array of camera ESNs that are shared to first responders
+responder_cameras                     | array[string]        | Array of camera <a class="definition" onclick="openModal('DOT-ESN')">ESNs</a> that are shared to first responders
 inactive_session_timeout              | int                  | Maximum time period in seconds without activity before web session expires
 login_attempt_limit                   | int                  | Maximum incorrect login attempts before the user account access becomes locked
 is_rtsp_cameras_enabled               | int                  | Indicates whether the account can have cameras attached over RTSP (instead of ONVIF) (1) or not (0)
@@ -413,7 +413,7 @@ contact_utc_offset                    | int                  | This field is no 
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the account
+id        | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a>
 
 ### Error Status Codes
 
@@ -443,7 +443,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/account -d "id=[ACCOUNT_ID]"
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-**id**    | string    | Account ID
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a>
 
 ### Error Status Codes
 
@@ -505,7 +505,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/account/list -H "Authentication
 
 Array Index | Attribute              | Data Type | Description
 ----------- | ---------              | --------- | -----------
-0           | id                     | string    | Unique identifier for the account
+0           | id                     | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a>
 1           | name                   | string    | Name of the account
 2           | camera_online_count    | int       | Number of cameras currently online in the account
 3           | camera_count           | int       | Number of cameras currently in the account

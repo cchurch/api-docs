@@ -4,11 +4,11 @@
 ## Overview
 <!--===================================================================-->
 
-Gaining access to the Eagle Eye API is a two-stage process. Clients first present their credentials and Realm to obtain a single-use *Authentication Token*. This single use token is valid for a predefined duration or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the `'auth_key'` cookie) that provides access to resources. This two-phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over a HTTPS connection
+Gaining access to the Eagle Eye API is a two-stage process. <a class="definition" onclick="openModal('DOT-Client')">Clients</a> first present their credentials and Realm to obtain a single-use *Authentication Token*. This single use token is valid for a predefined duration or until it has been used. Once the Authentication Token is obtained the Client must utilize it in an Authorize service call to obtain a session ID (via the `'auth_key'` cookie) that provides access to resources. This two-phase approach allows Clients to authenticate and operate in multiple domains. The first step is done using Authenticate. The second step is done using Authorize. Note that the Authenticate call must be done over a HTTPS connection
 
 In addition to the Simple Authentication described above, a more *secure* Authentication method known as **Two-Factor Authentication** (**TFA**) may be used. TFA is a method of confirming the user's identity by utilizing a combination of two different components. The first component is a user's password and the second is a one-time TFA code delivered to the user via another communication channel - email or a text message sent to the user's mobile phone
 
-Whether Simple or Two-Factor Authentication is used for a particular user's login is determined by this user's settings in the system. Note, however, that an account administrator may enforce all users in a particular account to use TFA
+Whether Simple or Two-Factor Authentication is used for a particular user's login is determined by this user's settings in the system. Note, however, that an <a class="definition" onclick="openModal('DOT-Administrator-User')">Account Administrator</a> may enforce all users in a particular <a class="definition" onclick="openModal('DOT-Account')">Account</a> to use TFA
 
 If TFA is enforced, the Authorize call will expect the TFA code to be passed in addition to the token obtained from the Authenticate call
 
