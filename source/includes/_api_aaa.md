@@ -4,14 +4,14 @@
 ## Overview
 <!--===================================================================-->
 
-This service enables the creation of new independent accounts and provides the means to recover an account. If you are creating sub-accounts tied to your current account refer to the [Account](#account) section
+This service enables the creation of new independent accounts and provides the means to recover an account. If you are creating <a class="definition" onclick="openModal('DOT-Sub-Account')">Sub-Accounts</a> tied to your current <a class="definition" onclick="openModal('DOT-Account')">Account</a> refer to the [Account](#account) section
 
 <!--===================================================================-->
 <!-- ## Create Account -->
 <h2 id=create-account-h2>Create Account</h2>
 <!--===================================================================-->
 
-Create a new account and the super user for the account. As a part of the creation process, the service sends a confirmation email containing a link (with account ID and activation token), which the user must click to activate the account (cannot be used until it is activated)
+Create a new account and the superuser for the account. As a part of the creation process, the service sends a confirmation email containing a link (with <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> and activation token), which the user must click to activate the account (cannot be used until it is activated)
 
 > Request
 
@@ -61,7 +61,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/validate_account -d "id=[I
 
 Parameter | Data Type   | Description | Is Required
 --------- | ---------   | ----------- | -----------
-**id**    | string      | Account ID  | true
+**id**    | string      | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> | true
 **token** | string      | Account validation token | true
 
 > Json Response
@@ -296,7 +296,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/change_password -d "passwo
 Parameter        | Data Type | Description | Is Required
 ---------        | --------- | ----------- | -----------
 **password**     | string    | New password | true
-id               | string    | ID of the user having their password changed (Defaults to the ID of the authenticated user). If empty or equal to authenticated user, then `'current_password'` becomes required
+id               | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> of the user having their password changed (Defaults to the ID of the authenticated user). If empty or equal to authenticated user, then `'current_password'` becomes required
 current_password | string    | Current password of the user. If `'id'` argument is empty or equal to the authenticated user's ID, then this is required
 
 > Json Response
@@ -311,7 +311,7 @@ current_password | string    | Current password of the user. If `'id'` argument 
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the user having their password changed
+id        | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> of the user having their password changed
 
 ### Error Status Codes
 
@@ -341,7 +341,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/switch_account -d "account
 
 Parameter  | Data Type | Description
 ---------  | --------- | -----------
-account_id | string    | ID of the account to login to. Optional. Defaults to the account ID that the user belongs to
+account_id | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> of the account to login to. Defaults to the account which the user belongs to
 
 ### Error Status Codes
 

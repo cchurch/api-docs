@@ -15,7 +15,7 @@ Type          | Meaning
 ### Assets Identifiers
 
   - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time, +/- offsets from `'now'` are valid in milliseconds)
-  - **CameraID:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit ID associated with a specific camera (CameraID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
+  - **<a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a>:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit ID associated with a specific camera (Camera ID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
   - **Quality*****(Future Feature)*****:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. Additional quality levels will be supported in time
     - **low:** around 100 KB/s
     - **med:** under 500 KB/s
@@ -128,7 +128,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/prev/image.jpeg -d "id=[CAM
 
 Parameter         | Data Type    | Description   | Is Required
 ---------         | ---------    | -----------   | -----------
-**id**            | string       | Camera ID     | true
+**id**            | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **timestamp**     | string       | Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
 quality           | string, enum | ***(Future Feature)*** Quality of the image <br><br>enum: low, med, high
@@ -181,7 +181,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/play/video.flv -d "id=[CAME
 
 Parameter           | Data Type    | Description    | Is Required
 ---------           | ---------    | -----------    | -----------
-**id**              | string       | Camera ID      | true
+**id**              | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 quality             | string, enum | ***(Future Feature)*** Indicates the requested resolution if multiple are available <br><br>enum: low, med, high
@@ -228,7 +228,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/cloud/image.jpg -d "id=[CAM
 
 Parameter           | Data Type | Description   | Is Required
 ---------           | --------- | -----------   | -----------
-**id**              | string    | Camera ID     | true
+**id**              | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
 
@@ -276,7 +276,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/cloud/video.flv -d "id=[CAM
 
 Parameter           | Data Type | Description   | Is Required
 ---------           | --------- | -----------   | -----------
-**id**              | string    | Camera ID     | true
+**id**              | string    | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **start_timestamp** | string    | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string    | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **webhook_url**     | string    | The webhook url (must be urlencoded) to trigger | true
@@ -325,7 +325,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/list/image -d "id=[CAMERA_I
 
 Parameter           | Data Type    | Description   | Is Required
 ---------           | ---------    | -----------   | -----------
-**id**              | string       | Camera ID     | true
+**id**              | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **asset_class**     | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
@@ -398,7 +398,7 @@ curl -X GET https://login.eagleeyenetworks.com/asset/list/video -d "id=[CAMERA_I
 
 Parameter           | Data Type    | Description   | Is Required
 ---------           | ---------    | -----------   | -----------
-**id**              | string       | Camera ID     | true
+**id**              | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 end_timestamp       | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN
 count               | int          | Used instead of or with an `'end_timestamp'` argument. If used with an `'end_timestamp'` argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the `'end_timestamp'` argument, returns N entries. Supports negative values, which return N entries before sorted in reverse order (i.e. `'-5'` will return 5 events prior to the specified time)
