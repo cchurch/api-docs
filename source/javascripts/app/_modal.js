@@ -270,7 +270,7 @@ function RGB2HEX(code) {
 
     if (code.indexOf("#") > -1) { return code; }    // Failsafe when supplied with HEX
 
-    else { return "#" + code.substr(4, code.indexOf(")") - 4).split(",").map((color) => String("0" + parseInt(color).toString(16)).slice(-2)).join(""); }
+    else { var colorMatch = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(code); return colorMatch ? "#" + (1 << 24 | colorMatch[1] << 16 | colorMatch[2] << 8 | colorMatch[3]).toString(16).substr(1) : code; }
 
 }
 
