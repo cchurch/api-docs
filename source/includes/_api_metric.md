@@ -11,7 +11,7 @@ This service defines Metrics that can be queried from the system
 <h2 id=bridge-bandwidth-h2>Bridge Bandwidth</h2>
 <!--===================================================================-->
 
-Used to query the Bridge Bandwidth usage for a particular device
+Used to query the <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> Bandwidth usage for a particular device
 
 > Request
 
@@ -25,7 +25,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/metric/bridgebandwidth -d "id=[
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**          | string       | Bridge ID   | true
+**id**          | string       | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a> | true
 start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to 7 days ago)
 end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*)
 group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute
@@ -151,7 +151,7 @@ HTTP Status Code | Description
 ## Camera Bandwidth
 <!--===================================================================-->
 
-Used to query the Camera Bandwidth usage for a particular device
+Used to query the <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> Bandwidth usage for a particular device
 
 > Request
 
@@ -165,7 +165,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/metric/camerabandwidth -d "id=[
 
 Parameter       | Data Type    | Description | Is Required
 ---------       | ---------    | ----------- | -----------
-**id**          | string       | Camera ID   | true
+**id**          | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 start_timestamp | string       | Start timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to 7 days ago)
 end_timestamp   | string       | End timestamp of query in EEN format: YYYYMMDDHHMMSS.NNN (defaults to *now*)
 group_by        | string, enum | Hour or day indicating how the results should be grouped <br><br>enum: day, hour, minute

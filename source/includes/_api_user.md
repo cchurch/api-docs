@@ -127,10 +127,10 @@ The <a class="definition" onclick="openModal('DOT-User')">User</a> service allow
 
 Parameter                            | Data Type            | Description                                                                          | Editable    | Required
 ---------                            | ---------            | -----------                                                                          |:-----------:| --------
-**id**                               | string               | Unique identifier of the user                                                        | **&cross;** | **<sub><form action="#update-user"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-user"><button>DELETE</button></form></sub>**
+**id**                               | string               | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> automatically generated and assigned during creation                                                                                                                                           | **&cross;** | **<sub><form action="#update-user"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-user"><button>DELETE</button></form></sub>**
 **first_name**                       | string               | First name of the user                                                               | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
 **last_name**                        | string               | Last name of the user                                                                | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
-**email**                            | string               | Email address of the user (must contain only ASCII characters) <br><br> For TFA: address to which messages containing TFA code will be delivered                                                                                                              | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
+**email**                            | string               | Email address of the user (must contain only ASCII characters) <br><br> For TFA: address to which messages containing TFA code will be delivered                                                                                                                             | **&check;** | **<sub><form action="#create-user"><button>PUT</button></form></sub>**
 uid                                  | string               | Identifier of the user <small>**(INTERNAL USE ONLY)**</small>                        | **&cross;** |
 phone                                | string               | Phone number                                                                         | **&check;** |
 mobile_phone                         | string               | Mobile phone number                                                                  | **&check;** |
@@ -140,7 +140,7 @@ state                                | string               | State/province    
 country                              | string               | Two letter country code                                                              | **&check;** |
 postal_code                          | string               | Zip/postal code                                                                      | **&check;** |
 owner_account_id                     | string               | Unique identifier of the account that the user belongs to                            | **&cross;** |
-active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the `'active_account_id'` of that user in their session becomes the unique identifier of the sub-account that was switched into                                                 | **&cross;** |
+active_account_id                    | string               | Unique identifier of the user's active account. When switching to a sub-account the `'active_account_id'` of that user in their session becomes the unique identifier of the sub-account that was switched into                                                              | **&cross;** |
 is_staff                             | int                  | Indicates whether the user is a staff member (1) or not (0) <small>**(INTERNAL USE ONLY)**</small>                                                                                                                                    | **&check;** |
 is_superuser                         | int                  | Indicates whether the user is a superuser (1) or not (0). Only superusers can set this <small>**(INTERNAL USE ONLY)**</small>                                                                                                                                    | **&check;** |
 is_account_superuser                 | int                  | Indicates whether the user is an account superuser (1) or not (0)                    | **&check;** |
@@ -154,35 +154,35 @@ is_device_admin                      | int                  | This is for backwa
 is_export_video                      | int                  | Indicates whether the user is authorized to export video (1) or not (0)              | **&check;** |
 is_recorded_video                    | int                  | Indicates whether the user is authorized to view recorded video (1) or not (0)       | **&check;** |
 is_edit_cameras                      | int                  | Indicates whether the user is authorized to edit cameras (1) or not (0)              | **&check;** |
-is_edit_all_users                    | int                  | Indicates whether the user is authorized to manage users who are not administrators in the master account (1) or not (0)                                                                                                                                         | **&check;** |
+is_edit_all_users                    | int                  | Indicates whether the user is authorized to manage users who are not administrators in the master account (1) or not (0)                                                                                                                                                | **&check;** |
 is_edit_account                      | int                  | Indicates whether the user is authorized to edit account settings (1) or not (0)     | **&check;** |
-is_system_notifications_disabled     | int                  | It reflects whether the account the user belongs to has system notifications disabled (1) or not (0). If true, then the user will not be able to receive any system alert notifications for the cameras in their account                                    | **&check;** |
+is_system_notifications_disabled     | int                  | It reflects whether the account the user belongs to has system notifications disabled (1) or not (0). If true, then the user will not be able to receive any system alert notifications for the cameras in their account                                                   | **&check;** |
 is_edit_ptz_stations                 | int                  | Indicates whether the user is authorized to edit PTZ stations (1) or not (0)         | **&check;** |
 is_view_preview_video                | int                  | Indicates whether the user is authorized to view preview images from cameras (1) or not (0)                                                                                                                                                | **&check;** |
 is_edit_camera_on_off                | int                  | Indicates whether the user is authorized to turn cameras on and off (1) or not (0)   | **&check;** |
-is_edit_camera_less_billing          | int                  | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)                                                                                                                          | **&check;** |
+is_edit_camera_less_billing          | int                  | Indicates whether the user is authorized to edit all camera settings except retention and full video resolution (1) or not (0)                                                                                                                                                | **&check;** |
 is_edit_all_and_add                  | int                  | Indicates whether the user is authorized to add/edit/delete bridges and cameras (1) or not (0)                                                                                                                                                | **&check;** |
-is_edit_sharing                      | int                  | Indicates whether the user is authorized to view/edit *Sharing* and *Responders* tabs under account settings (1) or not (0)                                                                                                                                     | **&check;** |
+is_edit_sharing                      | int                  | Indicates whether the user is authorized to view/edit *Sharing* and *Responders* tabs under account settings (1) or not (0)                                                                                                                                                | **&check;** |
 is_mobile_branded                    | int                  | Used by mobile devices                                                               | **&cross;** |
 is_edit_admin_users                  | int                  | Indicates whether the user is authorized to manage all users in sub-account (1) or not (0)                                                                                                                                                | **&check;** |
 is_view_contract                     | int                  | Indicates whether the user is authorized to view contracts and replay them (1) or not | **&check;** |
-is_ptz_live                          | int                  | Indicates whether the user is authorized to control pan, tilt, zoom and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)                                                                                                        | **&check;** |
+is_ptz_live                          | int                  | Indicates whether the user is authorized to control pan, tilt, zoom and recall stations while viewing preview or live video of PTZ cameras (1) or not (0)                                                                                                                | **&check;** |
 is_view_audit_trail                  | int                  | Indicates whether the user is authorized to view the audit trail feature (1) or not (0)                                                                                                                                                | **&cross;** |
-is_edit_users                        | int                  | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)                                                                                                                                            | **&check;** |
+is_edit_users                        | int                  | Indicates whether the user is authorized to manage users who are not administrators in a sub-account (1) or not (0)                                                                                                                                                | **&check;** |
 is_edit_motion_areas                 | int                  | Indicates whether the user is authorized to view and edit the *Motion* tab under camera settings (1) or not (0)                                                                                                                                                | **&check;** |
 is_two_factor_authentication_enabled | int                  | Indicates whether [Two-Factor Authentication](#1-authenticate) is enabled for the user (1) or not (0)                                                                                                                                                | **&check;** |
-user_authenticated_clients           | array[string]        | Array of strings containing trusted client devices that have been used for successful authorization of this user in the past (See [Authorized Devices](#authorized-devices))                                                                                   | **&check;** |
-account_utc_offset                   | int                  | Signed integer offset in seconds of the timezone from UTC. This is the `'utc_offset'` value from the user's associated account model                                                                                                                           | **&cross;** |
+user_authenticated_clients           | array[string]        | Array of strings containing trusted client devices that have been used for successful authorization of this user in the past (See [Authorized Devices](#authorized-devices))                                                                                               | **&check;** |
+account_utc_offset                   | int                  | Signed integer offset in seconds of the timezone from UTC. This is the `'utc_offset'` value from the user's associated account model                                                                                                                                      | **&cross;** |
 account_work_days                    | string               | The `'work_days'` value from the user's associated account model. Indicates which day is a work day                                                                                                                                                | **&cross;** |
 account_work_hours                   | array[string]        | The `'work_hours'` value from the user's associated account model. Indicates work hours for the account                                                                                                                                            | **&cross;** |
-language                             | string               | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages                                      | **&check;** |
-inactive_session_timeout             | int                  | Maximum time period in seconds without activity before web session expires. Defined in the settings of the account which the user belongs to                                                                                                                  | **&cross;** |
+language                             | string               | Language code. The API currently only supports English (en-us) and Japanese (ja) as display languages for the GUI. It accepts any valid language code as input, but it will show English text for the unsupported languages                                              | **&check;** |
+inactive_session_timeout             | int                  | Maximum time period in seconds without activity before web session expires. Defined in the settings of the account which the user belongs to                                                                                                                                | **&cross;** |
 utc_offset                           | int                  | Signed integer offset in seconds of the timezone from UTC. Automatically generated based on the timezone field                                                                                                                                              | **&cross;** |
 timezone                             | string               | Timezone of the user. Defaults to `'US/Pacific'` <br><br>Possible values: <br>`'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'`, `'UTC'`, ...                                                                 | **&check;** |
 last_login                           | string               | EEN timestamp of the last login by the user. Format: YYYYMMDDHHMMSS.NNN              | **&cross;** |
 alternate_email                      | string               | Alternate email address                                                              | **&check;** |
 sms_phone | string | Phone number to be used for SMS notifications<br><br> For TFA: address to which text messages (SMS) containing TFA code will be delivered                                                                                                                                          | **&check;** |
-is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)                                                                                                                                         | **&check;** |
+is_sms_include_picture               | int                  | Indicates whether the alert notifications should include a picture sent via MMS to the sms_phone number (1) or not (0)                                                                                                                                                | **&check;** |
 [json](#user-json)                   | string               | Miscellaneous settings of the user as a Json-formatted string                        | **&check;** |
 camera_access                        | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays, defined on a per device basis (Only superusers or account superusers can edit this field). Each sub-array contains two elements. The first field is the device unique identifier and the second field is a string of 1 or more characters indicating permissions of the user <br><br>Example: <br>[`'1005f2ed'`,`'RWS'`] = user can view, change and delete this device <br><br>Permissions include: <br>`'R'` - user has access to view images and video for this camera <br>`'W'` - user can modify and delete this camera <br>`'S'` - user can share this camera in a group share                                                                                                        | **&check;** |
 layouts                              | array[string]        | Array of strings each representing a layout unique identifier the user has access to | **&cross;** |
@@ -190,7 +190,7 @@ is_notify_enable                     | int                  | Indicates whether 
 notify_period                        | array[string]        | Time periods during which the user will receive alert notifications. Each element of the array contains three fields separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user will not receive any alert notifications <br><br>All times are expressed in local time and use a 24 hour clock formatted as HHMM              | **&check;** |
 notify_rule                          | array[string]        | Alert notification rules. Each rule contains three fields separated by dashes in the form of: `'<alert_label>-<notification_method>-<delay>'` <br><br>`'<alert_label>'` - name defined by the user <br>`'<notification_method>'` - either `'email'`, `'sms'` or `'gui'` <br>`'<delay>'` - amount of time in minutes between notifications                                                                                  | **&check;** |
 is_branded                           | int                  | Indicates whether the user is associated with an account that currently has branding enabled (1) or not (0)                                                                                                                                                | **&cross;** |
-active_brand_subdomain               | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists                                                                                                                                         | **&cross;** |
+active_brand_subdomain               | string               | If the user is associated with an account that has branding enabled, this will have that brand's subdomain if one exists                                                                                                                                             | **&cross;** |
 account_map_lines                    | json                 | Automatically retrieved from the user's current account setting `'map_lines'`        | **&cross;** |
 access_period                        | array[string]        | Contains the time periods during which the user has access to the account. Each element of the array contains three field separated by dashes. The first field is the day of the week where Monday is 0. The second element is the start time. The third element is the end time. If empty, user has no time restrictions for access to the account. All times are expressed in local time and use a 24 hour clock formatted as HHMM                                                                                                                                               | **&check;** |
 is_terms_noncompliant                | int                  | Indicates whether the terms of service have been accepted by the user (0) or not (1) | **&cross;** |
@@ -378,7 +378,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "Auth
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-id        | string    | User ID     | false
+id        | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> | false
 
 ### Error Status Codes
 
@@ -427,7 +427,7 @@ sms_phone      | string    | Phone number to be used for SMS notifications
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the user
+id        | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a>
 
 ### Error Status Codes
 
@@ -455,9 +455,9 @@ curl -X POST https://login.eagleeyenetworks.com/g/user -d '{"id": "[USER_ID]", "
 
 `POST https://login.eagleeyenetworks.com/g/user`
 
-Parameter                   | Data Type     | Description                             | Is Required
----------                   | ---------     | -----------                             | -----------
-**id**                      | string        | Unique identifier of the user           | true
+Parameter                   | Data Type     | Description                                                                                                      | Is Required
+---------                   | ---------     | -----------                                                                                                      | -----------
+**id**                      | string        | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> generated during creation | true
 first_name                  | string        | First name of the user
 last_name                   | string        | Last name of the user
 email                       | string        | Email address of the user (email must only contain ASCII characters)
@@ -518,7 +518,7 @@ access_period               | array[string] | Contains the time periods during w
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the user
+id        | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a>
 
 ### Error Status Codes
 
@@ -548,7 +548,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/user -d "id=[USER_ID]" -H "A
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | User ID     | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> | true
 
 ### Error Status Codes
 
@@ -620,7 +620,7 @@ curl --request GET https://login.eagleeyenetworks.com/g/user/list -H "Authentica
 
 Array Index | Attribute   | Data Type     | Description
 ---------   | ----------- | ---------     | -----------
-0           | id          | string        | Unique identifier of the user
+0           | id          | string        | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a>
 1           | first_name  | string        | First name of the user
 2           | last_name   | string        | Last name of the user
 3           | email       | string        | Email address of the user

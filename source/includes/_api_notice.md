@@ -6,13 +6,13 @@
 
 The following API endpoints facilitate presenting and accepting the Terms of Service. Eagle Eye Networks uses independent Terms of Service which will be presented through [Get Terms of Service for User](#get-terms-of-service-for-user). Additionally resellers can add their own Terms of Service through [Create Terms of Service for Account](#create-terms-of-service-for-account), which will then be presented with Eagle Eye Network's terms
 
-Resellers can assign their own terms at the master account level or give each sub-account custom terms at the sub-account level
+Resellers can assign their own terms at the Master Account Level or give each <a class="definition" onclick="openModal('DOT-Sub-Account')">Sub-Account</a> custom terms at the Sub-Account Level
 
 The basic workflow is as follows:
 
   1. Resellers create their own terms with the [Create Terms of Service for Account](#create-terms-of-service-for-account)
-  2. Client UI will display terms if not accepted from a [Get Terms of Service for User](#get-terms-of-service-for-user)
-  3. Client UI will accept the terms from a [Accept Terms of Service for User](#accept-terms-of-service-for-user)
+  2. <a class="definition" onclick="openModal('DOT-Client')">Client</a> UI will display terms if not accepted from a [Get Terms of Service for User](#get-terms-of-service-for-user)
+  3. <a class="definition" onclick="openModal('DOT-Client')">Client</a> UI will accept the terms from a [Accept Terms of Service for User](#accept-terms-of-service-for-user)
 
 <!--===================================================================-->
 ## Get Terms of Service for User
@@ -39,7 +39,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/user/terms -d "id=[USER_ID]" -H
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | User ID
+id        | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a>
 
 > Json Response
 
@@ -60,7 +60,7 @@ id        | string    | User ID
 
 Array Index | Attribute    | Data Type | Description
 ----------- | ---------    | --------- | -----------
-0           | user_id      | string    | Unique identifier of the user requesting the notice
+0           | user_id      | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> of the user requesting the notice
 1           | title        | string    | Title of the term of service
 2           | url          | string    | URL of a file with the text of the terms of service
 3           | version      | string    | Version string for the title of the terms of service
@@ -114,7 +114,7 @@ Parameter | Data Type     | Description | Is Required
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | User ID
+id        | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a>
 
 ### Error Status Codes
 
@@ -147,7 +147,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/account/terms -d "id=[ACCOUNT_I
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Account ID  | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> | true
 
 > Json Response
 
@@ -207,7 +207,7 @@ Parameter | Data Type | Description | Is Required
 
 Array Index | Attribute         | Data Type | Description
 ----------- | ---------         | --------- | -----------
-0           | account_id        | string    | Unique identifier of the account requesting the notice
+0           | account_id        | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> of the account requesting the notice
 1           | account_name      | string    | Name of the account requesting this notice
 2           | title             | string    | Title of the notice
 3           | version           | string    | Version number for the notice title, a larger version number will retire other versions
@@ -258,7 +258,7 @@ curl -X PUT https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_re
 Parameter         | Data Type | Description                                          | Required    | Default                  | Limitation
 ---------         | --------- | -----------                                          |:-----------:| -------                  | ----------
 **text**          | string    | Text of the term of service to accept                | **&check;** |                          | Use single LF character for line break
-id                | string    | Unique identifier of the account                     | **&cross;** | requester's account
+id                | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> | **&cross;** | requester's account
 title             | string    | Title of the term of service to accept               | **&cross;** | 'Terms and Conditions'   | 32 bytes of alpha numeric characters
 version           | string    | Version of the title, which should be unique         | **&cross;** | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required | int       | Whether administrators have to accept (1) or not (0) | **&cross;** | not updating
@@ -329,7 +329,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/account/terms -d '{"is_admin_r
 Parameter         | Data Type | Description                                          | Required    | Default                  | Limitation
 ---------         | --------- | -----------                                          |:-----------:| -------                  | ----------
 text              | string    | Text of the term of service to accept                | **&cross;** |                          |  use single LF character for line break
-id                | string    | Unique identifier of the account                     | **&cross;** | requester's account
+id                | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> | **&cross;** | requester's account
 title             | string    | Title of the term of service to accept               | **&cross;** | 'Terms and Conditions'   | 32 bytes of alpha numeric characters
 version           | string    | Version of the title, which should be unique         | **&cross;** | auto incrementing number | 32 bytes of alpha numeric characters
 is_admin_required | int       | Whether administrators have to accept (1) or not (0) | **&cross;** | not updating
@@ -401,7 +401,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/account/terms -d "id=[ACCOUN
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Account ID  | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> | true
 title     | string    | Title of the term of service
 
 > Json Response
@@ -427,7 +427,7 @@ title     | string    | Title of the term of service
 
 Parameter          | Data Type | Description
 ---------          | --------- | -----------
-account_id         | string    | Unique identifier of the account requesting the removal
+account_id         | string    | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> of the account requesting the removal
 account_name       | string    | Name of the account requesting the removal
 title              | string    | Title of the term of service
 version            | string    | Version number for the term title

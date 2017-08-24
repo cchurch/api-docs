@@ -4,17 +4,17 @@
 ## Overview
 <!--===================================================================-->
 
-<a class="definition" onclick="openModal('DOT-Layout')">Layouts</a> contain panes, which are groups of cameras arranged for viewing on screen. Layouts are associated with an account and account users are granted view/write/share permissions for the layout. Users who would otherwise have no access to a camera gain access to all cameras included in layouts shared with them
+<a class="definition" onclick="openModal('DOT-Layout')">Layouts</a> contain panes, which are groups of <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> arranged for viewing on screen. Layouts are associated with an <a class="definition" onclick="openModal('DOT-Account')">Account</a> and <a class="definition" onclick="openModal('DOT-User')">Users</a> are granted view/write/share permissions for the Layout. Users who would otherwise have no access to a camera gain access to all cameras included in Layouts shared with them
 
-Important information on accessing layouts:
+Important information on accessing Layouts:
 
-  - Freshly created users get read-only permissions (`'R'` letter in the layout's permission string) to all layouts existing for the account prior to user creation
-  - A user will not have any access to newly created layouts. Permissions must be assigned to them explicitly (Exception: users with `'is_layout_admin=1'` have unrestricted access to all layouts existing or new)
-  - Superusers and account superusers have unrestricted access to layouts, which cannot be limited by layout permissions
+  - Freshly created users get read-only permissions (`'R'` letter in the Layout's permission string) to all Layouts existing for the account prior to user creation
+  - A user will not have any access to newly created Layouts. Permissions must be assigned to them explicitly (Exception: users with `'is_layout_admin=1'` have unrestricted access to all Layouts existing or new)
+  - Superusers and account superusers have unrestricted access to Layouts, which cannot be limited by Layout permissions
 
-<aside class="notice">Layouts can only be created, listed or modified from within the account for which the layout should be visible</aside>
+<aside class="notice">Layouts can only be created, listed or modified from within the account for which the Layout should be visible</aside>
 
-The ordering of the panes is determined by the order of the [configuration panes](#layout-configuration-panes) returned by the API. Each pane will have a size of 1, 2, or 3. A size of 1 is the smallest and fills up 1x1 on the layout grid. A size of 3 is the largest and fills up 3x3 on the layout grid. If the grid does not have enough columns to fit the pane, then the size of the pane is decreased until it is able to fit on the grid
+The ordering of the panes is determined by the order of the [configuration panes](#layout-configuration-panes) returned by the API. Each pane will have a size of 1, 2, or 3. A size of 1 is the smallest and fills up 1x1 on the Layout grid. A size of 3 is the largest and fills up 3x3 on the Layout grid. If the grid does not have enough columns to fit the pane, then the size of the pane is decreased until it is able to fit on the grid
 
 Rendered Layouts on Web and Mobile:
 <img src="images/api_layout/example_1.png" alt="Example 1" width="1000">
@@ -99,14 +99,14 @@ Rendered Layouts on Web and Mobile:
 
 Property              | Data Type            | Description                                                                                          | Editable    | Required
 --------              | ---------            | -----------                                                                                          |:-----------:| --------
-**id**                | string               | Unique identifier for the layout                                                                     | **&cross;** | **<sub><form action="#get-layout"><button>GET</button></form></sub>** <br>**<sub><form action="#update-layout"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-layout"><button>DELETE</button></form></sub>**
+**id**                | string               | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a> automatically generated and assigned during creation                                                                                                                                            | **&cross;** | **<sub><form action="#get-layout"><button>GET</button></form></sub>** <br>**<sub><form action="#update-layout"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-layout"><button>DELETE</button></form></sub>**
 **name**              | string               | Name of the layout                                                                                   | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 **types**             | array[string]        | Specifies target(s) for layout. Multiple values are allowed                                          | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 **[configuration](#layout-configuration)** | json             | Json object of layout configuration                                                 | **&check;** | **<sub><form action="#create-layout"><button>PUT</button></form></sub>**
 json                  | string               | Json encoded string. The same content as the `'configuration'` field <small>**(DEPRECATED)**</small> | **&cross;** |
-permissions           | string               | String of zero or more characters. Each character defines a permission that the current user has for the layout  <br><br>Permissions include: <br>`'R'` - user can view this layout <br>`'W'` - user can modify this layout <br>`'D'` - user can delete this layout <br>`'S'` - user can share this layout                                                                                                                                   | **&cross;** |
-current_recording_key | string               | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service                                                                                                                            | **&cross;** |
-shares                | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. Setting the first field to `'account'` specifies that the layout is shared with all users of the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] - user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] - user can view and change this layout <br>[`'1005f2ed'`, `'R'`] - user can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array                                 | **&check;** |
+permissions           | string               | String of zero or more characters. Each character defines a permission that the current user has for the layout  <br><br>Permissions include: <br>`'R'` - user can view this layout <br>`'W'` - user can modify this layout <br>`'D'` - user can delete this layout <br>`'S'` - user can share this layout                                                                                                                                              | **&cross;** |
+current_recording_key | string               | String key representing a recording currently being made with the cameras in the layout, which was initiated using the action/recordnow service                                                                                                                                             | **&cross;** |
+shares                | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | Array of arrays each representing a user for whom sharing is enabled for this layout. Each string contains two comma-separated fields. The first field is a user ID and the second field are permissions for the user. Setting the first field to `'account'` specifies that the layout is shared with all users of the account <br><br>Example: <br>[`'1005f2ed'`,`'RWDS'`] - user can view, change, delete or share this layout <br>[`'1005f2ed'`,`'RW'`] - user can view and change this layout <br>[`'1005f2ed'`, `'R'`] - user can view this layout <br><br>Permissions for the user issuing the /layout GET are not included in this array                                                                                                                              | **&check;** |
 
 ### Layout - configuration
 
@@ -153,7 +153,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -H "
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Layout ID   | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a> | true
 
 ### Error Status Codes
 
@@ -200,7 +200,7 @@ shares            | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbs
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the layout
+id        | string    | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a>
 
 ### Error Status Codes
 
@@ -227,9 +227,9 @@ curl -X POST https://login.eagleeyenetworks.com/g/layout -d '{"id": "[LAYOUT_ID]
 
 `POST https://login/eagleeyenetworks.com/g/layout`
 
-Parameter     | Data Type     | Description | Is Required
----------     | ---------     | ----------- | -----------
-**id**        | string        | Unique identifier of layout | true
+Parameter     | Data Type     | Description                                                                                                                    | Is Required
+---------     | ---------     | -----------                                                                                                                    | -----------
+**id**        | string        | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a> generated during creation                             | true
 name          | string        | Layout name
 types         | array[string] | Specifies target(s) for layout. Multiple values are allowed
 [configuration](#layout-configuration) | json          | Json object of layout configuration
@@ -247,7 +247,7 @@ shares        | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&n
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier of the layout
+id        | string    | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a>
 
 ### Error Status Codes
 
@@ -277,7 +277,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/layout -d "id=[LAYOUT_ID]" -
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Layout ID   | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a> | true
 
 ### Error Status Codes
 
@@ -335,7 +335,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/layout/list -H "Authentication:
 
 Array Index | Attribute   | Data Type     | Description
 ----------- | ---------   | ---------     | -----------
-0           | id          | string        | Unique identifier for the layout
+0           | id          | string        | <a class="definition" onclick="openModal('DOT-Layout-ID')">Layout ID</a>
 1           | name        | string        | Name of the layout
 2           | types       | array[string] | Array of types defined for the layout
 3           | permissions | string        | String of zero or more characters. Each character defines a permission that the current user has for the layout <br><br>Permissions include: <br>`'R'` - user can view this layout <br>`'W'` - user can modify this layout <br>`'D'` - user can delete this layout <br>`'S'` - user can share this layout

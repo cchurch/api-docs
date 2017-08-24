@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> is a product of Eagle Eye that is deployed at the customer location and communicates with industry standard cameras. It converts the cameras to be compatible with the EEVB and record <a class="definition" onclick="openModal('DOT-Asset')" href="#images-and-video">assets</a>. The Bridge is configured and controlled via a cloud-based user interface (has no built-in user interface). The Bridge may serve local assets directly to local clients. The Bridge will also store assets until they are transferred to the EEVB. The Bridge can be configured via DHCP or have a static IP address
+The <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> is a product of Eagle Eye that is deployed at the customer location and communicates with industry standard cameras. It converts the cameras to be compatible with the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> and record <a class="definition" onclick="openModal('DOT-Asset')">Assets</a>. The Bridge is configured and controlled via a cloud-based user interface (has no built-in user interface). The Bridge may serve local assets directly to local clients. The Bridge will also store assets until they are transferred to the EEVB. The Bridge can be configured via DHCP or have a static IP address
 
 <!--===================================================================-->
 ## Bridge Model
@@ -499,7 +499,7 @@ The <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> is a prod
 
 Parameter                     | Data Type     | Description                                                                                        | Editable    | Required
 ---------                     | ---------     | -----------                                                                                        |:-----------:| --------
-**id**                        | string        | Unique identifier automatically generated and assigned while adding a device                       | **&cross;** | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
+**id**                        | string        | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a> automatically generated and assigned while adding the device to the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a>                                                                                 | **&cross;** | **<sub><form action="#get-bridge"><button>GET</button></form></sub>** <br>**<sub><form action="#update-bridge"><button>POST</button></form></sub>** <br>**<sub><form action="#delete-bridge"><button>DELETE</button></form></sub>**
 **name**                      | string        | Name of the bridge                                                                                 | **&check;** | **<sub><form action="#add-bridge-to-eevb"><button>PUT</button></form></sub>**
 [settings](#bridge-settings)  | json          | Json object of basic settings (location, etc.)                                                     | **&check;** |
 camera_settings_status_code   | int           | Indicates whether it was possible to retrieve the device settings (200) or not (404) <small>**(DEPRECATED)**</small> | **&cross;** |
@@ -509,11 +509,11 @@ timezone                      | string        | Indicates the timezone of where 
 guid                          | string        | The GUID (Globally Unique Identifier) is an immutable device identifier assigned to a device during the production process                                                                                                                                            | **&cross;** |
 permissions                   | string        | String of characters each defining a permission level of the current user                          | **&cross;** |
 tags                          | array[string] | Array of strings each representing a tag name                                                      | **&check;** |
-[bridges](#camera-bridges)    | json          | Json object of bridges (ESNs) this device is seen by <small>**(APPLIES ONLY TO CAMERAS)**</small>  | **&cross;** |
+[bridges](#camera-bridges)    | json          | Json object of bridges (<a class="definition" onclick="openModal('DOT-ESN')">ESNs</a>) this device is seen by <small>**(APPLIES ONLY TO CAMERAS)**</small>  | **&cross;** |
 camera_parameters_status_code | int           | Indicates whether it was possible to retrieve parameters of the device (200) or not (404)          | **&cross;** |
-camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                        | **&check;** |
+camera_parameters             | json          | Json object of bridge parameters. If bridge parameters cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_parameters_status_code will be 404                                                                   | **&check;** |
 camera_info_status_code       | int           | Indicates whether it was possible to retrieve information about the device (200) or not (404)      | **&cross;** |
-[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                           | **&cross;** |
+[camera_info](#bridge-camera_info) | json          | Json object of basic bridge information. If bridge information cannot be retrieved for whatever reason (example: communication with the bridge has been lost), this will be empty and camera_info_status_code will be 404                                                              | **&cross;** |
 
 ### Bridge - settings
 
@@ -599,7 +599,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -H "
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Bridge ID   | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a> | true
 
 ### Error Status Codes
 
@@ -612,7 +612,7 @@ HTTP Status Code | Description
 200	| Request succeeded
 
 <!--===================================================================-->
-## Add Bridge to EEVB
+## Add Bridge to <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a>
 <!--===================================================================-->
 
 Adds a Bridge to the Eagle Eye Video Bank
@@ -630,7 +630,7 @@ curl -X PUT https://login.eagleeyenetworks.com/g/device -d '{"name":"[NAME]","co
 Parameter     | Data Type | Description | Is Required
 ---------     | --------- | ----------- | -----------
 **name**      | string    | Bridge name | true
-**connectID** | string    | Connect ID is the code delivered with a bridge and assigned to it (All non-alphanumeric characters will be stripped) | true
+**connectID** | string    | <a class="definition" onclick="openModal('DOT-Connect-ID')">Connect ID</a> is the code delivered with a bridge and assigned to it (All non-alphanumeric characters will be stripped) | true
 
 > Json Response
 
@@ -644,7 +644,7 @@ Parameter     | Data Type | Description | Is Required
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier for the device
+id        | string    | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a>
 
 ### Error Status Codes
 
@@ -677,7 +677,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/device -d '{"id": "[BRIDGE_ID]
 
 Parameter                | Data Type     | Description | Is Required
 ---------                | ---------     | ----------- | -----------
-**id**                   | string        | Bridge ID   | true
+**id**                   | string        | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a> | true
 name                     | string        | Bridge name
 timezone                 | string        | Indicates the timezone of where the device is installed (defaults to the account timezone) <br><br>Example: `'US/Alaska'`, `'US/Arizona'`, `'US/Central'`, `'US/Eastern'`, `'US/Hawaii'`, `'America/Anchorage'` or `'UTC'`
 tags                     | array[string] | Array of strings each representing a tag name
@@ -697,7 +697,7 @@ camera_parameters_delete | json          | Json object of camera settings to del
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-id        | string    | Unique identifier for the device
+id        | string    | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a>
 
 ### Error Status Codes
 
@@ -728,7 +728,7 @@ curl -X DELETE https://login.eagleeyenetworks.com/g/device -d "id=[BRIDGE_ID]" -
 
 Parameter | Data Type | Description | Is Required
 --------- | --------- | ----------- | -----------
-**id**    | string    | Bridge ID   | true
+**id**    | string    | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a> | true
 
 ### Error Status Codes
 
@@ -759,7 +759,7 @@ curl -X GET https://login.eagleeyenetworks.com/g/device/list -H "Authentication:
 
 Parameter | Data Type | Description
 --------- | --------- | -----------
-e         | string    | Bridge ID
+e         | string    | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a>
 n         | string    | Bridge name
 t         | string    | Device type
 s         | string    | Device service status
@@ -862,11 +862,11 @@ s         | string    | Device service status
 
 Array Index | Attribute           | Data Type            | Description
 ----------- | ---------           | ---------            | -----------
-0           | account_id          | string               | Unique identifier of the device’s account
-1           | id                  | string               | Unique identifier of a device
+0           | account_id          | string               | <a class="definition" onclick="openModal('DOT-Account-ID')">Account ID</a> of the device’s account
+1           | id                  | string               | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a>
 2           | name                | string               | Device name
 3           | type                | string, enum         | Device type <br><br>enum: bridge, camera
-4           | cameras             | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | This is an array of string arrays, each array representing a camera that is attached to the bridge. The first element of the array is the camera ESN. The second element is the service status
+4           | cameras             | array&nbsp;[<br>&nbsp;&nbsp;array&nbsp;[<br>&nbsp;&nbsp;&nbsp;&nbsp;string</br>&nbsp;&nbsp;]</br>] | This is an array of string arrays, each array representing a camera that is attached to the bridge. The first element of the array is the camera <a class="definition" onclick="openModal('DOT-ESN')">ESN</a>. The second element is the service status
 5           | service_status      | string, enum         | Device service status: <br>`'ATTD'` - camera is attached to a bridge <br>`'IGND'` - camera is unattached from all bridges and is available to be attached to a bridge <br>`'IDLE'` - camera will register but will not operate (unregistered bridges) <br>`'ERSE'` - one shot, all camera data will be erased <br><br>For bridges this field is always `'ATTD'` <br><br>enum: ATTD, IGND, IDLE, ERSE
 6           | permissions         | string               | String of zero or more characters each defining a permission level (of the current user)
 7           | tags                | array[string]        | Array of strings each representing a tag name
@@ -882,7 +882,7 @@ Array Index | Attribute           | Data Type            | Description
 17          | is_upnp             | boolean              | Indicates whether the device is a UPNP device (1) or not (0) <small>**(APPLIES ONLY TO CAMERAS THAT HAVEN’T YET BEEN ATTACHED TO THE ACCOUNT, IN WHICH THEY COULD HAVE BEEN DETECTED VIA ONVIF OR UPNP)**</small>
 18          | video_input         | string               | Indicates the video input channel of the camera <small>**(APPLIES TO ANALOG CAMERAS)**</small>
 19          | video_status        | string               | Indicates the video status of the camera: <small>**(APPLIES TO ANALOG CAMERAS)**</small> <br>`'0x00000000'` - signal ok <br>`'0x00000102'` - no signal
-20          | location            | array                | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
+20          | location            | array                | Location of the device specified in the following way: <br><br>`[` <br>&nbsp;&nbsp;&nbsp;&nbsp;`latitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`longitude(float),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`azimuth(float/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`range(int/null for bridge),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`street address(string),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`floor(int),` <br>&nbsp;&nbsp;&nbsp;&nbsp;`location name(string)` <br>`]` <br><br>Note: If any field is not set, the value is null
 21          | parent_camera_id    | string               | Parent camera ID
 22          | child_camera_view   | string               | Child camera view
 23          | is_hidden           | int                  | GUI control to not show device

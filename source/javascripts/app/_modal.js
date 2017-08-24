@@ -74,6 +74,10 @@ $(document).ready(function() {
                             modalParagraph
                         );
 
+    // Retrieve the default modal color once the header has been assembled
+    initcolorCode = RGB2HEX($(".modal-header").css("background-color"));
+    // Global Variable (already converted to HEX)
+
 });
 
 
@@ -261,6 +265,24 @@ $(document).ready(
 );
 
 
+// Convert RGB color code to HEX
+function RGB2HEX(code) {
+
+    if (code.indexOf("#") > -1) { return code; }    // Failsafe when supplied with HEX
+
+    else { var colorMatch = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(code); return colorMatch ? "#" + (1 << 24 | colorMatch[1] << 16 | colorMatch[2] << 8 | colorMatch[3]).toString(16).substr(1) : code; }
+
+}
+
+// Get current Modal color (work in progress)
+function getModalColor() {
+
+    return RGB2HEX("#colorcode");
+    //return RGB2HEX($(".modal-header").css("background-color"));
+    //return RGB2HEX($(this).parents().find(".modal-header").css("background-color"));
+
+}
+
 //----------------------------------------------------------------------------------------
 // ADDITIONAL FUNCTIONALITY
 //----------------------------------------------------------------------------------------
@@ -315,7 +337,7 @@ var featureTitle =  'Modal Features',
                   + '<a class="definition" onclick="customModal(creditsTitle, creditsMsg)"><key>Alt</key> + <key>R</key></a> - Modal Author<br>';
 
 var colorTitle =    'Modal Colors',
-    colorMsg =      'Pressing <key>Alt</key> + <key>C</key> will each time generate a random color and apply it <key>#colorcode</key>' + ' | Alternatively press <a class="definition" onclick="resetModal()"><key>Reset</key></a>';
+    colorMsg =      'Pressing <key>Alt</key> + <key>C</key> will each time generate a random color and apply it <key>' + getModalColor() + '</key>' + ' | Alternatively press <a class="definition" onclick="resetModal()"><key>Reset</key></a>';
 
 
 // Press 'Alt + Key' to toggle any View
@@ -351,8 +373,7 @@ function colorModal(key, title, body) {
             event.preventDefault();
 
                 // Generate a random color code
-                //var colorCode = Math.floor((Math.random() * 899999) + 100000);    // From a narrow range
-                var colorCode = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
+                var colorCode = RGB2HEX("#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);}));    // Also converting to HEX should it be necessary
 
                 // Change the Modal color (CSS)
                 $(".modal-header").css("background-color", colorCode);
@@ -369,12 +390,10 @@ function colorModal(key, title, body) {
 function resetModal() {
 
     // Reset the Modal color (CSS)
-    var colorCode = "#5cb85c"
-    $(".modal-header").css("background-color", colorCode);
+    $(".modal-header").css("background-color", initcolorCode);
 
     // Feed the customModal() function the reset message
-    //customModal('Modal Reset', 'The Modal header color has been reset to <key>' + colorCode + '</key>');
-    customModal(colorTitle, 'Pressing <key>Alt</key> + <key>C</key> will each time generate a random color and apply it <key>' + colorCode + '</key>' + ' | Modal color reset complete!');
+    customModal(colorTitle, 'Pressing <key>Alt</key> + <key>C</key> will each time generate a random color and apply it <key>' + initcolorCode + '</key>' + ' | Modal color reset complete!');
 
 }
 

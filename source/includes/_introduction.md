@@ -46,7 +46,7 @@ To get started with the Eagle Eye Video API you will need an *API Key*. This is 
 
 You will have to verify your email address to create your *Developer Account*. You will also get an email with a shortcut to create the *API Key*. Click on the shortcut link to create your *API Key* and get started writing some code
 
-You may also want to purchase a development hardware kit from us (so you can connect some cameras). These are available at a large discount for developers. You can get an Eagle Eye Bridge and even some cameras from us for development and testing. Just email us for more info and pricing
+You may also want to purchase a development hardware kit from us (so you can connect some devices). These are available at a large discount for developers. You can get an Eagle Eye <a class="definition" onclick="openModal('DOT-Bridge')">Bridge</a> and even some <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> from us for development and testing. Just email us for more information and pricing
 
 <!-- TODO: Maybe provide a contact email address for the sales department -->
 

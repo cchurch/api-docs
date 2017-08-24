@@ -22,9 +22,9 @@ Each object consists of an ID element and a list of resource types to be monitor
 
 ### Event Sources
 
-  - Camera or device - camera alerts, start and stop recording, etc.
+  - <a class="definition" onclick="openModal('DOT-Device')">Device</a> - camera alerts, start and stop recording, etc.
   - System - maintenance, server changes, etc.
-  - Account - other user changes, account alerts, layout changes, etc.
+  - <a class="definition" onclick="openModal('DOT-Account')">Account</a> - other user changes, account alerts, layout changes, etc.
 
 Camera and device events include: on, off, online, offline, currently recording, currently sensing motion, start/stop schedule event, being controlled with PTZ, etc.
 
@@ -90,9 +90,9 @@ ALRS	| <details><summary>ROI alert start event&nbsp;&#9702;</summary><p><br>ROI 
 ALRE	| <details><summary>ROI alert end event&nbsp;&#9702;</summary><p><br>ROI motion event linked to alert has ended</br></p></details> | cameraid, alertroiid
 AEDA	| Device alert event                                                     | cameraid, status, deviceid, source_userid, source_accountid, values
 AEDN	| Device alert notification event                                        | cameraid, status, target_deviceid, triggerid, starttime, endtime, target_userid, json
-AEDC	| <details><summary>Create device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
-AEDD	| <details><summary>Delete device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
-AEDH	| <details><summary>Device change event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as ESN (Electronic Serial Number). It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid, values
+AEDC	| <details><summary>Create device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as <a class="definition" onclick="openModal('DOT-ESN')">ESN</a>. It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
+AEDD	| <details><summary>Delete device event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as <a class="definition" onclick="openModal('DOT-ESN')">ESN</a>. It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid
+AEDH	| <details><summary>Device change event&nbsp;&#9702;</summary><p><br>`'cameraid'` understood as <a class="definition" onclick="openModal('DOT-ESN')">ESN</a>. It can represent an account, bridge, camera or user</br></p></details> | cameraid, status, deviceid, source_userid, source_accountid, values
 ESES	| <details><summary>Stream start event&nbsp;&#9702;</summary><p><br>User-requested stream event has started</br></p></details> | cameraid, videoid, eventid
 ESEE	| <details><summary>Stream end event&nbsp;&#9702;</summary><p><br>User-requested stream event has ended</br></p></details> | cameraid, eventid
 SBWS	| <details><summary>Stream bw sample event&nbsp;&#9702;</summary><p><br>If enabled, the last N seconds of bandwidth from the camera</br></p></details> | cameraid, bw10, bw60, bw300, streamtype
@@ -370,7 +370,7 @@ video                     | [startts, endts] | List of start and end timestamps 
 [status](#status-bitmask) | bitmask          | A numerical bitmask defining the status. Bit position defines status
 [event](#event-objects)   | object           | Events are a key value pair, where the key is the Four CC of the event and event structure is the actual meta data for that specific event
 
-<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by ID (camera, bridge or account ESN)</aside>
+<aside class="notice">The cameras parameter is an entity, which can contain any object structure keyed by ID (camera, bridge or account <a class="definition" onclick="openModal('DOT-ESN')">ESN</a>)</aside>
 
 Due to the progressing expansion of the event polling mechanic, the parameter `'cameras'` has undergone numerous changes and has been kept as such for backwards compatibility. It should be understood as device/account
 
@@ -613,7 +613,7 @@ The handshake process has to be initiated from the client side via a standard HT
         <th style="text-align:center;">c000.</th>
         <th style="text-align:center;">eagleeyenetworks.com</th>
         <th style="text-align:center;">&#47;api&#47;v2</th>
-        <th style="text-align:center;">&#47;Device</th>
+        <th style="text-align:center;">&#47;<a class="definition" onclick="openModal('DOT-Device')">Device</a></th>
         <th style="text-align:center;">&#47;00001007</th>
         <th style="text-align:center;">&#47;Events</th>
     </tr>

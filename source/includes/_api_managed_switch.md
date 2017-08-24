@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-To simplify camera troubleshooting Eagle Eye Networks provides managed Ethernet switches to be used in the camera LAN. The managed switch uses PoE (Power over Ethernet) to provide power to cameras connected to its LAN ports the same way a typical PoE switch would, but it can additionally switch the power in individual ports on or off in response to commands delivered via Eagle Eye Network API (Thus forcing a camera *hard reset* by simply cycling its power supply)
+To simplify <a class="definition" onclick="openModal('DOT-Camera')">Camera</a> troubleshooting Eagle Eye Networks provides managed Ethernet switches to be used in the camera LAN. The managed switch uses PoE (Power over Ethernet) to provide power to cameras connected to its LAN ports the same way a typical PoE switch would, but it can additionally switch the power in individual ports on or off in response to commands delivered via Eagle Eye Network API (Thus forcing a camera *hard reset* by simply cycling its power supply)
 
 <aside class="notice">Managed Switches can only be controlled or listed from within the account, where the device resides</aside>
 
@@ -126,13 +126,13 @@ Parameter         | Data Type     | Description
 ---------         | ---------     | -----------
 guid              | string        | Globally Unique Identifier of the switch
 state             | string        | State of the managed switch: <br>`'REDY'` - idle and ready to control <br>`'PROB'` - probing for the data behind ports like mac/voltage/enabled etc. <br>`'CTRL'` - busy actively changing settings
-bridges           | array[string] | List of bridge ESN's this managed switch was found on
+bridges           | array[string] | List of bridge <a class="definition" onclick="openModal('DOT-ESN')">ESNs</a> this managed switch was found on
 ports             | integer       | Number of controllable PoE ports available on the switch
 ip                | string        | IP address of managed switch
 version           | string        | Version information
 comment           | string        | Comment stored on switch
 [port_details](#managed-switch-port_details) | array[obj]    | List of *Port Details* objects
-available_bridges | array[string] | List of available bridge ESN's, i.e. bridges that this switch can be attached to
+available_bridges | array[string] | List of available bridge <a class="definition" onclick="openModal('DOT-ESN')">ESNs</a>, i.e. bridges that this switch can be attached to
 name              | string        | Name of the switch
 
 ### Managed Switch - port_details
@@ -142,10 +142,10 @@ Parameter   | Data Type | Description
 index       | string    | Port index in the form of `'port_N'`, where N gets substituted by an integer (starting from 1)
 enabled     | string    | Indicates whether the port is on (true) or off (false)
 mac         | string    | MAC address behind the port, string "Multiple(N)" for N number of MAC addresses found behind this port
-ip          | string    | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string "" if more MAC addresses are found behind this port
+ip          | string    | If a single MAC address is found this is the arp lookup corresponding to that MAC address. Empty string `''` if more MAC addresses are found behind this port
 power       | float     | Power in Watts that this port is drawing
 camera_guid | string    | GUID of the camera that is tied to the MAC/IP address
-esn         | string    | ESN of the camera that is tied to the MAC/IP address
+esn         | string    | <a class="definition" onclick="openModal('DOT-ESN')">ESN</a> of the camera that is tied to the MAC/IP address
 
 ### Error Status Codes
 
@@ -320,7 +320,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/camera/power_cycle -d '{"ident
 
 Parameter      | Data Type | Description                                                                                                                     | Required    |
 ---------      | --------- | -----------                                                                                                                     |:-----------:|
-**identifier** | string    | Device identifier: <br>`<GUID>` - Global Unique Identifier of the camera <br>`<ESN>` - ID of the camera <br>`<MAC>` - MAC address of the camera                                                                                                                                                       | **&check;** |
+**identifier** | string    | <a class="definition" onclick="openModal('DOT-Device')">Device</a> identifier: <br>`<GUID>` - Global Unique Identifier of the camera <br>`<ESN>` - ID of the camera <br>`<MAC>` - MAC address of the camera                                                                                                                                                       | **&check;** |
 
 > Json Response
 
