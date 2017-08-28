@@ -11,7 +11,7 @@ You can get an API key by filling out the form
 **I found an error with Eagle Eye Video API, where should I report it?**<br id=FAQ-003>
 For API specific questions, issues or feature requests, please submit a request
 
-<aside><form action="http://www.eagleeyenetworks.com/support"><button><b>&#128030;</b> Report a Bug</button></form></aside>
+<aside><form action="https://www.eagleeyenetworks.com/support"><button><b>&#128030;</b> Report a Bug</button></form></aside>
 
 **How do you charge for the Eagle Eye Video API use?**<br id=FAQ-004>
 The Eagle Eye Video API does not require any additional fees for use <br>The only fees are the per camera fees for the use of the Eagle Eye system

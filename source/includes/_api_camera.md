@@ -1509,8 +1509,8 @@ HTTP Status Code | Description
 400	| Unexpected or non-identifiable arguments are supplied
 401	| Unauthorized due to invalid session cookie
 403	| Forbidden due to the user missing the necessary privileges
-404	| No device matching the ConnectID or GUID was found
-409	| ConnectID or GUID is currently already in use by an account
+404	| No device matching the Connect ID or GUID was found
+409	| Connect ID or GUID is currently already in use by an account
 410	| Communication cannot be made to attach the camera to the bridge
 415	| Device associated with the given GUID is unsupported
 200	| Request succeeded
