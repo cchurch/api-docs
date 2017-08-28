@@ -58,11 +58,11 @@ Please see the section on [Single Sign On](#single-sign-on) for alternatives to 
 
 ### Visual Steps
 
-![alt text](introduction/apikey_1.png "Step 1")
-![alt text](introduction/apikey_2.png "Step 2")
-![alt text](introduction/apikey_3.png "Step 3")
-![alt text](introduction/apikey_4.png "Step 4")
-![alt text](introduction/apikey_5.png "Step 5")
+![visual step 1](introduction/apikey_1.png "Step 1")
+![visual step 2](introduction/apikey_2.png "Step 2")
+![visual step 3](introduction/apikey_3.png "Step 3")
+![visual step 4](introduction/apikey_4.png "Step 4")
+![visual step 5](introduction/apikey_5.png "Step 5")
 
 <!--===================================================================-->
 ## Content Features

@@ -218,12 +218,12 @@ layouts                 | json       | Json-formatted data keyed by the account 
 ## Permissions
 <!--===================================================================-->
 
-There are several user types:
+### User Types
 
-  - superuser <small>**(INTERNAL USE ONLY)**</small>
-  - staff <small>**(INTERNAL USE ONLY)**</small>
-  - account superuser
-  - regular user
+  - **<a class="definition" onclick="openModal('DOT-Superuser')">Superuser</a>** <small>**(INTERNAL USE ONLY)**</small>
+  - **Staff** <small>**(INTERNAL USE ONLY)**</small>
+  - **<a class="definition" onclick="openModal('DOT-Account-Superuser')">Account Superuser</a>**
+  - **Regular User**
 
 **Account superuser**
 
@@ -235,7 +235,7 @@ The account superuser has a full set of permissions. This user can manage all us
 
 After being created the regular user has several default permissions : `'is_live_video'`, `'is_recorded_video'`, `'is_export_video'`
 
-### List of permissions
+### List of Permissions
 
 Required Parameter          | Description
 ------------------          | -----------
@@ -357,6 +357,16 @@ The table below shows which user management actions a user can execute depending
     <td style="border:solid 1px;background-color:#F9FBFC;">no</td>
   </tr>
 </table>
+
+### TFA Enforcing
+
+The following entities can edit the Two-Factor Authentication settings for an account:
+
+  - The **Superuser** is able to force TFA for:
+    - Any <a class="definition" onclick="openModal('DOT-Sub-Account')">Sub-Account</a> from within the <a class="definition" onclick="openModal('DOT-Master-Account')">Master Account</a>
+    - The Sub-Account they have currently switched into
+  - The **Account Superuser** is able to force TFA for:
+    - The Sub Account in which they have been granted administrator permissions
 
 <!--===================================================================-->
 ## Get User
