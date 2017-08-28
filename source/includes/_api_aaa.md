@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-This service enables the creation of new independent accounts and provides the means to recover an account. If you are creating <a class="definition" onclick="openModal('DOT-Sub-Account')">Sub-Accounts</a> tied to your current <a class="definition" onclick="openModal('DOT-Account')">Account</a> refer to the [Account](#account) section
+This service enables the creation of new Independent Accounts and provides the means to recover them. If you are creating <a class="definition" onclick="openModal('DOT-Sub-Account')">Sub-Accounts</a> tied to your current <a class="definition" onclick="openModal('DOT-Account')">Account</a> refer to the [Account](#account) section
 
 <!--===================================================================-->
 <!-- ## Create Account -->
@@ -178,7 +178,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/reset_password -d "passwor
 Parameter                      | Data Type | Description | Is Required
 ---------                      | --------- | ----------- | -----------
 **token**                      | string    | Password reset token provided in email | true
-**password**                   | string    | New password | true
+**password**                   | string    | New password (alphanumeric, min 10 characters) | true
 accepted_terms_of_service_urls | string    | New terms of service acceptance url
 
 > Json Response
@@ -295,7 +295,7 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/change_password -d "passwo
 
 Parameter        | Data Type | Description | Is Required
 ---------        | --------- | ----------- | -----------
-**password**     | string    | New password | true
+**password**     | string    | New password (alphanumeric, min 10 characters) | true
 id               | string    | <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> of the user having their password changed (Defaults to the ID of the authenticated user). If empty or equal to authenticated user, then `'current_password'` becomes required
 current_password | string    | Current password of the user. If `'id'` argument is empty or equal to the authenticated user's ID, then this is required
 

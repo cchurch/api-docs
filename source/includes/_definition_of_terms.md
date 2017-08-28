@@ -86,10 +86,10 @@ Every <a class="definition" onclick="openModal('DOT-Account')">Account</a> has U
 A User ID is a 32 bit hex number that uniquely identifies a User. This User ID is assigned by the <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> when the <a class="definition" onclick="openModal('DOT-User')">User</a> is created
 
 **User Login**<def id=DOT-User-Login>
-A <a class="definition" onclick="openModal('DOT-User')">User</a>’s Login is his email address. This uniquely identifies the user and provides for password recovery. <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> only supports only email based User Logins. Each User is associated with one and only one <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Each User will have only one UserID assigned by the system
+A <a class="definition" onclick="openModal('DOT-User')">User</a>’s Login is his email address. This uniquely identifies the user and enables password recovery. <a class="definition" onclick="openModal('DOT-EEVB')">EEVB</a> supports only email based User Logins. Each User is associated with only one <a class="definition" onclick="openModal('DOT-Account')">Account</a> and will only have one <a class="definition" onclick="openModal('DOT-User-ID')">User ID</a> assigned by the system
 
-**Administrator User**<def id=DOT-Administrator-User>
-An <a class="definition" onclick="openModal('DOT-Account')">Account</a> must have at least one Administrator User. The last Administrator User cannot be deleted. An Account may have multiple Administrator Users. The Administrator User can add and delete other users, can change permissions, add and delete <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> and view all Assets. The Administrator Users will be notified if there are any billing issues and can view the billing history. Administrator Users can change billing and purchase additional services
+**Account Superuser**<def id=DOT-Account-Superuser>
+An <a class="definition" onclick="openModal('DOT-Account')">Account</a> must have at least one Account Superuser. The last Account Superuser cannot be deleted. An Account may have multiple Account Superusers. The Account Superuser can add and delete other users, can change permissions as well as make other Account Superusers, add/delete <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a> and view all Assets. The Account Superusers will be notified if there are any billing issues and can view the billing history. Account Superusers can change billing and purchase additional services
 
 **Layout**<def id=DOT-Layout>
 A collection of <a class="definition" onclick="openModal('DOT-Camera')">Cameras</a>, the position and size on the screen, the setting associated with the display of the cameras on the screen stored and named. Layouts are used to display camera feeds on monitor screens and to assist with research work. Layouts are created by <a class="definition" onclick="openModal('DOT-User')">Users</a> and named by them. Layouts can be either User specific or global in nature. Account Layouts are visible to all Users of an <a class="definition" onclick="openModal('DOT-Account')">Account</a>. Each Camera Group has an associated implied Layout with it. Layouts have permissions for each User
@@ -180,4 +180,13 @@ Hover Modals refer to the `onmouseover` open Modal behavior activated when the c
 <!--===================================================================-->
 
 **Layout ID**<def style="display: none" id=DOT-Layout-ID>
-<img src="images/general_icons/wip.png" alt="Work in progress" height ="40">
+<img src="images/general_icons/wip.png" title="Work in progress" alt="visual wip" height="40">
+
+**Master Account**<def style="display: none" id=DOT-Master-Account>
+<img src="images/general_icons/wip.png" title="Work in progress" alt="visual wip" height="40">
+
+**Superuser <sub>(internal use only)</sub>**<def style="display: none" id=DOT-Superuser>
+<img src="images/general_icons/wip.png" title="Work in progress" alt="visual wip" height="40">
+
+**Account Superuser**<def style="display: none" id=DOT-Account-Superuser>
+<img src="images/general_icons/wip.png" title="Work in progress" alt="visual wip" height="40">

@@ -8,7 +8,7 @@ Gaining access to the Eagle Eye API is a two-stage process. <a class="definition
 
 In addition to the Simple Authentication described above, a more *secure* Authentication method known as **Two-Factor Authentication** (**TFA**) may be used. TFA is a method of confirming the user's identity by utilizing a combination of two different components. The first component is a user's password and the second is a one-time TFA code delivered to the user via another communication channel - email or a text message sent to the user's mobile phone
 
-Whether Simple or Two-Factor Authentication is used for a particular user's login is determined by this user's settings in the system. Note, however, that an <a class="definition" onclick="openModal('DOT-Administrator-User')">Account Administrator</a> may enforce all users in a particular <a class="definition" onclick="openModal('DOT-Account')">Account</a> to use TFA
+Whether Simple or Two-Factor Authentication is used for a particular user's login is determined by this user's settings in the system. Note, however, that an <a class="definition" onclick="openModal('DOT-Account-Superuser')">Account Superuser</a> may enforce all users in a particular <a class="definition" onclick="openModal('DOT-Account')">Account</a> to use TFA
 
 If TFA is enforced, the Authorize call will expect the TFA code to be passed in addition to the token obtained from the Authenticate call
 
@@ -53,10 +53,10 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/authenticate -d "username=
 
 `POST https://login.eagleeyenetworks.com/g/aaa/authenticate`
 
-Parameter    | Data Type | Is Required
----------    | --------- | -----------
-**username** | string    | &check;
-**password** | string    | &check;
+Parameter    | Data Type | Description                                                                                                                        | Is Required
+---------    | --------- | -----------                                                                                                                        | -----------
+**username** | string    | The username defined by the user (email address)                                                                                   | true
+**password** | string    | The password defined by the user (alphanumeric, min 10 characters)                                                                 | true
 
 > Json Response (Simple Authentication)
 
@@ -341,7 +341,7 @@ HTTP Status Code | Description
 ## Forced vs. Optional TFA
 <!--===================================================================-->
 
-Depending whether the account to which the user belongs enforces TFA or not, the user may be able to select Simple Authentication for their future logins rather than TFA
+Depending whether the account to which the user belongs enforces TFA or not, the user may be able to select Simple Authentication for their future <a class="definition" onclick="openModal('DOT-User-Login')">Logins</a> rather than TFA
 
 In order to find out whether the account enforces TFA examine the `'is_two_factor_authentication_forced'` flag in the account record returned by the [Get Account](#get-account) API Call. This flag can be set or cleared by the account superuser with the [Update Account](#update-account) API call
 
