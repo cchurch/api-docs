@@ -40,8 +40,8 @@ docker-compose down
 # builds and executes the docker image, this will show output in current window
 docker-compose up
 
-    # this will run in detach mode, use in place of `docker-compose up`
-    docker-compose up -d
+# this will run in detach mode, use in place of `docker-compose up`
+docker-compose up -d
 
 # list containers
 docker ps
