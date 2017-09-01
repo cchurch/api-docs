@@ -14,7 +14,7 @@ Type          | Meaning
 
 ### Assets Identifiers
 
-  - **Timestamp:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time, +/- offsets from `'now'` are valid in milliseconds)
+  - **<a class="definition" onclick="openModal('DOT-Timestamp')">Timestamp</a>:** Eagle Eye timestamps have the format YYYYMMDDhhmmss.xxx and are always specified in GMT time. In most contexts special tokens can also be used to specify relative times - `'now'` is the current time (a value starting with + or - is an offset from the current time, +/- offsets from `'now'` are valid in milliseconds)
   - **<a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a>:** Cameras are identified by a 8 character hexadecimal string, representing a unique 32 bit ID associated with a specific camera (Camera ID are not necessarily linked to specific hardware devices to allow device upgrade and replacement without disruption of history storage)
   - **Quality*****(Future Feature)*****:** Images and video may have multiple quality levels, each representing the same base asset. Video can be transcoded between quality levels on demand (at some point) to support reduced bandwidth for mobile devices. Normally cameras will capture at medium or high quality. Additional quality levels will be supported in time
     - **low:** around 100 KB/s
@@ -24,12 +24,12 @@ Type          | Meaning
 
 ### Retrieve Image
 
-The image request model provides an efficient mechanism for accessing image sequences for several usage models. Image requests can be done directly using the next/after/prev virtual model. This returns images before or after specified timestamps. Alternatively, the timestamp and event information can be fetched through the [List](#get-list-of-images) interface (to get events for history) and [Poll](#poll) interface to track new images as they become available in real-time. The following description provides typical usage models for various events:
+The image request model provides an efficient mechanism for accessing image sequences for several usage models. Image requests can be done directly using the next/after/prev virtual model. This returns images before or after specified timestamps. Alternatively, the timestamp and event information can be fetched through the [List](#get-list-of-images) interface (to get <a class="definition" onclick="openModal('DOT-Event')">Events</a> for history) and [Poll](#poll) interface to track new images as they become available in real-time. The following description provides typical usage models for various events:
 
   - **Low bandwidth video playback:** The preview stream is a sequential set of JPEG images. If played back in order, low resolution video is accomplished
     - The simplest implementation is to fetch `'next'` with a timestamp of `'now'` (i.e. `'/asset/next/image.jpeg?t=now;c=12345678;a=pre'`) - waiting for the subsequent image after the current time. Each time an image is returned, a new request should be made. If the downstream bandwidth is very low, the image fetch will automatically slow down (because delivery of image A happens after image B has been received, so the next call will fetch image C, skipping display of image B entirely). This approach works well for tracking a single image stream (Tip: the first request should be done as a `'prev'` request to make sure an image is displayed, before the sequential next requests). The downside of this model is it requires a dedicated socket for each image stream being played. Many browsers have a limited pool of open sockets
     - A more efficient mechanism for tracking multiple image streams is to use the [Poll](#poll) interface. It will provide the timestamp of the next image available for a set of camera, which can then be fetched via the /asset/asset call. Since the poll request supports multiple cameras in a single request, it requires only a single socket for any number of cameras. The client application should implement a *fair* algorithm across the returned timestamps to address low bandwidth situations (that is, make sure every image stream gets updated before you fetch a new image for the same stream). This algorithm will provide smooth frame rate degradation across any number of cameras, whether the performance bottleneck is client CPU or bandwidth. The best model for this is:
-      - Receive update notifications for all cameras being tracked via a single sequential poll session
+      - Receive update <a class="definition" onclick="openModal('DOT-Alert-Notification')">Notifications</a> for all cameras being tracked via a single sequential poll session
       - For each camera, keep track of the latest image notification, replacing the last one even if it has not been fetched yet
       - With a limited pool of *requests* do a fair rotation between all cameras, fetching only the most recent image for each and skipping the fetch if the image is already loading
   - **Random access image discovery:** The preview and thumb image streams can provide a visual navigation tool for accessing recorded video. The typical implementation requires a map from a timestamp to the *best* image for that timestamp. To implement this approach, the client should use the `'after'` and `'prev'` requests with the timestamp of the user playhead. Both calls provide header data for x-ee-timestamp, x-ee-next and x-ee-prev which identify the current and subsequent images in both directions when it can be easily determined. The usage paradigm for this should be:
@@ -130,7 +130,7 @@ Parameter         | Data Type    | Description   | Is Required
 ---------         | ---------    | -----------   | -----------
 **id**            | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **timestamp**     | string       | Timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**asset_class**   | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
+**asset_class**   | string, enum | <a class="definition" onclick="openModal('DOT-Asset-Class')">Asset Class</a> of the image <br><br>enum: all, pre, thumb | true
 quality           | string, enum | ***(Future Feature)*** Quality of the image <br><br>enum: low, med, high
 
 > Response
@@ -328,7 +328,7 @@ Parameter           | Data Type    | Description   | Is Required
 **id**              | string       | <a class="definition" onclick="openModal('DOT-Camera-ID')">Camera ID</a> | true
 **start_timestamp** | string       | Start timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 **end_timestamp**   | string       | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
-**asset_class**     | string, enum | Asset class of the image <br><br>enum: all, pre, thumb | true
+**asset_class**     | string, enum | <a class="definition" onclick="openModal('DOT-Asset-Class')">Asset Class</a> of the image <br><br>enum: all, pre, thumb | true
 count               | int          | Used instead or with an `'end_timestamp'` argument. If used with an `'end_timestamp'` argument, the count is a limit on the number of entries to return, starting at the starting timestamp. If used without the `'end_timestamp'` argument, returns N entries. Support negative value, which returns N entries before, sorted in reverse order - example -5 return 5 events previous to the specified time
 
 > Json Response

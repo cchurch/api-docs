@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-This service offers native PNG span rendering to support metric visualization. For spans the image is filled with the foreground color, where the specified span is active and with the background, where it is inactive. At least one pixel will be filled for a span independent of scale (the span may overlap others). For etags one pixel is filled for each active event, but the pixel may overlap others
+This service offers native <a class="definition" onclick="openModal('DOT-PNG-Span')">PNG Span</a> rendering to support metric visualization. For spans the image is filled with the foreground color, where the specified span is active and with the background, where it is inactive. At least one pixel will be filled for a span independent of scale (the span may overlap others). For etags one pixel is filled for each active <a class="definition" onclick="openModal('DOT-Event')">Event</a>, but the pixel may overlap others
 
 ### Response Headers
 
