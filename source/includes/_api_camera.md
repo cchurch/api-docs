@@ -46,7 +46,7 @@ When getting the camera settings, a Json string representing a Json object is re
     - `'settings'`
       - A subset of the base settings, indicating items the user has specifically set
       - The user settings contain only the `'v'` of the setting and are bare objects (e.g. `'contrast=0.1'`)
-      - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. alerts) it is important the entire setting object is replaced with a new value
+      - Most setting are `'atomic'` entities updated at a single time. For value settings (brightness) this is obvious, but for complex settings (e.g. <a class="definition" onclick="openModal('DOT-Alert-Notification')">Alerts</a>) it is important the entire setting object is replaced with a new value
       - A few settings (currently `'alerts'`,`'rois'`,`'active_alerts'`,`'active_rois'`) are accumulation settings. A setting add transaction adds the new member to the set and a settings delete removes a member
     - `'schedules'` - A set of named fields as follows:
       - `'start'` - time object, indicating when the schedule is set to on. This is a transition point in time, not a description of the active time period. To have a schedule that runs during working hours - { `'start'`: { `'hours'`: `8`, `'wdays'`: `[1,2,3,4,5]`}, `'end'`: {`'hours'`: `17`, `'wdays'`: `[1,2,3,4,5]` }}
@@ -106,7 +106,7 @@ Each camera make/model/version is different, thus not every setting is supported
       - `'motion_threshold'` - (float)percentage of the screen to be occluded by motion within this ROI to create an ROI event (defaults to motion_size_ratio from main screen)
       - `'name'` - string used for the display name of the ROI in a GUI. Not to be confused with the `'<roiname>'` as the key of this ROI object
       - `'ignore_motion'` - boolean integer (1/0) indicating whether motion will be ignored for this ROI. Used as a GUI abstraction to indicate we want to set `'motion_sensitivity'` to `'0.001'` and `'motion_noise_filter'` to `'0.99'`
-      - `'roiid'` - (int)id to attach to the ROI event. If 0, or not present, events will not be created, which will also prevent roi based alerts
+      - `'roiid'` - (int)id to attach to the ROI event. If 0 or not present, events will not be created, which will also prevent ROI-based alerts
       - `'hold_off_ms'` - (int) ms of constant motion before an event is created, defaults to motion_event_holdoff_ms
       - `'hold_on_ms'` - (int) ms of idle before stopping an ROI motion event (defaults to motion_event_holdon_ms from main settings)
   - `'scene_type'` - string indicating the type of scene the camera is viewing
