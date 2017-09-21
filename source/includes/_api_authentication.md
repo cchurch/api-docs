@@ -420,7 +420,7 @@ Upon a successful TFA-based log in, the **Authorize** API call sets a cookie `'t
 
 ***NOTE 1:***
 
-The same `'tfa_key'` value may be used for multiple users, who have successfully authorized in the past from the particular device
+The same `'tfa_key'` value may be applied for multiple users, who have successfully authorized in the past from the particular device
 
 ***NOTE 2:***
 
