@@ -493,7 +493,8 @@ curl -X GET https://login.eagleeyenetworks.com/g/account/list -H "Authentication
         0,
         "20180228234555.722",
         0,
-        "Greater ID"
+        "Greater ID",
+        0
     ],
     [...],
     [...],
@@ -523,6 +524,7 @@ Array Index | Attribute              | Data Type | Description
 15          | last_login             | string    | EEN timestamp of the last login by this account
 16          | average_retention_days | int       | The average number of retention days for the account
 17          | customer_id            | string    | The customer ID assigned to this account
+18          | unknown_camera_count   | int       | The camera count where the status was 'invalid' (i.e. *unknown*) from all <a class="definition" onclick="openModal('DOT-EE-Archiver')">Archivers</a> <br><br>When requesting details about an <a class="definition" onclick="openModal('DOT-ESN')">ESN</a> from an Archiver they sometimes return 'invalid'. The middleware handles asking each of the Archivers for an ESN and sends back the first result that is valid
 
 <aside class="success">Please note that the model definition has property keys, but that's only for reference purposes since it's just a standard array</aside>
 
