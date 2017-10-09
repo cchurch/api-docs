@@ -16,7 +16,7 @@ Manged Switches may be standalone or built into EEN bridges (e.g. model 305)
 ## Get List of Managed Switches
 <!--===================================================================-->
 
-Returns a list of Managed Switches available to the current user
+Returns an array of arrays with each sub-array representing a Managed Switch available to the user
 
 > Request (basic)
 
@@ -160,7 +160,7 @@ HTTP Status Code | Description
 ## Get Managed Switch
 <!--===================================================================-->
 
-This API call allows for retrieval of detailed information behind the Managed Switch
+Returns a Managed Switch object by GUID
 
 > Request
 
@@ -174,7 +174,8 @@ curl -X GET https://login.eagleeyenetworks.com/g/managed_switch -d "guid=[SWITCH
 
 Parameter | Data Type | Description                                                                                                                          | Required    |
 --------- | --------- | -----------                                                                                                                          |:-----------:|
-**guid**  | string    | Unique identifier of the switch                                                                                                      | **&check;** |
+**guid**  | string    | Managed Switch <a class="definition" onclick="openModal('DOT-GUID')">GUID</a>                                                        | **&check;** |
+bridge    | string    | <a class="definition" onclick="openModal('DOT-Bridge-ID')">Bridge ID</a> to narrow the result to                                     | **&cross;** |
 
 > Json Response
 
@@ -234,13 +235,43 @@ Parameter | Data Type     | Description
 --------- | ---------     | -----------
 guid      | string        | Globally Unique Identifier
 state     | string        | State of the managed switch: <br>`'REDY'` - idle and ready to control <br>`'PROB'` - probing for the data behind ports like mac/voltage/enabled etc. <br>`'CTRL'` - busy actively changing settings
-bridges   | array[string] | List of bridge esns this managed switch was found on
 ports     | integer       | Number of controllable PoE ports available on the switch
 ip        | string        | IP address of managed switch
 version   | string        | Version information
 comment   | string        | Comment stored on switch
 [port_details](#managed-switch-port_details) | array[obj]    | List of *Port Details* objects
 name      | string        | Name of the switch
+
+### Error Status Codes
+
+HTTP Status Code | Description
+---------------- | -----------
+400	| Unexpected or non-identifiable arguments are supplied
+401	| Unauthorized due to invalid session cookie
+403	| Forbidden due to the user missing the necessary privileges
+404	| Bridge or managed switch not found
+200	| Request succeeded
+
+<!--===================================================================-->
+## Update Managed Switch
+<!--===================================================================-->
+
+Update Managed Switch information
+
+> Request
+
+```shell
+curl -X POST https://login.eagleeyenetworks.com/g/managed_switch -d "guid=[SWITCH_GUID]" -d "name=[SWITCH_NAME]" -H "Authentication: [API_KEY]:" --cookie "auth_key=[AUTH_KEY]"
+```
+
+### HTTP Request
+
+`GET https://login.eagleeyenetworks.com/g/managed_switch`
+
+Parameter | Data Type | Description                                                                                                                          | Required    |
+--------- | --------- | -----------                                                                                                                          |:-----------:|
+**guid**  | string    | Managed Switch <a class="definition" onclick="openModal('DOT-GUID')">GUID</a>                                                        | **&check;** |
+name      | string    | Managed Switch Name                                                                                                                  | **&cross;** |
 
 ### Error Status Codes
 
