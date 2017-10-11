@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Annotation service allows to push data (including HTML elements) into the event stream to add additional information about a camera/video. Annotations are associated with a device and a timestamp
+The Annotation service allows to push data (including HTML elements) into the <a class="definition" onclick="openModal('DOT-Event')">Event</a> stream to add additional information about a camera/video. Annotations are associated with a <a class="definition" onclick="openModal('DOT-Device')">Device</a> and a <a class="definition" onclick="openModal('DOT-Timestamp')">Timestamp</a>
 
 <aside class="notice">Annotations are subject to normal retention logic and as such will be discarded when the annotated time has exceeded retention</aside>
 

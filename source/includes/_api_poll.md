@@ -4,7 +4,7 @@
 ## Overview
 <!--===================================================================-->
 
-The Poll service provides a mechanism for an application to receive notifications of events or spans from Eagle Eye Networks. These entities are grouped by resource
+The Poll service provides a mechanism for an application to receive <a class="definition" onclick="openModal('DOT-Alert-Notification')">Notifications</a> of <a class="definition" onclick="openModal('DOT-Event')">Events</a> or spans from Eagle Eye Networks. These entities are grouped by resource
 
 <aside class="success">This service will continually be extended</aside>
 
@@ -62,7 +62,7 @@ Camera and device events include: on, off, online, offline, currently recording,
 
 <aside class="notice">Each event type is returned with the EEN formatted timestamp: YYYYMMDDhhmmss.xxx</aside>
 
-**Note:** Event object descriptions marked with '&#9702;' can be expanded for additional information on the event
+**Note:** <a class="definition" onclick="openModal('DOT-Event')">Event</a> object descriptions marked with '&#9702;' can be expanded for additional information on the event
 
 Four&nbsp;CC | Description                                                     | Returned parameters
 ------------ | -----------                                                     | -------------------
