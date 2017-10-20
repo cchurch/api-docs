@@ -410,5 +410,4 @@ curl -X POST https://login.eagleeyenetworks.com/g/aaa/logout -H "Authentication:
 HTTP Status Code | Description
 ---------------- | -----------
 400	| Unexpected or non-identifiable arguments are supplied
-401	| Unauthorized due to invalid session cookie
 204	| User has been logged out
