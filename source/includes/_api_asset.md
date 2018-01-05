@@ -218,9 +218,9 @@ Initiate the download of a Bundle, TimeLapse or Video in the requested `'downloa
 
 ### Download types:
 
-  - **Video** *(Returns an MP4 trans-coded video)*
-  - **Bundle** *(Returns a ZIP Archive file with individual MP4 videos and a TimeLapse video)*
-  - **TimeLapse** *(Returns a TimeLapse trans-coded video)*
+  - **Video:** Returns an MP4 trans-coded video
+  - **Bundle:** Returns a ZIP Archive file with individual MP4 videos and a TimeLapse video
+  - **TimeLapse:** Returns a TimeLapse trans-coded video
 
 ### Video formats:
 
@@ -243,7 +243,7 @@ Parameter              | Data Type | Description | Is Required
 **end_timestamp**      | string    | End timestamp in EEN format: YYYYMMDDHHMMSS.NNN | true
 is_timestamp_enabled   | boolean   | Indicates whether a timestamp should be embedded into the video (1) or not (0)
 timezone               | string    | Timezone which should be embedded into the video
-download_type          | string    | Download type to create. Defaults to `'Video'` <br><br>enum: Video, Bundle, TimeLapse
+download_type          | string    | Download type to create. Defaults to `'video'` <br><br>enum: video, bundle, timelapse
 video_format           | string    | Video format to use. Defaults to `'mp4'` (currently only MP4 is available)
 video_description      | string    | Video description
 playback_speed         | int       | Video playback speed
