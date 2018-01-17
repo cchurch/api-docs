@@ -403,7 +403,7 @@ HTTP Status Code | Description
 ## Create User
 <!--===================================================================-->
 
-Create a new User. After being created the user is in the pending state (`'is_pending=1'`, `'is_active=0'`). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active (`'is_pending=0'`, `'is_active=1'`).<br/>This default behaviour may be overrriden - see description of `no_activation_email` parameter.
+Create a new User. After being created the user is in the pending state (`'is_pending=1'`, `'is_active=0'`). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active (`'is_pending=0'`, `'is_active=1'`).<br/>This default behaviour may be overriden - see description of `no_activation_email` parameter.
 
 > Request
 
