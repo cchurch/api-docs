@@ -403,7 +403,7 @@ HTTP Status Code | Description
 ## Create User
 <!--===================================================================-->
 
-Create a new User. After being created the user is in the pending state (`'is_pending=1'`, `'is_active=0'`). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active (`'is_pending=0'`, `'is_active=1'`).<br/>This default behaviour may be overriden - see description of `no_activation_email` parameter.
+Create a new User. After being created the user is in the pending state (`'is_pending=1'`, `'is_active=0'`). The user creation email will be sent to the email address passed in the request. Then the user will be able to enter a password (In this step they may need to accept [Terms of Service](#terms-of-service)). After this operation the user will be active (`'is_pending=0'`, `'is_active=1'`)
 
 > Request
 
@@ -421,12 +421,8 @@ Parameter      | Data Type | Description | Is Required
 **last_name**  | string    | The last name of the user | true
 **email**      | string    | The email address of the user | true
 sms_phone      | string    | Phone number to be used for SMS notifications
-no_activation_email | int | 0 - default user activation process <br> 1 - no activation e-mail will be sent to user
 
-
-<aside class="notice">When TFA authentication is used and authorization code delivery via SMS is set, the user's 'sms_phone' number must be defined</aside>  
-
-<aside class="notice">When 'no_activation_email' is set to 1, the user will not receive the activation e-mail which normally allows them to set their password. In such a case the activation of the user requires two steps: 1. Set the initial user password with Change Password API call, 2. Set the 'is_active' flag to 1 in the user model using Update User API call</aside>
+<aside class="notice">When TFA authentication is used and authorization code delivery via SMS is set, the user's `'sms_phone'` number must be defined</aside>
 
 > Json Response
 
